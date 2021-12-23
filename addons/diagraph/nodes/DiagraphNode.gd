@@ -8,6 +8,7 @@ var data := {
 	type = '',
 	name = '',
 	text = '',
+	rect_size = {x = 0, y = 0},
 	offset = {x = 0, y = 0},
 	number_of_slots = 1,
 	slots = [],
@@ -35,8 +36,7 @@ func _ready():
 	connect('resize_request', self, 'resize_request')
 
 func resize_request(new_minsize):
-	rect_min_size = new_minsize
-	$Body.rect_min_size.x = new_minsize.x - 50
+	rect_size = new_minsize
 
 func set_id(id):
 	data.id = id
@@ -47,14 +47,21 @@ func get_data():
 	data.text = $Body/TextEdit.text
 	data.offset.x = offset.x
 	data.offset.y = offset.y
+	data.rect_size.x = rect_size.x
+	data.rect_size.y = rect_size.y
 	return data
 
 func set_data(new_data):
 	$Body/TextEdit.text = new_data.text
 	offset.x = new_data.offset.x
 	offset.y = new_data.offset.y
+	if 'rect_size' in new_data:
+		rect_size.x = new_data.rect_size.x
+		rect_size.y = new_data.rect_size.y
 	slots_changed(new_data.number_of_slots)
-	data = new_data
+	data.type = new_data.type
+	data.name = new_data.name
+	return self
 
 # func toggle_editing():
 # 	editing = !editing
@@ -77,20 +84,15 @@ func slots_changed(number):
 		data.number_of_slots -= 1
 		remove_slot(data.number_of_slots)
 		choices.pop_back().queue_free()
-		rect_size=Vector2(10, 10)
+		# rect_size = Vector2(10, 10)
+
+	$Body/Toolbar/Choices.value = number
 
 func add_slot(index):
-	print('adding slot ', index)
 	set_slot(index, false, 0, Color.white, true, 0, slot_colors[index - 1])
 
 func remove_slot(index):
-	print('removing slot ', index)
 	set_slot(index + 1, false, 0, Color.white, false, 0, Color.white)
-
 
 func update_title():
 	self.title = str(data.id) + " | " + data.name
-
-func to_json():
-	pass
-

@@ -1,0 +1,74 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://addons/diagraph/editor/GraphEdit.gd" type="Script" id=1]
+[ext_resource path="res://addons/diagraph/resources/theme.tres" type="Theme" id=2]
+[ext_resource path="res://addons/diagraph/editor/ContextMenu.tscn" type="PackedScene" id=3]
+[ext_resource path="res://addons/diagraph/editor/DiagraphEditor.gd" type="Script" id=4]
+
+[node name="DiagraphEditor" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 2.0
+margin_top = 2.0
+margin_right = -2.0
+margin_bottom = -2.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 2 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GraphEdit" type="GraphEdit" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+right_disconnects = true
+scroll_offset = Vector2( 0, -266.379 )
+snap_distance = 10
+show_zoom_label = true
+minimap_enabled = false
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ContextMenu" parent="." instance=ExtResource( 3 )]
+
+[node name="Toolbar" type="HBoxContainer" parent="."]
+margin_left = 318.0
+margin_top = 6.0
+margin_right = 1020.0
+margin_bottom = 38.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="New" type="Button" parent="Toolbar"]
+margin_right = 46.0
+margin_bottom = 32.0
+text = "New"
+flat = true
+
+[node name="Print" type="Button" parent="Toolbar"]
+margin_left = 50.0
+margin_right = 99.0
+margin_bottom = 32.0
+text = "Print"
+flat = true
+
+[node name="Save" type="Button" parent="Toolbar"]
+margin_left = 103.0
+margin_right = 150.0
+margin_bottom = 32.0
+text = "Save"
+flat = true
+
+[node name="Clear" type="Button" parent="Toolbar"]
+margin_left = 154.0
+margin_right = 205.0
+margin_bottom = 32.0
+text = "Clear"
+flat = true

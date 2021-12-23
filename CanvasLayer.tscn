@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://addons/diagraph/DiagraphEditor.tscn" type="PackedScene" id=1]
+[ext_resource path="res://addons/diagraph/editor/DiagraphEditor.tscn" type="PackedScene" id=1]
 [ext_resource path="res://addons/graphtastic/dialog_editor/main_panel.tscn" type="PackedScene" id=2]
 
 [node name="CanvasLayer" type="CanvasLayer"]

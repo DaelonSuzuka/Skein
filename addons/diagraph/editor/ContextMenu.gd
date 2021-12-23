@@ -2,6 +2,8 @@ extends PopupMenu
 
 # ******************************************************************************
 
+var graph
+
 func _ready():
 	connect('index_pressed', self, 'context_menu_item_pressed')
 
@@ -18,7 +20,7 @@ func show_context_menu(event):
 	clear()
 	rect_size.y = 0
 
-	add_item('Test')
+	add_item('New Node')
 	add_item('Test2')
 	add_item('Test3')
 
@@ -33,5 +35,7 @@ func context_menu_item_pressed(index):
 		var item = get_item_text(index)
 
 		match item:
-			'Test':
-				print('test')
+			'New Node':
+				var node = graph.create_node()
+				node.offset = graph.get_offset_from_mouse()
+				return

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/diagraph_icon.png-8d76cac4168b04e8b143967b06cc1b3c.stex"
+path="res://.import/diagraph_icon.png-890c7dd798f29ddb786bb15ea68e9d2e.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/diagraph/diagraph_icon.png"
-dest_files=[ "res://.import/diagraph_icon.png-8d76cac4168b04e8b143967b06cc1b3c.stex" ]
+source_file="res://addons/diagraph/resources/diagraph_icon.png"
+dest_files=[ "res://.import/diagraph_icon.png-890c7dd798f29ddb786bb15ea68e9d2e.stex" ]
 
 [params]
 
