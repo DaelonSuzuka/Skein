@@ -1,0 +1,113 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://addons/diagraph/DiagraphNode.gd" type="Script" id=1]
+[ext_resource path="res://addons/diagraph/theme.tres" type="Theme" id=2]
+
+[node name="1" type="GraphNode"]
+margin_right = -199.68
+margin_bottom = -247.2
+rect_min_size = Vector2( 200, 200 )
+theme = ExtResource( 2 )
+custom_constants/port_offset = 0
+custom_constants/separation = 4
+title = "Title"
+show_close = true
+resizable = true
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color( 1, 1, 1, 1 )
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color( 0, 0, 1, 1 )
+slot/1/left_enabled = true
+slot/1/left_type = 0
+slot/1/left_color = Color( 1, 1, 1, 1 )
+slot/1/right_enabled = true
+slot/1/right_type = 0
+slot/1/right_color = Color( 0, 0, 1, 1 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Body" type="VBoxContainer" parent="."]
+margin_left = 11.0
+margin_top = 27.0
+margin_right = 189.0
+margin_bottom = 177.0
+rect_min_size = Vector2( 0, 150 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Toolbar" type="HBoxContainer" parent="Body"]
+margin_right = 178.0
+margin_bottom = 31.0
+
+[node name="Edit" type="Button" parent="Body/Toolbar"]
+margin_right = 41.0
+margin_bottom = 31.0
+text = "Edit"
+
+[node name="Label" type="Label" parent="Body/Toolbar"]
+margin_left = 45.0
+margin_right = 98.0
+margin_bottom = 31.0
+size_flags_horizontal = 3
+
+[node name="Choices" type="SpinBox" parent="Body/Toolbar"]
+margin_left = 102.0
+margin_right = 178.0
+margin_bottom = 31.0
+min_value = 1.0
+max_value = 4.0
+value = 1.0
+rounded = true
+
+[node name="Editor" type="VBoxContainer" parent="Body"]
+visible = false
+margin_top = 35.0
+margin_right = 178.0
+margin_bottom = 66.0
+
+[node name="Title" type="HBoxContainer" parent="Body/Editor"]
+margin_right = 178.0
+margin_bottom = 31.0
+
+[node name="Label" type="Label" parent="Body/Editor/Title"]
+margin_right = 45.0
+margin_bottom = 31.0
+text = "Title:"
+
+[node name="LineEdit" type="LineEdit" parent="Body/Editor/Title"]
+margin_left = 49.0
+margin_right = 178.0
+margin_bottom = 31.0
+size_flags_horizontal = 3
+
+[node name="TextEdit" type="TextEdit" parent="Body"]
+margin_top = 35.0
+margin_right = 178.0
+margin_bottom = 150.0
+rect_min_size = Vector2( 0, 100 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Choice" type="HBoxContainer" parent="."]
+margin_left = 11.0
+margin_top = 181.0
+margin_right = 189.0
+margin_bottom = 212.0
+
+[node name="LineEdit" type="LineEdit" parent="Choice"]
+margin_right = 157.0
+margin_bottom = 31.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Choice"]
+margin_left = 161.0
+margin_right = 178.0
+margin_bottom = 31.0
+text = "1"

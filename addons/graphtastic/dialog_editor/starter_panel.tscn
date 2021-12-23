@@ -1,0 +1,160 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://addons/graphtastic/resources/style_themes/theme.tres" type="Theme" id=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "tool
+extends Control
+
+
+
+func _on_Start_Close_pressed():
+	var scene = preload(\"main_panel.tscn\")
+	var start= scene.instance()
+	add_child(start)
+	get_node(\"Start\").visible=false
+"
+
+[sub_resource type="GDScript" id=2]
+script/source = "tool
+extends Button
+
+
+func _on_Help_pressed():
+	var popup=get_node(\"AcceptDialog\")
+	popup.popup_centered_ratio()
+
+
+func _on_RichTextLabel_meta_clicked(meta):
+	OS.shell_open(meta)
+"
+
+[node name="editor_starter" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 2 )
+script = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Start" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Start" type="Button" parent="Start"]
+margin_right = 1024.0
+margin_bottom = 31.0
+text = "start the editor"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HSeparator" type="HSeparator" parent="Start"]
+margin_top = 35.0
+margin_right = 1024.0
+margin_bottom = 60.0
+rect_min_size = Vector2( 0, 25 )
+
+[node name="Help" type="Button" parent="Start"]
+margin_top = 64.0
+margin_right = 1024.0
+margin_bottom = 95.0
+text = "help / info"
+flat = true
+script = SubResource( 2 )
+
+[node name="AcceptDialog" type="AcceptDialog" parent="Start/Help"]
+margin_left = -434.0
+margin_right = 536.0
+margin_bottom = 1219.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Start/Help/AcceptDialog"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 962.0
+margin_bottom = 1172.0
+focus_mode = 2
+bbcode_enabled = true
+bbcode_text = "This is an early version of the GraphTastic- Editor.
+So some features are still unfinished, with disabled buttons, but i dont plan on breaking any future compatabilty. If you find bugs or unexpected behavior. i'd apprciate you reporting them on: https://github.com/vinceprobst/graphtastic/issues
+Same goes for any suggestions to improve the plugin.
+
+You can use this plugin and it's source code without crediting me, for comercial or noncomercial projects as you see fit, or salvage and alter whatever parts you want from it. Though i personally would love, to hear back from any finished project using this.
+
+
+
+
+
+
+
+quickguide: 
+	[*]click \"new graph\" after you started the editor. Now press edit on the new graph and fill in \"hello world\" in the big text box. Close the text-window (by clicking x or anywhere else on the screen) and lets add another node and connect it to the first. Now lets add a 2nd node by clicking the connection spot near the number 1 and releasing on a free space in the grid. add \"a fine world\" to that node. Now click \"save to .tsv\" on the right top.
+[*]Now we can go back to the normal 2D view. Create a new scene and add the GT_TexboxPlayer node as we would a normal TextLabel. When we have it selected there should show up \"Resource Path\" on the top of the inspector. Fill in the path of the file we crated. Since we want our dialog to start at the first node in the first chapter we can leave the other values as they are. Press F6 to play the scene and it should work.
+
+
+some info/notes i'll put just here till i make a proper readme/help function or documentation:
+	[*] make sure to load the GT_TextboxPlayer last, compared to other GT-nodes. (e.g. if all GT- nodes have the same parent just put it at the bottom)
+[*] if you wanna use the variable-functions of GT, just fill in all variables you want to use into GTP.variables={ \"health\": 100, \"playername\": \"paul\" } before. GTP is a singleton so you can access it from any script in your code.  (similar GTP.pictures if you dont want to write the full resource_path each time for the pictures)
+[*] GT_Speaker and GT_Pictures \"speaker_persistant\" property will either keep showing the last image/text if there is a blank entry in the next graphnode. Otherwise no entry always means those nodes will turn invisible till needed again.
+[*] all GT_ nodes emit a bunch of custom signals. This should make it easy to add custom animations, soundeffects etc. to your dialog. Signals can be either captured from the nodes directly, or from GTP, who forwards all signals used.
+
+
+how the graphs connections gets parsed (choies and if statments)
+	[*] if there is any value in the choice slot it gets treated as a choice-slot otherwise as an if-slot
+[*] choices always get priory, choices become clickable buttons for the player to select from
+[*] choices with an if statement get disabled when false
+[*] when all choices are false, or no choices at all, then the dialog-player will go from top to bottom to look for a path where the ifstatement is true
+[*]  an empty or \"\" or \" \" or \"#\" (without the \") statement will return true aswell.
+[*] if there is no connection for the dialog-player left it will start to end the dialog
+"
+text = "This is an early version of the GraphTastic- Editor.
+So some features are still unfinished, with disabled buttons, but i dont plan on breaking any future compatabilty. If you find bugs or unexpected behavior. i'd apprciate you reporting them on: https://github.com/vinceprobst/graphtastic/issues
+Same goes for any suggestions to improve the plugin.
+
+You can use this plugin and it's source code without crediting me, for comercial or noncomercial projects as you see fit, or salvage and alter whatever parts you want from it. Though i personally would love, to hear back from any finished project using this.
+
+
+
+
+
+
+
+quickguide: 
+	[*]click \"new graph\" after you started the editor. Now press edit on the new graph and fill in \"hello world\" in the big text box. Close the text-window (by clicking x or anywhere else on the screen) and lets add another node and connect it to the first. Now lets add a 2nd node by clicking the connection spot near the number 1 and releasing on a free space in the grid. add \"a fine world\" to that node. Now click \"save to .tsv\" on the right top.
+[*]Now we can go back to the normal 2D view. Create a new scene and add the GT_TexboxPlayer node as we would a normal TextLabel. When we have it selected there should show up \"Resource Path\" on the top of the inspector. Fill in the path of the file we crated. Since we want our dialog to start at the first node in the first chapter we can leave the other values as they are. Press F6 to play the scene and it should work.
+
+
+some info/notes i'll put just here till i make a proper readme/help function or documentation:
+	[*] make sure to load the GT_TextboxPlayer last, compared to other GT-nodes. (e.g. if all GT- nodes have the same parent just put it at the bottom)
+[*] if you wanna use the variable-functions of GT, just fill in all variables you want to use into GTP.variables={ \"health\": 100, \"playername\": \"paul\" } before. GTP is a singleton so you can access it from any script in your code.  (similar GTP.pictures if you dont want to write the full resource_path each time for the pictures)
+[*] GT_Speaker and GT_Pictures \"speaker_persistant\" property will either keep showing the last image/text if there is a blank entry in the next graphnode. Otherwise no entry always means those nodes will turn invisible till needed again.
+[*] all GT_ nodes emit a bunch of custom signals. This should make it easy to add custom animations, soundeffects etc. to your dialog. Signals can be either captured from the nodes directly, or from GTP, who forwards all signals used.
+
+
+how the graphs connections gets parsed (choies and if statments)
+	[*] if there is any value in the choice slot it gets treated as a choice-slot otherwise as an if-slot
+[*] choices always get priory, choices become clickable buttons for the player to select from
+[*] choices with an if statement get disabled when false
+[*] when all choices are false, or no choices at all, then the dialog-player will go from top to bottom to look for a path where the ifstatement is true
+[*]  an empty or \"\" or \" \" or \"#\" (without the \") statement will return true aswell.
+[*] if there is no connection for the dialog-player left it will start to end the dialog
+"
+selection_enabled = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="Start/Start" to="." method="_on_Start_Close_pressed"]
+[connection signal="pressed" from="Start/Help" to="Start/Help" method="_on_Help_pressed"]
+[connection signal="meta_clicked" from="Start/Help/AcceptDialog/RichTextLabel" to="Start/Help" method="_on_RichTextLabel_meta_clicked"]

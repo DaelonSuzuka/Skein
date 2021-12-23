@@ -1,0 +1,150 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/graphtastic/dialog_player/toolmode/popup_ineditor.gd" type="Script" id=1]
+
+[node name="WindowDialog" type="WindowDialog"]
+visible = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+window_title = "Quickplay"
+resizable = true
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBox" type="VBoxContainer" parent="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 10
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/VBox"]
+margin_right = 1024.0
+margin_bottom = 430.0
+rect_min_size = Vector2( 0, 150 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 10
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/VBox/HBoxContainer"]
+margin_right = 507.0
+margin_bottom = 430.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 10
+
+[node name="Label" type="Label" parent="Control/VBox/HBoxContainer/VBoxContainer"]
+margin_right = 507.0
+margin_bottom = 14.0
+hint_tooltip = "input the values of the variables you want the play to have access to when it starts.
+
+You should have access to the singleton GTP anywhere in your code like this: \"GTP.variables\""
+mouse_filter = 1
+text = "GTP.variables ="
+
+[node name="TextEditVariables" type="TextEdit" parent="Control/VBox/HBoxContainer/VBoxContainer"]
+margin_top = 24.0
+margin_right = 507.0
+margin_bottom = 372.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "{
+\"health\": 100,
+\"playername\": \"paul\",
+}"
+
+[node name="Label2" type="Label" parent="Control/VBox/HBoxContainer/VBoxContainer"]
+margin_top = 382.0
+margin_right = 507.0
+margin_bottom = 396.0
+text = "input starting chapterID ="
+
+[node name="chapterID" type="SpinBox" parent="Control/VBox/HBoxContainer/VBoxContainer"]
+margin_top = 406.0
+margin_right = 507.0
+margin_bottom = 430.0
+min_value = 1.0
+max_value = 9999.0
+value = 1.0
+align = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Control/VBox/HBoxContainer"]
+margin_left = 517.0
+margin_right = 1024.0
+margin_bottom = 430.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 10
+
+[node name="Label" type="Label" parent="Control/VBox/HBoxContainer/VBoxContainer2"]
+margin_right = 507.0
+margin_bottom = 14.0
+hint_tooltip = "If you dont want to write the full path of the picture in the editor each time, you can set up easy to understand abreviations.
+You could even use the \"angry\" \"neutral\" \"happy\" for all of your npcs and automatically change GTP.pictures accordingly when you talk to a npc.
+
+
+You should have access to the singleton GTP anywhere in your code like this: \"GTP.pictures={...}\""
+mouse_filter = 1
+text = "GTP.pictures ="
+
+[node name="TextEditPictures" type="TextEdit" parent="Control/VBox/HBoxContainer/VBoxContainer2"]
+margin_top = 24.0
+margin_right = 507.0
+margin_bottom = 372.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "{
+\"angry\": \"res://resources/pictures/em_angry.png\",
+\"laugh\": \"res://resources/pictures/em_laugh.png\",
+}"
+
+[node name="Label2" type="Label" parent="Control/VBox/HBoxContainer/VBoxContainer2"]
+margin_top = 382.0
+margin_right = 507.0
+margin_bottom = 396.0
+text = "input starting nodeID ="
+
+[node name="nodeID" type="SpinBox" parent="Control/VBox/HBoxContainer/VBoxContainer2"]
+margin_top = 406.0
+margin_right = 507.0
+margin_bottom = 430.0
+min_value = 1.0
+max_value = 9999.0
+value = 1.0
+align = 2
+
+[node name="Button" type="Button" parent="Control/VBox"]
+margin_top = 440.0
+margin_right = 1024.0
+margin_bottom = 460.0
+text = "start playing"
+
+[node name="Control" type="Control" parent="Control/VBox"]
+margin_top = 470.0
+margin_right = 1024.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.3
+
+[connection signal="popup_hide" from="." to="." method="_on_WindowDialog_popup_hide"]
+[connection signal="pressed" from="Control/VBox/Button" to="." method="_on_Button_pressed"]

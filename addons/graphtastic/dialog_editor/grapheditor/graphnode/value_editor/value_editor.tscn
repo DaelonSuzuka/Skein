@@ -1,0 +1,444 @@
+[gd_scene load_steps=20 format=2]
+
+[ext_resource path="res://addons/graphtastic/dialog_editor/grapheditor/graphnode/value_editor/value_editor.gd" type="Script" id=1]
+
+[sub_resource type="InputEventKey" id=1]
+control = true
+command = true
+scancode = 49
+
+[sub_resource type="ShortCut" id=2]
+shortcut = SubResource( 1 )
+
+[sub_resource type="InputEventKey" id=3]
+control = true
+command = true
+scancode = 50
+
+[sub_resource type="ShortCut" id=4]
+shortcut = SubResource( 3 )
+
+[sub_resource type="InputEventKey" id=5]
+control = true
+command = true
+scancode = 51
+
+[sub_resource type="ShortCut" id=6]
+shortcut = SubResource( 5 )
+
+[sub_resource type="InputEventKey" id=7]
+control = true
+command = true
+scancode = 52
+
+[sub_resource type="ShortCut" id=8]
+shortcut = SubResource( 7 )
+
+[sub_resource type="InputEventKey" id=9]
+control = true
+command = true
+scancode = 53
+
+[sub_resource type="ShortCut" id=10]
+shortcut = SubResource( 9 )
+
+[sub_resource type="InputEventKey" id=11]
+alt = true
+scancode = 49
+
+[sub_resource type="ShortCut" id=12]
+shortcut = SubResource( 11 )
+
+[sub_resource type="InputEventKey" id=13]
+alt = true
+scancode = 50
+
+[sub_resource type="ShortCut" id=14]
+shortcut = SubResource( 13 )
+
+[sub_resource type="InputEventKey" id=15]
+alt = true
+scancode = 51
+
+[sub_resource type="ShortCut" id=16]
+shortcut = SubResource( 15 )
+
+[sub_resource type="InputEventKey" id=17]
+alt = true
+scancode = 52
+
+[sub_resource type="ShortCut" id=18]
+shortcut = SubResource( 17 )
+
+[node name="ValueEdit" type="WindowDialog"]
+visible = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 7.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+margin_right = 1024.0
+margin_bottom = 593.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainerTop" type="VBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_right = 1024.0
+margin_bottom = 80.0
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxSpeaker2" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/VBoxContainerTop"]
+margin_right = 1024.0
+margin_bottom = 24.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/VBoxContainerTop/HBoxSpeaker2"]
+margin_top = 5.0
+margin_right = 100.0
+margin_bottom = 19.0
+rect_min_size = Vector2( 100, 0 )
+hint_tooltip = "one of the 3 Textureframes.
+you can use direct paths:
+res://picture.png
+or use just: angry
+if you set up GTP.pictures={\"angry\": res://picture.png
+\"happy\"....}"
+mouse_filter = 1
+text = "left-picture"
+align = 2
+
+[node name="LEFT_PIC" type="LineEdit" parent="ScrollContainer/VBoxContainer/VBoxContainerTop/HBoxSpeaker2"]
+margin_left = 104.0
+margin_right = 510.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+expand_to_text_length = true
+placeholder_text = "#"
+
+[node name="Label2" type="Label" parent="ScrollContainer/VBoxContainer/VBoxContainerTop/HBoxSpeaker2"]
+margin_left = 514.0
+margin_top = 5.0
+margin_right = 614.0
+margin_bottom = 19.0
+rect_min_size = Vector2( 100, 0 )
+hint_tooltip = "one of the 3 Textureframes.
+you can use direct paths:
+res://picture.png
+or use just: angry
+if you set up GTP.pictures={\"angry\": res://picture.png
+\"happy\"....}"
+mouse_filter = 1
+text = "right-picture"
+align = 2
+
+[node name="RIGHT_PIC" type="LineEdit" parent="ScrollContainer/VBoxContainer/VBoxContainerTop/HBoxSpeaker2"]
+margin_left = 618.0
+margin_right = 1024.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+placeholder_text = "#"
+
+[node name="HBoxSpeaker" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/VBoxContainerTop"]
+margin_top = 28.0
+margin_right = 1024.0
+margin_bottom = 52.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/VBoxContainerTop/HBoxSpeaker"]
+margin_top = 5.0
+margin_right = 100.0
+margin_bottom = 19.0
+rect_min_size = Vector2( 100, 0 )
+text = "speaker:"
+align = 2
+
+[node name="SPEAKER" type="LineEdit" parent="ScrollContainer/VBoxContainer/VBoxContainerTop/HBoxSpeaker"]
+margin_left = 104.0
+margin_right = 510.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+expand_to_text_length = true
+placeholder_text = "#"
+
+[node name="Label2" type="Label" parent="ScrollContainer/VBoxContainer/VBoxContainerTop/HBoxSpeaker"]
+margin_left = 514.0
+margin_top = 5.0
+margin_right = 614.0
+margin_bottom = 19.0
+rect_min_size = Vector2( 100, 0 )
+hint_tooltip = "one of the 3 Textureframes.
+you can use direct paths:
+res://picture.png
+or use just: angry
+if you set up GTP.pictures={\"angry\": \"res://picture.png\", \"happy\": \"res//pic2.png\"}"
+mouse_filter = 1
+text = "center-picture"
+align = 2
+
+[node name="CENTER_PIC" type="LineEdit" parent="ScrollContainer/VBoxContainer/VBoxContainerTop/HBoxSpeaker"]
+margin_left = 618.0
+margin_right = 1024.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+placeholder_text = "#"
+
+[node name="HBoxName" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/VBoxContainerTop"]
+margin_top = 56.0
+margin_right = 1024.0
+margin_bottom = 80.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NID" type="Label" parent="ScrollContainer/VBoxContainer/VBoxContainerTop/HBoxName"]
+margin_top = 5.0
+margin_right = 100.0
+margin_bottom = 19.0
+rect_min_size = Vector2( 100, 0 )
+text = "node-Name;"
+align = 1
+
+[node name="NODENAME" type="LineEdit" parent="ScrollContainer/VBoxContainer/VBoxContainerTop/HBoxName"]
+margin_left = 104.0
+margin_right = 1024.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+expand_to_text_length = true
+placeholder_text = "#"
+
+[node name="HSplitContainer" type="HSplitContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 84.0
+margin_right = 1024.0
+margin_bottom = 575.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+split_offset = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DIALOGTXT" type="TextEdit" parent="ScrollContainer/VBoxContainer/HSplitContainer"]
+margin_right = 932.0
+margin_bottom = 491.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_colors/function_color = Color( 1, 1, 1, 1 )
+custom_colors/number_color = Color( 1, 1, 1, 1 )
+syntax_highlighting = true
+show_line_numbers = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/HSplitContainer"]
+margin_left = 944.0
+margin_right = 1024.0
+margin_bottom = 491.0
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ButtonInsertVar" type="Button" parent="ScrollContainer/VBoxContainer/HSplitContainer/VBoxContainer"]
+margin_right = 80.0
+margin_bottom = 41.0
+hint_tooltip = "Show the variable's value:
+#(health)# becomes 100 (in main texbox)"
+focus_mode = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+shortcut = SubResource( 2 )
+text = "insert var"
+
+[node name="ButtonChangeVar" type="Button" parent="ScrollContainer/VBoxContainer/HSplitContainer/VBoxContainer"]
+margin_top = 45.0
+margin_right = 80.0
+margin_bottom = 86.0
+hint_tooltip = "<change>health=health-20<change>
+Change variable before the = to the value of the expr after."
+focus_mode = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+shortcut = SubResource( 4 )
+text = "change var"
+
+[node name="ButtonSignal" type="Button" parent="ScrollContainer/VBoxContainer/HSplitContainer/VBoxContainer"]
+margin_top = 90.0
+margin_right = 80.0
+margin_bottom = 131.0
+hint_tooltip = "<signal>key</signal>
+<signal>key{55}</signal>
+<signal>key{health}</signal>
+
+sends a custom signal. 
+(\"key\") (\"key\", 55) or (\"key\", 100) would be recived
+"
+focus_mode = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+shortcut = SubResource( 6 )
+text = "signal"
+
+[node name="ButtonIf" type="Button" parent="ScrollContainer/VBoxContainer/HSplitContainer/VBoxContainer"]
+margin_top = 135.0
+margin_right = 80.0
+margin_bottom = 176.0
+hint_tooltip = "<if>health<50{our hero felt sickly}
+All commands or text in {} gets ignored if the condition is not met. 
+can NOT stack multiple <if>{ <if>...}"
+focus_mode = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+shortcut = SubResource( 8 )
+text = "if-condi"
+
+[node name="ButtonChangeChapter" type="Button" parent="ScrollContainer/VBoxContainer/HSplitContainer/VBoxContainer"]
+margin_top = 180.0
+margin_right = 80.0
+margin_bottom = 221.0
+hint_tooltip = "<chapter>2:3</chapter>
+if there is no valid next connection or all are false,
+then we go to chapter 2 node 3 after this textbox."
+focus_mode = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+shortcut = SubResource( 10 )
+text = "toChapter"
+
+[node name="ButtonBB_Bold" type="Button" parent="ScrollContainer/VBoxContainer/HSplitContainer/VBoxContainer"]
+margin_top = 225.0
+margin_right = 80.0
+margin_bottom = 266.0
+focus_mode = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+shortcut = SubResource( 12 )
+text = "bb_bold"
+
+[node name="ButtonBB_Italics" type="Button" parent="ScrollContainer/VBoxContainer/HSplitContainer/VBoxContainer"]
+margin_top = 270.0
+margin_right = 80.0
+margin_bottom = 311.0
+focus_mode = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+shortcut = SubResource( 14 )
+text = "bb_italics"
+
+[node name="ButtonBB_color" type="Button" parent="ScrollContainer/VBoxContainer/HSplitContainer/VBoxContainer"]
+margin_top = 315.0
+margin_right = 80.0
+margin_bottom = 356.0
+focus_mode = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+shortcut = SubResource( 16 )
+text = "bb_color"
+
+[node name="ButtonBB_img" type="Button" parent="ScrollContainer/VBoxContainer/HSplitContainer/VBoxContainer"]
+margin_top = 360.0
+margin_right = 80.0
+margin_bottom = 401.0
+focus_mode = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+shortcut = SubResource( 18 )
+text = "bb_img"
+
+[node name="ButtonHoverOver" type="Button" parent="ScrollContainer/VBoxContainer/HSplitContainer/VBoxContainer"]
+margin_top = 405.0
+margin_right = 80.0
+margin_bottom = 446.0
+hint_tooltip = "<hover>Jan{a man of small stature with but...}</hover>
+
+Add descriptions that show if the mouse hovers over the text. 
+Can use variables in {}"
+focus_mode = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+disabled = true
+text = "hovertxt"
+
+[node name="ButtonStart" type="Button" parent="ScrollContainer/VBoxContainer/HSplitContainer/VBoxContainer"]
+margin_top = 450.0
+margin_right = 80.0
+margin_bottom = 491.0
+hint_tooltip = "<skip>
+Skip this node without showing it to the player. 
+Code gets still executed."
+focus_mode = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "skip"
+
+[node name="VBoxChoices" type="VBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 579.0
+margin_right = 1024.0
+margin_bottom = 593.0
+size_flags_horizontal = 3
+
+[node name="HBox" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/VBoxChoices"]
+margin_right = 1024.0
+margin_bottom = 14.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/VBoxChoices/HBox"]
+margin_right = 494.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Choices:"
+
+[node name="Label2" type="Label" parent="ScrollContainer/VBoxContainer/VBoxChoices/HBox"]
+margin_left = 498.0
+margin_right = 992.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "If Statements:"
+
+[node name="Label3" type="Label" parent="ScrollContainer/VBoxContainer/VBoxChoices/HBox"]
+margin_left = 996.0
+margin_right = 1024.0
+margin_bottom = 14.0
+text = "Slot:"
+
+[connection signal="popup_hide" from="." to="." method="_on_ValueEdit_popup_hide"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/HSplitContainer/VBoxContainer/ButtonInsertVar" to="." method="_on_ButtonInsertVar_pressed"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/HSplitContainer/VBoxContainer/ButtonChangeVar" to="." method="_on_ButtonChangeVar_pressed"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/HSplitContainer/VBoxContainer/ButtonSignal" to="." method="_on_ButtonSignal_pressed"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/HSplitContainer/VBoxContainer/ButtonIf" to="." method="_on_ButtonIf_pressed"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/HSplitContainer/VBoxContainer/ButtonChangeChapter" to="." method="_on_ButtonChangeChapter_pressed"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/HSplitContainer/VBoxContainer/ButtonBB_Bold" to="." method="_on_ButtonBB_Bold_pressed"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/HSplitContainer/VBoxContainer/ButtonBB_Italics" to="." method="_on_ButtonBB_Italics_pressed"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/HSplitContainer/VBoxContainer/ButtonBB_color" to="." method="_on_ButtonBB_color_pressed"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/HSplitContainer/VBoxContainer/ButtonBB_img" to="." method="_on_ButtonBB_img_pressed"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/HSplitContainer/VBoxContainer/ButtonHoverOver" to="." method="_on_ButtonHoverOver_pressed"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/HSplitContainer/VBoxContainer/ButtonStart" to="." method="_on_ButtonStart_pressed"]

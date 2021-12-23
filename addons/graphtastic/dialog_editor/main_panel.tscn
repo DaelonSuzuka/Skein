@@ -1,0 +1,184 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://addons/graphtastic/dialog_editor/main_panel.gd" type="Script" id=2]
+[ext_resource path="res://addons/graphtastic/resources/style_themes/theme.tres" type="Theme" id=3]
+
+[node name="main_panel" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 3 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MainMenu" type="HBoxContainer" parent="VBoxContainer"]
+margin_right = 1024.0
+margin_bottom = 31.0
+
+[node name="NewChapter" type="Button" parent="VBoxContainer/MainMenu"]
+visible = false
+margin_right = 21.0
+margin_bottom = 31.0
+text = "+"
+
+[node name="DeleteChapter" type="Button" parent="VBoxContainer/MainMenu"]
+visible = false
+margin_left = 25.0
+margin_right = 42.0
+margin_bottom = 31.0
+text = "-"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ChapterMenuButton" type="MenuButton" parent="VBoxContainer/MainMenu"]
+margin_right = 333.0
+margin_bottom = 31.0
+size_flags_horizontal = 3
+text = "1 | chapter1"
+flat = false
+clip_text = true
+items = [ "add New Chapter", null, 0, false, false, 0, 0, null, "", false, "change Name of Chapter", null, 0, false, false, 1, 0, null, "", false, "delete current Chapter", null, 0, false, false, 2, 0, null, "", false, "", null, 0, false, false, -1, 0, null, "", true, "1 | chapter1", null, 0, false, false, 4, 0, null, "", false ]
+
+[node name="VSeparator" type="VSeparator" parent="VBoxContainer/MainMenu"]
+margin_left = 337.0
+margin_right = 341.0
+margin_bottom = 31.0
+
+[node name="Quickplay" type="Button" parent="VBoxContainer/MainMenu"]
+margin_left = 345.0
+margin_right = 388.0
+margin_bottom = 31.0
+text = "Play"
+
+[node name="VSeparator2" type="VSeparator" parent="VBoxContainer/MainMenu"]
+margin_left = 392.0
+margin_right = 396.0
+margin_bottom = 31.0
+
+[node name="LabelFilename" type="Label" parent="VBoxContainer/MainMenu"]
+margin_left = 400.0
+margin_right = 734.0
+margin_bottom = 31.0
+size_flags_horizontal = 3
+text = "unsaved file"
+align = 2
+clip_text = true
+
+[node name="Quicksave" type="Button" parent="VBoxContainer/MainMenu"]
+margin_left = 738.0
+margin_right = 825.0
+margin_bottom = 31.0
+disabled = true
+text = "quicksave"
+
+[node name="NewFile" type="Button" parent="VBoxContainer/MainMenu"]
+margin_left = 829.0
+margin_right = 900.0
+margin_bottom = 31.0
+text = "new file"
+
+[node name="SaveTsv" type="Button" parent="VBoxContainer/MainMenu"]
+margin_left = 904.0
+margin_right = 950.0
+margin_bottom = 31.0
+text = "save"
+
+[node name="LoadTsv" type="Button" parent="VBoxContainer/MainMenu"]
+margin_left = 954.0
+margin_right = 999.0
+margin_bottom = 31.0
+text = "load"
+
+[node name="CloseEditor" type="Button" parent="VBoxContainer/MainMenu"]
+margin_left = 1003.0
+margin_right = 1024.0
+margin_bottom = 31.0
+text = "X"
+
+[node name="CreateNewFilePopup" type="ConfirmationDialog" parent="."]
+margin_right = 200.0
+margin_bottom = 86.0
+window_title = "Create a New File"
+dialog_text = "---------------------------
+file lost if not saved!
+---------------------------"
+dialog_autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FileDialog" type="FileDialog" parent="."]
+margin_right = 350.0
+margin_bottom = 176.0
+window_title = "Open a File"
+resizable = true
+mode = 0
+filters = PoolStringArray( "*.tsv" )
+
+[node name="NewChapterPopup" type="ConfirmationDialog" parent="."]
+margin_right = 200.0
+margin_bottom = 86.0
+window_title = "Create a new Chapter"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LineEdit" type="LineEdit" parent="NewChapterPopup"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 204.0
+margin_bottom = 39.0
+size_flags_horizontal = 3
+align = 1
+placeholder_text = "<chaptername>"
+
+[node name="RenameChapterPopup" type="ConfirmationDialog" parent="."]
+margin_right = 200.0
+margin_bottom = 86.0
+window_title = "Change name of Chapter"
+
+[node name="LineEdit" type="LineEdit" parent="RenameChapterPopup"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 230.0
+margin_bottom = 39.0
+size_flags_horizontal = 3
+align = 1
+placeholder_text = "<chaptername>"
+
+[node name="DeleteChapterPopup" type="ConfirmationDialog" parent="."]
+margin_right = 200.0
+margin_bottom = 112.0
+window_title = "Delete current Chapter"
+dialog_text = "All Data in this chapter will be lost"
+dialog_autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="VBoxContainer/MainMenu/NewChapter" to="." method="_on_NewChapter_pressed"]
+[connection signal="pressed" from="VBoxContainer/MainMenu/DeleteChapter" to="." method="_on_DeleteChapter_pressed"]
+[connection signal="pressed" from="VBoxContainer/MainMenu/Quickplay" to="." method="_on_Quickplay_pressed"]
+[connection signal="pressed" from="VBoxContainer/MainMenu/Quicksave" to="." method="_on_Quicksave_pressed"]
+[connection signal="pressed" from="VBoxContainer/MainMenu/NewFile" to="." method="_on_NewFile_pressed"]
+[connection signal="pressed" from="VBoxContainer/MainMenu/SaveTsv" to="." method="_on_SaveTsv_pressed"]
+[connection signal="pressed" from="VBoxContainer/MainMenu/LoadTsv" to="." method="_on_LoadTsv_pressed"]
+[connection signal="pressed" from="VBoxContainer/MainMenu/CloseEditor" to="." method="_on_CloseEditor_pressed"]
+[connection signal="confirmed" from="CreateNewFilePopup" to="." method="_on_CreateNewFilePopup_confirmed"]
+[connection signal="file_selected" from="FileDialog" to="." method="_on_FileDialog_file_selected"]
+[connection signal="confirmed" from="NewChapterPopup" to="." method="_on_NewChapterPopup_confirmed"]
+[connection signal="confirmed" from="RenameChapterPopup" to="." method="_on_RenameChapterPopup_confirmed"]
+[connection signal="confirmed" from="DeleteChapterPopup" to="." method="_on_DeleteChapterPopup_confirmed"]

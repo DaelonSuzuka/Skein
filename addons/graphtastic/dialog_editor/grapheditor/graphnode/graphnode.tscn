@@ -1,0 +1,89 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/graphtastic/dialog_editor/grapheditor/graphnode/graphnode.gd" type="Script" id=1]
+
+[node name="1" type="GraphNode"]
+margin_top = -1.0
+margin_right = 164.0
+margin_bottom = 78.0
+title = "1 | "
+show_close = true
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color( 1, 1, 1, 1 )
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color( 1, 1, 1, 1 )
+slot/1/left_enabled = true
+slot/1/left_type = 0
+slot/1/left_color = Color( 0.0235294, 0.0431373, 0.14902, 1 )
+slot/1/right_enabled = true
+slot/1/right_type = 0
+slot/1/right_color = Color( 0.223529, 0.368627, 0.552941, 1 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxMain" type="HBoxContainer" parent="."]
+margin_left = 16.0
+margin_top = 24.0
+margin_right = 148.0
+margin_bottom = 48.0
+alignment = 2
+
+[node name="Button_Value_Edit" type="Button" parent="HBoxMain"]
+margin_right = 54.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Edit"
+
+[node name="SpinBox" type="SpinBox" parent="HBoxMain"]
+margin_left = 58.0
+margin_right = 132.0
+margin_bottom = 24.0
+hint_tooltip = "only slots that are connected are valid for the dialog-box."
+min_value = 1.0
+max_value = 60.0
+value = 1.0
+align = 2
+
+[node name="HBox" type="HBoxContainer" parent="."]
+margin_left = 16.0
+margin_top = 49.0
+margin_right = 148.0
+margin_bottom = 73.0
+
+[node name="LineEditChoice" type="LineEdit" parent="HBox"]
+margin_right = 58.0
+margin_bottom = 24.0
+hint_tooltip = "Choices:
+Text here will show up as a button for the player to choose from if there are multiple outgoing connections.
+(choice will only show up if there are actually multiple choices set up that lead to paths)"
+size_flags_horizontal = 3
+size_flags_vertical = 3
+placeholder_text = "#"
+
+[node name="LineEditIf" type="LineEdit" parent="HBox"]
+margin_left = 62.0
+margin_right = 120.0
+margin_bottom = 24.0
+hint_tooltip = "optional IF-statments.
+Choice-Buttons will grey-out if condition is not met.
+
+if Choice texts are left empty dialog will go from top to bottom to find the next valid path."
+size_flags_horizontal = 3
+size_flags_vertical = 3
+placeholder_text = "#"
+
+[node name="Label" type="Label" parent="HBox"]
+margin_left = 124.0
+margin_top = 5.0
+margin_right = 132.0
+margin_bottom = 19.0
+text = "1"
+
+[connection signal="close_request" from="." to="." method="_on_GraphNode_close_request"]
+[connection signal="pressed" from="HBoxMain/Button_Value_Edit" to="." method="_on_Button_Value_Edit_pressed"]
+[connection signal="value_changed" from="HBoxMain/SpinBox" to="." method="_on_SpinBox_value_changed"]
