@@ -71,7 +71,6 @@ scancode = 52
 shortcut = SubResource( 17 )
 
 [node name="ValueEdit" type="WindowDialog"]
-visible = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3

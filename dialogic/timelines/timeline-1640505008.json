@@ -1,0 +1,23 @@
+{
+	"events": [
+		{
+			"action": "join",
+			"character": "",
+			"event_id": "dialogic_002",
+			"mirror": false,
+			"portrait": "",
+			"position": {
+				"0": false,
+				"1": false,
+				"2": false,
+				"3": false,
+				"4": false
+			}
+		}
+	],
+	"metadata": {
+		"dialogic-version": "1.3",
+		"file": "timeline-1640505008.json",
+		"name": "timeline-1640505008"
+	}
+}

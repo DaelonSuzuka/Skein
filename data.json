@@ -2,129 +2,43 @@
 	"nodes": {
 		"1": {
 			"id": 1,
-			"type": "",
-			"name": "",
-			"text": "this is text",
+			"type": "entry",
+			"name": "Entry",
 			"rect_size": {
-				"x": 322,
-				"y": 404.000031
+				"x": 200,
+				"y": 100
 			},
 			"offset": {
-				"x": 150,
-				"y": -180
-			},
-			"number_of_slots": 3,
-			"slots": [
-
-			]
+				"x": 200,
+				"y": -100
+			}
 		},
 		"2": {
 			"id": 2,
-			"type": "",
-			"name": "",
-			"text": "no u ",
+			"type": "speech",
+			"name": "Speech",
 			"rect_size": {
-				"x": 200,
-				"y": 317
+				"x": 400,
+				"y": 300
 			},
 			"offset": {
-				"x": 1040,
-				"y": -320
+				"x": 510,
+				"y": -130
 			},
-			"number_of_slots": 4,
-			"slots": [
-
-			]
-		},
-		"3": {
-			"id": 3,
-			"type": "",
-			"name": "",
-			"text": "goodbye",
-			"rect_size": {
-				"x": 200,
-				"y": 317
-			},
-			"offset": {
-				"x": 850,
-				"y": 400
-			},
-			"number_of_slots": 4,
-			"slots": [
-
-			]
+			"text": "You see some energy tanks down below. You can almost reach down and touch them! \nWait, there's something shiny near them that IS in reach..."
 		},
 		"4": {
 			"id": 4,
-			"type": "",
-			"name": "",
-			"text": "",
+			"type": "exit",
+			"name": "Entry",
 			"rect_size": {
 				"x": 200,
-				"y": 282
+				"y": 100
 			},
 			"offset": {
-				"x": 1800,
-				"y": -300
-			},
-			"number_of_slots": 3,
-			"slots": [
-
-			]
-		},
-		"5": {
-			"id": 5,
-			"type": "",
-			"name": "",
-			"text": "",
-			"rect_size": {
-				"x": 200,
-				"y": 212.000031
-			},
-			"offset": {
-				"x": 1810,
-				"y": 110
-			},
-			"number_of_slots": 1,
-			"slots": [
-
-			]
-		},
-		"6": {
-			"id": 6,
-			"type": "",
-			"name": "",
-			"text": "",
-			"rect_size": {
-				"x": 200,
-				"y": 212
-			},
-			"offset": {
-				"x": 1810,
-				"y": 340
-			},
-			"number_of_slots": 1,
-			"slots": [
-
-			]
-		},
-		"7": {
-			"id": 7,
-			"type": "",
-			"name": "",
-			"text": "",
-			"rect_size": {
-				"x": 200,
-				"y": 212
-			},
-			"offset": {
-				"x": 2100,
-				"y": -270
-			},
-			"number_of_slots": 1,
-			"slots": [
-
-			]
+				"x": 1120,
+				"y": -180
+			}
 		}
 	},
 	"connections": [
@@ -135,45 +49,19 @@
 			0
 		],
 		[
-			"1",
-			1,
-			"3",
-			0
-		],
-		[
 			"2",
 			0,
 			"4",
 			0
-		],
-		[
-			"4",
-			0,
-			"5",
-			0
-		],
-		[
-			"5",
-			0,
-			"6",
-			0
-		],
-		[
-			"4",
-			1,
-			"7",
-			0
-		],
-		[
-			"4",
-			2,
-			"7",
-			0
 		]
 	],
 	"scroll_offset": {
-		"x": 0,
-		"y": -266.379486
+		"x": 477,
+		"y": -416.25
 	},
-	"zoom": 1
+	"zoom": 1,
+	"snap": {
+		"on": true,
+		"step": 10
+	}
 }

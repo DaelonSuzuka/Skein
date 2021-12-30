@@ -1,0 +1,85 @@
+{
+    "connections": [
+        {
+            "from": "Node0",
+            "from_port": 0,
+            "to": "Node1",
+            "to_port": 0
+        },
+        {
+            "from": "Node1",
+            "from_port": 0,
+            "to": "Node2",
+            "to_port": 0
+        }
+    ],
+    "nodes": {
+        "Node0": {
+            "Line0": "",
+            "offset_x": 200,
+            "offset_y": 80,
+            "rect_x": 275,
+            "rect_y": 129,
+            "type": "Conversation"
+        },
+        "Node1": {
+            "Line0": {
+                "Dialog": "",
+                "Translation": ""
+            },
+            "Line1": {
+                "Dialog": "",
+                "Translation": ""
+            },
+            "Line2": {
+                "Dialog": "",
+                "Translation": ""
+            },
+            "Line3": {
+                "Dialog": "",
+                "Translation": ""
+            },
+            "Line4": {
+                "Dialog": "",
+                "Translation": ""
+            },
+            "Line5": {
+                "Dialog": "",
+                "Translation": ""
+            },
+            "Size": 6,
+            "offset_x": 560,
+            "offset_y": 80,
+            "rect_x": 344,
+            "rect_y": 476,
+            "type": "Speech"
+        },
+        "Node2": {
+            "Line0": "",
+            "Line1": "",
+            "Line2": "",
+            "Line3": "",
+            "Line4": "",
+            "Size": 5,
+            "offset_x": 1000,
+            "offset_y": 80,
+            "rect_x": 275,
+            "rect_y": 250,
+            "type": "Choice"
+        }
+    },
+    "sc": {
+        "Node0": {
+            "0": {
+                "to": "Node1",
+                "to_slot": 0
+            }
+        },
+        "Node1": {
+            "0": {
+                "to": "Node2",
+                "to_slot": 0
+            }
+        }
+    }
+}

@@ -1,0 +1,61 @@
+{
+    "default_conversation": "Node0",
+    "nodes": {
+        "Node0": {
+            "Line0": "",
+            "type": "Conversation"
+        },
+        "Node1": {
+            "Line0": "",
+            "Line1": "",
+            "Line2": "",
+            "Line3": "",
+            "Line4": "",
+            "Line5": "",
+            "Size": 6,
+            "type": "Speech"
+        },
+        "Node2": {
+            "Line0": "",
+            "Line1": "",
+            "Line2": "",
+            "Line3": "",
+            "Line4": "",
+            "Size": 5,
+            "type": "Choice"
+        },
+        "Node3": {
+            "Size": 5,
+            "type": "Mux"
+        },
+        "Node4": {
+            "Line0": "",
+            "Size": 1,
+            "type": "Speech"
+        },
+        "Node5": {
+            "Line0": "",
+            "type": "Condition"
+        }
+    },
+    "sc": {
+        "Node0": {
+            "0": {
+                "to": "Node1",
+                "to_slot": 0
+            }
+        },
+        "Node1": {
+            "0": {
+                "to": "Node2",
+                "to_slot": 0
+            }
+        },
+        "Node4": {
+            "0": {
+                "to": "Node2",
+                "to_slot": 0
+            }
+        }
+    }
+}

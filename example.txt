@@ -1,0 +1,25 @@
+
+
+[node]
+
+<AshTalk>
+Hmmm... this doesn't look right
+Activate optical systems
+
+... oof, my head. I should run diagnostics
+
+<AshDiagnostics>
+COMMAND: DIAGNOSTICS
+TARGET: SELF
+
+<AshDiagnostics>
+running DIAGNOSTICS on TARGET
+Identification: ASH
+Software Version 22500524X9PL
+
+<AshDiagnostics>
+hardware ID: Unknown
+Current Location: Isometropolis  x.31512822 y.12839012 z.50238452
+
+<AshTalk>
+Hmmm.. that's not helpful. I should look around

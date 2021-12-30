@@ -1,0 +1,150 @@
+[gd_scene format=2]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0, 0, 0, 0.498039 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="CenterContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PanelContainer" type="PanelContainer" parent="Control"]
+margin_top = 58.0
+margin_right = 348.0
+margin_bottom = 581.0
+rect_min_size = Vector2( 300, 200 )
+rect_clip_content = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Contents" type="VBoxContainer" parent="Control/PanelContainer"]
+margin_left = 14.0
+margin_top = 14.0
+margin_right = 334.0
+margin_bottom = 509.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TargetNodeInput" type="VBoxContainer" parent="Control/PanelContainer/Contents"]
+margin_right = 320.0
+margin_bottom = 78.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Control/PanelContainer/Contents/TargetNodeInput"]
+margin_right = 320.0
+margin_bottom = 25.0
+text = "Target Node:"
+
+[node name="InputDivider" type="HBoxContainer" parent="Control/PanelContainer/Contents/TargetNodeInput"]
+margin_top = 33.0
+margin_right = 320.0
+margin_bottom = 78.0
+size_flags_horizontal = 3
+
+[node name="TextureRect" type="TextureRect" parent="Control/PanelContainer/Contents/TargetNodeInput/InputDivider"]
+margin_right = 32.0
+margin_bottom = 45.0
+rect_min_size = Vector2( 32, 32 )
+size_flags_vertical = 3
+stretch_mode = 6
+
+[node name="LineEdit" type="LineEdit" parent="Control/PanelContainer/Contents/TargetNodeInput/InputDivider"]
+margin_left = 40.0
+margin_right = 320.0
+margin_bottom = 45.0
+size_flags_horizontal = 3
+editable = false
+placeholder_text = "Select a node before running Iconify"
+caret_blink = true
+caret_blink_speed = 0.5
+
+[node name="TargetPropertyInput" type="VBoxContainer" parent="Control/PanelContainer/Contents"]
+margin_top = 86.0
+margin_right = 320.0
+margin_bottom = 156.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Control/PanelContainer/Contents/TargetPropertyInput"]
+margin_right = 320.0
+margin_bottom = 25.0
+text = "Target Property:"
+
+[node name="OptionButton" type="OptionButton" parent="Control/PanelContainer/Contents/TargetPropertyInput"]
+margin_top = 33.0
+margin_right = 320.0
+margin_bottom = 70.0
+
+[node name="IconInput" type="VBoxContainer" parent="Control/PanelContainer/Contents"]
+margin_top = 164.0
+margin_right = 320.0
+margin_bottom = 450.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Control/PanelContainer/Contents/IconInput"]
+margin_right = 320.0
+margin_bottom = 25.0
+text = "Icon:"
+
+[node name="InputDivider" type="HBoxContainer" parent="Control/PanelContainer/Contents/IconInput"]
+margin_top = 33.0
+margin_right = 320.0
+margin_bottom = 78.0
+
+[node name="TextureRect" type="TextureRect" parent="Control/PanelContainer/Contents/IconInput/InputDivider"]
+margin_right = 32.0
+margin_bottom = 45.0
+rect_min_size = Vector2( 32, 32 )
+size_flags_vertical = 3
+stretch_mode = 6
+
+[node name="LineEdit" type="LineEdit" parent="Control/PanelContainer/Contents/IconInput/InputDivider"]
+margin_left = 40.0
+margin_right = 320.0
+margin_bottom = 45.0
+size_flags_horizontal = 3
+caret_blink = true
+caret_blink_speed = 0.5
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Control/PanelContainer/Contents/IconInput"]
+margin_top = 86.0
+margin_right = 320.0
+margin_bottom = 286.0
+rect_min_size = Vector2( 320, 200 )
+scroll_horizontal_enabled = false
+
+[node name="IconGrid" type="GridContainer" parent="Control/PanelContainer/Contents/IconInput/ScrollContainer"]
+margin_bottom = 200.0
+rect_min_size = Vector2( 0, 200 )
+columns = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/Contents"]
+margin_top = 458.0
+margin_right = 320.0
+margin_bottom = 495.0
+
+[node name="Cancel" type="Button" parent="Control/PanelContainer/Contents/HBoxContainer"]
+margin_right = 95.0
+margin_bottom = 37.0
+text = "Cancel"
+
+[node name="Apply" type="Button" parent="Control/PanelContainer/Contents/HBoxContainer"]
+margin_left = 103.0
+margin_right = 320.0
+margin_bottom = 37.0
+size_flags_horizontal = 3
+text = "Apply"

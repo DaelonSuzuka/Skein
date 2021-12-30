@@ -3,9 +3,17 @@ extends GraphNode
 
 # ******************************************************************************
 
+enum {
+	DIALOG,
+	COMMENT,
+	ENTRY,
+	EXIT,
+	JUMP,
+}
+
 var data := {
 	id = 0,
-	type = '',
+	type = DIALOG,
 	name = '',
 	text = '',
 	rect_size = {x = 0, y = 0},
@@ -29,30 +37,36 @@ var slot_colors := [
 
 func _ready():
 	update_title()
-	# $Body/Editor.visible = false
-	# $Body/TextEdit.visible = true
-	$Body/Toolbar/Choices.connect('value_changed', self, 'slots_changed')
-	# $Body/Toolbar/Edit.connect('pressed', self, 'toggle_editing')
+	$Body/Toolbar/Close.connect('pressed', self, 'emit_signal', ['close_request'])
+	$Body/Text/Toolbar/Choices.connect('value_changed', self, 'slots_changed')
 	connect('resize_request', self, 'resize_request')
 
 func resize_request(new_minsize):
 	rect_size = new_minsize
+
+# ******************************************************************************
 
 func set_id(id):
 	data.id = id
 	update_title()
 	name = str(id)
 
+func update_title():
+	$Body/Toolbar/Id.text = str(data.id) + " | "
+	$Body/Toolbar/Title.text = data.name
+
 func get_data():
-	data.text = $Body/TextEdit.text
+	data.text = $Body/Text/TextEdit.text
 	data.offset.x = offset.x
 	data.offset.y = offset.y
 	data.rect_size.x = rect_size.x
 	data.rect_size.y = rect_size.y
+	data.name = $Body/Toolbar/Title.text
 	return data
 
 func set_data(new_data):
-	$Body/TextEdit.text = new_data.text
+	$Body/Text/TextEdit.text = new_data.text
+	$Body/Toolbar/Title.text = new_data.name
 	offset.x = new_data.offset.x
 	offset.y = new_data.offset.y
 	if 'rect_size' in new_data:
@@ -63,10 +77,10 @@ func set_data(new_data):
 	data.name = new_data.name
 	return self
 
-# func toggle_editing():
-# 	editing = !editing
-# 	$Body/Editor.visible = editing
-# 	$Body/TextEdit.visible = !editing
+# ******************************************************************************
+
+func add_choice():
+	pass
 
 func slots_changed(number):
 	if number == data.number_of_slots:
@@ -84,15 +98,11 @@ func slots_changed(number):
 		data.number_of_slots -= 1
 		remove_slot(data.number_of_slots)
 		choices.pop_back().queue_free()
-		# rect_size = Vector2(10, 10)
 
-	$Body/Toolbar/Choices.value = number
+	$Body/Text/Toolbar/Choices.value = number
 
 func add_slot(index):
 	set_slot(index, false, 0, Color.white, true, 0, slot_colors[index - 1])
 
 func remove_slot(index):
 	set_slot(index + 1, false, 0, Color.white, false, 0, Color.white)
-
-func update_title():
-	self.title = str(data.id) + " | " + data.name
