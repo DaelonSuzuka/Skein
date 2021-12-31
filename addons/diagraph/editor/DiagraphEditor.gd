@@ -56,7 +56,7 @@ func trace():
 		if 'entry' in node.data and node.data.entry:
 			walk_tree(tree, node)
 			$DialogBox.show()
-			$DialogBox.connect('done', $HSplit, 'show')
+			$DialogBox.connect('done', $HSplit, 'show', [], CONNECT_ONESHOT)
 			$HSplit.hide()
 			$DialogBox.start(nodes, node.name)
 
