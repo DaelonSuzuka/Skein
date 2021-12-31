@@ -9,10 +9,30 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Resource",
+"class": "Character",
+"language": "GDScript",
+"path": "res://addons/textalog/resources/character_class/character_class.gd"
+}, {
 "base": "Reference",
 "class": "DTS",
 "language": "GDScript",
 "path": "res://addons/dialogic/Localization/translation_service.gd"
+}, {
+"base": "DialogNode",
+"class": "DialogBubble",
+"language": "GDScript",
+"path": "res://addons/textalog/nodes/dialogue_bubble_node/dialog_bubble.gd"
+}, {
+"base": "Container",
+"class": "DialogManager",
+"language": "GDScript",
+"path": "res://addons/textalog/nodes/dialogue_base_node/dialog_node/dialog_node.gd"
+}, {
+"base": "Control",
+"class": "DialogNode",
+"language": "GDScript",
+"path": "res://addons/textalog/nodes/dialogue_base_node/dialogue_base_node.gd"
 }, {
 "base": "Node",
 "class": "Dialogic",
@@ -38,14 +58,36 @@ _global_script_classes=[ {
 "class": "DialogicUtil",
 "language": "GDScript",
 "path": "res://addons/dialogic/Other/DialogicUtil.gd"
+}, {
+"base": "Container",
+"class": "OptionsManager",
+"language": "GDScript",
+"path": "res://addons/textalog/nodes/dialogue_base_node/options_node/options_node.gd"
+}, {
+"base": "Resource",
+"class": "Portrait",
+"language": "GDScript",
+"path": "res://addons/textalog/resources/portrait_class/portrait_class.gd"
+}, {
+"base": "Control",
+"class": "PortraitManager",
+"language": "GDScript",
+"path": "res://addons/textalog/nodes/dialogue_base_node/portraits_node/portraits_node.gd"
 } ]
 _global_script_class_icons={
+"Character": "res://addons/textalog/assets/icons/character_icon.png",
 "DTS": "",
+"DialogBubble": "",
+"DialogManager": "",
+"DialogNode": "",
 "Dialogic": "",
 "DialogicBackgroundMusic": "",
 "DialogicDefinitionsUtil": "",
 "DialogicResources": "",
-"DialogicUtil": ""
+"DialogicUtil": "",
+"OptionsManager": "",
+"Portrait": "res://addons/textalog/assets/icons/portrait_icon.png",
+"PortraitManager": ""
 }
 
 [application]
