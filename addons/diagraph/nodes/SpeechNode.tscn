@@ -37,25 +37,25 @@ slot/0/right_enabled = true
 slot/1/left_enabled = false
 slot/1/left_type = 0
 slot/1/left_color = Color( 1, 1, 1, 1 )
-slot/1/right_enabled = true
+slot/1/right_enabled = false
 slot/1/right_type = 0
 slot/1/right_color = Color( 0, 1, 1, 1 )
 slot/2/left_enabled = false
 slot/2/left_type = 0
 slot/2/left_color = Color( 1, 1, 1, 1 )
-slot/2/right_enabled = true
+slot/2/right_enabled = false
 slot/2/right_type = 0
 slot/2/right_color = Color( 1, 0.27, 0, 1 )
 slot/3/left_enabled = false
 slot/3/left_type = 0
 slot/3/left_color = Color( 1, 1, 1, 1 )
-slot/3/right_enabled = true
+slot/3/right_enabled = false
 slot/3/right_type = 0
 slot/3/right_color = Color( 0, 1, 0, 1 )
 slot/4/left_enabled = false
 slot/4/left_type = 0
 slot/4/left_color = Color( 1, 1, 1, 1 )
-slot/4/right_enabled = true
+slot/4/right_enabled = false
 slot/4/right_type = 0
 slot/4/right_color = Color( 1, 1, 0, 1 )
 slot/5/left_enabled = false
@@ -106,6 +106,7 @@ __meta__ = {
 }
 
 [node name="ChoiceTitles" type="HBoxContainer" parent="Body/Text" index="1"]
+visible = false
 margin_top = 198.0
 margin_right = 378.0
 margin_bottom = 229.0
@@ -130,6 +131,7 @@ margin_bottom = 31.0
 rect_min_size = Vector2( 28, 0 )
 
 [node name="Choice1" type="HBoxContainer" parent="." index="1"]
+visible = false
 margin_left = 11.0
 margin_top = 260.0
 margin_right = 389.0
@@ -162,6 +164,7 @@ icon = SubResource( 7 )
 items = [ "Add Choice", null, 0, false, false, 0, 0, null, "", false, "test2", null, 0, false, false, 1, 0, null, "", false ]
 
 [node name="Choice2" type="HBoxContainer" parent="." index="2"]
+visible = false
 margin_left = 11.0
 margin_top = 295.0
 margin_right = 389.0
@@ -194,6 +197,7 @@ icon = SubResource( 7 )
 items = [ "Add Choice", null, 0, false, false, 0, 0, null, "", false, "test2", null, 0, false, false, 1, 0, null, "", false ]
 
 [node name="Choice3" type="HBoxContainer" parent="." index="3"]
+visible = false
 margin_left = 11.0
 margin_top = 330.0
 margin_right = 389.0
@@ -226,6 +230,7 @@ icon = SubResource( 7 )
 items = [ "Add Choice", null, 0, false, false, 0, 0, null, "", false, "test2", null, 0, false, false, 1, 0, null, "", false ]
 
 [node name="Choice4" type="HBoxContainer" parent="." index="4"]
+visible = false
 margin_left = 11.0
 margin_top = 365.0
 margin_right = 389.0

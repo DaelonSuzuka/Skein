@@ -35,21 +35,30 @@ func new_node_requested(type):
 
 # ******************************************************************************
 
+var nodes = {}
+
 func walk_tree(tree, node):
 	tree[node.name] = {}
+	if !nodes.has(node):
+		nodes[node.name] = node
+		
 	for con in node.data.connections:
 		walk_tree(tree[node.name], GraphEdit.nodes[con])
 
 func trace():
-	print('tracing')
+	# print('tracing')
 
+	nodes.clear()
 	var tree = {}
 	var selection = GraphEdit.get_selected_nodes()
 	if selection.size() == 1:
 		var node = selection[0]
 		if 'entry' in node.data and node.data.entry:
 			walk_tree(tree, node)
-			print('found entry ', tree)
+			$DialogBox.show()
+			$DialogBox.connect('done', $HSplit, 'show')
+			$HSplit.hide()
+			$DialogBox.start(nodes, node.name)
 
 # ******************************************************************************
 

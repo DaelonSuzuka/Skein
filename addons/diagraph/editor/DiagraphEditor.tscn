@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://addons/diagraph/editor/GraphEdit.gd" type="Script" id=1]
 [ext_resource path="res://addons/diagraph/resources/theme.tres" type="Theme" id=2]
 [ext_resource path="res://addons/diagraph/editor/ContextMenu.tscn" type="PackedScene" id=3]
 [ext_resource path="res://addons/diagraph/editor/DiagraphEditor.gd" type="Script" id=4]
+[ext_resource path="res://addons/diagraph/DialogBox.tscn" type="PackedScene" id=5]
 
 [sub_resource type="StyleBoxEmpty" id=2]
 
@@ -24,6 +25,7 @@ margin_left = 2.0
 margin_top = 2.0
 margin_right = -2.0
 margin_bottom = -2.0
+mouse_filter = 1
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource( 2 )
@@ -177,3 +179,6 @@ dialog_text = "Really clear all nodes?"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="DialogBox" parent="." instance=ExtResource( 5 )]
+visible = false

@@ -28,7 +28,7 @@ func _ready():
 
 func clear() -> void:
 	clear_connections()
-	for node in nodes:
+	for node in nodes.values():
 		node.queue_free()
 	nodes.clear()
 	used_ids.clear()
@@ -100,9 +100,15 @@ func on_connection_from_empty(to, to_slot, release_position) -> void:
 	request_connection(node.name, 0, to, to_slot)
 
 func on_connection_to_empty(from, from_slot, release_position) -> void:
-	var node = create_node()
-	node.offset = release_position + scroll_offset - Vector2(0,0.8 * node.rect_size.y)
-	node.offset = node.offset.snapped(Vector2(get_snap(), get_snap()))
+	var data = {
+		type = 'speech',
+		offset = get_offset_from_mouse()
+	}
+	if use_snap:
+		var snap = snap_distance
+		data.offset = data.offset.snapped(Vector2(snap, snap))
+	var node = create_node(data)
+	
 	if !request_connection(from, from_slot, node.name, 0):
 		delete_node(node)
 

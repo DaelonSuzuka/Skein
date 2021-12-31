@@ -37,6 +37,8 @@ func set_id(id):
 func update_title():
 	$Body/Toolbar/Title.text = data.name
 
+# ******************************************************************************
+
 func get_data():
 	data.offset.x = offset.x
 	data.offset.y = offset.y
@@ -49,7 +51,10 @@ func set_data(new_data):
 	if 'type' in new_data:
 		data.type = new_data.type
 	if 'connections' in new_data:
-		data.connections = new_data.connections
+		for con in new_data.connections:
+			data.connections[con] = []
+			data.connections[con].append(int(new_data.connections[con][0]))
+			data.connections[con].append(int(new_data.connections[con][1]))
 	if 'id' in new_data:
 		set_id(new_data.id)
 	if 'name' in new_data:
@@ -62,3 +67,8 @@ func set_data(new_data):
 		rect_size.x = new_data.rect_size.x
 		rect_size.y = new_data.rect_size.y
 	return self
+
+# ******************************************************************************
+
+func parse():
+	return {}

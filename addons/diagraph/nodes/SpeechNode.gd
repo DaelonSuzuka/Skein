@@ -86,6 +86,31 @@ func set_data(new_data):
 			
 	.set_data(new_data)
 
+func parse():
+	var result = {
+		text = TextEdit.text.split('\n'),
+		next = 'none'
+	}
+
+	var connections = {}
+	for to in data.connections:
+		var num = str(data.connections[to][0] + 1)
+		connections[num] = to
+
+	if data['show_choices']:
+		result.next = 'choice'
+		result['choices'] = {}
+
+		for c in choices:
+			var d = c.get_data()
+			d['next'] = connections[c.name[6]]
+			result['choices'][c.name] = d
+	else:
+		if 0 in connections:
+			result.next = connections[0]
+
+	return result
+
 # ******************************************************************************
 
 # func _input(event):
