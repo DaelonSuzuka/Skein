@@ -36,7 +36,6 @@ func start(new_nodes, first):
 	current_node = first
 	current_index = 0
 	current_data = nodes[current_node].parse()
-	print(current_data)
 	next()
 
 func next():
@@ -54,16 +53,12 @@ func next():
 			return
 		current_node = current_data.next
 		current_data = nodes[current_node].parse()
-		print(current_data)
 		current_index = 0
 
 	$TextBox/RichTextLabel.text = current_data.text[current_index]
 	current_index += 1
 
 func pressed(choice):
-	print(choice)
-	# current_data.choices[choice].
-	
 	current_node = current_data.choices[choice].next
 	current_index = 0
 	current_data = nodes[current_node].parse()
