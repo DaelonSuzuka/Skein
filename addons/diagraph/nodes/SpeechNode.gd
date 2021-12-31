@@ -106,8 +106,8 @@ func parse():
 			d['next'] = connections[c.name[6]]
 			result['choices'][c.name] = d
 	else:
-		if 0 in connections:
-			result.next = connections[0]
+		if '1' in connections:
+			result.next = connections['1']
 
 	return result
 
