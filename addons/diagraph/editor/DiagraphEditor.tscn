@@ -76,6 +76,7 @@ __meta__ = {
 }
 
 [node name="SelectChapter" type="MenuButton" parent="Toolbar"]
+visible = false
 margin_right = 150.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 150, 0 )
@@ -90,29 +91,36 @@ align = 0
 items = [ "Chapter 1", null, 0, false, false, 0, 0, null, "", false, "Chapter 2", null, 0, false, false, 1, 0, null, "", false ]
 
 [node name="New" type="Button" parent="Toolbar"]
-margin_left = 154.0
-margin_right = 200.0
+margin_right = 46.0
 margin_bottom = 32.0
 text = "New"
 flat = true
 
 [node name="Save" type="Button" parent="Toolbar"]
-margin_left = 204.0
-margin_right = 251.0
+margin_left = 50.0
+margin_right = 97.0
 margin_bottom = 32.0
 text = "Save"
 flat = true
 
 [node name="Clear" type="Button" parent="Toolbar"]
-margin_left = 255.0
-margin_right = 306.0
+margin_left = 101.0
+margin_right = 152.0
 margin_bottom = 32.0
 text = "Clear"
 flat = true
 
+[node name="Trace" type="Button" parent="Toolbar"]
+margin_left = 156.0
+margin_right = 210.0
+margin_bottom = 32.0
+text = "Trace"
+flat = true
+
 [node name="Options" type="MenuButton" parent="Toolbar"]
-margin_left = 310.0
-margin_right = 371.0
+visible = false
+margin_left = 222.0
+margin_right = 283.0
 margin_bottom = 32.0
 focus_mode = 2
 custom_styles/hover = SubResource( 2 )

@@ -12,6 +12,7 @@ func _ready():
 	$Toolbar/Clear.connect('pressed', $ConfirmClear, 'popup')
 	$ConfirmClear.connect('confirmed', GraphEdit, 'clear')
 	$Toolbar/Save.connect('pressed', self, 'save_data')
+	$Toolbar/Trace.connect('pressed', self, 'trace')
 	$ContextMenu.connect('create_node', self, 'new_node_requested')
 
 	if !Engine.editor_hint:
@@ -19,6 +20,7 @@ func _ready():
 
 func _input(event):
 	if event is InputEventMouseButton and event.button_index == 2 and event.pressed:
+		# accept_event()
 		$ContextMenu.show_context_menu(event)
 
 func new_node_requested(type):
@@ -33,12 +35,30 @@ func new_node_requested(type):
 
 # ******************************************************************************
 
+func walk_tree(tree, node):
+	tree[node.name] = {}
+	for con in node.data.connections:
+		walk_tree(tree[node.name], GraphEdit.nodes[con])
+
+func trace():
+	print('tracing')
+
+	var tree = {}
+	var selection = GraphEdit.get_selected_nodes()
+	if selection.size() == 1:
+		var node = selection[0]
+		if 'entry' in node.data and node.data.entry:
+			walk_tree(tree, node)
+			print('found entry ', tree)
+
+# ******************************************************************************
+
 var file_name = 'res://data.json'
 
 func save_data():
+	print('saving')
 	var data = {
 		nodes = {},
-		connections = GraphEdit.connections,
 		scroll_offset = {
 			x = GraphEdit.scroll_offset.x,
 			y = GraphEdit.scroll_offset.y,
@@ -49,7 +69,7 @@ func save_data():
 			step = GraphEdit.snap_distance,
 		}
 	}
-	for node in GraphEdit.nodes:
+	for node in GraphEdit.nodes.values():
 		data.nodes[node.data.id] = node.get_data()
 
 	save_json(data)
@@ -59,8 +79,10 @@ func load_data():
 	if data:
 		for id in data.nodes:
 			GraphEdit.create_node(data.nodes[id])
-		for con in data.connections:
-			GraphEdit.request_connection(con[0], con[1], con[2], con[3])
+		for node in GraphEdit.nodes.values():
+			for to in node.data.connections:
+				var con = node.data.connections[to]
+				GraphEdit.request_connection(node.name, con[0], to, con[1])
 		if 'scroll_offset' in data:
 			GraphEdit.scroll_offset.x = data.scroll_offset.x
 			GraphEdit.scroll_offset.y = data.scroll_offset.y

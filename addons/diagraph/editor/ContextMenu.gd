@@ -2,6 +2,16 @@ extends PopupMenu
 
 # ******************************************************************************
 
+var node_types = [
+	'Entry',
+	'Exit',
+	'Speech',
+	'Branch',
+	'Jump',
+]
+
+# ******************************************************************************
+
 func _ready():
 	connect('index_pressed', self, 'context_menu_item_pressed')
 
@@ -21,10 +31,8 @@ func show_context_menu(event):
 	rect_size.y = 0
 
 	add_separator('New Node:')
-	add_item('Entry')
-	add_item('Exit')
-	add_item('Speech')
-	add_item('Jump')
+	for type in node_types:
+		add_item(type)
 
 	rect_position = event.position + Vector2(6, 6)
 	context_menu_active = true
@@ -35,5 +43,5 @@ func context_menu_item_pressed(index):
 		context_menu_active = false
 		var item = get_item_text(index)
 		
-		if item in ['Entry', 'Exit', 'Speech', 'Choice', 'Jump']:
+		if item in node_types:
 			emit_signal('create_node', item.to_lower())

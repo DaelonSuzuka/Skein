@@ -9,6 +9,7 @@ var data := {
 	name = '',
 	rect_size = {x = 0, y = 0},
 	offset = {x = 0, y = 0},
+	connections = {}
 }
 
 onready var Edit = $Body/Toolbar/Edit
@@ -47,6 +48,8 @@ func get_data():
 func set_data(new_data):
 	if 'type' in new_data:
 		data.type = new_data.type
+	if 'connections' in new_data:
+		data.connections = new_data.connections
 	if 'id' in new_data:
 		set_id(new_data.id)
 	if 'name' in new_data:

@@ -1,65 +1,142 @@
 {
 	"nodes": {
-		"1": {
-			"id": 1,
-			"type": "entry",
-			"name": "Entry",
-			"rect_size": {
-				"x": 200,
-				"y": 100
-			},
-			"offset": {
-				"x": 200,
-				"y": -100
-			}
-		},
-		"2": {
-			"id": 2,
+		"3161026589": {
+			"id": 3161026589,
 			"type": "speech",
 			"name": "Speech",
 			"rect_size": {
-				"x": 400,
-				"y": 300
+				"x": 400.000305,
+				"y": 399.999847
 			},
 			"offset": {
-				"x": 510,
-				"y": -130
+				"x": -110,
+				"y": 140
 			},
-			"text": "You see some energy tanks down below. You can almost reach down and touch them! \nWait, there's something shiny near them that IS in reach..."
+			"connections": {
+				"4204663500": [
+					0,
+					0
+				]
+			},
+			"show_choices": false,
+			"choices": {
+				"Choice1": {
+					"choice": "",
+					"condition": ""
+				},
+				"Choice2": {
+					"choice": "",
+					"condition": ""
+				},
+				"Choice3": {
+					"choice": "",
+					"condition": ""
+				},
+				"Choice4": {
+					"choice": "",
+					"condition": ""
+				}
+			},
+			"entry": true,
+			"text": ""
 		},
-		"4": {
-			"id": 4,
-			"type": "exit",
-			"name": "Entry",
+		"2668139190": {
+			"id": 2668139190,
+			"type": "speech",
+			"name": "Speech",
 			"rect_size": {
-				"x": 200,
+				"x": 400.000092,
+				"y": 399.999939
+			},
+			"offset": {
+				"x": -40,
+				"y": -290
+			},
+			"connections": [
+
+			],
+			"show_choices": true,
+			"choices": {
+				"Choice1": {
+					"choice": "test",
+					"condition": ""
+				},
+				"Choice2": {
+					"choice": "test2",
+					"condition": ""
+				},
+				"Choice3": {
+					"choice": "",
+					"condition": ""
+				},
+				"Choice4": {
+					"choice": "",
+					"condition": ""
+				}
+			},
+			"entry": false,
+			"text": "\n"
+		},
+		"4134715227": {
+			"id": 4134715227,
+			"type": "branch",
+			"name": "Branch",
+			"rect_size": {
+				"x": 400.000275,
+				"y": 250.000061
+			},
+			"offset": {
+				"x": -650,
+				"y": -160
+			},
+			"connections": {
+				"2668139190": [
+					0,
+					0
+				],
+				"3161026589": [
+					1,
+					0
+				]
+			},
+			"branches": {
+				"Branch1": {
+					"condition": "1"
+				},
+				"Branch2": {
+					"condition": "11241"
+				},
+				"Branch3": {
+					"condition": "wdgdswg"
+				},
+				"Branch4": {
+					"condition": "sddgsdSg"
+				}
+			},
+			"entry": true
+		},
+		"4204663500": {
+			"id": 4204663500,
+			"type": "exit",
+			"name": "Exit",
+			"rect_size": {
+				"x": 200.000183,
 				"y": 100
 			},
 			"offset": {
-				"x": 1120,
-				"y": -180
+				"x": 470,
+				"y": 300
+			},
+			"connections": {
+
 			}
 		}
 	},
-	"connections": [
-		[
-			"1",
-			0,
-			"2",
-			0
-		],
-		[
-			"2",
-			0,
-			"4",
-			0
-		]
-	],
 	"scroll_offset": {
-		"x": 477,
-		"y": -416.25
+		"x": -508.953461,
+		"y": -297.667938
 	},
-	"zoom": 1,
+	"zoom": 0.466507,
 	"snap": {
 		"on": true,
 		"step": 10

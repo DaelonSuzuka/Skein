@@ -8,7 +8,7 @@ slot/0/left_enabled = true
 script = ExtResource( 1 )
 
 [node name="Title" parent="Body/Toolbar" index="1"]
-text = "Entry"
+text = "Exit"
 
 [node name="Control" type="Control" parent="Body" index="1"]
 anchor_right = 1.0

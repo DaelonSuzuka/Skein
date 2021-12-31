@@ -3,5 +3,5 @@ extends 'BaseNode.gd'
 
 # ******************************************************************************
 
-# func _ready():
-# 	data.type = 'conversation'
+func _ready():
+	data['entry'] = true

@@ -7,11 +7,11 @@ onready var node_types = {
 	'entry': load('res://addons/diagraph/nodes/EntryNode.tscn'),
 	'exit': load('res://addons/diagraph/nodes/ExitNode.tscn'),
 	'speech': load('res://addons/diagraph/nodes/SpeechNode.tscn'),
+	'branch': load('res://addons/diagraph/nodes/BranchNode.tscn'),
 	'jump': load('res://addons/diagraph/nodes/JumpNode.tscn'),
 }
 
-var connections = []
-var nodes = []
+var nodes = {}
 
 # ******************************************************************************
 
@@ -28,12 +28,21 @@ func _ready():
 
 func clear() -> void:
 	clear_connections()
-	connections.clear()
 	for node in nodes:
 		node.queue_free()
 	nodes.clear()
+	used_ids.clear()
 
 # ******************************************************************************
+
+var used_ids = []
+
+func get_id():
+	var id = randi()
+	if id in used_ids:
+		id = get_id()
+	used_ids.append(id)
+	return id
 
 func create_node(data=null) -> Node:
 	var node
@@ -41,21 +50,23 @@ func create_node(data=null) -> Node:
 		node = node_types[data.type].instance()
 	else:
 		node = node_types['speech'].instance()
-		node.set_id(nodes.size() + 1)
+		node.set_id(get_id())
 	node.connect('close_request', self, 'delete_node', [node])
 	add_child(node)
 	if data:
-		if !('id' in data):
-			data.id = nodes.size() + 1
+		if 'id' in data:
+			used_ids.append(data.id)
+		else:
+			data.id = get_id()
 		node.set_data(data)
-	nodes.append(node)
+	nodes[str(node.data.id)] = node
 	return node
 	
 func delete_node(node) -> void:
 	for con in get_connection_list():
 		if con["from"] == node.name or con["to"] == node.name:
 			request_disconnection(con["from"], con["from_port"], con["to"], con["to_port"])
-	nodes.erase(node)
+	nodes.erase(node.data.id)
 	node.queue_free()
 
 # ******************************************************************************
@@ -67,18 +78,25 @@ func request_connection(from, from_slot, to, to_slot) -> bool:
 				return false
 	if !has_node(from):
 		return false
-	connections.push_back([from, from_slot, to, to_slot])
+		
+	nodes[from].data.connections[to] = [from_slot, to_slot]
 	connect_node(from, from_slot, to, to_slot)
 	return true
 
 func request_disconnection(from, from_slot, to, to_slot) -> void:
 	disconnect_node(from, from_slot, to, to_slot)
-	connections.erase([from, from_slot, to, to_slot])
+	nodes[from].data.connections.erase(to)
 
 func on_connection_from_empty(to, to_slot, release_position) -> void:
-	var node = create_node()
-	node.offset = release_position + scroll_offset - Vector2(node.rect_size.x, 0.8 * node.rect_size.y)
-	node.offset = node.offset.snapped(Vector2(get_snap(), get_snap()))
+	var data = {
+		type = 'speech',
+		offset = get_offset_from_mouse()
+	}
+	if use_snap:
+		var snap = snap_distance
+		data.offset = data.offset.snapped(Vector2(snap, snap))
+	var node = create_node(data)
+
 	request_connection(node.name, 0, to, to_slot)
 
 func on_connection_to_empty(from, from_slot, release_position) -> void:
@@ -110,8 +128,7 @@ func paste_nodes_request() -> void:
 	var new_nodes = []
 	var center = Vector2(0, 0)
 	for data in copy_data:
-		var node = create_node()
-		node.set_data(data)
+		var node = create_node(data)
 		new_nodes.append(node)
 		center += node.offset
 	center /= new_nodes.size()

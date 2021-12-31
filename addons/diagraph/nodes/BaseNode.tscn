@@ -58,7 +58,7 @@ slot/0/left_type = 0
 slot/0/left_color = Color( 1, 1, 1, 1 )
 slot/0/right_enabled = false
 slot/0/right_type = 0
-slot/0/right_color = Color( 0, 0, 1, 1 )
+slot/0/right_color = Color( 0, 0.6, 1, 1 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": true
