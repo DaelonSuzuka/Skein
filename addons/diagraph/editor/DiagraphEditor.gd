@@ -5,30 +5,36 @@ extends Control
 
 onready var GraphEdit: GraphEdit = find_node('GraphEdit')
 onready var Toolbar = $Toolbar
-onready var DialogBox = $DialogBox
+onready var DialogBox = $Preview/DialogBox
 
 var is_plugin = false
 
 # ******************************************************************************
 
 func _ready():
-	$Toolbar/New.connect('pressed', GraphEdit, 'create_node')
+	$Toolbar/New.connect('pressed', self, 'create_conversation')
 	$Toolbar/Clear.connect('pressed', $ConfirmClear, 'popup')
 	$ConfirmClear.connect('confirmed', GraphEdit, 'clear')
 	$Toolbar/Save.connect('pressed', self, 'save_data')
 	$Toolbar/Run.connect('pressed', self, 'run')
-	$StopButton.connect('pressed', self, 'stop')
+	$Preview/Stop.connect('pressed', self, 'stop')
+	$Preview/Debug.connect('toggled', $Preview/DialogBox/DebugLog, 'set_visible')
 	DialogBox.connect('done', self, 'stop')
 
-	$DialogBox.hide()
-	$StopButton.hide()
-	$Dimmer.hide()
+	$Preview/DialogBox.show()
+	$Preview/Stop.show()
+	$Preview/Debug.show()
+	$Preview/Dimmer.show()
+	$Preview.hide()
 
 	if !Engine.editor_hint or is_plugin:
 		load_data()
 
 		remove_child(Toolbar)
 		GraphEdit.get_zoom_hbox().add_child(Toolbar)
+
+func create_conversation():
+	$FileDialog.popup()
 
 # ******************************************************************************
 
@@ -50,15 +56,11 @@ func run():
 		var node = selection[0]
 		if 'entry' in node.data and node.data.entry:
 			walk_tree(tree, node)
-			DialogBox.show()
-			$Dimmer.show()
-			$StopButton.show()
+			$Preview.show()
 			DialogBox.start(nodes, node.name)
 	
 func stop():
-	$DialogBox.hide()
-	$StopButton.hide()
-	$Dimmer.hide()
+	$Preview.hide()
 
 # ******************************************************************************
 
