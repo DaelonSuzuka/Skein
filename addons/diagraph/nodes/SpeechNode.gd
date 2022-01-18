@@ -103,7 +103,8 @@ func parse():
 
 		for c in choices:
 			var d = c.get_data()
-			d['next'] = connections[c.name[6]]
+			if c.name[6] in connections:
+				d['next'] = connections[c.name[6]]
 			result['choices'][c.name] = d
 	else:
 		if '1' in connections:
