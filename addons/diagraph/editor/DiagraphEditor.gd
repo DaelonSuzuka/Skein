@@ -30,6 +30,14 @@ func _input(event):
 	if event.button_index == 2:
 		$ContextMenu.show_context_menu(event)
 
+	# Scroll wheel up/down to zoom
+	if event.button_index == BUTTON_WHEEL_DOWN:
+		GraphEdit.do_zoom_scroll(-1)
+		accept_event()
+	elif event.button_index == BUTTON_WHEEL_UP:
+		GraphEdit.do_zoom_scroll(1)
+		accept_event()
+
 func new_node_requested(type):
 	var data = {
 		type = type,
