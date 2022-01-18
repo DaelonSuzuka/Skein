@@ -1,6 +1,5 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=10 format=2]
 
-[ext_resource path="res://addons/diagraph/dialog_box/TextBox.gd" type="Script" id=2]
 [ext_resource path="res://addons/diagraph/dialog_box/DialogBox.gd" type="Script" id=3]
 
 [sub_resource type="StyleBoxEmpty" id=6]
@@ -23,10 +22,6 @@ anti_aliasing = false
 
 [sub_resource type="StyleBoxEmpty" id=5]
 
-[sub_resource type="StyleBoxFlat" id=2]
-bg_color = Color( 0, 0, 0, 0.74902 )
-corner_detail = 1
-
 [sub_resource type="StyleBoxFlat" id=10]
 bg_color = Color( 1, 1, 1, 1 )
 corner_radius_top_right = 25
@@ -38,6 +33,19 @@ anti_aliasing = false
 bg_color = Color( 0, 0, 0, 1 )
 corner_radius_top_right = 25
 corner_radius_bottom_left = 25
+corner_detail = 1
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id=2]
+content_margin_left = 4.0
+content_margin_right = 4.0
+content_margin_top = 4.0
+content_margin_bottom = 4.0
+bg_color = Color( 0, 0, 0, 0.74902 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
 corner_detail = 1
 anti_aliasing = false
 
@@ -139,22 +147,6 @@ custom_styles/focus = SubResource( 4 )
 custom_styles/normal = SubResource( 5 )
 bbcode_enabled = true
 text = "teastaaegaegas"
-script = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="DebugLog" type="Label" parent="TextBox"]
-visible = false
-margin_left = 438.0
-margin_top = -418.0
-margin_right = 675.0
-margin_bottom = -79.0
-grow_vertical = 0
-custom_styles/normal = SubResource( 2 )
-valign = 2
-clip_text = true
-max_lines_visible = 20
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -187,5 +179,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextTimer" type="Timer" parent="."]
-one_shot = true
+[node name="DebugLog" type="Label" parent="."]
+margin_left = 750.0
+margin_top = -299.0
+margin_right = 987.0
+margin_bottom = 40.0
+grow_vertical = 0
+custom_styles/normal = SubResource( 2 )
+valign = 2
+clip_text = true
+max_lines_visible = 20
+__meta__ = {
+"_edit_use_anchors_": false
+}
