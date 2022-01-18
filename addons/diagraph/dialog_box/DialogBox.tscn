@@ -1,6 +1,5 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=11 format=2]
 
-[ext_resource path="res://addons/diagraph/dialog_box/Options.gd" type="Script" id=1]
 [ext_resource path="res://addons/diagraph/dialog_box/TextBox.gd" type="Script" id=2]
 [ext_resource path="res://addons/diagraph/dialog_box/DialogBox.gd" type="Script" id=3]
 
@@ -43,8 +42,13 @@ corner_detail = 1
 anti_aliasing = false
 
 [node name="DialogBox" type="Control"]
-anchor_right = 1.0
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
 anchor_bottom = 1.0
+margin_left = -512.0
+margin_top = -250.0
+margin_right = 512.0
 mouse_filter = 1
 script = ExtResource( 3 )
 __meta__ = {
@@ -52,11 +56,13 @@ __meta__ = {
 }
 
 [node name="Portrait" type="Control" parent="."]
+anchor_left = 0.5
 anchor_top = 1.0
+anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = 169.0
+margin_left = -343.0
 margin_top = -158.0
-margin_right = 169.0
+margin_right = -343.0
 margin_bottom = -158.0
 mouse_filter = 2
 __meta__ = {
@@ -64,10 +70,14 @@ __meta__ = {
 }
 
 [node name="Name" type="Label" parent="."]
-margin_left = 320.0
-margin_top = 384.0
-margin_right = 462.0
-margin_bottom = 410.0
+anchor_left = 0.442
+anchor_top = 1.0
+anchor_right = 0.442
+anchor_bottom = 1.0
+margin_left = -141.608
+margin_top = -184.0
+margin_right = 0.391968
+margin_bottom = -158.0
 custom_styles/normal = SubResource( 6 )
 text = "test"
 align = 1
@@ -101,19 +111,41 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Options" type="HBoxContainer" parent="."]
+anchor_left = 0.484
+anchor_top = 1.0
+anchor_right = 0.484
+anchor_bottom = 1.0
+margin_left = 0.383972
+margin_top = -190.0
+margin_right = 496.384
+margin_bottom = -153.0
+alignment = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="TextBox" type="RichTextLabel" parent="."]
-margin_left = 320.0
-margin_top = 436.0
-margin_right = 1000.0
-margin_bottom = 535.0
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -200.0
+margin_top = -131.0
+margin_right = 480.0
+margin_bottom = -32.0
 rect_clip_content = false
 custom_styles/focus = SubResource( 4 )
 custom_styles/normal = SubResource( 5 )
 bbcode_enabled = true
 text = "teastaaegaegas"
 script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="DebugLog" type="Label" parent="TextBox"]
+visible = false
 margin_left = 438.0
 margin_top = -418.0
 margin_right = 675.0
@@ -157,16 +189,3 @@ __meta__ = {
 
 [node name="TextTimer" type="Timer" parent="."]
 one_shot = true
-
-[node name="Options" type="HBoxContainer" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 470.0
-margin_top = 375.0
-margin_right = -26.0
-margin_bottom = -178.0
-alignment = 2
-script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
