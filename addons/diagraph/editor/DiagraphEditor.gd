@@ -24,11 +24,11 @@ func _ready():
 	$StopButton.hide()
 	$Dimmer.hide()
 
-	# remove_child(Toolbar)
-	# GraphEdit.get_zoom_hbox().add_child(Toolbar)
-
 	if !Engine.editor_hint or is_plugin:
 		load_data()
+
+		remove_child(Toolbar)
+		GraphEdit.get_zoom_hbox().add_child(Toolbar)
 
 # ******************************************************************************
 
