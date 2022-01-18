@@ -3,6 +3,8 @@ extends GraphEdit
 
 # ******************************************************************************
 
+onready var ContextMenu = preload('res://addons/diagraph/utils/ContextMenu.gd')
+
 onready var node_types = {
 	'entry': load('res://addons/diagraph/nodes/EntryNode.tscn'),
 	'exit': load('res://addons/diagraph/nodes/ExitNode.tscn'),
@@ -24,6 +26,46 @@ func _ready():
 	connect('copy_nodes_request', self, 'copy_nodes_request')
 	connect('delete_nodes_request', self, 'delete_nodes_request')
 	connect('paste_nodes_request', self, 'paste_nodes_request')
+
+var ctx = null
+
+func _input(event: InputEvent) -> void:
+	if !visible or !(event is InputEventMouseButton):
+		return
+	var rect = Rect2(rect_global_position, rect_size)
+	if !rect.has_point(event.global_position):
+		return
+	if !event.pressed:
+		return
+
+	# right click for context menu
+	if event.button_index == 2:
+		if ctx:
+			ctx.queue_free()
+		ctx = ContextMenu.new(self, 'new_node_requested')
+		ctx.add_separator('New Node:')
+		for type in ['Entry', 'Exit', 'Speech', 'Branch', 'Jump']:
+			ctx.add_item(type)
+		ctx.open(event.global_position)
+
+	# Scroll wheel up/down to zoom
+	if event.button_index == BUTTON_WHEEL_DOWN:
+		do_zoom_scroll(-1)
+		accept_event()
+	elif event.button_index == BUTTON_WHEEL_UP:
+		do_zoom_scroll(1)
+		accept_event()
+
+func new_node_requested(type: String) -> void:
+	ctx = null
+	var data = {
+		type = type.to_lower(),
+		offset = get_offset_from_mouse()
+	}
+	if use_snap:
+		var snap = snap_distance
+		data.offset = data.offset.snapped(Vector2(snap, snap))
+	create_node(data)
 
 # ******************************************************************************
 

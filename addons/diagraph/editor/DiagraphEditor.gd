@@ -6,7 +6,6 @@ extends Control
 onready var GraphEdit: GraphEdit = find_node('GraphEdit')
 onready var Toolbar = $Toolbar
 onready var DialogBox = $DialogBox
-onready var ContextMenu = $ContextMenu
 
 var is_plugin = false
 
@@ -18,43 +17,12 @@ func _ready():
 	$ConfirmClear.connect('confirmed', GraphEdit, 'clear')
 	$Toolbar/Save.connect('pressed', self, 'save_data')
 	$Toolbar/Trace.connect('pressed', self, 'trace')
-	ContextMenu.connect('create_node', self, 'new_node_requested')
 
 	# remove_child(Toolbar)
 	# GraphEdit.get_zoom_hbox().add_child(Toolbar)
 
 	if !Engine.editor_hint or is_plugin:
 		load_data()
-
-func _input(event):
-	if !visible or !(event is InputEventMouseButton):
-		return
-	var rect = Rect2(rect_global_position, rect_size)
-	if !rect.has_point(event.global_position):
-		return
-	if !event.pressed:
-		return
-
-	if event.button_index == 2:
-		ContextMenu.show_context_menu(event)
-
-	# Scroll wheel up/down to zoom
-	if event.button_index == BUTTON_WHEEL_DOWN:
-		GraphEdit.do_zoom_scroll(-1)
-		accept_event()
-	elif event.button_index == BUTTON_WHEEL_UP:
-		GraphEdit.do_zoom_scroll(1)
-		accept_event()
-
-func new_node_requested(type):
-	var data = {
-		type = type,
-		offset = GraphEdit.get_offset_from_mouse()
-	}
-	if GraphEdit.use_snap:
-		var snap = GraphEdit.snap_distance
-		data.offset = data.offset.snapped(Vector2(snap, snap))
-	GraphEdit.create_node(data)
 
 # ******************************************************************************
 
