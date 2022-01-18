@@ -3,7 +3,7 @@ extends RichTextLabel
 
 # ******************************************************************************
 
-onready var Eval = preload('res://addons/diagraph/Eval.gd').new()
+var Eval = preload('res://addons/diagraph/utils/Eval.gd').new()
 
 var TextTimer := Timer.new()
 var original_cooldown := 0.05
