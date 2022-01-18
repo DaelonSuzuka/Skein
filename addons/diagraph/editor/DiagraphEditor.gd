@@ -16,7 +16,12 @@ func _ready():
 	$Toolbar/Clear.connect('pressed', $ConfirmClear, 'popup')
 	$ConfirmClear.connect('confirmed', GraphEdit, 'clear')
 	$Toolbar/Save.connect('pressed', self, 'save_data')
-	$Toolbar/Trace.connect('pressed', self, 'trace')
+	$Toolbar/Run.connect('pressed', self, 'trace')
+	$StopButton.connect('pressed', self, 'stop_trace')
+
+	$DialogBox.hide()
+	$StopButton.hide()
+	$Dimmer.hide()
 
 	# remove_child(Toolbar)
 	# GraphEdit.get_zoom_hbox().add_child(Toolbar)
@@ -45,11 +50,15 @@ func trace():
 		if 'entry' in node.data and node.data.entry:
 			walk_tree(tree, node)
 			DialogBox.show()
-			DialogBox.connect('done', $HSplit, 'show', [], CONNECT_ONESHOT)
-			DialogBox.connect('done', Toolbar, 'show', [], CONNECT_ONESHOT)
-			$HSplit.hide()
-			Toolbar.hide()
+			DialogBox.connect('done', self, 'stop_trace', [], CONNECT_ONESHOT)
+			$Dimmer.show()
+			$StopButton.show()
 			DialogBox.start(nodes, node.name)
+	
+func stop_trace():
+	$DialogBox.hide()
+	$StopButton.hide()
+	$Dimmer.hide()
 
 # ******************************************************************************
 
