@@ -6,6 +6,7 @@ extends GraphEdit
 onready var node_types = {
 	'entry': load('res://addons/diagraph/nodes/EntryNode.tscn'),
 	'exit': load('res://addons/diagraph/nodes/ExitNode.tscn'),
+	'base': load('res://addons/diagraph/nodes/SpeechNode.tscn'),
 	'speech': load('res://addons/diagraph/nodes/SpeechNode.tscn'),
 	'branch': load('res://addons/diagraph/nodes/BranchNode.tscn'),
 	'jump': load('res://addons/diagraph/nodes/JumpNode.tscn'),
