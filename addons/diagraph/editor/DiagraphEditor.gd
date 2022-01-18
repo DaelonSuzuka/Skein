@@ -19,8 +19,15 @@ func _ready():
 		load_data()
 
 func _input(event):
-	if event is InputEventMouseButton and event.button_index == 2 and event.pressed:
-		# accept_event()
+	if !visible or !(event is InputEventMouseButton):
+		return
+	var rect = Rect2(rect_global_position, rect_size)
+	if !rect.has_point(event.global_position):
+		return
+	if !event.pressed:
+		return
+
+	if event.button_index == 2:
 		$ContextMenu.show_context_menu(event)
 
 func new_node_requested(type):
