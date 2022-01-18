@@ -11,11 +11,11 @@ onready var ContextMenu = $ContextMenu
 # ******************************************************************************
 
 func _ready():
-	Toolbar/New.connect('pressed', GraphEdit, 'create_node')
-	Toolbar/Clear.connect('pressed', $ConfirmClear, 'popup')
+	$Toolbar/New.connect('pressed', GraphEdit, 'create_node')
+	$Toolbar/Clear.connect('pressed', $ConfirmClear, 'popup')
 	$ConfirmClear.connect('confirmed', GraphEdit, 'clear')
-	Toolbar/Save.connect('pressed', self, 'save_data')
-	Toolbar/Trace.connect('pressed', self, 'trace')
+	$Toolbar/Save.connect('pressed', self, 'save_data')
+	$Toolbar/Trace.connect('pressed', self, 'trace')
 	ContextMenu.connect('create_node', self, 'new_node_requested')
 
 	# remove_child(Toolbar)
