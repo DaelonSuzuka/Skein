@@ -13,7 +13,7 @@ var active := false
 # ******************************************************************************
 
 func _ready():
-	connect('option_selected', self, 'pressed')
+	pass
 
 func _input(event):
 	if !visible or !active or waiting_for_choice:

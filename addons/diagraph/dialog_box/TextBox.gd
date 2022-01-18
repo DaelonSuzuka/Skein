@@ -19,6 +19,8 @@ func _ready():
 	TextTimer.connect('timeout', self, 'process_text')
 	TextTimer.one_shot = true
 
+# ******************************************************************************
+
 var next_line := ''
 var line_index := 0
 
@@ -32,12 +34,6 @@ func set_line(line):
 
 func speed(value=original_cooldown):
 	next_char_cooldown = value
-
-class EvalContext:
-	pass
-
-	# func speed(value):
-	# 	next_char_cooldown = value
 
 func process_text():
 	if line_index == next_line.length():
