@@ -65,18 +65,21 @@ func trace():
 var file_name = 'res://data.json'
 
 func save_data():
-	print('saving')
 	var data = {
-		nodes = {},
 		scroll_offset = {
 			x = GraphEdit.scroll_offset.x,
 			y = GraphEdit.scroll_offset.y,
 		},
+		height = GraphEdit.rect_size.y,
 		zoom = GraphEdit.zoom,
+		minimap_enabled = GraphEdit.minimap_enabled,
+		minimap_opacity = GraphEdit.minimap_opacity,
+		minimap_size = var2str(GraphEdit.minimap_size),
 		snap = {
 			on = GraphEdit.use_snap,
 			step = GraphEdit.snap_distance,
-		}
+		},
+		nodes = {},
 	}
 	for node in GraphEdit.nodes.values():
 		data.nodes[node.data.id] = node.get_data()
@@ -92,9 +95,17 @@ func load_data():
 			for to in node.data.connections:
 				var con = node.data.connections[to]
 				GraphEdit.request_connection(node.name, con[0], to, con[1])
+		if 'height' in data:
+			GraphEdit.rect_size.y = data.height
 		if 'scroll_offset' in data:
 			GraphEdit.scroll_offset.x = data.scroll_offset.x
 			GraphEdit.scroll_offset.y = data.scroll_offset.y
+		if 'minimap_enabled' in data:
+			GraphEdit.minimap_enabled = data.minimap_enabled
+		if 'minimap_opacity' in data:
+			GraphEdit.minimap_opacity = data.minimap_opacity
+		if 'minimap_size' in data:
+			GraphEdit.minimap_size = str2var(data.minimap_size)
 		if 'zoom' in data:
 			GraphEdit.zoom = data.zoom
 		if 'snap' in data:
