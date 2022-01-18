@@ -30,7 +30,7 @@ func _ready():
 var ctx = null
 
 func _input(event: InputEvent) -> void:
-	if !visible or !(event is InputEventMouseButton):
+	if !owner.visible or !(event is InputEventMouseButton):
 		return
 	var rect = Rect2(rect_global_position, rect_size)
 	if !rect.has_point(event.global_position):
