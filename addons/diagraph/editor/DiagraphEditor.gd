@@ -3,17 +3,23 @@ extends Control
 
 # ******************************************************************************
 
-onready var GraphEdit = find_node('GraphEdit')
+onready var GraphEdit: GraphEdit = find_node('GraphEdit')
+onready var Toolbar = $Toolbar
+onready var DialogBox = $DialogBox
+onready var ContextMenu = $ContextMenu
 
 # ******************************************************************************
 
 func _ready():
-	$Toolbar/New.connect('pressed', GraphEdit, 'create_node')
-	$Toolbar/Clear.connect('pressed', $ConfirmClear, 'popup')
+	Toolbar/New.connect('pressed', GraphEdit, 'create_node')
+	Toolbar/Clear.connect('pressed', $ConfirmClear, 'popup')
 	$ConfirmClear.connect('confirmed', GraphEdit, 'clear')
-	$Toolbar/Save.connect('pressed', self, 'save_data')
-	$Toolbar/Trace.connect('pressed', self, 'trace')
-	$ContextMenu.connect('create_node', self, 'new_node_requested')
+	Toolbar/Save.connect('pressed', self, 'save_data')
+	Toolbar/Trace.connect('pressed', self, 'trace')
+	ContextMenu.connect('create_node', self, 'new_node_requested')
+
+	# remove_child(Toolbar)
+	# GraphEdit.get_zoom_hbox().add_child(Toolbar)
 
 	if !Engine.editor_hint:
 		load_data()
@@ -28,7 +34,7 @@ func _input(event):
 		return
 
 	if event.button_index == 2:
-		$ContextMenu.show_context_menu(event)
+		ContextMenu.show_context_menu(event)
 
 	# Scroll wheel up/down to zoom
 	if event.button_index == BUTTON_WHEEL_DOWN:
@@ -61,8 +67,6 @@ func walk_tree(tree, node):
 		walk_tree(tree[node.name], GraphEdit.nodes[con])
 
 func trace():
-	# print('tracing')
-
 	nodes.clear()
 	var tree = {}
 	var selection = GraphEdit.get_selected_nodes()
@@ -70,10 +74,12 @@ func trace():
 		var node = selection[0]
 		if 'entry' in node.data and node.data.entry:
 			walk_tree(tree, node)
-			$DialogBox.show()
-			$DialogBox.connect('done', $HSplit, 'show', [], CONNECT_ONESHOT)
+			DialogBox.show()
+			DialogBox.connect('done', $HSplit, 'show', [], CONNECT_ONESHOT)
+			DialogBox.connect('done', Toolbar, 'show', [], CONNECT_ONESHOT)
 			$HSplit.hide()
-			$DialogBox.start(nodes, node.name)
+			Toolbar.hide()
+			DialogBox.start(nodes, node.name)
 
 # ******************************************************************************
 
