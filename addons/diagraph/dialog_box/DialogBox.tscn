@@ -180,6 +180,7 @@ __meta__ = {
 }
 
 [node name="DebugLog" type="Label" parent="."]
+visible = false
 margin_left = 750.0
 margin_top = -299.0
 margin_right = 987.0
