@@ -34,12 +34,16 @@ func _ready():
 
 	data['entry'] = false
 
-	TextEdit.add_color_region('{', '}', Color.green)
-	TextEdit.add_color_region('<', '>', Color.dodgerblue)
-	TextEdit.add_color_region('[', ']', Color.yellow)
-	TextEdit.add_color_region('(', ')', Color.orange)
-	TextEdit.add_color_region('"', '"', Color.red)
 	TextEdit.add_color_region('#', '', Color.forestgreen, true)
+
+	TextEdit.add_keyword_color('Ash', Color.dodgerblue)
+	TextEdit.add_keyword_color('Pico', Color.magenta)
+
+	# TextEdit.add_color_region('{', '}', Color.green)
+	# TextEdit.add_color_region('<', '>', Color.dodgerblue)
+	# TextEdit.add_color_region('[', ']', Color.yellow)
+	# TextEdit.add_color_region('(', ')', Color.orange)
+	# TextEdit.add_color_region('"', '"', Color.red)
 
 	set_slot_color_right(1, slot_colors[0])
 	set_slot_color_right(2, slot_colors[1])
@@ -134,5 +138,3 @@ func set_choices_enabled(state):
 	set_slot_enabled_right(2, state)
 	set_slot_enabled_right(3, state)
 	set_slot_enabled_right(4, state)
-
-
