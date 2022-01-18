@@ -8,6 +8,8 @@ onready var Toolbar = $Toolbar
 onready var DialogBox = $DialogBox
 onready var ContextMenu = $ContextMenu
 
+var is_plugin = false
+
 # ******************************************************************************
 
 func _ready():
@@ -21,7 +23,7 @@ func _ready():
 	# remove_child(Toolbar)
 	# GraphEdit.get_zoom_hbox().add_child(Toolbar)
 
-	if !Engine.editor_hint:
+	if !Engine.editor_hint or is_plugin:
 		load_data()
 
 func _input(event):

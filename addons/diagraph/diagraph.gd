@@ -11,6 +11,7 @@ var editor_button
 
 func _enter_tree():
 	editor_instance = editor_class.instance()
+	editor_instance.is_plugin = true
 	editor_button = add_control_to_bottom_panel(editor_instance, 'Diagraph')
 
 func _exit_tree():
