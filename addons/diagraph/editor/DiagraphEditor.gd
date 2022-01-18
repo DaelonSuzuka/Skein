@@ -16,8 +16,9 @@ func _ready():
 	$Toolbar/Clear.connect('pressed', $ConfirmClear, 'popup')
 	$ConfirmClear.connect('confirmed', GraphEdit, 'clear')
 	$Toolbar/Save.connect('pressed', self, 'save_data')
-	$Toolbar/Run.connect('pressed', self, 'trace')
-	$StopButton.connect('pressed', self, 'stop_trace')
+	$Toolbar/Run.connect('pressed', self, 'run')
+	$StopButton.connect('pressed', self, 'stop')
+	DialogBox.connect('done', self, 'stop')
 
 	$DialogBox.hide()
 	$StopButton.hide()
@@ -41,7 +42,7 @@ func walk_tree(tree, node):
 	for con in node.data.connections:
 		walk_tree(tree[node.name], GraphEdit.nodes[con])
 
-func trace():
+func run():
 	nodes.clear()
 	var tree = {}
 	var selection = GraphEdit.get_selected_nodes()
@@ -50,12 +51,11 @@ func trace():
 		if 'entry' in node.data and node.data.entry:
 			walk_tree(tree, node)
 			DialogBox.show()
-			DialogBox.connect('done', self, 'stop_trace', [], CONNECT_ONESHOT)
 			$Dimmer.show()
 			$StopButton.show()
 			DialogBox.start(nodes, node.name)
 	
-func stop_trace():
+func stop():
 	$DialogBox.hide()
 	$StopButton.hide()
 	$Dimmer.hide()
