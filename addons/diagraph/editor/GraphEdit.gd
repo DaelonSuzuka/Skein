@@ -158,3 +158,16 @@ func get_selected_nodes() -> Array:
 		if child is GraphNode and child.is_selected():
 			selected_nodes.append(child)
 	return selected_nodes
+
+# ------------------------------------------------------------------------------
+
+func do_zoom_scroll(step: int) -> void:
+	# TODO: sometimes this gets really wierd
+	var new_zoom = zoom * pow(zoom_step, step)
+	var anchor = get_offset_from_mouse()
+	
+	var zoom_center = anchor - ((scroll_offset + rect_size) / 2)
+	var ratio = 1.0 - new_zoom / zoom
+	scroll_offset -= zoom_center * ratio
+
+	zoom = new_zoom
