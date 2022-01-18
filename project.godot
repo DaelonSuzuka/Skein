@@ -182,7 +182,7 @@ gdscript/warnings/return_value_discarded=false
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/Iconify/plugin.cfg", "res://addons/dialog_graph/plugin.cfg", "res://addons/dialogic/plugin.cfg", "res://addons/dialogue_tree/plugin.cfg", "res://addons/event_system_plugin/plugin.cfg", "res://addons/textalog/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/Iconify/plugin.cfg", "res://addons/diagraph/plugin.cfg", "res://addons/godot-plugin-refresher/plugin.cfg" )
 
 [physics]
 
