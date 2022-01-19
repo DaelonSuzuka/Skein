@@ -40,12 +40,10 @@ func update_title():
 # ******************************************************************************
 
 func get_data():
-	data.offset.x = offset.x
-	data.offset.y = offset.y
-	data.rect_size.x = rect_size.x
-	data.rect_size.y = rect_size.y
+	data.offset = var2str(offset)
+	data.rect_size = var2str(rect_size)
 	data.name = $Body/Toolbar/Title.text
-	return data
+	return data.duplicate(true)
 
 func set_data(new_data):
 	if 'type' in new_data:
@@ -61,11 +59,9 @@ func set_data(new_data):
 		data.name = new_data.name
 		update_title()
 	if 'offset' in new_data:
-		offset.x = new_data.offset.x
-		offset.y = new_data.offset.y
+		offset = str2var(new_data.offset)
 	if 'rect_size' in new_data:
-		rect_size.x = new_data.rect_size.x
-		rect_size.y = new_data.rect_size.y
+		rect_size = str2var(new_data.rect_size)
 	return self
 
 # ******************************************************************************

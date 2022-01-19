@@ -68,10 +68,7 @@ var file_name = 'res://data.json'
 
 func save_data():
 	var data = {
-		scroll_offset = {
-			x = GraphEdit.scroll_offset.x,
-			y = GraphEdit.scroll_offset.y,
-		},
+		scroll_offset = var2str(GraphEdit.scroll_offset),
 		height = GraphEdit.rect_size.y,
 		zoom = GraphEdit.zoom,
 		minimap_enabled = GraphEdit.minimap_enabled,
@@ -84,7 +81,13 @@ func save_data():
 		nodes = {},
 	}
 	for node in GraphEdit.nodes.values():
-		data.nodes[node.data.id] = node.get_data()
+		data.nodes[str(node.data.id)] = node.get_data()
+
+	
+	var f = File.new()
+	f.open('test.txt', File.WRITE)
+	f.store_string(var2str(data))
+	f.close()
 
 	save_json(data)
 
@@ -100,8 +103,7 @@ func load_data():
 		if 'height' in data:
 			GraphEdit.rect_size.y = data.height
 		if 'scroll_offset' in data:
-			GraphEdit.scroll_offset.x = data.scroll_offset.x
-			GraphEdit.scroll_offset.y = data.scroll_offset.y
+			GraphEdit.scroll_offset = str2var(data.scroll_offset)
 		if 'minimap_enabled' in data:
 			GraphEdit.minimap_enabled = data.minimap_enabled
 		if 'minimap_opacity' in data:

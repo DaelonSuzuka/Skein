@@ -1,9 +1,6 @@
 {
-	"scroll_offset": {
-		"x": -553.903809,
-		"y": -119.513321
-	},
-	"height": 635,
+	"scroll_offset": "Vector2( -499.171, -220.271 )",
+	"height": 596,
 	"zoom": 0.799463,
 	"minimap_enabled": false,
 	"minimap_opacity": 0.65,
@@ -17,14 +14,8 @@
 			"id": 4134715227,
 			"type": "base",
 			"name": "Speech",
-			"rect_size": {
-				"x": 400,
-				"y": 400
-			},
-			"offset": {
-				"x": -510,
-				"y": 75
-			},
+			"rect_size": "Vector2( 400, 400 )",
+			"offset": "Vector2( -510, 75 )",
 			"connections": {
 				"3161026589": [
 					0,
@@ -38,19 +29,19 @@
 			"show_choices": true,
 			"choices": {
 				"Choice1": {
-					"choice": "Yeah!",
+					"text": "Yeah!",
 					"condition": ""
 				},
 				"Choice2": {
-					"choice": "I don't think so...",
+					"text": "I don't think so...",
 					"condition": ""
 				},
 				"Choice3": {
-					"choice": "",
+					"text": "",
 					"condition": ""
 				},
 				"Choice4": {
-					"choice": "",
+					"text": "",
 					"condition": ""
 				}
 			},
@@ -61,33 +52,27 @@
 			"id": 3161026589,
 			"type": "speech",
 			"name": "Speech",
-			"rect_size": {
-				"x": 570.000244,
-				"y": 374.999939
-			},
-			"offset": {
-				"x": 45,
-				"y": 0
-			},
+			"rect_size": "Vector2( 570, 375 )",
+			"offset": "Vector2( 45, 0 )",
 			"connections": {
 
 			},
 			"show_choices": false,
 			"choices": {
 				"Choice1": {
-					"choice": "",
+					"text": "",
 					"condition": ""
 				},
 				"Choice2": {
-					"choice": "",
+					"text": "",
 					"condition": ""
 				},
 				"Choice3": {
-					"choice": "",
+					"text": "",
 					"condition": ""
 				},
 				"Choice4": {
-					"choice": "",
+					"text": "",
 					"condition": ""
 				}
 			},
@@ -98,33 +83,27 @@
 			"id": 2668139190,
 			"type": "speech",
 			"name": "Speech",
-			"rect_size": {
-				"x": 390.000244,
-				"y": 195.000244
-			},
-			"offset": {
-				"x": 60,
-				"y": 390
-			},
+			"rect_size": "Vector2( 390, 195 )",
+			"offset": "Vector2( 60, 390 )",
 			"connections": {
 
 			},
 			"show_choices": false,
 			"choices": {
 				"Choice1": {
-					"choice": "",
+					"text": "",
 					"condition": ""
 				},
 				"Choice2": {
-					"choice": "",
+					"text": "",
 					"condition": ""
 				},
 				"Choice3": {
-					"choice": "",
+					"text": "",
 					"condition": ""
 				},
 				"Choice4": {
-					"choice": "",
+					"text": "",
 					"condition": ""
 				}
 			},
