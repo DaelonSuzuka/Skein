@@ -40,11 +40,6 @@ var current_node = 0
 var current_line = 0
 var current_data = null
 
-var characters = {
-	'Ash': load('res://characters/Ash/Ash.tscn').instance(),
-	'Pico': load('res://characters/Pico/Pico.tscn').instance(),
-}
-
 # ******************************************************************************
 
 func add_option(option, value=null):
@@ -63,12 +58,12 @@ func remove_options() -> void:
 
 # ******************************************************************************
 
-func start(new_nodes, first):
+func start(new_nodes, entry):
 	active = true
 	$Name/Outline.modulate = Color.white
 	$TextBox/Outline.modulate = Color.white
 	nodes = new_nodes
-	current_node = first
+	current_node = entry
 	current_line = 0
 	current_data = nodes[current_node].parse()
 	next()
@@ -76,7 +71,6 @@ func start(new_nodes, first):
 func next():
 	if current_line == current_data.text.size():
 		if current_data.next == 'none':
-			hide()
 			active = false
 			emit_signal('done')
 			return
@@ -102,10 +96,10 @@ func next():
 
 	var color = Color.white
 
-	if name in characters:
+	if name in Diagraph.characters:
 		var portrait = $Portrait.get_node_or_null(name)
 		if !portrait:
-			$Portrait.add_child(characters[name])
+			$Portrait.add_child(Diagraph.characters[name])
 			portrait = $Portrait.get_node_or_null(name)
 		for child in $Portrait.get_children():
 			child.visible = child.name == name
@@ -159,13 +153,28 @@ func process_text():
 				if end != -1:
 					var command = next_line.substr(line_index, end - line_index + 2)
 					line_index = end + 2
-					$DebugLog.text += '\nexpansion: ' + command
+					var locals = {
+						'test': 'penis',
+					}
+					for c in Diagraph.characters:
+						locals[c] = Diagraph.characters[c]
+					var cmd = command.lstrip('{{').rstrip('}}')
+					var result = Eval.evaluate(cmd, self, locals)
+					next_line.erase(line_index, end - line_index + 2)
+					next_line = next_line.insert(line_index, str(result))
+					$DebugLog.text += '\nexpansion: ' + str(result)
+					process_text()
 			else:
 				var end = next_line.findn('}', line_index)
 				if end != -1:
 					var command = next_line.substr(line_index, end - line_index + 1)
 					line_index = end + 1
-					var result = Eval.evaluate(command.lstrip('{').rstrip('}'), self)
+					var locals = {
+						'test': 'penis',
+					}
+					for c in Diagraph.characters:
+						locals[c] = Diagraph.characters[c]
+					var result = Eval.evaluate(command.lstrip('{').rstrip('}'), self, locals)
 					$DebugLog.text += '\ncommand: ' + command
 					process_text()
 		'<': # reserved for future use

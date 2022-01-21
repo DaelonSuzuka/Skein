@@ -38,26 +38,13 @@ func create_conversation():
 
 # ******************************************************************************
 
-var nodes = {}
-
-func walk_tree(tree, node):
-	tree[node.name] = {}
-	if !nodes.has(node):
-		nodes[node.name] = node
-		
-	for con in node.data.connections:
-		walk_tree(tree[node.name], GraphEdit.nodes[con])
-
 func run():
-	nodes.clear()
-	var tree = {}
 	var selection = GraphEdit.get_selected_nodes()
 	if selection.size() == 1:
 		var node = selection[0]
 		if 'entry' in node.data and node.data.entry:
-			walk_tree(tree, node)
 			$Preview.show()
-			DialogBox.start(nodes, node.name)
+			DialogBox.start(GraphEdit.nodes, node.name)
 	
 func stop():
 	$Preview.hide()
