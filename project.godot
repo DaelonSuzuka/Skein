@@ -138,6 +138,10 @@ config/name="Diagraph"
 run/main_scene="res://CanvasLayer.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Diagraph="*res://addons/diagraph/DiagraphSingleton.gd"
+
 [debug]
 
 gdscript/warnings/unused_variable=false

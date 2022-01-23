@@ -30,7 +30,7 @@ func _ready():
 	
 	data['choices'] = {}
 	for c in choices:
-		data['choices'][c.name] = {}
+		data['choices'][c.name[6]] = {}
 
 	data['entry'] = false
 
@@ -69,8 +69,19 @@ func index_pressed(index):
 func get_data():
 	var data = .get_data()
 	data['text'] = TextEdit.text
+	if data['show_choices']:
+		data['next'] = 'choice'
+
+	var connections = {}
+	for to in data.connections:
+		var num = str(data.connections[to][0] + 1)
+		connections[num] = to
+
 	for c in choices:
-		data['choices'][c.name] = c.get_data()
+		data['choices'][c.name[6]] = c.get_data()
+		data['choices'][c.name[6]]['next'] = ''
+		if c.name[6] in connections:
+			data['choices'][c.name[6]]['next'] = connections[c.name[6]]
 	return data
 
 func set_data(new_data):
@@ -86,35 +97,9 @@ func set_data(new_data):
 		Edit.get_popup().set_item_checked(0, state)
 	if 'choices' in new_data:
 		for c in choices:
-			c.set_data(new_data['choices'][c.name])
+			c.set_data(new_data['choices'][c.name[6]])
 			
 	.set_data(new_data)
-
-func parse():
-	var result = {
-		text = TextEdit.text.split('\n'),
-		next = 'none'
-	}
-
-	var connections = {}
-	for to in data.connections:
-		var num = str(data.connections[to][0] + 1)
-		connections[num] = to
-
-	if data['show_choices']:
-		result.next = 'choice'
-		result['choices'] = {}
-
-		for c in choices:
-			var d = c.get_data()
-			if c.name[6] in connections:
-				d['next'] = connections[c.name[6]]
-			result['choices'][c.name] = d
-	else:
-		if '1' in connections:
-			result.next = connections['1']
-
-	return result
 
 # ******************************************************************************
 

@@ -61,6 +61,7 @@ __meta__ = {
 }
 
 [node name="Toolbar" type="HBoxContainer" parent="HSplit/Sidebar/VBoxContainer"]
+visible = false
 margin_right = 100.0
 margin_bottom = 31.0
 
@@ -78,7 +79,6 @@ size_flags_horizontal = 3
 text = "wut"
 
 [node name="Tree" type="Tree" parent="HSplit/Sidebar/VBoxContainer"]
-margin_top = 35.0
 margin_right = 100.0
 margin_bottom = 596.0
 size_flags_vertical = 3

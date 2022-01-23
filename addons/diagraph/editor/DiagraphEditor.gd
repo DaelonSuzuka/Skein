@@ -4,6 +4,7 @@ extends Control
 # ******************************************************************************
 
 onready var GraphEdit: GraphEdit = find_node('GraphEdit')
+onready var Tree: Tree = find_node('Tree')
 onready var Toolbar = $Toolbar
 onready var DialogBox = $Preview/DialogBox
 
@@ -27,6 +28,19 @@ func _ready():
 	$Preview/Dimmer.show()
 	$Preview.hide()
 
+	var root = Tree.create_item()
+	Tree.set_hide_root(true)
+	var convos = Tree.create_item(root)
+	convos.set_text(0, 'Conversations')
+	for convo in Diagraph.conversations:
+		var item = Tree.create_item(convos)
+		item.set_text(0, convo)
+	var chars = Tree.create_item(root)
+	chars.set_text(0, 'Characters')
+	for character in Diagraph.characters:
+		var item = Tree.create_item(chars)
+		item.set_text(0, character)
+
 	if !Engine.editor_hint or is_plugin:
 		load_data()
 
@@ -39,22 +53,27 @@ func create_conversation():
 # ******************************************************************************
 
 func run():
+	var nodes := {}
+	for node in GraphEdit.nodes.values():
+		nodes[str(node.data.id)] = node.get_data()
+
 	var selection = GraphEdit.get_selected_nodes()
 	if selection.size() == 1:
 		var node = selection[0]
 		if 'entry' in node.data and node.data.entry:
 			$Preview.show()
-			DialogBox.start(GraphEdit.nodes, node.name)
+			DialogBox.start(nodes, node.name)
 	
 func stop():
 	$Preview.hide()
 
 # ******************************************************************************
 
+var editor_data_file_name = 'user://editor_data.json'
 var file_name = 'res://data.json'
 
 func save_data():
-	var data = {
+	var editor_data = {
 		scroll_offset = var2str(GraphEdit.scroll_offset),
 		height = GraphEdit.rect_size.y,
 		zoom = GraphEdit.zoom,
@@ -65,28 +84,18 @@ func save_data():
 			on = GraphEdit.use_snap,
 			step = GraphEdit.snap_distance,
 		},
-		nodes = {},
 	}
+
+	save_json(editor_data_file_name, editor_data)
+
+	var nodes := {}
 	for node in GraphEdit.nodes.values():
-		data.nodes[str(node.data.id)] = node.get_data()
-
-	
-	var f = File.new()
-	f.open('test.txt', File.WRITE)
-	f.store_string(var2str(data))
-	f.close()
-
-	save_json(data)
+		nodes[str(node.data.id)] = node.get_data()
+	save_json(file_name, nodes)
 
 func load_data():
-	var data = load_json()
+	var data = load_json(editor_data_file_name)
 	if data:
-		for id in data.nodes:
-			GraphEdit.create_node(data.nodes[id])
-		for node in GraphEdit.nodes.values():
-			for to in node.data.connections:
-				var con = node.data.connections[to]
-				GraphEdit.request_connection(node.name, con[0], to, con[1])
 		if 'height' in data:
 			GraphEdit.rect_size.y = data.height
 		if 'scroll_offset' in data:
@@ -103,19 +112,28 @@ func load_data():
 			GraphEdit.use_snap = data.snap.on
 			GraphEdit.snap_distance = data.snap.step
 
+	var nodes = load_json(file_name)
+	if nodes:
+		for id in nodes:
+			GraphEdit.create_node(nodes[id])
+		for node in GraphEdit.nodes.values():
+			for to in node.data.connections:
+				var con = node.data.connections[to]
+				GraphEdit.request_connection(node.name, con[0], to, con[1])
+
 # ******************************************************************************
 
-func save_json(data):
+func save_json(name, data):
 	var f = File.new()
-	f.open(file_name, File.WRITE)
+	f.open(name, File.WRITE)
 	f.store_string(JSON.print(data, "\t"))
 	f.close()
 
-func load_json():
+func load_json(name):
 	var result = null
 	var f = File.new()
-	if f.file_exists(file_name):
-		f.open(file_name, File.READ)
+	if f.file_exists(name):
+		f.open(name, File.READ)
 		var text = f.get_as_text()
 		f.close()
 		result = JSON.parse(text).result

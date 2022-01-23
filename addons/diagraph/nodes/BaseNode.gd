@@ -7,6 +7,7 @@ var data := {
 	id = 0,
 	type = 'base',
 	name = '',
+	next = 'none',
 	rect_size = {x = 0, y = 0},
 	offset = {x = 0, y = 0},
 	connections = {}
@@ -63,8 +64,3 @@ func set_data(new_data):
 	if 'rect_size' in new_data:
 		rect_size = str2var(new_data.rect_size)
 	return self
-
-# ******************************************************************************
-
-func parse():
-	return {}

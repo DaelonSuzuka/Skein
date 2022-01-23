@@ -58,14 +58,15 @@ func remove_options() -> void:
 
 # ******************************************************************************
 
-func start(new_nodes, entry):
+func start(conversation, entry:String, line:=0):
 	active = true
 	$Name/Outline.modulate = Color.white
 	$TextBox/Outline.modulate = Color.white
-	nodes = new_nodes
+	nodes = conversation
 	current_node = entry
-	current_line = 0
-	current_data = nodes[current_node].parse()
+	current_line = line
+	current_data = nodes[current_node]
+	current_data.text = current_data.text.split('\n')
 	next()
 
 func next():
@@ -84,7 +85,7 @@ func next():
 			return
 
 		current_node = current_data.next
-		current_data = nodes[current_node].parse()
+		current_data = nodes[current_node]
 		current_line = 0
 
 	var line = current_data.text[current_line]
@@ -117,11 +118,11 @@ func option_selected(choice):
 	waiting_for_choice = false
 	current_node = current_data.choices[choice].next
 	current_line = 0
-	current_data = nodes[current_node].parse()
+	current_data = nodes[current_node]
+	current_data.text = current_data.text.split('\n')
 	next()
 
 # ******************************************************************************
-
 
 var next_line := ''
 var line_index := 0
@@ -214,5 +215,3 @@ func process_text():
 			line_index += 1
 
 	TextTimer.start(cooldown)
-
-
