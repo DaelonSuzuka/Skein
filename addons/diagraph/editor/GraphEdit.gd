@@ -235,8 +235,6 @@ func get_conversation():
 # ******************************************************************************
 
 func set_data(data) -> void:
-	if 'height' in data:
-		rect_size.y = data.height
 	if 'scroll_offset' in data:
 		scroll_offset = str2var(data.scroll_offset)
 	if 'minimap_enabled' in data:
@@ -254,7 +252,6 @@ func set_data(data) -> void:
 func get_data() -> Dictionary:
 	var data = {
 		scroll_offset = var2str(scroll_offset),
-		height = rect_size.y,
 		zoom = zoom,
 		minimap_enabled = minimap_enabled,
 		minimap_opacity = minimap_opacity,
