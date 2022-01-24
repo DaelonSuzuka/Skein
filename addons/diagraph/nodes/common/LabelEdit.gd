@@ -7,46 +7,57 @@ export var text := '' setget set_text
 func set_text(new_text):
 	text = new_text
 	if is_inside_tree():
-		$Label.text = text
-		$LineEdit.text = text
+		label.text = text
+		line_edit.text = text
 
 signal text_changed(new_text)
+
+onready var line_edit = $LineEdit
+onready var label = $Label
 
 # ******************************************************************************
 
 func _ready():
 	set_text(text)
-	$LineEdit.hide()
-	$LineEdit.connect('focus_exited', self, 'reject')
-	$LineEdit.connect('gui_input', self, 'line_edit_input')
+	remove_child(line_edit)
+	line_edit.connect('focus_exited', self, 'reject')
+	line_edit.connect('gui_input', self, 'line_edit_input')
+	label.connect('gui_input', self, 'label_gui_input')
 
 func line_edit_input(event):
 	if event is InputEventKey and event.pressed:
 		match event.as_text():
 			'Escape':
 				reject()
+				accept_event()
 			'Enter':
 				accept()
+				accept_event()
 
-func _input(event):
+func label_gui_input(event):
 	if event is InputEventMouseButton:
 		if event.doubleclick:
 			start_editing()
+			accept_event()
 
 # ******************************************************************************
 
 func start_editing():
-	$LineEdit.text = $Label.text
-	$Label.hide()
-	$LineEdit.show()
+	line_edit.text = label.text
+	label.hide()
+	line_edit.show()
+	add_child(line_edit)
+	line_edit.grab_focus()
 	
 func accept():
-	text = $LineEdit.text
-	$Label.text = text
-	$Label.show()
-	$LineEdit.hide()
+	text = line_edit.text
+	label.text = text
+	label.show()
+	line_edit.hide()
+	remove_child(line_edit)
 	emit_signal('text_changed', text)
 
 func reject():
-	$Label.show()
-	$LineEdit.hide()
+	label.show()
+	line_edit.hide()
+	remove_child(line_edit)

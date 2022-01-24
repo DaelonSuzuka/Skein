@@ -12,9 +12,9 @@ margin_top = 0.0
 margin_right = -4.0
 margin_bottom = -4.0
 
+[node name="DialogBox" parent="." instance=ExtResource( 2 )]
+visible = false
+
 [node name="TestNPC" type="Node2D" parent="."]
 script = ExtResource( 3 )
 conversation = "test_convo"
-
-[node name="DialogBox" parent="." instance=ExtResource( 2 )]
-visible = false

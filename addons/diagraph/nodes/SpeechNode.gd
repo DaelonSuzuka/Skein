@@ -34,21 +34,36 @@ func _ready():
 
 	data['entry'] = false
 
+	refresh_colors()
+	Diagraph.connect('refreshed', self, 'refresh_colors')
+
+	set_slot_color_right(1, slot_colors[0])
+	set_slot_color_right(2, slot_colors[1])
+	set_slot_color_right(3, slot_colors[2])
+	set_slot_color_right(4, slot_colors[3])
+
+	connect('gui_input', self, '_on_gui_input')
+
+func _on_gui_input(event):
+	if !(event is InputEventMouseButton) or !event.pressed:
+		return
+	if event.button_index == 2:
+		print('right click')
+		accept_event()
+
+func refresh_colors():
+	TextEdit.clear_colors()
+
 	TextEdit.add_color_region('#', '', Color.forestgreen, true)
 
-	TextEdit.add_keyword_color('Ash', Color.dodgerblue)
-	TextEdit.add_keyword_color('Pico', Color.magenta)
+	for name in Diagraph.characters:
+		TextEdit.add_keyword_color(name, Diagraph.characters[name].color)
 
 	# TextEdit.add_color_region('{', '}', Color.green)
 	# TextEdit.add_color_region('<', '>', Color.dodgerblue)
 	# TextEdit.add_color_region('[', ']', Color.yellow)
 	# TextEdit.add_color_region('(', ')', Color.orange)
 	# TextEdit.add_color_region('"', '"', Color.red)
-
-	set_slot_color_right(1, slot_colors[0])
-	set_slot_color_right(2, slot_colors[1])
-	set_slot_color_right(3, slot_colors[2])
-	set_slot_color_right(4, slot_colors[3])
 
 func index_pressed(index):
 	match Edit.get_popup().get_item_text(index):

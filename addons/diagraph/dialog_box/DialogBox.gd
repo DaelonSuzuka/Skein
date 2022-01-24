@@ -58,12 +58,14 @@ func remove_options() -> void:
 
 # ******************************************************************************
 
-func start(conversation, entry:String, line:=0):
+func start(conversation, entry:String='', line:=0):
 	active = true
 	$Name/Outline.modulate = Color.white
 	$TextBox/Outline.modulate = Color.white
-	nodes = conversation
+	nodes = Diagraph.load_conversation(conversation)
 	current_node = entry
+	if !entry:
+		current_node = nodes.keys()[0]
 	current_line = line
 	current_data = nodes[current_node]
 	current_data.text = current_data.text.split('\n')
@@ -89,11 +91,16 @@ func next():
 		current_line = 0
 
 	var line = current_data.text[current_line]
+	if line.length() == 0 or line.begins_with('#'):
+		current_line += 1
+		next()
+		return
+
 	var name = ''
 	var parts = line.split(':')
 	if parts.size() > 1:
 		name = parts[0]
-		line = parts[1]
+		line = line.lstrip(parts[0] + ':')
 
 	var color = Color.white
 

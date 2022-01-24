@@ -108,13 +108,11 @@ func run():
 	var selection = GraphEdit.get_selected_nodes()
 	if selection.size() == 1:
 		var node = selection[0]
-		if 'entry' in node.data and node.data.entry:
-			save_conversation()
-			save_editor_data()
-			var nodes = load_json(current_conversation)
-			$Preview.show()
-			print('run ', current_conversation)
-			DialogBox.start(nodes, node.name)
+		save_conversation()
+		save_editor_data()
+		$Preview.show()
+		print('run ', current_conversation)
+		DialogBox.start(current_conversation, node.name)
 	
 func stop():
 	$Preview.hide()

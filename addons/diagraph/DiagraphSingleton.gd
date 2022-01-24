@@ -11,16 +11,13 @@ var conversations := []
 
 var dialog_target = null
 
+signal refreshed
+
 # ******************************************************************************
 
 func _ready():
-	load_conversations()
-	
-	for path in get_files(characters_path):
-		for file in get_files(characters_path + path, '.tscn'):
-			var c = load(characters_path + path + '/' + file).instance()
-			characters[c.name] = c
-
+	validate_paths()
+	call_deferred('refresh')
 
 	# start_dialog('convo') # [convo]
 	# start_dialog('convo:entry') # [convo, entry]
@@ -30,9 +27,28 @@ func _ready():
 	# start_dialog('convo', 1) # [convo, , 1]
 	# start_dialog('convo::1') # [convo, , 1]
 
+func refresh():
+	# print('refresh')
+	load_conversations()
+	load_characters()
+	emit_signal('refreshed')
+
 func load_conversations():
-	print('load_conversations')
+	# print('load_conversations')
+	conversations.clear()
 	conversations = get_files(conversation_path)
+
+func load_characters():
+	# print('load_characters')
+	characters.clear()
+	for path in get_files(characters_path):
+		# print(path)
+		for file in get_files(characters_path + path, '.tscn'):
+			# print(file)
+			var c = load(characters_path + path + '/' + file).instance()
+			characters[c.name] = c
+
+# ******************************************************************************
 
 func start_dialog(convo, arg1=null, arg2=null):
 	if arg1 != null:
@@ -51,20 +67,22 @@ func start_dialog(convo, arg1=null, arg2=null):
 
 	var parts = convo.split(':')
 
-	var path = conversation_path + parts[0] + '.json'
-	var conversation = load_conversation(path)
+	var name = name_to_path(parts[0])
+	var entry = ''
+	var line = 0
+	if parts.size() >= 1:
+		entry = parts[1]
+	if parts.size() >= 2:
+		line = int(parts[2])
 
 	if dialog_target:
 		dialog_target.show()
-		dialog_target.start(conversation, conversation.keys()[0])
+		dialog_target.start(name, entry, line)
 
 # ******************************************************************************
 
-func save_conversation(name, data) -> void:
-	var f = File.new()
-	f.open(name, File.WRITE)
-	f.store_string(JSON.print(data, "\t"))
-	f.close()
+func name_to_path(name):
+	return conversation_path + name + '.json'
 
 func load_conversation(name) -> Dictionary:
 	var result = null
@@ -77,6 +95,13 @@ func load_conversation(name) -> Dictionary:
 	return result
 
 # ******************************************************************************
+
+func validate_paths():
+	var dir = Directory.new()
+	if !dir.dir_exists(characters_path):
+		dir.make_dir_recursive(characters_path)
+	if !dir.dir_exists(conversation_path):
+		dir.make_dir_recursive(conversation_path)
 
 func get_files(path, ext='') -> Array:
 	var files = []
@@ -94,7 +119,5 @@ func get_files(path, ext='') -> Array:
 					files.append(file)
 			else:
 				files.append(file)
-
 	dir.list_dir_end()
-
 	return files

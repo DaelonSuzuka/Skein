@@ -21,6 +21,17 @@ func _ready():
 
 	convos = create_item(root)
 	convos.set_text(0, 'Conversations')
+	chars = create_item(root)
+	chars.set_text(0, 'Characters')
+
+	Diagraph.connect('refreshed', self, 'refresh')
+		
+	connect('item_selected', self, '_on_item_selected')
+	connect('item_rmb_selected', self, '_on_item_rmb_selected')
+	connect('gui_input', self, '_on_gui_input')
+	connect('item_edited', self, '_on_item_edited')
+
+func refresh():
 	for convo in Diagraph.conversations:
 		var item = create_item(convos)
 		item.set_text(0, convo.rstrip('.json'))
@@ -28,16 +39,9 @@ func _ready():
 		item.set_metadata(0, path)
 		item.set_tooltip(0, path)
 
-	chars = create_item(root)
-	chars.set_text(0, 'Characters')
 	for character in Diagraph.characters:
 		var item = create_item(chars)
 		item.set_text(0, character)
-		
-	connect('item_selected', self, '_on_item_selected')
-	connect('item_rmb_selected', self, '_on_item_rmb_selected')
-	connect('gui_input', self, '_on_gui_input')
-	connect('item_edited', self, '_on_item_edited')
 
 func _on_gui_input(event):
 	if event is InputEventMouseButton and event.button_index == 1:
@@ -100,7 +104,7 @@ func _on_item_rmb_selected(position):
 		# ctx.add_item('Copy Name')
 		ctx.add_item('Rename')
 		ctx.add_item('Delete')
-		ctx.open(position)
+		ctx.open(get_global_mouse_position())
 		return
 	
 	# ctx = ContextMenu.new(self, 'item_selected')
@@ -111,7 +115,6 @@ func _on_item_rmb_selected(position):
 	# ctx.open(position)
 
 func item_selected(selection):
-
 	match selection:
 		'New':
 			print('create convo')

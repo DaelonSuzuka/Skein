@@ -8,7 +8,6 @@ export var line := 0
 
 # ******************************************************************************
 
-func _ready():
-	pass
-	# Diagraph.dialog_target = $'../DialogBox'
-	# Diagraph.start_dialog(conversation, entry, line)
+# func _ready():
+# 	Diagraph.dialog_target = owner.get_node('DialogBox')
+# 	Diagraph.start_dialog(conversation, entry, line)
