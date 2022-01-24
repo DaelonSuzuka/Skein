@@ -111,10 +111,12 @@ func next():
 			portrait = $Portrait.get_node_or_null(name)
 		for child in $Portrait.get_children():
 			child.visible = child.name == name
-		color = portrait.color
-
-	$Name/Outline.modulate = color
-	$TextBox/Outline.modulate = color
+		
+		color = portrait.get('color')
+		if !color:
+			color = Color.white
+		$Name/Outline.modulate = color
+		$TextBox/Outline.modulate = color
 	$Name.text = name
 	set_line(line)
 
