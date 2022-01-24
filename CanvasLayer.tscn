@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://addons/diagraph/editor/DiagraphEditor.tscn" type="PackedScene" id=1]
+[ext_resource path="res://addons/diagraph/dialog_box/DialogBox.tscn" type="PackedScene" id=2]
 [ext_resource path="res://TestNPC.gd" type="Script" id=3]
 
 [node name="CanvasLayer" type="CanvasLayer"]
@@ -13,3 +14,7 @@ margin_bottom = -4.0
 
 [node name="TestNPC" type="Node2D" parent="."]
 script = ExtResource( 3 )
+conversation = "test_convo"
+
+[node name="DialogBox" parent="." instance=ExtResource( 2 )]
+visible = false

@@ -6,19 +6,21 @@ extends Node
 var characters_path = 'res://characters/'
 var characters := {}
 
-var conversation_path := 'res://conversations'
+var conversation_path := 'res://conversations/'
 var conversations := []
 
+var dialog_target = null
+
+# ******************************************************************************
+
 func _ready():
-	conversations = get_files(conversation_path)
+	load_conversations()
 	
 	for path in get_files(characters_path):
 		for file in get_files(characters_path + path, '.tscn'):
 			var c = load(characters_path + path + '/' + file).instance()
 			characters[c.name] = c
 
-
-	# save_conversation('user://diagraph/test.json', {'test': 'penis'})
 
 	# start_dialog('convo') # [convo]
 	# start_dialog('convo:entry') # [convo, entry]
@@ -27,6 +29,10 @@ func _ready():
 	# start_dialog('convo', 'entry', 1) # [convo, entry, 1]
 	# start_dialog('convo', 1) # [convo, , 1]
 	# start_dialog('convo::1') # [convo, , 1]
+
+func load_conversations():
+	print('load_conversations')
+	conversations = get_files(conversation_path)
 
 func start_dialog(convo, arg1=null, arg2=null):
 	if arg1 != null:
@@ -45,7 +51,12 @@ func start_dialog(convo, arg1=null, arg2=null):
 
 	var parts = convo.split(':')
 
-	print(parts)
+	var path = conversation_path + parts[0] + '.json'
+	var conversation = load_conversation(path)
+
+	if dialog_target:
+		dialog_target.show()
+		dialog_target.start(conversation, conversation.keys()[0])
 
 # ******************************************************************************
 

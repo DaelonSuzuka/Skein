@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://addons/diagraph/editor/GraphEdit.gd" type="Script" id=1]
 [ext_resource path="res://addons/diagraph/resources/theme.tres" type="Theme" id=2]
 [ext_resource path="res://addons/diagraph/dialog_box/OptionButton.tscn" type="PackedScene" id=3]
 [ext_resource path="res://addons/diagraph/editor/DiagraphEditor.gd" type="Script" id=4]
 [ext_resource path="res://addons/diagraph/dialog_box/DialogBox.tscn" type="PackedScene" id=5]
+[ext_resource path="res://addons/diagraph/editor/Tree.gd" type="Script" id=6]
 
 [sub_resource type="ImageTexture" id=9]
 
@@ -33,19 +34,22 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="AutoSave" type="Timer" parent="."]
+autostart = true
+
 [node name="HSplit" type="HSplitContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_constants/autohide = 0
 custom_icons/grabber = SubResource( 9 )
 custom_styles/bg = SubResource( 10 )
-split_offset = 100
+split_offset = 150
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Sidebar" type="Control" parent="HSplit"]
-margin_right = 100.0
+margin_right = 150.0
 margin_bottom = 596.0
 
 [node name="Panel" type="Panel" parent="HSplit/Sidebar"]
@@ -79,12 +83,15 @@ size_flags_horizontal = 3
 text = "wut"
 
 [node name="Tree" type="Tree" parent="HSplit/Sidebar/VBoxContainer"]
-margin_right = 100.0
+margin_right = 150.0
 margin_bottom = 596.0
 size_flags_vertical = 3
+allow_rmb_select = true
+hide_root = true
+script = ExtResource( 6 )
 
 [node name="GraphEdit" type="GraphEdit" parent="HSplit"]
-margin_left = 108.0
+margin_left = 158.0
 margin_right = 1020.0
 margin_bottom = 596.0
 size_flags_horizontal = 3
@@ -110,12 +117,14 @@ __meta__ = {
 }
 
 [node name="New" type="Button" parent="Toolbar"]
+visible = false
 margin_right = 46.0
 margin_bottom = 32.0
 text = "New"
 flat = true
 
 [node name="Save" type="Button" parent="Toolbar"]
+visible = false
 margin_left = 50.0
 margin_right = 97.0
 margin_bottom = 32.0
@@ -123,15 +132,14 @@ text = "Save"
 flat = true
 
 [node name="Clear" type="Button" parent="Toolbar"]
-margin_left = 101.0
-margin_right = 152.0
+margin_right = 51.0
 margin_bottom = 32.0
 text = "Clear"
 flat = true
 
 [node name="Run" type="Button" parent="Toolbar"]
-margin_left = 156.0
-margin_right = 198.0
+margin_left = 55.0
+margin_right = 97.0
 margin_bottom = 32.0
 text = "Run"
 flat = true
@@ -174,7 +182,7 @@ margin_left = -3.8147e-05
 margin_top = -0.000236511
 text = "Stop"
 
-[node name="Debug" parent="Preview" instance=ExtResource( 3 )]
+[node name="Next" parent="Preview" instance=ExtResource( 3 )]
 anchor_left = 0.0421569
 anchor_top = 0.14094
 anchor_right = 0.0421569
@@ -182,6 +190,17 @@ anchor_bottom = 0.14094
 margin_left = 100.0
 margin_top = -0.000236511
 margin_right = 171.0
+toggle_mode = true
+text = "Next"
+
+[node name="Debug" parent="Preview" instance=ExtResource( 3 )]
+anchor_left = 0.0421569
+anchor_top = 0.14094
+anchor_right = 0.0421569
+anchor_bottom = 0.14094
+margin_left = 204.0
+margin_top = -0.000236511
+margin_right = 275.0
 toggle_mode = true
 text = "Debug"
 
