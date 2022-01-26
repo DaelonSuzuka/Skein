@@ -6,12 +6,11 @@ extends Control
 var OptionButton = preload('res://addons/diagraph/dialog_box/OptionButton.tscn')
 var Eval = preload('res://addons/diagraph/utils/Eval.gd').new()
 
-signal done
-
 var TextTimer := Timer.new()
 var original_cooldown := 0.05
 var next_char_cooldown := original_cooldown
 
+signal done
 signal line_finished
 signal character_added(c)
 
@@ -35,11 +34,6 @@ func _input(event):
 			accept_event()
 			next()
 
-var nodes = {}
-var current_node = 0
-var current_line = 0
-var current_data = null
-
 # ******************************************************************************
 
 func add_option(option, value=null):
@@ -58,24 +52,79 @@ func remove_options() -> void:
 
 # ******************************************************************************
 
-func start(conversation, entry:String='', line:=0):
+var nodes = {}
+var current_node = 0
+var current_line = 0
+var current_data = null
+var caller = null
+var line_count = 0
+var length = -1
+
+func start(conversation, options={}):
+	var parts = conversation.split(':')
+	var name = Diagraph.name_to_path(parts[0])
+	var entry = ''
+	var line = 0
+	if parts.size() >= 2:
+		entry = parts[1]
+	if parts.size() >= 3:
+		line = int(parts[2])
+
 	active = true
+	caller = null
 	$Name/Outline.modulate = Color.white
 	$TextBox/Outline.modulate = Color.white
-	nodes = Diagraph.load_conversation(conversation)
-	current_node = entry
-	if !entry:
+
+	nodes = Diagraph.load_json(name)
+
+	current_node = null
+	if entry:
+		for node in nodes.values():
+			if node.name == entry:
+				current_node = str(node.id)
+		if !current_node:
+			current_node = entry
+	else:
 		current_node = nodes.keys()[0]
-	current_line = line
+
 	current_data = nodes[current_node]
 	current_data.text = current_data.text.split('\n')
+	
+	line_count = 0
+	current_line = line
+	if line == -1:
+		current_line = current_data.text.size() - 1
+
+	if 'caller' in options:
+		caller = options.caller
+
+	length = -1
+	if 'length' in options:
+		length = options.length
+	if 'len' in options:
+		length = options.len
+
 	next()
+	show()
+
+func stop():
+	active = false
+	hide()
+	emit_signal('done')
 
 func next():
+	if line_active:
+		while line_active:
+			process_text(false)
+		return
+
+	if length > 0 and line_count >= length:
+		stop()
+		return
+
 	if current_line == current_data.text.size():
 		if current_data.next == 'none':
-			active = false
-			emit_signal('done')
+			stop()
 			return
 		if current_data.next == 'choice':
 			waiting_for_choice = true
@@ -111,15 +160,16 @@ func next():
 			portrait = $Portrait.get_node_or_null(name)
 		for child in $Portrait.get_children():
 			child.visible = child.name == name
-		
-		color = portrait.get('color')
-		if !color:
-			color = Color.white
-		$Name/Outline.modulate = color
-		$TextBox/Outline.modulate = color
+		if portrait.get('color'):
+			color = portrait.color
+
+	$Name/Outline.modulate = color
+	$TextBox/Outline.modulate = color
 	$Name.text = name
+	$Name.visible = name != ''
 	set_line(line)
 
+	line_count += 1
 	current_line += 1
 
 func option_selected(choice):
@@ -127,7 +177,7 @@ func option_selected(choice):
 	waiting_for_choice = false
 	current_node = current_data.choices[choice].next
 	current_line = 0
-	current_data = nodes[current_node]
+	current_data = nodes[current_node].duplicate(true)
 	current_data.text = current_data.text.split('\n')
 	next()
 
@@ -135,8 +185,10 @@ func option_selected(choice):
 
 var next_line := ''
 var line_index := 0
+var line_active := false
 
 func set_line(line):
+	line_active = true
 	next_line = line
 	line_index = 0
 	text_box.bbcode_text = ''
@@ -147,11 +199,12 @@ func set_line(line):
 func speed(value=original_cooldown):
 	next_char_cooldown = value
 
-func process_text():
+func process_text(use_timer=true):
 	if line_index == next_line.length():
 		emit_signal('line_finished')
 		TextTimer.stop()
-		return
+		line_active = false
+		return 
 
 	var next_char = next_line[line_index]
 	var cooldown = next_char_cooldown
@@ -164,7 +217,7 @@ func process_text():
 					var command = next_line.substr(line_index, end - line_index + 2)
 					line_index = end + 2
 					var locals = {
-						'test': 'penis',
+						'caller': caller,
 					}
 					for c in Diagraph.characters:
 						locals[c] = Diagraph.characters[c]
@@ -173,20 +226,21 @@ func process_text():
 					next_line.erase(line_index, end - line_index + 2)
 					next_line = next_line.insert(line_index, str(result))
 					$DebugLog.text += '\nexpansion: ' + str(result)
-					process_text()
+					# process_text()
 			else:
 				var end = next_line.findn('}', line_index)
 				if end != -1:
 					var command = next_line.substr(line_index, end - line_index + 1)
 					line_index = end + 1
 					var locals = {
-						'test': 'penis',
+						'caller': caller,
 					}
 					for c in Diagraph.characters:
 						locals[c] = Diagraph.characters[c]
-					var result = Eval.evaluate(command.lstrip('{').rstrip('}'), self, locals)
+					var cmd = command.lstrip('{').rstrip('}')
+					var result = Eval.evaluate(cmd, self, locals)
 					$DebugLog.text += '\ncommand: ' + command
-					process_text()
+					# process_text()
 		'<': # reserved for future use
 			var end = next_line.findn('>', line_index)
 			if end != -1:
@@ -223,4 +277,5 @@ func process_text():
 			emit_signal('character_added', next_char)
 			line_index += 1
 
-	TextTimer.start(cooldown)
+	if use_timer:
+		TextTimer.start(cooldown)

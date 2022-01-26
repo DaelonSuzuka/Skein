@@ -36,6 +36,7 @@ func _ready():
 	Tree.connect('conversation_created', self, 'create_conversation')
 	Tree.connect('conversation_deleted', self, 'delete_conversation')
 	Tree.connect('conversation_renamed', self, 'rename_conversation')
+	Tree.connect('character_added', self, 'character_added')
 
 	if !Engine.editor_hint or is_plugin:
 		load_editor_data()
@@ -70,7 +71,6 @@ func load_conversation(path):
 		GraphEdit.set_data(editor_data[path])
 	else:
 		editor_data[path] = {}
-	
 	var nodes = load_json(path)
 	if nodes:
 		GraphEdit.set_conversation(nodes)
@@ -104,6 +104,16 @@ func rename_conversation(old, new):
 
 # ******************************************************************************
 
+func character_added(path):
+	var char_map = load_json(Diagraph.character_map_path, {})
+	print(char_map)
+	var c = load(path).instance()
+	char_map[c.name] = path
+	save_json(Diagraph.character_map_path, char_map)
+	Diagraph.refresh()
+
+# ******************************************************************************
+
 func run():
 	var selection = GraphEdit.get_selected_nodes()
 	if selection.size() == 1:
@@ -132,23 +142,25 @@ func save_editor_data():
 	save_json(editor_data_file_name, editor_data)
 
 func load_editor_data():
-	editor_data = load_json(editor_data_file_name)
-	if 'current_conversation' in editor_data:
-		load_conversation(editor_data['current_conversation'])
+	var data = load_json(editor_data_file_name)
+	if data:
+		editor_data = data
+		if 'current_conversation' in editor_data:
+			load_conversation(editor_data['current_conversation'])
 
 # ******************************************************************************
 
-func save_json(name, data):
+func save_json(path, data):
 	var f = File.new()
-	f.open(name, File.WRITE)
+	f.open(path, File.WRITE)
 	f.store_string(JSON.print(data, "\t"))
 	f.close()
 
-func load_json(name):
-	var result = null
+func load_json(path, default=null):
+	var result = default
 	var f = File.new()
-	if f.file_exists(name):
-		f.open(name, File.READ)
+	if f.file_exists(path):
+		f.open(path, File.READ)
 		var text = f.get_as_text()
 		f.close()
 		result = JSON.parse(text).result

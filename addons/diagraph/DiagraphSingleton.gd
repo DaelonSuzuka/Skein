@@ -4,6 +4,7 @@ extends Node
 # ******************************************************************************
 
 var characters_path = 'res://characters/'
+var character_map_path = characters_path + 'other_characters.json'
 var characters := {}
 
 var conversation_path := 'res://conversations/'
@@ -19,82 +20,40 @@ func _ready():
 	validate_paths()
 	call_deferred('refresh')
 
-	# start_dialog('convo') # [convo]
-	# start_dialog('convo:entry') # [convo, entry]
-	# start_dialog('convo:entry:1') # [convo, entry, 1]
-	# start_dialog('convo:entry', 1) # [convo, entry, 1]
-	# start_dialog('convo', 'entry', 1) # [convo, entry, 1]
-	# start_dialog('convo', 1) # [convo, , 1]
-	# start_dialog('convo::1') # [convo, , 1]
-
 func refresh():
-	# print('refresh')
 	load_conversations()
 	load_characters()
 	emit_signal('refreshed')
 
 func load_conversations():
-	# print('load_conversations')
 	conversations.clear()
 	conversations = get_files(conversation_path)
 
 func load_characters():
-	# print('load_characters')
 	characters.clear()
-	for path in get_files(characters_path):
-		# print(path)
-		for file in get_files(characters_path + path, '.tscn'):
-			# print(file)
-			var c = load(characters_path + path + '/' + file).instance()
-			characters[c.name] = c
+	var dir := Directory.new()
+	for folder in get_files(characters_path):
+		for file in get_files(characters_path + folder, '.tscn'):
+			var file_name = characters_path + folder + '/' + file
+			if dir.file_exists(file_name):
+				var c = load(file_name).instance()
+				characters[c.name] = c
+
+	var char_map = load_json(character_map_path)
+	for name in char_map:
+		if dir.file_exists(char_map[name]):
+			characters[name] = load(char_map[name]).instance()
 
 # ******************************************************************************
 
-func start_dialog(convo, arg1=null, arg2=null):
-	if arg1 != null:
-		if arg1 is String:
-			convo += ':'
-		if arg1 is int:
-			if convo.count(':') == 0:
-				convo += '::'
-			if convo.count(':') == 1:
-				convo += ':'
-		convo += str(arg1)
-	if arg2 != null:
-		if convo.count(':') == 1:
-			convo += ':'
-		convo += str(arg2)
-
-	var parts = convo.split(':')
-
-	var name = name_to_path(parts[0])
-	var entry = ''
-	var line = 0
-	if parts.size() >= 1:
-		entry = parts[1]
-	if parts.size() >= 2:
-		line = int(parts[2])
-
+func start_dialog(conversation, options={}):
 	if dialog_target:
-		dialog_target.show()
-		dialog_target.start(name, entry, line)
+		dialog_target.start(conversation, options)
 
 # ******************************************************************************
 
 func name_to_path(name):
 	return conversation_path + name + '.json'
-
-func load_conversation(name) -> Dictionary:
-	var result = null
-	var f = File.new()
-	if f.file_exists(name):
-		f.open(name, File.READ)
-		var text = f.get_as_text()
-		f.close()
-		result = JSON.parse(text).result
-	return result
-
-# ******************************************************************************
 
 func validate_paths():
 	var dir = Directory.new()
@@ -121,3 +80,19 @@ func get_files(path, ext='') -> Array:
 				files.append(file)
 	dir.list_dir_end()
 	return files
+
+func save_json(path, data):
+	var f = File.new()
+	f.open(path, File.WRITE)
+	f.store_string(JSON.print(data, "\t"))
+	f.close()
+
+func load_json(path, default=null):
+	var result = default
+	var f = File.new()
+	if f.file_exists(path):
+		f.open(path, File.READ)
+		var text = f.get_as_text()
+		f.close()
+		result = JSON.parse(text).result
+	return result
