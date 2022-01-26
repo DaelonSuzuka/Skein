@@ -57,7 +57,8 @@ func refresh_colors():
 	TextEdit.add_color_region('#', '', Color.forestgreen, true)
 
 	for name in Diagraph.characters:
-		TextEdit.add_keyword_color(name, Diagraph.characters[name].color)
+		if Diagraph.characters[name].get('color'):
+			TextEdit.add_keyword_color(name, Diagraph.characters[name].color)
 
 	# TextEdit.add_color_region('{', '}', Color.green)
 	# TextEdit.add_color_region('<', '>', Color.dodgerblue)
