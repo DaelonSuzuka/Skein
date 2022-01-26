@@ -16,6 +16,27 @@ signal refreshed
 
 # ******************************************************************************
 
+func start_dialog(conversation, options={}):
+	if dialog_target:
+		dialog_target.start(conversation, options)
+
+# ------------------------------------------------------------------------------
+
+var locals = {}
+
+func add_local(name, value):
+	locals[name] = value
+
+func get_locals():
+	var _locals = locals.duplicate(true)
+	if dialog_target and dialog_target.get('caller'):
+		_locals['caller'] = dialog_target.caller
+	for c in Diagraph.characters:
+		_locals[c] = Diagraph.characters[c]
+	return _locals
+
+# ******************************************************************************
+
 func _ready():
 	validate_paths()
 	call_deferred('refresh')
@@ -39,16 +60,10 @@ func load_characters():
 				var c = load(file_name).instance()
 				characters[c.name] = c
 
-	var char_map = load_json(character_map_path)
+	var char_map = load_json(character_map_path, {})
 	for name in char_map:
 		if dir.file_exists(char_map[name]):
 			characters[name] = load(char_map[name]).instance()
-
-# ******************************************************************************
-
-func start_dialog(conversation, options={}):
-	if dialog_target:
-		dialog_target.start(conversation, options)
 
 # ******************************************************************************
 

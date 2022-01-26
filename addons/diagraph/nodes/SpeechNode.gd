@@ -34,8 +34,8 @@ func _ready():
 
 	data['entry'] = false
 
-	refresh_colors()
-	Diagraph.connect('refreshed', self, 'refresh_colors')
+	TextEdit.refresh_colors()
+	Diagraph.connect('refreshed', TextEdit, 'refresh_colors')
 
 	set_slot_color_right(1, slot_colors[0])
 	set_slot_color_right(2, slot_colors[1])
@@ -51,21 +51,6 @@ func _on_gui_input(event):
 		# print('right click')
 		accept_event()
 
-func refresh_colors():
-	TextEdit.clear_colors()
-
-	TextEdit.add_color_region('#', '', Color.forestgreen, true)
-
-	for name in Diagraph.characters:
-		if Diagraph.characters[name].get('color'):
-			TextEdit.add_keyword_color(name, Diagraph.characters[name].color)
-
-	# TextEdit.add_color_region('{', '}', Color.green)
-	# TextEdit.add_color_region('<', '>', Color.dodgerblue)
-	# TextEdit.add_color_region('[', ']', Color.yellow)
-	# TextEdit.add_color_region('(', ')', Color.orange)
-	# TextEdit.add_color_region('"', '"', Color.red)
-
 func index_pressed(index):
 	match Edit.get_popup().get_item_text(index):
 		'Choices':
@@ -73,12 +58,6 @@ func index_pressed(index):
 			var state = Edit.get_popup().is_item_checked(0)
 			data['show_choices'] = state
 			set_choices_enabled(state)
-			
-		'Entry':
-			Edit.get_popup().toggle_item_checked(0)
-			var state = Edit.get_popup().is_item_checked(0)
-			data['entry'] = state
-			prints('entry:', state)
 
 # ******************************************************************************
 
@@ -103,9 +82,6 @@ func get_data():
 func set_data(new_data):
 	if 'text' in new_data:
 		TextEdit.text = new_data.text
-	if 'entry' in new_data:
-		data['entry'] = new_data['entry']
-		Edit.get_popup().set_item_checked(1, new_data['entry'])
 	if 'show_choices' in new_data:
 		var state = new_data['show_choices']
 		data['show_choices'] = new_data['show_choices']

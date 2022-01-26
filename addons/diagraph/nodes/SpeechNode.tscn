@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://addons/diagraph/nodes/BaseNode.tscn" type="PackedScene" id=1]
 [ext_resource path="res://addons/diagraph/nodes/SpeechNode.gd" type="Script" id=2]
 [ext_resource path="res://addons/diagraph/nodes/Choice.gd" type="Script" id=3]
+[ext_resource path="res://addons/diagraph/nodes/TextEdit.gd" type="Script" id=4]
 
 [sub_resource type="StyleBoxEmpty" id=1]
 
@@ -70,14 +71,20 @@ script = ExtResource( 2 )
 margin_right = 389.0
 margin_bottom = 396.0
 
+[node name="Id" parent="Body/Toolbar" index="0"]
+margin_top = 3.0
+margin_right = 19.0
+margin_bottom = 20.0
+
 [node name="Title" parent="Body/Toolbar" index="1"]
+margin_left = 26.0
 margin_right = 344.0
 text = "Speech"
 
 [node name="Edit" parent="Body/Toolbar" index="2"]
 margin_left = 351.0
 margin_right = 367.0
-items = [ "Choices", null, 1, false, false, 0, 0, null, "", false, "Entry", null, 1, false, false, 1, 0, null, "", false ]
+items = [ "Choices", null, 1, false, false, 0, 0, null, "", false ]
 
 [node name="Close" parent="Body/Toolbar" index="3"]
 margin_left = 374.0
@@ -98,9 +105,9 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 syntax_highlighting = true
 show_line_numbers = true
-draw_tabs = true
 highlight_all_occurrences = true
 wrap_enabled = true
+script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

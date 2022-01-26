@@ -44,6 +44,7 @@ func add_option(option, value=null):
 	button.text = option
 
 	$Options.add_child(button)
+	return button
 
 func remove_options() -> void:
 	for child in $Options.get_children():
@@ -61,21 +62,27 @@ var line_count = 0
 var length = -1
 
 func start(conversation, options={}):
-	var parts = conversation.split(':')
-	var name = Diagraph.name_to_path(parts[0])
+	var name = ''
 	var entry = ''
 	var line = 0
-	if parts.size() >= 2:
-		entry = parts[1]
-	if parts.size() >= 3:
-		line = int(parts[2])
+	remove_options()
+
+	if conversation.begins_with('res://'):
+		name = conversation
+	else:
+		var parts = conversation.split(':')
+		name = Diagraph.name_to_path(parts[0])
+		if parts.size() >= 2:
+			entry = parts[1]
+		if parts.size() >= 3:
+			line = int(parts[2])
 
 	active = true
 	caller = null
 	$Name/Outline.modulate = Color.white
 	$TextBox/Outline.modulate = Color.white
 
-	nodes = Diagraph.load_json(name)
+	nodes = Diagraph.load_json(name, {})
 
 	current_node = null
 	if entry:
@@ -110,6 +117,7 @@ func start(conversation, options={}):
 func stop():
 	active = false
 	hide()
+	remove_options()
 	emit_signal('done')
 
 func next():
@@ -130,7 +138,13 @@ func next():
 			waiting_for_choice = true
 			for c in current_data.choices:
 				if current_data.choices[c].choice:
-					add_option(current_data.choices[c].choice, c)
+					var result = true
+					var condition = current_data.choices[c].condition
+					if condition:
+						result = Eval.evaluate(condition, self, Diagraph.get_locals())
+					var option = add_option(current_data.choices[c].choice, c)
+					if !result:
+						option.set_disabled(true)
 			if $Options.get_child_count():
 				$Options.get_child(0).grab_focus()
 			return
@@ -216,13 +230,8 @@ func process_text(use_timer=true):
 				if end != -1:
 					var command = next_line.substr(line_index, end - line_index + 2)
 					line_index = end + 2
-					var locals = {
-						'caller': caller,
-					}
-					for c in Diagraph.characters:
-						locals[c] = Diagraph.characters[c]
 					var cmd = command.lstrip('{{').rstrip('}}')
-					var result = Eval.evaluate(cmd, self, locals)
+					var result = Eval.evaluate(cmd, self, Diagraph.get_locals())
 					next_line.erase(line_index, end - line_index + 2)
 					next_line = next_line.insert(line_index, str(result))
 					$DebugLog.text += '\nexpansion: ' + str(result)
@@ -232,13 +241,8 @@ func process_text(use_timer=true):
 				if end != -1:
 					var command = next_line.substr(line_index, end - line_index + 1)
 					line_index = end + 1
-					var locals = {
-						'caller': caller,
-					}
-					for c in Diagraph.characters:
-						locals[c] = Diagraph.characters[c]
 					var cmd = command.lstrip('{').rstrip('}')
-					var result = Eval.evaluate(cmd, self, locals)
+					var result = Eval.evaluate(cmd, self, Diagraph.get_locals())
 					$DebugLog.text += '\ncommand: ' + command
 					# process_text()
 		'<': # reserved for future use

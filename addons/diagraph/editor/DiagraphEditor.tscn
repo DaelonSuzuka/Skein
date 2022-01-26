@@ -97,7 +97,7 @@ margin_bottom = 596.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 right_disconnects = true
-scroll_offset = Vector2( -150, -320 )
+scroll_offset = Vector2( -318, -266 )
 snap_distance = 10
 zoom_step = 1.1
 show_zoom_label = true
@@ -132,14 +132,14 @@ text = "Save"
 flat = true
 
 [node name="Clear" type="Button" parent="Toolbar"]
-margin_right = 51.0
+margin_right = 42.0
 margin_bottom = 32.0
 text = "Clear"
 flat = true
 
 [node name="Run" type="Button" parent="Toolbar"]
-margin_left = 55.0
-margin_right = 97.0
+margin_left = 46.0
+margin_right = 79.0
 margin_bottom = 32.0
 text = "Run"
 flat = true
