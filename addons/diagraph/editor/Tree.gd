@@ -38,7 +38,8 @@ func refresh():
 	chars.set_text(0, 'Characters')
 	for convo in Diagraph.conversations:
 		var item = create_item(convos)
-		item.set_text(0, convo)
+		var text = convo.substr(0, convo.length() - '.json'.length())
+		item.set_text(0, text)
 		var path = Diagraph.conversation_path + convo
 		item.set_metadata(0, path)
 		item.set_tooltip(0, path)
