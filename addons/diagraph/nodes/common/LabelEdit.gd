@@ -35,7 +35,7 @@ func line_edit_input(event):
 				accept_event()
 
 func label_gui_input(event):
-	if event is InputEventMouseButton:
+	if event is InputEventMouseButton and event.button_index == 1:
 		if event.doubleclick:
 			start_editing()
 			accept_event()
@@ -48,16 +48,20 @@ func start_editing():
 	line_edit.show()
 	add_child(line_edit)
 	line_edit.grab_focus()
+	line_edit.caret_position = line_edit.text.length()
+	line_edit.select_all()
 	
 func accept():
 	text = line_edit.text
 	label.text = text
 	label.show()
 	line_edit.hide()
-	remove_child(line_edit)
+	if line_edit.get_parent():
+		remove_child(line_edit)
 	emit_signal('text_changed', text)
 
 func reject():
 	label.show()
 	line_edit.hide()
-	remove_child(line_edit)
+	if line_edit.get_parent():
+		remove_child(line_edit)
