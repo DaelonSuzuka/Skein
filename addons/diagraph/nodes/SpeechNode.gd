@@ -48,7 +48,7 @@ func _on_gui_input(event):
 	if !(event is InputEventMouseButton) or !event.pressed:
 		return
 	if event.button_index == 2:
-		print('right click')
+		# print('right click')
 		accept_event()
 
 func refresh_colors():
