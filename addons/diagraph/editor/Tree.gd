@@ -9,12 +9,14 @@ var root: TreeItem = null
 var convos: TreeItem = null
 var chars: TreeItem = null
 
+signal conversation_changed(path)
 signal conversation_selected(path)
 signal conversation_created(path)
 signal conversation_deleted(path)
 signal conversation_renamed(old_path, new_path)
 
-signal character_added(path)
+signal card_selected(path)
+signal card_renamed(id, new_path)
 
 # ******************************************************************************
 
@@ -32,42 +34,47 @@ func refresh():
 		root.free()
 	root = create_item()
 
-	convos = create_item(root)
-	convos.set_text(0, 'Conversations')
-	chars = create_item(root)
-	chars.set_text(0, 'Characters')
 	for convo in Diagraph.conversations:
-		var item = create_item(convos)
-		var text = convo.substr(0, convo.length() - '.json'.length())
+		var item = create_item(root)
+		var text = convo
+		var path = convo
 		item.set_text(0, text)
-		var path = Diagraph.conversation_path + convo
 		item.set_metadata(0, path)
 		item.set_tooltip(0, path)
 
-	for character in Diagraph.characters:
-		var item = create_item(chars)
-		item.set_text(0, character)
+		var nodes = Diagraph.load_json(Diagraph.name_to_path(path), {})
+		for node in nodes.values():
+			var _item = create_item(item)
+			_item.set_text(0, node.name)
+			_item.set_metadata(0, node.id)
+			# _item.set_tooltip(0, str(node.id))
 
 func _on_gui_input(event):
 	if event is InputEventMouseButton and event.button_index == 1:
-		if event.is_pressed() and event.doubleclick:
-			_start_rename()
+		if event.pressed and event.doubleclick:
+			change_conversation()
+
+func change_conversation():
+	var item = get_selected()
+	var parent = item.get_parent()
+	var path = get_item_path(item)
+
+	emit_signal('conversation_changed', path)
+
+# ******************************************************************************
 
 func _start_rename():
 	var item = get_selected()
-	if item.get_parent() == convos:
-		edit_selected()
-		var path = item.get_metadata(0)
-		if path:
-			item.set_editable(0, true)
+	item.set_editable(0, true)
+	edit_selected()
 
 func _on_item_edited():
 	var item = get_selected()
 	item.set_editable(0, false)
-	if item.get_parent() == convos:
+	if item.get_parent() == root:
 		var name = item.get_text(0)
 		var path = item.get_metadata(0)
-		var new_path = Diagraph.conversation_path + name + '.json'
+		var new_path = name
 		if path:
 			item.set_metadata(0, new_path)
 			item.set_tooltip(0, new_path)
@@ -76,73 +83,66 @@ func _on_item_edited():
 			item.set_metadata(0, new_path)
 			item.set_tooltip(0, new_path)
 			emit_signal('conversation_created', new_path)
+	else:
+		var name = item.get_text(0)
+		var id = item.get_metadata(0)
+		item.set_tooltip(0, name)
+		emit_signal('card_renamed', id, name)
 
 # ******************************************************************************
 
-func can_drop_data(position, data) -> bool:
-	var result = false
-	if 'files' in data:
-		if data.files.size() == 1:
-			result = data.files[0].ends_with('.tscn')
-	return result
+func get_item_path(item:TreeItem) -> String:
+	var parent = item.get_parent()
+	if parent == root:
+		return item.get_text(0)
+	else:
+		return parent.get_text(0) + ':' + item.get_text(0)
 
-func drop_data(position, data) -> void:
-	emit_signal('character_added', data.files[0])
-
-# ******************************************************************************
-
-func _on_item_selected():
+func _on_item_selected() -> void:
 	var item = get_selected()
+	var parent = item.get_parent()
+	var path = get_item_path(item)
 	
-	if item.get_parent() == convos:
-		var path = item.get_metadata(0)
-		if path:
-			emit_signal('conversation_selected', path)
+	if parent == root:
+		emit_signal('conversation_selected', path)
+	else:
+		emit_signal('card_selected', path)
+
+# ******************************************************************************
 
 var ctx = null
 
-func _on_item_rmb_selected(position):
+func _on_item_rmb_selected(position) -> void:
 	if ctx:
 		ctx.queue_free()
 		ctx = null
 	var item = get_selected()
 
-	if item == convos:
-		ctx = ContextMenu.new(self, 'item_selected')
+	ctx = ContextMenu.new(self, '_on_ctx_item_selected')
+	if item.get_parent() == root:
 		ctx.add_item('New')
-		# ctx.add_item('Create Subfolder')
-		# ctx.add_item('Delete Folder')
-		ctx.open(get_global_mouse_position())
-		return
-
-	if item.get_parent() == convos:
-		ctx = ContextMenu.new(self, 'item_selected')
-		ctx.add_item('New')
-		# ctx.add_item('Copy Name')
+		ctx.add_item('Copy Path')
 		ctx.add_item('Rename')
 		ctx.add_item('Delete')
-		ctx.open(get_global_mouse_position())
-		return
-	
-	# ctx = ContextMenu.new(self, 'item_selected')
-	# if item == chars:
-	# 	ctx.add_item('chars')
-	# if item.get_parent() == chars:
-	# 	ctx.add_item('char')
-	# ctx.open(position)
+	else:
+		ctx.add_item('Copy Path')
+		# ctx.add_item('Copy Name')
+		ctx.add_item('Rename')
+		# ctx.add_item('Delete')
+	ctx.open(get_global_mouse_position())
 
-func item_selected(selection):
+func _on_ctx_item_selected(selection:String) -> void:
 	match selection:
 		'New':
-			print('create convo')
-			var item = create_item(convos)
+			var item = create_item(root)
 			item.set_text(0, 'new')
 			item.set_editable(0, true)
 			item.select(0)
 			call_deferred('edit_selected')
-		'Copy Name':
+		'Copy Path':
 			var item = get_selected()
-			print(item.get_text(0))
+			var path = get_item_path(item)
+			OS.clipboard = path
 		'Rename':
 			_start_rename()
 		'Delete':
@@ -152,4 +152,3 @@ func item_selected(selection):
 			var path = item.get_metadata(0)
 			if path:
 				emit_signal('conversation_deleted', path)
-

@@ -32,11 +32,13 @@ func _ready():
 	$Preview/Dimmer.show()
 	$Preview.hide()
 
-	Tree.connect('conversation_selected', self, 'change_conversation')
+	Tree.connect('conversation_changed', self, 'change_conversation')
+	Tree.connect('conversation_selected', self, 'conversation_selected')
 	Tree.connect('conversation_created', self, 'create_conversation')
 	Tree.connect('conversation_deleted', self, 'delete_conversation')
 	Tree.connect('conversation_renamed', self, 'rename_conversation')
-	Tree.connect('character_added', self, 'character_added')
+	Tree.connect('card_selected', self, 'card_selected')
+	Tree.connect('card_renamed', self, 'card_renamed')
 
 	if !Engine.editor_hint or is_plugin:
 		load_editor_data()
@@ -56,7 +58,7 @@ func save_conversation():
 	if !current_conversation:
 		return
 	var nodes = GraphEdit.get_conversation()
-	save_json(current_conversation, nodes)
+	save_json(Diagraph.name_to_path(current_conversation), nodes)
 
 func change_conversation(path):
 	save_conversation()
@@ -64,14 +66,19 @@ func change_conversation(path):
 	load_conversation(path)
 
 func load_conversation(path):
+	var parts = path.split(':')
+	var name = parts[0]
+	if current_conversation == name:
+		return
+	print('loading convo: ', path)
 	GraphEdit.clear()
-	current_conversation = path
+	current_conversation = name
 
-	if path in editor_data:
-		GraphEdit.set_data(editor_data[path])
+	if name in editor_data:
+		GraphEdit.set_data(editor_data[name])
 	else:
-		editor_data[path] = {}
-	var nodes = load_json(path)
+		editor_data[name] = {}
+	var nodes = load_json(Diagraph.name_to_path(name), {})
 	if nodes:
 		GraphEdit.set_conversation(nodes)
 
@@ -87,7 +94,7 @@ func delete_conversation(path):
 	editor_data.erase(path)
 	save_editor_data()
 	var dir = Directory.new()
-	dir.remove(path)
+	dir.remove(Diagraph.name_to_path(path))
 	Diagraph.load_conversations()
 
 func rename_conversation(old, new):
@@ -98,15 +105,26 @@ func rename_conversation(old, new):
 	editor_data.erase(old)
 	save_editor_data()
 	var dir = Directory.new()
-	dir.rename(old, new)
+	dir.rename(Diagraph.name_to_path(old), Diagraph.name_to_path(new))
 	load_conversation(new)
 	Diagraph.load_conversations()
+
+func conversation_selected(path):
+	pass
+	# print('conversation_selected: ', path)
+
+func card_selected(path):
+	pass
+	# print('conversation_selected: ', path)
+
+func card_renamed(old, new):
+	pass
+	# prints('card_renamed:', old, new)
 
 # ******************************************************************************
 
 func character_added(path):
 	var char_map = load_json(Diagraph.character_map_path, {})
-	print(char_map)
 	var c = load(path).instance()
 	char_map[c.name] = path
 	save_json(Diagraph.character_map_path, char_map)

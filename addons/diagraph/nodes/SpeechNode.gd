@@ -32,8 +32,6 @@ func _ready():
 	for c in choices:
 		data['choices'][c.name[6]] = {}
 
-	data['entry'] = false
-
 	TextEdit.refresh_colors()
 	Diagraph.connect('refreshed', TextEdit, 'refresh_colors')
 
@@ -45,11 +43,13 @@ func _ready():
 	connect('gui_input', self, '_on_gui_input')
 
 func _on_gui_input(event):
-	if !(event is InputEventMouseButton) or !event.pressed:
+	if !(event is InputEventMouseButton):
 		return
-	if event.button_index == 2:
-		# print('right click')
-		accept_event()
+	if event.button_index != 2 or !event.pressed:
+		return
+
+	# accept_event()
+	# print('right click')
 
 func index_pressed(index):
 	match Edit.get_popup().get_item_text(index):
@@ -92,14 +92,6 @@ func set_data(new_data):
 			c.set_data(new_data['choices'][c.name[6]])
 			
 	.set_data(new_data)
-
-# ******************************************************************************
-
-# func _input(event):
-# 	if event is InputEventMouseButton and event.button_index == 2 and event.pressed:
-# 		if Rect2(rect_position, rect_size).has_point(event.position):
-# 			accept_event()
-# 			print('speech ctxmenu')
 
 # ******************************************************************************
 
