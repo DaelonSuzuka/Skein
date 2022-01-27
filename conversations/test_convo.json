@@ -39,7 +39,6 @@
 				"next": ""
 			}
 		},
-		"entry": true,
 		"text": "Ash: What's happening?\nPico: I don't know.....\nPico: Do you think this is that new dialog editor we've heard about?"
 	},
 	"3161026589": {
@@ -75,7 +74,6 @@
 				"next": ""
 			}
 		},
-		"entry": true,
 		"text": "Pico: What features do you think it'll have?\nAsh: {speed(.001)}Maybe you can speed up the text!\nAsh: Or slow it {speed(.5)}w a y{speed()} down?"
 	},
 	"2668139190": {
@@ -111,7 +109,6 @@
 				"next": ""
 			}
 		},
-		"entry": true,
 		"text": "Pico: I wonder what else it could be...."
 	}
 }
