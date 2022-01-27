@@ -3,30 +3,24 @@
 		"id": 4134715227,
 		"type": "speech",
 		"name": "Speech",
+		"text": "Ash: What's happening?\nPico: I don't know.....\nPico: Do you think this is that new dialog editor we've heard about?",
 		"next": "choice",
-		"rect_size": "Vector2( 400, 400 )",
-		"offset": "Vector2( -510, 80 )",
+		"rect_size": "Vector2( 400, 400.001 )",
+		"offset": "Vector2( -510, 70 )",
 		"connections": {
-			"3161026589": [
-				0,
-				0
-			],
-			"2668139190": [
-				1,
-				0
-			]
+
 		},
 		"show_choices": true,
 		"choices": {
 			"1": {
 				"choice": "Yeah!",
 				"condition": "",
-				"next": "3161026589"
+				"next": ""
 			},
 			"2": {
 				"choice": "I don't think so...",
 				"condition": "",
-				"next": "2668139190"
+				"next": ""
 			},
 			"3": {
 				"choice": "",
@@ -38,16 +32,16 @@
 				"condition": "",
 				"next": ""
 			}
-		},
-		"text": "Ash: What's happening?\nPico: I don't know.....\nPico: Do you think this is that new dialog editor we've heard about?"
+		}
 	},
 	"3161026589": {
 		"id": 3161026589,
 		"type": "speech",
 		"name": "Speech",
+		"text": "Pico: What features do you think it'll have?\nAsh: {speed(.001)}Maybe you can speed up the text!\nAsh: Or slow it {speed(.5)}w a y{speed()} down?",
 		"next": "none",
-		"rect_size": "Vector2( 570, 375 )",
-		"offset": "Vector2( 50, 0 )",
+		"rect_size": "Vector2( 570, 375.001 )",
+		"offset": "Vector2( 50, 20 )",
 		"connections": {
 
 		},
@@ -73,13 +67,13 @@
 				"condition": "",
 				"next": ""
 			}
-		},
-		"text": "Pico: What features do you think it'll have?\nAsh: {speed(.001)}Maybe you can speed up the text!\nAsh: Or slow it {speed(.5)}w a y{speed()} down?"
+		}
 	},
 	"2668139190": {
 		"id": 2668139190,
 		"type": "speech",
 		"name": "Speech",
+		"text": "Pico: I wonder what else it could be....",
 		"next": "none",
 		"rect_size": "Vector2( 590, 200 )",
 		"offset": "Vector2( 70, 420 )",
@@ -108,7 +102,152 @@
 				"condition": "",
 				"next": ""
 			}
+		}
+	},
+	"1099556929": {
+		"id": 1099556929,
+		"type": "speech",
+		"name": "Speech",
+		"text": "second branch",
+		"next": "none",
+		"rect_size": "Vector2( 230, 180 )",
+		"offset": "Vector2( 110, -560 )",
+		"connections": {
+
 		},
-		"text": "Pico: I wonder what else it could be...."
+		"show_choices": false,
+		"choices": {
+			"1": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			},
+			"2": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			},
+			"3": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			},
+			"4": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			}
+		}
+	},
+	"1519752278": {
+		"id": 1519752278,
+		"type": "speech",
+		"name": "Speech",
+		"text": "third branch",
+		"next": "none",
+		"rect_size": "Vector2( 200, 220 )",
+		"offset": "Vector2( -60, -340 )",
+		"connections": {
+
+		},
+		"show_choices": false,
+		"choices": {
+			"1": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			},
+			"2": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			},
+			"3": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			},
+			"4": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			}
+		}
+	},
+	"3154986942": {
+		"id": 3154986942,
+		"type": "speech",
+		"name": "Speech",
+		"text": "first branch",
+		"next": "none",
+		"rect_size": "Vector2( 200, 190 )",
+		"offset": "Vector2( -160, -630 )",
+		"connections": {
+
+		},
+		"show_choices": false,
+		"choices": {
+			"1": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			},
+			"2": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			},
+			"3": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			},
+			"4": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			}
+		}
+	},
+	"1353875733": {
+		"id": 1353875733,
+		"type": "branch",
+		"name": "Branch",
+		"text": "",
+		"next": "branch",
+		"rect_size": "Vector2( 400, 175 )",
+		"offset": "Vector2( -684.769, -426.405 )",
+		"connections": {
+			"3154986942": [
+				0,
+				0
+			],
+			"1099556929": [
+				1,
+				0
+			],
+			"1519752278": [
+				2,
+				0
+			]
+		},
+		"branches": {
+			"1": {
+				"condition": "false",
+				"next": "3154986942"
+			},
+			"2": {
+				"condition": "false",
+				"next": "1099556929"
+			},
+			"3": {
+				"condition": "true",
+				"next": "1519752278"
+			},
+			"4": {
+				"condition": "",
+				"next": ""
+			}
+		}
 	}
 }
