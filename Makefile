@@ -9,6 +9,7 @@ MAKEFLAGS += -s
 # Targets
 
 pull:
+	git submodule update
 	git reset --hard
 	git pull
 

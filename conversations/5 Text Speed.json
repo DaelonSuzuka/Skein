@@ -3,10 +3,10 @@
 		"id": 3161026589,
 		"type": "speech",
 		"name": "Speech",
-		"text": "Ash: hi!",
+		"text": "Pico: What features do you think it'll have?\nAsh: {speed(.001)}Maybe you can speed up the text!\nAsh: Or slow it {speed(.5)}w a y{speed()} down?",
 		"next": "none",
-		"rect_size": "Vector2( 400, 400 )",
-		"offset": "Vector2( -220, 60 )",
+		"rect_size": "Vector2( 569.995, 375.005 )",
+		"offset": "Vector2( -310, -80 )",
 		"connections": {
 
 		},

@@ -1,116 +1,4 @@
 {
-	"4134715227": {
-		"id": 4134715227,
-		"type": "speech",
-		"name": "Speech",
-		"text": "Ash: What's happening?\nAlka: I don't know.....\nPico: Do you think this is that new dialog editor we've heard about?",
-		"next": "choice",
-		"rect_size": "Vector2( 400.001, 399.998 )",
-		"offset": "Vector2( -510, 70 )",
-		"connections": {
-			"3161026589": [
-				0,
-				0
-			],
-			"2668139190": [
-				1,
-				0
-			]
-		},
-		"show_choices": true,
-		"choices": {
-			"1": {
-				"choice": "Yeah!",
-				"condition": "",
-				"next": "3161026589"
-			},
-			"2": {
-				"choice": "I don't think so...",
-				"condition": "",
-				"next": "2668139190"
-			},
-			"3": {
-				"choice": "",
-				"condition": "",
-				"next": ""
-			},
-			"4": {
-				"choice": "",
-				"condition": "",
-				"next": ""
-			}
-		}
-	},
-	"3161026589": {
-		"id": 3161026589,
-		"type": "speech",
-		"name": "Speech",
-		"text": "Pico: What features do you think it'll have?\nAsh: {speed(.001)}Maybe you can speed up the text!\nAsh: Or slow it {speed(.5)}w a y{speed()} down?",
-		"next": "none",
-		"rect_size": "Vector2( 569.995, 375.005 )",
-		"offset": "Vector2( 50, 20 )",
-		"connections": {
-
-		},
-		"show_choices": false,
-		"choices": {
-			"1": {
-				"choice": "",
-				"condition": "",
-				"next": ""
-			},
-			"2": {
-				"choice": "",
-				"condition": "",
-				"next": ""
-			},
-			"3": {
-				"choice": "",
-				"condition": "",
-				"next": ""
-			},
-			"4": {
-				"choice": "",
-				"condition": "",
-				"next": ""
-			}
-		}
-	},
-	"2668139190": {
-		"id": 2668139190,
-		"type": "speech",
-		"name": "Speech",
-		"text": "Pico: I wonder what else it could be....",
-		"next": "none",
-		"rect_size": "Vector2( 590.005, 200 )",
-		"offset": "Vector2( 70, 420 )",
-		"connections": {
-
-		},
-		"show_choices": false,
-		"choices": {
-			"1": {
-				"choice": "",
-				"condition": "",
-				"next": ""
-			},
-			"2": {
-				"choice": "",
-				"condition": "",
-				"next": ""
-			},
-			"3": {
-				"choice": "",
-				"condition": "",
-				"next": ""
-			},
-			"4": {
-				"choice": "",
-				"condition": "",
-				"next": ""
-			}
-		}
-	},
 	"1099556929": {
 		"id": 1099556929,
 		"type": "speech",
@@ -118,7 +6,7 @@
 		"text": "second branch",
 		"next": "none",
 		"rect_size": "Vector2( 229.999, 180 )",
-		"offset": "Vector2( 80, -610 )",
+		"offset": "Vector2( 510, -50 )",
 		"connections": {
 
 		},
@@ -153,7 +41,7 @@
 		"text": "third branch",
 		"next": "none",
 		"rect_size": "Vector2( 200, 220 )",
-		"offset": "Vector2( -90, -390 )",
+		"offset": "Vector2( 340, 170 )",
 		"connections": {
 
 		},
@@ -188,7 +76,7 @@
 		"text": "first branch",
 		"next": "none",
 		"rect_size": "Vector2( 200.003, 190 )",
-		"offset": "Vector2( -190, -740 )",
+		"offset": "Vector2( 260, -170 )",
 		"connections": {
 
 		},
@@ -223,7 +111,7 @@
 		"text": "",
 		"next": "branch",
 		"rect_size": "Vector2( 400.001, 175 )",
-		"offset": "Vector2( -634.769, -476.405 )",
+		"offset": "Vector2( -220, 70 )",
 		"connections": {
 			"3154986942": [
 				0,
@@ -264,7 +152,7 @@
 		"text": "",
 		"next": "none",
 		"rect_size": "Vector2( 1220, 680 )",
-		"offset": "Vector2( -690, -810 )",
+		"offset": "Vector2( -260, -250 )",
 		"connections": {
 
 		},

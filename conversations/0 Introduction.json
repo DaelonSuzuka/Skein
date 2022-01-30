@@ -1,0 +1,37 @@
+{
+	"3161026589": {
+		"id": 3161026589,
+		"type": "speech",
+		"name": "Speech",
+		"text": "# Welcome to the live demo of the Diagraph dialog editor",
+		"next": "none",
+		"rect_size": "Vector2( 730, 560 )",
+		"offset": "Vector2( -10, -40 )",
+		"connections": {
+
+		},
+		"show_choices": false,
+		"choices": {
+			"1": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			},
+			"2": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			},
+			"3": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			},
+			"4": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			}
+		}
+	}
+}
