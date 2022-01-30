@@ -3,6 +3,7 @@
 		"id": 3161026589,
 		"type": "speech",
 		"name": "Speech",
+		"text": "Ash: hi!",
 		"next": "none",
 		"rect_size": "Vector2( 400, 400 )",
 		"offset": "Vector2( -220, 60 )",
@@ -31,7 +32,6 @@
 				"condition": "",
 				"next": ""
 			}
-		},
-		"text": "Ash: hi!"
+		}
 	}
 }
