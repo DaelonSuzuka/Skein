@@ -1,0 +1,37 @@
+{
+	"3161026589": {
+		"id": 3161026589,
+		"type": "speech",
+		"name": "Speech",
+		"text": "Ash: hi!\nByron: hi!\nClaire: hi!\nAlka: hi!\nCharli: Hey!\nLaurene: Yo!\nLydia: Hello.\nPico: What's up?\n",
+		"next": "none",
+		"rect_size": "Vector2( 400, 400 )",
+		"offset": "Vector2( -330, -110 )",
+		"connections": {
+
+		},
+		"show_choices": false,
+		"choices": {
+			"1": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			},
+			"2": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			},
+			"3": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			},
+			"4": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			}
+		}
+	}
+}

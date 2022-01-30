@@ -3,7 +3,7 @@
 		"id": 4134715227,
 		"type": "speech",
 		"name": "Speech",
-		"text": "Ash: What's happening?\nPico: I don't know.....\nPico: Do you think this is that new dialog editor we've heard about?",
+		"text": "Ash: What's happening?\nAlka: I don't know.....\nPico: Do you think this is that new dialog editor we've heard about?",
 		"next": "choice",
 		"rect_size": "Vector2( 400.001, 399.998 )",
 		"offset": "Vector2( -510, 70 )",
