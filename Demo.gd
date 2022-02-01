@@ -8,7 +8,11 @@ onready var Key = find_node('Key')
 onready var Value = find_node('Value')
 onready var Add = find_node('Add')
 
-var demo_vars := {}
+var demo_vars := {
+	'test': 'beep',
+	'wallet': 100,
+	'last_meal': 'pizza',
+}
 var demo_var_path = 'demo_vars.json'
 
 # ******************************************************************************
@@ -19,8 +23,12 @@ func _ready():
 	Value.connect('text_changed', self, 'value_text_changed')
 	Add.connect('pressed', self, 'add_pressed')
 	update_add_button()
-	demo_vars = Diagraph.load_json(demo_var_path, {})
+	demo_vars = Diagraph.load_json(demo_var_path, demo_vars)
 	DictBox.remove_child(DictEntry)
+
+	Diagraph.add_locals(demo_vars)
+	for key in demo_vars:
+		create_entry(key, demo_vars[key])
 
 func key_text_changed(new_text):
 	update_add_button()
@@ -31,18 +39,38 @@ func value_text_changed(new_text):
 func update_add_button():
 	Add.disabled = !(Key.text and Value.text)
 
+func check_string_types(text):
+	var value = text
+	if text.is_valid_integer():
+		value = text.to_int()
+	elif text.is_valid_integer():
+		value = text.to_float()
+	return value
+
 func add_pressed():
-	demo_vars[Key.text] = Value.text
+	var value = check_string_types(Value.text)
+	create_entry(Key.text, value)
+	Key.clear()
+	Value.clear()
+	save_demo_vars()
+
+func create_entry(key, value):
+	demo_vars[key] = value
 	var entry = DictEntry.duplicate(true)
-	var key = entry.get_node('DictKey')
-	var value = entry.get_node('DictValue')
-	entry.get_node('DictKey').text = Key.text
-	entry.get_node('DictValue').text = Value.text
+	var entry_key = entry.get_node('DictKey')
+	var entry_value = entry.get_node('DictValue')
+	entry_key.text = key
+	entry_value.text = str(value)
+	entry_value.connect('text_changed', self, 'entry_changed', [key])
 	DictBox.add_child(entry)
 	entry.show()
 
+func entry_changed(new_text, key):
+	var value = check_string_types(new_text)
+	demo_vars[key] = value
+	save_demo_vars()
+
 func save_demo_vars():
-	for entry in DictBox.get_children():
-		pass
-		# entry.get_node('DictKey').text
-		# entry.get_node('DictValue').text
+	print(demo_vars)
+	Diagraph.save_json(demo_var_path, demo_vars)
+	Diagraph.add_locals(demo_vars)

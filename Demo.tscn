@@ -55,15 +55,30 @@ __meta__ = {
 [node name="Control3" type="Control" parent="HSplitContainer/Control/VBoxContainer"]
 margin_right = 169.0
 
-[node name="ScrollContainer" type="ScrollContainer" parent="HSplitContainer/Control/VBoxContainer"]
+[node name="Label" type="Label" parent="HSplitContainer/Control/VBoxContainer"]
 margin_top = 4.0
+margin_right = 169.0
+margin_bottom = 29.0
+hint_tooltip = "These variables can be referenced inside your dialogues or in Branch nodes or Choice Conditions."
+mouse_filter = 1
+size_flags_horizontal = 3
+text = "Game Variables:"
+autowrap = true
+
+[node name="HSeparator" type="HSeparator" parent="HSplitContainer/Control/VBoxContainer"]
+margin_top = 33.0
+margin_right = 169.0
+margin_bottom = 37.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HSplitContainer/Control/VBoxContainer"]
+margin_top = 41.0
 margin_right = 169.0
 margin_bottom = 554.0
 size_flags_vertical = 3
 
 [node name="DictBox" type="VBoxContainer" parent="HSplitContainer/Control/VBoxContainer/ScrollContainer"]
 margin_right = 169.0
-margin_bottom = 550.0
+margin_bottom = 513.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
@@ -77,6 +92,7 @@ size_flags_horizontal = 3
 margin_right = 73.0
 margin_bottom = 25.0
 size_flags_horizontal = 3
+editable = false
 placeholder_text = "Key"
 
 [node name="DictValue" type="LineEdit" parent="HSplitContainer/Control/VBoxContainer/ScrollContainer/DictBox/DictEntry"]
@@ -86,7 +102,7 @@ margin_bottom = 25.0
 size_flags_horizontal = 3
 placeholder_text = "Value"
 
-[node name="HSeparator" type="HSeparator" parent="HSplitContainer/Control/VBoxContainer"]
+[node name="HSeparator2" type="HSeparator" parent="HSplitContainer/Control/VBoxContainer"]
 margin_top = 558.0
 margin_right = 169.0
 margin_bottom = 562.0
