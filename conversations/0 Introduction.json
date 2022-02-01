@@ -2,11 +2,448 @@
 	"3161026589": {
 		"id": 3161026589,
 		"type": "speech",
+		"name": "looking_for_lunch",
+		"text": "Alka: Are you hungry?\nByron: Yeah, I could eat.\nAlka: What do you want?",
+		"next": "choice",
+		"rect_size": "Vector2( 400, 400 )",
+		"offset": "Vector2( -410, -210 )",
+		"connections": {
+			"2668139190": [
+				0,
+				0
+			],
+			"4134715227": [
+				1,
+				0
+			],
+			"4204663500": [
+				2,
+				0
+			],
+			"1099556929": [
+				3,
+				0
+			]
+		},
+		"show_choices": true,
+		"choices": {
+			"1": {
+				"choice": "Pizza",
+				"condition": "",
+				"next": "2668139190"
+			},
+			"2": {
+				"choice": "Burgers",
+				"condition": "",
+				"next": "4134715227"
+			},
+			"3": {
+				"choice": "A salad?",
+				"condition": "",
+				"next": "4204663500"
+			},
+			"4": {
+				"choice": "Steak!",
+				"condition": "",
+				"next": "1099556929"
+			}
+		}
+	},
+	"2668139190": {
+		"id": 2668139190,
+		"type": "branch",
+		"name": "Branch",
+		"text": "",
+		"next": "branch",
+		"rect_size": "Vector2( 250, 175 )",
+		"offset": "Vector2( 180, -460 )",
+		"connections": {
+			"3154986942": [
+				0,
+				0
+			],
+			"517644291": [
+				1,
+				0
+			]
+		},
+		"branches": {
+			"1": {
+				"condition": "last_meal != 'pizza'",
+				"next": "3154986942"
+			},
+			"2": {
+				"condition": "",
+				"next": "517644291"
+			},
+			"3": {
+				"condition": "",
+				"next": ""
+			},
+			"4": {
+				"condition": "",
+				"next": ""
+			}
+		}
+	},
+	"4134715227": {
+		"id": 4134715227,
+		"type": "speech",
 		"name": "Speech",
-		"text": "# Welcome to the live demo of the Diagraph dialog editor",
+		"text": "Alka: I could go for burgers.",
 		"next": "none",
-		"rect_size": "Vector2( 730, 560 )",
-		"offset": "Vector2( -10, -40 )",
+		"rect_size": "Vector2( 310, 171 )",
+		"offset": "Vector2( 300, -60 )",
+		"connections": {
+
+		},
+		"show_choices": false,
+		"choices": {
+			"1": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			},
+			"2": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			},
+			"3": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			},
+			"4": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			}
+		}
+	},
+	"4204663500": {
+		"id": 4204663500,
+		"type": "speech",
+		"name": "Speech",
+		"text": "Alka: Wait, are you serious?\nByron: Of course not.\nByron: Let's call Lydia and see what she wants.",
+		"next": "none",
+		"rect_size": "Vector2( 360, 171 )",
+		"offset": "Vector2( 740, 0 )",
+		"connections": {
+
+		},
+		"show_choices": false,
+		"choices": {
+			"1": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			},
+			"2": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			},
+			"3": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			},
+			"4": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			}
+		}
+	},
+	"1099556929": {
+		"id": 1099556929,
+		"type": "branch",
+		"name": "Branch",
+		"text": "",
+		"next": "branch",
+		"rect_size": "Vector2( 250, 175 )",
+		"offset": "Vector2( 260, 360 )",
+		"connections": {
+			"3960688578": [
+				0,
+				0
+			],
+			"1798784612": [
+				1,
+				0
+			]
+		},
+		"branches": {
+			"1": {
+				"condition": "wallet > 80",
+				"next": "3960688578"
+			},
+			"2": {
+				"condition": "",
+				"next": "1798784612"
+			},
+			"3": {
+				"condition": "",
+				"next": ""
+			},
+			"4": {
+				"condition": "",
+				"next": ""
+			}
+		}
+	},
+	"3154986942": {
+		"id": 3154986942,
+		"type": "speech",
+		"name": "Speech",
+		"text": "Alka: Pizza sounds good, what toppings do you want?",
+		"next": "choice",
+		"rect_size": "Vector2( 390, 310 )",
+		"offset": "Vector2( 530, -650 )",
+		"connections": {
+			"1519752278": [
+				1,
+				0
+			],
+			"1353875733": [
+				0,
+				0
+			]
+		},
+		"show_choices": true,
+		"choices": {
+			"1": {
+				"choice": "Pepperoni?",
+				"condition": "",
+				"next": "1353875733"
+			},
+			"2": {
+				"choice": "Hawaiian.",
+				"condition": "",
+				"next": "1519752278"
+			},
+			"3": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			},
+			"4": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			}
+		}
+	},
+	"1519752278": {
+		"id": 1519752278,
+		"type": "speech",
+		"name": "Speech",
+		"text": "Alka: ._._._ Get out.",
+		"next": "none",
+		"rect_size": "Vector2( 320, 171 )",
+		"offset": "Vector2( 990, -400 )",
+		"connections": {
+
+		},
+		"show_choices": false,
+		"choices": {
+			"1": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			},
+			"2": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			},
+			"3": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			},
+			"4": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			}
+		}
+	},
+	"1353875733": {
+		"id": 1353875733,
+		"type": "speech",
+		"name": "Speech",
+		"text": "Alka: Great, I'll place the order.",
+		"next": "none",
+		"rect_size": "Vector2( 320, 171 )",
+		"offset": "Vector2( 990, -640 )",
+		"connections": {
+
+		},
+		"show_choices": false,
+		"choices": {
+			"1": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			},
+			"2": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			},
+			"3": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			},
+			"4": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			}
+		}
+	},
+	"3960688578": {
+		"id": 3960688578,
+		"type": "speech",
+		"name": "Speech",
+		"text": "Alka: Only if it's your treat, Byron!",
+		"next": "none",
+		"rect_size": "Vector2( 310, 171 )",
+		"offset": "Vector2( 690, 300 )",
+		"connections": {
+
+		},
+		"show_choices": false,
+		"choices": {
+			"1": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			},
+			"2": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			},
+			"3": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			},
+			"4": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			}
+		}
+	},
+	"1798784612": {
+		"id": 1798784612,
+		"type": "speech",
+		"name": "Speech",
+		"text": "Alka: But you told me you only have {{wallet}} dollars!",
+		"next": "none",
+		"rect_size": "Vector2( 330, 171 )",
+		"offset": "Vector2( 690, 490 )",
+		"connections": {
+
+		},
+		"show_choices": false,
+		"choices": {
+			"1": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			},
+			"2": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			},
+			"3": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			},
+			"4": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			}
+		}
+	},
+	"546127059": {
+		"id": 546127059,
+		"type": "comment",
+		"name": "Comment",
+		"text": "",
+		"next": "none",
+		"rect_size": "Vector2( 900, 470 )",
+		"offset": "Vector2( 190, 220 )",
+		"connections": {
+
+		},
+		"color": "fff1ff00"
+	},
+	"517644291": {
+		"id": 517644291,
+		"type": "speech",
+		"name": "Speech",
+		"text": "Alka: I just had pizza. Can't we have something else?",
+		"next": "none",
+		"rect_size": "Vector2( 350, 180 )",
+		"offset": "Vector2( 530, -300 )",
+		"connections": {
+
+		},
+		"show_choices": false,
+		"choices": {
+			"1": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			},
+			"2": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			},
+			"3": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			},
+			"4": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			}
+		}
+	},
+	"2465219394": {
+		"id": 2465219394,
+		"type": "comment",
+		"name": "Comment",
+		"text": "",
+		"next": "none",
+		"rect_size": "Vector2( 1240, 610 )",
+		"offset": "Vector2( 120, -690 )",
+		"connections": {
+
+		},
+		"color": "ff00fff9"
+	},
+	"1097442878": {
+		"id": 1097442878,
+		"type": "speech",
+		"name": "Speech",
+		"text": "# Welcome to Diagraph\n# This file has an example dialogue that will demonstrate some of Diagraph's features.\n\n\n# Select the card below titled 'looking_for_lunch'\n# Click the 'Run' button on the top toolbar",
+		"next": "none",
+		"rect_size": "Vector2( 480, 400 )",
+		"offset": "Vector2( -430, -690 )",
 		"connections": {
 
 		},
