@@ -21,6 +21,7 @@ Supports: (), [], {}, <>, "", '', ||
 
 ## Code execution
 Text inside of {curly braces} is executed silently.
-![](/img/code_exec_1.png)
-Text inside of {{double curly braces}} is executed and the result is printed to the dialog box.
 ![](/img/code_exec_2.png)
+
+Text inside of {{double curly braces}} is executed and the result is printed to the dialog box.
+![](/img/code_exec_1.png)
