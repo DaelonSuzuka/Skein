@@ -9,9 +9,9 @@ MAKEFLAGS += -s
 # Targets
 
 pull:
-	git submodule update
 	git reset --hard
 	git pull
+	git submodule update
 
 webdeploy:
 	$(GODOT) --export "HTML5"
