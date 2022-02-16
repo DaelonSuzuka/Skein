@@ -1,7 +1,7 @@
 [gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://characters/Laurene/Laurene_Portrait.png" type="Texture" id=1]
-[ext_resource path="res://characters/Portrait.gd" type="Script" id=2]
+[ext_resource path="res://characters/Character.gd" type="Script" id=2]
 [ext_resource path="res://characters/64xportrait_frame.png" type="Texture" id=7]
 
 [sub_resource type="SpriteFrames" id=1]

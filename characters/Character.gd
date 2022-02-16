@@ -4,6 +4,8 @@ extends Node2D
 
 export var color := Color()
 
+onready var portrait = $Portrait
+
 # ******************************************************************************
 
 func _ready():
