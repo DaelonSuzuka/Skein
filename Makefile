@@ -20,6 +20,10 @@ webdeploy:
 win:
 	$(GODOT) --export "Windows Desktop"
 
+itch:
+	$(GODOT) --export "HTML5"
+	butler.exe push build/web daelon/diagraph:html5
+
 # **************************************************************************** #
 # Variables
 
