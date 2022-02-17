@@ -8,6 +8,22 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Reference",
+"class": "SfxrGenerator",
+"language": "GDScript",
+"path": "res://addons/godot_sfxr/SfxrGenerator.gd"
+}, {
+"base": "Object",
+"class": "SfxrGlobals",
+"language": "GDScript",
+"path": "res://addons/godot_sfxr/SfxrGlobals.gd"
+} ]
+_global_script_class_icons={
+"SfxrGenerator": "",
+"SfxrGlobals": ""
+}
+
 [application]
 
 config/name="Diagraph"
@@ -27,7 +43,7 @@ gdscript/warnings/return_value_discarded=false
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/Iconify/plugin.cfg", "res://addons/godot-plugin-refresher/plugin.cfg", "res://addons/hyperlog/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/Iconify/plugin.cfg", "res://addons/godot-plugin-refresher/plugin.cfg", "res://addons/godot_sfxr/plugin.cfg", "res://addons/hyperlog/plugin.cfg" )
 
 [physics]
 
