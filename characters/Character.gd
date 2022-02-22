@@ -16,6 +16,9 @@ func _ready():
 		talk_count = Portrait.frames.get_frame_count('talk')
 
 func talk(c):
+	if c in [' ', ',', '.']:
+		return
+
 	if BlipPlayer:
 		BlipPlayer.play()
 
@@ -28,3 +31,6 @@ func talk(c):
 func idle():
 	if Portrait.frames.has_animation('idle'):
 		Portrait.play('idle')
+
+func mood(mood_name):
+	print('setting mood ', mood_name)
