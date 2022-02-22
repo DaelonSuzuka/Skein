@@ -29,7 +29,7 @@ func talk(c):
 		Portrait.frame = (Portrait.frame + 1) % talk_count
 
 func idle():
-	if Portrait.frames.has_animation('idle'):
+	if Portrait and Portrait.frames.has_animation('idle'):
 		Portrait.play('idle')
 
 func mood(mood_name):
