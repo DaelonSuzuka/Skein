@@ -26,7 +26,7 @@ func _ready():
 	demo_vars = Diagraph.load_json(demo_var_path, demo_vars)
 	DictBox.remove_child(DictEntry)
 
-	Diagraph.add_locals(demo_vars)
+	Diagraph.sandbox.add_locals(demo_vars)
 	for key in demo_vars:
 		create_entry(key, demo_vars[key])
 
@@ -73,4 +73,4 @@ func entry_changed(new_text, key):
 func save_demo_vars():
 	print(demo_vars)
 	Diagraph.save_json(demo_var_path, demo_vars)
-	Diagraph.add_locals(demo_vars)
+	Diagraph.sandbox.add_locals(demo_vars)
