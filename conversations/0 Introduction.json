@@ -470,5 +470,40 @@
 				"next": ""
 			}
 		}
+	},
+	"2642119551": {
+		"id": 2642119551,
+		"type": "speech",
+		"name": "Speech",
+		"text": "{{self}} {{caller}} {{scene}}\n\n{speed(1)} testing 1 2 3 4",
+		"next": "none",
+		"rect_size": "Vector2( 400, 400 )",
+		"offset": "Vector2( -980, -430 )",
+		"connections": {
+
+		},
+		"show_choices": false,
+		"choices": {
+			"1": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			},
+			"2": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			},
+			"3": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			},
+			"4": {
+				"choice": "",
+				"condition": "",
+				"next": ""
+			}
+		}
 	}
 }
