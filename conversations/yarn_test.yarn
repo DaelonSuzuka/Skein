@@ -1,0 +1,36 @@
+title: Test1
+offset: Vector2( -450, 0 )
+id: 3161026590
+
+type: speech
+---
+
+Alka: how much doge do you have?
+- A lot
+	Alka: wait really?
+- Not very much => UrPoor
+
+===
+title: UrPoor
+id: 3161026588
+type: speech
+---
+
+Alka: lol ur poor
+
+===
+title: Tanks
+offset: Vector2( 450, 0 )
+id: 3161026589
+type: speech
+---
+Companion: Hi there! What do you feel like doing today?
+
+-> I want to go swimming.
+    Companion: Okay, let's go swimming.
+	<<jump Test1>>
+-> I'd prefer to go hiking.
+    Companion: Cool, we'll go hiking then.
+    
+Player: Sounds good!
+===
