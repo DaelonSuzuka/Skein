@@ -1,28 +1,35 @@
-title: Test1
-offset: Vector2( -450, 0 )
 id: 3161026590
-
 type: speech
+position: Rect2( -370, -70, 400, 330 )
+title: GDM_Syntax
 ---
-
 Alka: how much doge do you have?
+
+// new inline choices
 - A lot
-	Alka: wait really?
+	Alka: Wait really?
+	Alka: Buy me lunch, rich guy!
+	- No way!
+		Alka: Awww
+	- Okay, let's go.
+		Alka: Hell yeah!
+// => jumps to a node by name
 - Not very much => UrPoor
 
 ===
-title: UrPoor
 id: 3161026588
 type: speech
+position: Rect2( 70, -70, 210, 170 )
+title: UrPoor
 ---
 
 Alka: lol ur poor
 
 ===
-title: Tanks
-offset: Vector2( 450, 0 )
 id: 3161026589
 type: speech
+position: Rect2( 450, 0, 400, 400 )
+title: YarnSyntax
 ---
 Companion: Hi there! What do you feel like doing today?
 
