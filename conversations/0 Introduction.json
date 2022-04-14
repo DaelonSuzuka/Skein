@@ -5,8 +5,9 @@
 		"name": "Steak Branch",
 		"text": "",
 		"next": "none",
-		"rect_size": "Vector2( 900, 470 )",
-		"offset": "Vector2( 190, 220 )",
+		"rect_size": "",
+		"position": "Rect2( 190, 220, 900, 470 )",
+		"offset": "",
 		"connections": {
 
 		},
@@ -18,8 +19,9 @@
 		"name": "Pizza Branch",
 		"text": "",
 		"next": "none",
-		"rect_size": "Vector2( 1240, 610 )",
-		"offset": "Vector2( 120, -690 )",
+		"rect_size": "",
+		"position": "Rect2( 120, -690, 1240, 610 )",
+		"offset": "",
 		"connections": {
 
 		},
@@ -31,8 +33,9 @@
 		"name": "looking_for_lunch",
 		"text": "Alka: Are you hungry?\nByron: Yeah, I could eat.\nAlka: What do you want?",
 		"next": "choice",
-		"rect_size": "Vector2( 400, 400 )",
-		"offset": "Vector2( -410, -210 )",
+		"rect_size": "",
+		"position": "Rect2( -410, -210, 400, 400 )",
+		"offset": "",
 		"connections": {
 			"2668139190": [
 				0,
@@ -81,8 +84,9 @@
 		"name": "Branch",
 		"text": "",
 		"next": "branch",
-		"rect_size": "Vector2( 250, 175 )",
-		"offset": "Vector2( 180, -460 )",
+		"rect_size": "",
+		"position": "Rect2( 180, -460, 250, 175 )",
+		"offset": "",
 		"connections": {
 			"3154986942": [
 				0,
@@ -118,8 +122,9 @@
 		"name": "Speech",
 		"text": "Alka: I could go for burgers.",
 		"next": "none",
-		"rect_size": "Vector2( 310, 171 )",
-		"offset": "Vector2( 300, -60 )",
+		"rect_size": "",
+		"position": "Rect2( 300, -60, 310, 171 )",
+		"offset": "",
 		"connections": {
 
 		},
@@ -153,8 +158,9 @@
 		"name": "Speech",
 		"text": "Alka: Wait, are you serious?\nByron: Of course not.\nByron: Let's call Lydia and see what she wants.",
 		"next": "none",
-		"rect_size": "Vector2( 360, 171 )",
-		"offset": "Vector2( 740, 0 )",
+		"rect_size": "",
+		"position": "Rect2( 740, 0, 360, 171 )",
+		"offset": "",
 		"connections": {
 
 		},
@@ -188,8 +194,9 @@
 		"name": "Branch",
 		"text": "",
 		"next": "branch",
-		"rect_size": "Vector2( 250, 175 )",
-		"offset": "Vector2( 260, 360 )",
+		"rect_size": "",
+		"position": "Rect2( 260, 360, 250, 175 )",
+		"offset": "",
 		"connections": {
 			"3960688578": [
 				0,
@@ -225,8 +232,9 @@
 		"name": "Speech",
 		"text": "Alka: Pizza sounds good, what toppings do you want?",
 		"next": "choice",
-		"rect_size": "Vector2( 390, 310 )",
-		"offset": "Vector2( 530, -650 )",
+		"rect_size": "",
+		"position": "Rect2( 530, -650, 390, 310 )",
+		"offset": "",
 		"connections": {
 			"1519752278": [
 				1,
@@ -267,8 +275,9 @@
 		"name": "Speech",
 		"text": "Alka: ._._._ Get out.",
 		"next": "none",
-		"rect_size": "Vector2( 320, 171 )",
-		"offset": "Vector2( 990, -400 )",
+		"rect_size": "",
+		"position": "Rect2( 990, -400, 320, 171 )",
+		"offset": "",
 		"connections": {
 
 		},
@@ -302,8 +311,9 @@
 		"name": "Speech",
 		"text": "Alka: Great, I'll place the order.",
 		"next": "none",
-		"rect_size": "Vector2( 320, 171 )",
-		"offset": "Vector2( 990, -640 )",
+		"rect_size": "",
+		"position": "Rect2( 990, -640, 320, 171 )",
+		"offset": "",
 		"connections": {
 
 		},
@@ -337,8 +347,9 @@
 		"name": "Speech",
 		"text": "Alka: Only if it's your treat, Byron!",
 		"next": "none",
-		"rect_size": "Vector2( 310, 171 )",
-		"offset": "Vector2( 690, 300 )",
+		"rect_size": "",
+		"position": "Rect2( 690, 300, 310, 171 )",
+		"offset": "",
 		"connections": {
 
 		},
@@ -372,8 +383,9 @@
 		"name": "Speech",
 		"text": "Alka: But you told me you only have {{wallet}} dollars!",
 		"next": "none",
-		"rect_size": "Vector2( 330, 171 )",
-		"offset": "Vector2( 690, 490 )",
+		"rect_size": "",
+		"position": "Rect2( 690, 490, 330, 171 )",
+		"offset": "",
 		"connections": {
 
 		},
@@ -407,8 +419,9 @@
 		"name": "Speech",
 		"text": "Alka: I just had pizza. Can't we have something else?",
 		"next": "none",
-		"rect_size": "Vector2( 350, 180 )",
-		"offset": "Vector2( 530, -300 )",
+		"rect_size": "",
+		"position": "Rect2( 530, -300, 350, 180 )",
+		"offset": "",
 		"connections": {
 
 		},
@@ -442,8 +455,9 @@
 		"name": "Speech",
 		"text": "# Welcome to Diagraph\n# This file has an example dialogue that will demonstrate some of Diagraph's features.\n\n\n# Select the card below titled 'looking_for_lunch'\n# Click the 'Run' button on the top toolbar",
 		"next": "none",
-		"rect_size": "Vector2( 480, 400 )",
-		"offset": "Vector2( -430, -690 )",
+		"rect_size": "",
+		"position": "Rect2( -430, -690, 480, 400 )",
+		"offset": "",
 		"connections": {
 
 		},
@@ -477,8 +491,9 @@
 		"name": "Speech",
 		"text": "{{self}} {{caller}} {{scene}}\n\n{speed(1)} testing 1 2 3 4",
 		"next": "none",
-		"rect_size": "Vector2( 400, 400 )",
-		"offset": "Vector2( -980, -430 )",
+		"rect_size": "",
+		"position": "Rect2( -980, -430, 400, 400 )",
+		"offset": "",
 		"connections": {
 
 		},
