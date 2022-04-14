@@ -41,6 +41,11 @@ gdscript/warnings/unused_variable=false
 gdscript/warnings/unused_argument=false
 gdscript/warnings/return_value_discarded=false
 
+[display]
+
+window/size/width=1920
+window/size/height=1200
+
 [editor_plugins]
 
 enabled=PoolStringArray( "res://addons/Iconify/plugin.cfg", "res://addons/godot-plugin-refresher/plugin.cfg", "res://addons/godot_sfxr/plugin.cfg", "res://addons/hyperlog/plugin.cfg" )
