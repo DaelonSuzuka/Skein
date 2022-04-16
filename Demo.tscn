@@ -26,13 +26,13 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 0.0
 margin_top = 0.0
-margin_right = 841.0
-margin_bottom = 600.0
+margin_right = 1737.0
+margin_bottom = 1200.0
 
 [node name="Control" type="Control" parent="HSplitContainer"]
-margin_left = 849.0
-margin_right = 1024.0
-margin_bottom = 600.0
+margin_left = 1745.0
+margin_right = 1920.0
+margin_bottom = 1200.0
 
 [node name="Panel" type="Panel" parent="HSplitContainer/Control"]
 modulate = Color( 0.537255, 0.537255, 0.537255, 1 )
@@ -73,12 +73,12 @@ margin_bottom = 37.0
 [node name="ScrollContainer" type="ScrollContainer" parent="HSplitContainer/Control/VBoxContainer"]
 margin_top = 41.0
 margin_right = 169.0
-margin_bottom = 554.0
+margin_bottom = 1154.0
 size_flags_vertical = 3
 
 [node name="DictBox" type="VBoxContainer" parent="HSplitContainer/Control/VBoxContainer/ScrollContainer"]
 margin_right = 169.0
-margin_bottom = 513.0
+margin_bottom = 1113.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
@@ -103,14 +103,14 @@ size_flags_horizontal = 3
 placeholder_text = "Value"
 
 [node name="HSeparator2" type="HSeparator" parent="HSplitContainer/Control/VBoxContainer"]
-margin_top = 558.0
+margin_top = 1158.0
 margin_right = 169.0
-margin_bottom = 562.0
+margin_bottom = 1162.0
 
 [node name="Control" type="Control" parent="HSplitContainer/Control/VBoxContainer"]
-margin_top = 566.0
+margin_top = 1166.0
 margin_right = 169.0
-margin_bottom = 596.0
+margin_bottom = 1196.0
 rect_min_size = Vector2( 0, 30 )
 size_flags_horizontal = 3
 
@@ -145,6 +145,6 @@ disabled = true
 text = "Add"
 
 [node name="Control2" type="Control" parent="HSplitContainer/Control/VBoxContainer"]
-margin_top = 600.0
+margin_top = 1200.0
 margin_right = 169.0
-margin_bottom = 600.0
+margin_bottom = 1200.0
