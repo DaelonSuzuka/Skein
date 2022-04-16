@@ -1,0 +1,55 @@
+id: 3161026590
+type: speech
+next: none
+position: Rect2( -410, -180, 430, 540 )
+connections: {}
+show_choices: False
+choices: {"1": {"choice": "","condition": "","next": ""},"2": {"choice": "","condition": "","next": ""},"3": {"choice": "","condition": "","next": ""},"4": {"choice": "","condition": "","next": ""}}
+title: Test1
+---
+Alka: how much doge do you have?
+
+// new inline choices
+- A lot
+	Alka: Wait really?
+	Alka: Buy me lunch, rich guy!
+	- No way!
+		Alka: Awww
+	- Okay, let's go.
+		Alka: Hell yeah!
+// => jumps to a node by name
+- Not very much => UrPoor
+
+===
+id: 3161026588
+type: speech
+next: none
+position: Rect2( 70, -70, 210, 170 )
+connections: {}
+show_choices: False
+choices: {"1": {"choice": "","condition": "","next": ""},"2": {"choice": "","condition": "","next": ""},"3": {"choice": "","condition": "","next": ""},"4": {"choice": "","condition": "","next": ""}}
+title: UrPoor
+---
+
+Alka: lol ur poor
+
+===
+id: 3161026589
+type: speech
+next: none
+position: Rect2( 450, 0, 400, 400 )
+connections: {}
+show_choices: False
+choices: {"1": {"choice": "","condition": "","next": ""},"2": {"choice": "","condition": "","next": ""},"3": {"choice": "","condition": "","next": ""},"4": {"choice": "","condition": "","next": ""}}
+title: YarnSyntax
+---
+Alka: Hi there! What do you feel like doing today?
+
+-> I want to go swimming.
+    Alka: Okay, let's go swimming.
+	<<jump Test1>>
+-> I'd prefer to go hiking.
+    Alka: Cool, we'll go hiking then.
+    
+Player: Sounds good!
+===
