@@ -13,15 +13,16 @@ pull:
 	git pull
 	git submodule update
 
-webdeploy:
+web:
 	$(GODOT) --export "HTML5"
+
+webdeploy: web
 	cp build/web/* ~/www/html/diagraph*
 
 win:
 	$(GODOT) --export "Windows Desktop"
 
 itch:
-	$(GODOT) --export "HTML5"
 	butler.exe push build/web daelon/diagraph:html5
 
 # **************************************************************************** #
