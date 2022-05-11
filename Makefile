@@ -17,7 +17,7 @@ web:
 	$(GODOT) --export "HTML5"
 
 webdeploy: web
-	cp build/web/* ~/www/html/isotope
+	cp build/web/* ~/www/html/diagraph
 
 win:
 	$(GODOT) --export "Windows Desktop"
