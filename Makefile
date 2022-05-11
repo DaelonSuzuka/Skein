@@ -17,7 +17,7 @@ web:
 	$(GODOT) --export "HTML5"
 
 webdeploy: web
-	cp build/web/* ~/www/html/diagraph*
+	cp build/web/* ~/www/html/isotope
 
 win:
 	$(GODOT) --export "Windows Desktop"
@@ -34,7 +34,7 @@ GD = ""
 ifndef WSLENV
 	GD := godot.exe
 else
-	GD := ~/godot/Godot_v3.4.2-stable_linux_headless.64
+	GD := ~/godot/Godot_v3.5-beta5_linux_headless.64
 endif
 
 GDARGS := --no-window --quiet
