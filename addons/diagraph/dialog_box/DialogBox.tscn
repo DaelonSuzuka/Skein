@@ -1,0 +1,208 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://addons/diagraph/resources/fonts/NotoSans-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://addons/diagraph/dialog_box/DialogBox.gd" type="Script" id=3]
+
+[sub_resource type="DynamicFont" id=12]
+size = 20
+font_data = ExtResource( 1 )
+
+[sub_resource type="Theme" id=11]
+default_font = SubResource( 12 )
+
+[sub_resource type="StyleBoxEmpty" id=6]
+
+[sub_resource type="StyleBoxFlat" id=9]
+bg_color = Color( 1, 1, 1, 1 )
+corner_radius_top_right = 15
+corner_radius_bottom_left = 15
+corner_detail = 1
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id=8]
+bg_color = Color( 0, 0, 0, 1 )
+corner_radius_top_right = 15
+corner_radius_bottom_left = 15
+corner_detail = 1
+anti_aliasing = false
+
+[sub_resource type="StyleBoxEmpty" id=4]
+
+[sub_resource type="StyleBoxEmpty" id=5]
+
+[sub_resource type="StyleBoxFlat" id=10]
+bg_color = Color( 1, 1, 1, 1 )
+corner_radius_top_right = 25
+corner_radius_bottom_left = 25
+corner_detail = 1
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id=7]
+bg_color = Color( 0, 0, 0, 1 )
+corner_radius_top_right = 25
+corner_radius_bottom_left = 25
+corner_detail = 1
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id=2]
+content_margin_left = 4.0
+content_margin_right = 4.0
+content_margin_top = 4.0
+content_margin_bottom = 4.0
+bg_color = Color( 0, 0, 0, 0.74902 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_detail = 1
+anti_aliasing = false
+
+[node name="DialogBox" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme = SubResource( 11 )
+script = ExtResource( 3 )
+
+[node name="Portrait" type="Control" parent="."]
+anchor_left = 0.15625
+anchor_top = 0.685291
+anchor_right = 0.15625
+anchor_bottom = 0.685291
+margin_top = 0.198593
+margin_bottom = 0.198593
+rect_scale = Vector2( 4, 4 )
+mouse_filter = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Name" type="Label" parent="."]
+anchor_left = 0.320312
+anchor_top = 0.533333
+anchor_right = 0.429687
+anchor_bottom = 0.586702
+custom_styles/normal = SubResource( 6 )
+text = "test"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="NameOutline" type="Panel" parent="Name"]
+show_behind_parent = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -6.0
+margin_top = -6.0
+margin_right = 6.0
+margin_bottom = 6.0
+custom_styles/panel = SubResource( 9 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="Name"]
+show_behind_parent = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -5.0
+margin_top = -5.0
+margin_right = 5.0
+margin_bottom = 5.0
+custom_styles/panel = SubResource( 8 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Options" type="HBoxContainer" parent="."]
+anchor_left = 0.445
+anchor_top = 0.533213
+anchor_right = 0.965445
+anchor_bottom = 0.591678
+margin_left = 0.319977
+margin_top = 0.0719986
+margin_right = 0.383972
+margin_bottom = -0.00660706
+alignment = 2
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="TextBox" type="RichTextLabel" parent="."]
+anchor_left = 0.320313
+anchor_top = 0.64
+anchor_right = 0.960938
+anchor_bottom = 0.893333
+rect_clip_content = false
+custom_styles/focus = SubResource( 4 )
+custom_styles/normal = SubResource( 5 )
+bbcode_enabled = true
+text = "teastaaegaegas"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="TextBoxOutline" type="Panel" parent="TextBox"]
+show_behind_parent = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -6.0
+margin_top = -6.0
+margin_right = 6.0
+margin_bottom = 6.0
+custom_styles/panel = SubResource( 10 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="TextBox"]
+show_behind_parent = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -5.0
+margin_top = -5.0
+margin_right = 5.0
+margin_bottom = 5.0
+custom_styles/panel = SubResource( 7 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Next" type="RichTextLabel" parent="TextBox"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -29.2502
+margin_top = -49.1999
+margin_right = -8.25024
+margin_bottom = -24.1999
+rect_scale = Vector2( 2, 2 )
+custom_styles/normal = SubResource( 6 )
+bbcode_enabled = true
+bbcode_text = "[rainbow freq=0.1 sat=10 val=20]>"
+text = ">"
+scroll_active = false
+
+[node name="DebugLog" type="Label" parent="."]
+visible = false
+anchor_left = 0.742727
+anchor_top = 0.06
+anchor_right = 0.955195
+anchor_bottom = 0.5
+margin_left = 0.447998
+margin_right = -0.120056
+grow_vertical = 0
+custom_styles/normal = SubResource( 2 )
+valign = 2
+clip_text = true
+max_lines_visible = 20
+__meta__ = {
+"_edit_use_anchors_": true
+}

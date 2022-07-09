@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://addons/diagraph/nodes/ExitNode.gd" type="Script" id=1]
+[ext_resource path="res://addons/diagraph/nodes/BaseNode.tscn" type="PackedScene" id=2]
+
+[node name="1" instance=ExtResource( 2 )]
+slot/0/left_enabled = true
+script = ExtResource( 1 )
+
+[node name="Title" parent="Body/Toolbar" index="1"]
+text = "Exit"
+
+[node name="Control" type="Control" parent="Body" index="1"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
