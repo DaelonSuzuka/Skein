@@ -11,7 +11,6 @@ MAKEFLAGS += -s
 pull:
 	git reset --hard
 	git pull
-	git submodule update
 
 web:
 	$(GODOT) --export "HTML5"
