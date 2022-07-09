@@ -17,13 +17,35 @@ web:
 	$(GODOT) --export "HTML5"
 
 webdeploy: web
-	cp build/web/* ~/www/html/diagraph
+	cp build/web/* /var/www/html/magnusdei.io/diagraph
 
 win:
 	$(GODOT) --export "Windows Desktop"
 
 itch:
 	butler.exe push build/web daelon/diagraph:html5
+
+# **************************************************************************** #
+# download godot binary and export templates for linux
+
+GDVERSION = 3.5
+GDBUILD = rc6
+
+URL = https://downloads.tuxfamily.org/godotengine/$(GDVERSION)/$(GDBUILD)/
+GDBINARY = Godot_v$(GDVERSION)-$(GDBUILD)_linux_headless.64
+TEMPLATES = Godot_v$(GDVERSION)-$(GDBUILD)_export_templates.tpz
+
+download:
+	wget $(URL)$(GDBINARY).zip
+	unzip $(GDBINARY).zip
+	mv $(GDBINARY) ~/godot
+	rm $(GDBINARY).zip
+
+	wget $(URL)$(TEMPLATES)
+	unzip $(TEMPLATES)
+	mv templates/ ~/.local/share/godot/templates/$(GDVERSION).$(GDBUILD)/
+
+	rm $(TEMPLATES)
 
 # **************************************************************************** #
 # Variables
@@ -34,7 +56,7 @@ GD = ""
 ifndef WSLENV
 	GD := godot.exe
 else
-	GD := ~/godot/Godot_v3.5-beta5_linux_headless.64
+	GD := ~/godot/$(GDBINARY)
 endif
 
 GDARGS := --no-window --quiet
@@ -42,64 +64,5 @@ GDARGS := --no-window --quiet
 GODOT = $(GD) $(GDARGS)
 
 # **************************************************************************** #
-# This makefile is for managing python virtual environments
-# Simply add "include venv.mk" to the bottom of your regular Makefile
 
-# Add this as a requirement to any make target that relies on the venv
-.PHONY: venv
-venv: $(VENV_DIR)
-
-# **************************************************************************** #
-
-# forward pip commands to the venv
-pip: venv
-	$(VENV_PYTHON) -m pip $(RUN_ARGS)
-
-# update requirements.txt to match the state of the venv
-freeze_reqs: venv
-	$(VENV_PYTHON) -m pip freeze > requirements.txt
-
-# try to update the venv - expirimental feature, don't rely on it
-update_venv: venv
-	$(VENV_PYTHON) -m pip install --upgrade -r requirements.txt
-
-# deletes the venv
-clean_venv:
-	$(RM) $(VENV_DIR)
-
-# deletes the venv and rebuilds it
-reset_venv: clean_venv venv
-
-# **************************************************************************** #
-# python venv settings
-VENV_NAME := .venv
-
-ifeq ($(OS),Windows_NT)
-	VENV_DIR := $(VENV_NAME)
-	VENV := $(VENV_DIR)\Scripts
-	PYTHON := python
-	VENV_PYTHON := $(VENV)\$(PYTHON)
-	VENV_PYINSTALLER := $(VENV)\pyinstaller
-	RM := rd /s /q 
-else
-	VENV_DIR := $(VENV_NAME)
-	VENV := $(VENV_DIR)/bin
-	PYTHON := python3
-	VENV_PYTHON := $(VENV)/$(PYTHON)
-	VENV_PYINSTALLER := $(VENV)/pyinstaller
-	RM := rm -rf 
-endif
-
-# Create the venv if it doesn't exist
-$(VENV_DIR):
-	$(PYTHON) -m venv $(VENV_DIR)
-	$(VENV_PYTHON) -m pip install --upgrade pip
-	$(VENV_PYTHON) -m pip install -r requirements.txt
-
-# If the first argument is "pip"...
-ifeq (pip,$(firstword $(MAKECMDGOALS)))
-  # use the rest as arguments for "pip"
-  RUN_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
-  # ...and turn them into do-nothing targets
-  $(eval $(RUN_ARGS):;@:)
-endif
+include venv.mk
