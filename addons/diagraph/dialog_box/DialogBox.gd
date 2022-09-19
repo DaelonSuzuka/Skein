@@ -93,28 +93,13 @@ func strip_name(text):
 
 func split_text(text):
 	var parts = text.split('\n')
-	var original = -1
-	var parts_to_concat = []
 
-	# for i in len(parts):
-	# 	if parts[i].ends_with('\\'):
-	# 		if original == -1:
-	# 			original = i
-	# 		parts_to_concat.append(i + 1)
-	# 	elif original != -1:
-	# 		for x in parts_to_concat:
-	# 			if x < len(parts):
-	# 				var next_part = parts[x]
-	# 				if ':' in next_part:
-	# 					next_part = strip_name(next_part)
-	# 				parts[original] += '\n' + next_part
-	# 				parts[x] = '#' + parts[x]
-	# 		original = -1
+	# text preprocess stages
+	parts = preprocess_random_lines(parts)
 
-	return preprocess_lines(parts)
+	return parts
 
-
-func preprocess_lines(lines):
+func preprocess_random_lines(lines):
 	var output = []
 	var choices = []
 
@@ -140,6 +125,7 @@ var nodes := {}
 var current_node = 0
 var current_line := 0
 var current_data := {}
+var continue_previous_line := false
 var caller: Node = null
 var line_count := 0
 var length := -1
@@ -487,7 +473,9 @@ func set_line(_line):
 	line_active = true
 	line = _line
 	cursor = 0
-	TextBox.bbcode_text = ''
+	if !continue_previous_line:
+		TextBox.bbcode_text = ''
+	continue_previous_line = false
 	DebugLog.text = ''
 	Next.visible = false
 	next_char_cooldown = original_cooldown
@@ -616,6 +604,11 @@ func next_char(use_timer=true):
 			if cursor < line.length():
 				print_char(line[cursor])
 				cursor += 1
+			else: # last char in line is backslash
+				print('continue on next line')
+				continue_previous_line = true
+				print_char('\n')
+
 		_:  # not a special character, just print it
 			print_char(this_char)
 			cursor += 1
