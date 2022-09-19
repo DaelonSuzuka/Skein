@@ -201,6 +201,8 @@ func _on_item_collapsed(item):
 
 func _on_item_selected() -> void:
 	var item = get_selected()
+	if item == null:
+		return
 	var type = item.get_meta('type')
 	if item.has_meta('path'):
 		var path = item.get_meta('path')
@@ -215,6 +217,8 @@ func _on_item_selected() -> void:
 
 func _on_item_activated():
 	var item = get_selected()
+	if item == null:
+		return
 	var path = item.get_meta('path')
 	var type = item.get_meta('type')
 
@@ -230,11 +234,15 @@ func _on_item_activated():
 
 func _start_rename():
 	var item = get_selected()
+	if item == null:
+		return
 	item.set_editable(0, true)
 	edit_selected()
 
 func _on_item_edited():
 	var item = get_selected()
+	if item == null:
+		return
 	var name = item.get_text(0)
 	var type = item.get_meta('type')
 	item.set_editable(0, false)
@@ -292,6 +300,8 @@ func select_item(path):
 
 func delete_item(id):
 	var item = root.get_children()
+	if item == null:
+		return
 	while true:
 		if item == null:
 			break
