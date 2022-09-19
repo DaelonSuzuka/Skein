@@ -3,7 +3,7 @@ extends EditorPlugin
 
 # ******************************************************************************
 
-const singleton_path = 'res://addons/diagraph/DiagraphSingleton.gd'
+const singleton_path = 'res://addons/diagraph/DiagraphSingleton.tscn'
 
 const inspector_class = 'res://addons/diagraph/DiagraphInspectorPlugin.gd'
 var inspector_instance

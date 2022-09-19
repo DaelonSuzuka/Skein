@@ -111,6 +111,42 @@ func split_text(text):
 
 	return parts
 
+
+# func preprocess_lines(lines):
+# 	var output = []
+# 	var choices = []
+
+# 	for line in lines:
+# 		if next_line.begins_with('%'):
+# 			choices.append(line)
+# 		else:
+# 			if choices:
+# 				line = choices[randi() % choices.size() - 1].lstrip('% ')
+# 				choices = []
+	
+# 			output.append(line)
+
+	# var i = 0
+	# while true:
+	# 	if i >= current_data.text.size():
+	# 		break
+	# 	var next_line = current_data.text[current_line + i]
+	# 	if !next_line.begins_with('%'):
+	# 		break
+
+	# 	choices.append(next_line)
+	# 	i += 1
+	
+	# var chosen_line = choices[randi() % choices.size() - 1].lstrip('% ')
+
+	# for choice in choices:
+	# 	var index = current_data.text.find(choice)
+	# 	current_data.text[index] = '#'
+
+	# current_data.text[current_line] = chosen_line
+
+	# return output
+
 # ******************************************************************************
 
 var nodes := {}
@@ -541,11 +577,19 @@ func next_char(use_timer=true):
 				var block = get_block('<', '>', ['nostrip'])
 				if block:
 					print(block)
-		'[':  # detect chunks of bbcode
-			var block = get_block('[', ']', ['nostrip'])
-			if block:
-				TextBox.bbcode_text += block
-				next_char()
+		'[':
+			if next_char == '[': # inline random dialog
+				var block = get_block('[[', ']]', ['erase'])
+				if block:
+					var parts = block.split('|')
+					var selection = parts[randi() % parts.size() - 1]
+					line = line.insert(cursor, str(selection))
+					next_char()
+			else: # detect chunks of bbcode
+				var block = get_block('[', ']', ['nostrip'])
+				if block:
+					TextBox.bbcode_text += block
+					next_char()
 		'|':  # pipe denotes chunks of text that should pop all at once
 			var end = line.findn('|', cursor + 1)
 			if end != -1:

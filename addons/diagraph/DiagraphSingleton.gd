@@ -14,6 +14,7 @@ var conversation_prefix := prefix + conversation_path
 
 var sandbox = load('res://addons/diagraph/Sandbox.gd').new()
 var watcher = load('res://addons/diagraph/Watcher.gd').new()
+onready var canvas = get_node('DiagraphCanvas')
 
 var characters := {}
 var conversations := {}
@@ -120,8 +121,12 @@ func load_conversation(path, default=null):
 	var has_prefix = path.begins_with(Diagraph.prefix)
 	path = path.trim_prefix(Diagraph.prefix)
 	path = path.split(':')[0]
-	if has_prefix:
-		path = Diagraph.ensure_prefix(path)
+	
+	# TODO: why the hell was this broken
+	# if has_prefix:
+	# 	path = Diagraph.ensure_prefix(path)
+
+	path = Diagraph.ensure_prefix(path)
 
 	if path in _conversations:
 		path = _conversations[path]
@@ -268,6 +273,9 @@ func get_all_folders(path: String, max_depth:=10, _depth:=0, _files:=[]) -> Arra
 		file = dir.get_next()
 	dir.list_dir_end()
 	return _files
+
+# ******************************************************************************
+
 
 # ******************************************************************************
 

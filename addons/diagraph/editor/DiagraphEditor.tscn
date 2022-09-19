@@ -4,7 +4,7 @@
 [ext_resource path="res://addons/diagraph/resources/theme.tres" type="Theme" id=2]
 [ext_resource path="res://addons/diagraph/dialog_box/OptionButton.tscn" type="PackedScene" id=3]
 [ext_resource path="res://addons/diagraph/editor/DiagraphEditor.gd" type="Script" id=4]
-[ext_resource path="res://addons/diagraph/dialog_box/DialogBox.tscn" type="PackedScene" id=5]
+[ext_resource path="res://addons/diagraph/dialog_box/BaseDialogBox.tscn" type="PackedScene" id=5]
 [ext_resource path="res://addons/diagraph/editor/Tree.gd" type="Script" id=6]
 [ext_resource path="res://addons/diagraph/utils/MenuButton.gd" type="Script" id=7]
 

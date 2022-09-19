@@ -35,14 +35,17 @@ corner_detail = 1
 anti_aliasing = false
 
 [node name="DialogBox" instance=ExtResource( 1 )]
-option_button_path = "res://global_canvas/OptionButton.tscn"
+anchor_right = 0.233333
+anchor_bottom = 0.062963
 
 [node name="Portrait" parent="." index="0"]
 anchor_left = 0.172917
+anchor_top = 0.685291
 anchor_right = 0.172917
-rect_scale = Vector2( 2, 2 )
+anchor_bottom = 0.685291
 
 [node name="Name" parent="." index="1"]
+visible = false
 anchor_left = 0.366667
 anchor_top = 0.622222
 anchor_right = 0.483333
@@ -56,21 +59,20 @@ custom_styles/panel = SubResource( 2 )
 custom_styles/panel = SubResource( 3 )
 
 [node name="Options" parent="." index="2"]
+visible = false
 anchor_left = 0.516
-anchor_top = 0.603437
+anchor_top = 0.621956
 anchor_right = 0.965867
-anchor_bottom = 0.700024
+anchor_bottom = 0.681506
 
 [node name="TextBox" parent="." index="3"]
-anchor_left = 0.366667
-anchor_top = 0.740741
-anchor_right = 0.954167
-anchor_bottom = 0.918519
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 custom_fonts/normal_font = SubResource( 1 )
-text = "teastaaegaegas
-line 2
-line 3
-line 4"
+text = "dialog line goes here
+line 2"
 scroll_active = false
 
 [node name="TextBoxOutline" parent="TextBox" index="1"]
@@ -78,10 +80,3 @@ custom_styles/panel = SubResource( 4 )
 
 [node name="Panel" parent="TextBox" index="2"]
 custom_styles/panel = SubResource( 5 )
-
-[node name="Next" parent="TextBox" index="3"]
-margin_left = -21.0
-margin_top = -25.0
-margin_right = 0.0
-margin_bottom = 0.0
-rect_scale = Vector2( 1, 1 )

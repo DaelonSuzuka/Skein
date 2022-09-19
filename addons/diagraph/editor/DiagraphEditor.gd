@@ -312,7 +312,7 @@ func run():
 		Preview.remove_child(DialogBox)
 		DialogBox.queue_free()
 		DialogBox = null
-	DialogBox = load('res://addons/diagraph/dialog_box/DialogBox.tscn').instance()
+	DialogBox = load('res://addons/diagraph/dialog_box/EditorDialogBox.tscn').instance()
 	Preview.add_child(DialogBox)
 	DialogBox.connect('done', self, 'stop')
 	DialogBox.start(conversation, {exec = false})
