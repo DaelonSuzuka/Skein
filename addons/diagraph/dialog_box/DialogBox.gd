@@ -605,7 +605,6 @@ func next_char(use_timer=true):
 				print_char(line[cursor])
 				cursor += 1
 			else: # last char in line is backslash
-				print('continue on next line')
 				continue_previous_line = true
 				print_char('\n')
 
