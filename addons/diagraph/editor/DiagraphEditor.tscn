@@ -398,4 +398,3 @@ toggle_mode = true
 text = "Font+"
 
 [node name="DialogBox" parent="Preview" instance=ExtResource( 5 )]
-option_button_path = "res://addons/diagraph/dialog_box/OptionButton.tscn"
