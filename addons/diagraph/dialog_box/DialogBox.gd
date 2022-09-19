@@ -3,7 +3,7 @@ extends Control
 
 # ******************************************************************************
 
-export(String, FILE, '*.tscn,*.scn') var option_button_path = 'res://addons/diagraph/dialog_box/OptionButton.tscn'
+export(String, FILE, '*.tscn,*.scn') var option_button_path = 'res://addons/diagraph/dialog_box/BaseOptionButton.tscn'
 
 onready var OptionButton = load(option_button_path)
 
