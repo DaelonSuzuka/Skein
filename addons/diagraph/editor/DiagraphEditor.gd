@@ -314,11 +314,12 @@ func run():
 		DialogBox = null
 	DialogBox = load('res://addons/diagraph/dialog_box/EditorDialogBox.tscn').instance()
 	Preview.add_child(DialogBox)
-	DialogBox.connect('done', self, 'stop')
+	DialogBox.connect('done', $Preview, 'hide')
 	DialogBox.start(conversation, {exec = false})
 
 func stop():
 	$Preview.hide()
+	DialogBox.stop()
 
 func next():
 	DialogBox.next_line()
