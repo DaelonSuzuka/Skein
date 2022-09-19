@@ -89,6 +89,7 @@ func title_bar_ctx(pos: Vector2) -> void:
 	Parent.ctx.add_check_item('Default')
 	Parent.ctx.set_item_checked(0, bool(data.default))
 	Parent.ctx.add_item('Copy Path')
+	Parent.ctx.add_item('Copy Name')
 	for item in self.get_title_bar_ctx_items():
 		Parent.ctx.add_item(item)
 	Parent.ctx.open(pos)
@@ -105,6 +106,8 @@ func _title_bar_ctx_selection(selection: String):
 		'Copy Path':
 			var path = '%s:%s' % [Parent.owner.current_conversation, data.name]
 			OS.clipboard = path
+		'Copy Name':
+			OS.clipboard = data.name
 
 	self.title_bar_ctx_selection(selection)
 
