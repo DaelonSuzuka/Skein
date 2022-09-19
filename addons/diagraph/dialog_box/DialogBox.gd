@@ -185,7 +185,7 @@ func start(conversation, options={}):
 	if parts.size() >= 3:
 		line_number = int(parts[2])
 
-	nodes = Diagraph.load_conversation(conversation, {}) as Dictionary
+	nodes = Diagraph.load_conversation(conversation, {}).duplicate(true)
 
 	# identify starting node
 	current_node = null
