@@ -260,6 +260,9 @@ func next_line():
 			next_char(false)
 		return
 
+	if waiting_for_choice:
+		return
+
 	if length > 0 and line_count >= length:
 		stop()
 		return
