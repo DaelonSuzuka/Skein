@@ -20,6 +20,8 @@ var characters := {}
 var conversations := {}
 var _conversations := {}
 
+var files = load('res://addons/diagraph/utils/FileUtils.gd').new()
+
 signal refreshed
 
 # ******************************************************************************
@@ -38,10 +40,10 @@ func _ready():
 func init_file_watcher():
 	add_child(watcher)
 
-	for folder in get_all_folders(conversation_prefix):
+	for folder in files.get_all_folders(conversation_prefix):
 		watcher.add_scan_directory(folder)
 
-	for folder in get_all_folders(characters_prefix):
+	for folder in files.get_all_folders(characters_prefix):
 		watcher.add_scan_directory(folder)
 
 	watcher.connect('files_changed', self, 'refresh')
@@ -53,7 +55,7 @@ func refresh():
 
 func load_conversations():
 	conversations.clear()
-	var convos = get_all_files(conversation_prefix, ['.yarn', '.json'])
+	var convos = files.get_all_files(conversation_prefix, ['.yarn', '.json'])
 	for convo in convos:
 		conversations[path_to_name(convo)] = convo
 		_conversations[path_to_name(convo)] = convo
@@ -71,23 +73,23 @@ func load_conversations():
 			_conversations[basefilename] = convo
 
 func load_builtin_conversations():
-	for file in get_all_files('res://' + conversation_path, '.json'):
+	for file in files.get_all_files('res://' + conversation_path, '.json'):
 		var to_path = file.replace('res://', 'user://')
 		save_json(to_path, load_json(file))
-	for file in get_all_files('res://' + conversation_path, '.yarn'):
+	for file in files.get_all_files('res://' + conversation_path, '.yarn'):
 		var to_path = file.replace('res://', 'user://')
 		save_yarn(to_path, load_yarn(file))
 
 func load_characters():
 	characters.clear()
-	for file in get_all_files('res://' + characters_path, '.tscn'):
+	for file in files.get_all_files('res://' + characters_path, '.tscn'):
 		var c = load(file).instance()
 		characters[c.name] = c
 		add_child(c)
 		c.hide()
 
-	# for folder in get_files('res://' + characters_path):
-	# 	for file in get_files('res://' + characters_path + folder, '.tscn'):
+	# for folder in files.get_files('res://' + characters_path):
+	# 	for file in files.get_files('res://' + characters_path + folder, '.tscn'):
 	# 		var file = 'res://' + characters_path + folder + '/' + file
 	# 		if dir.file_exists(file):
 	# 			var c = load(file).instance()
@@ -175,107 +177,6 @@ func validate_paths():
 		dir.make_dir_recursive(prefix + characters_path)
 	if !dir.dir_exists(conversation_prefix):
 		dir.make_dir_recursive(conversation_prefix)
-
-# ******************************************************************************
-
-func check_extension(file, ext=null) -> bool:
-	if ext:
-		if ext is String:
-			if file.ends_with(ext):
-				return true
-		elif ext is Array:
-			for e in ext:
-				if file.ends_with(e):
-					return true
-	return false
-
-# get all files in given directory with optional extension filter
-func get_files(path: String, ext='') -> Array:
-	var _files = []
-	var dir = Directory.new()
-	dir.open(path)
-	dir.list_dir_begin(true, true)
-
-	var file = dir.get_next()
-	while true:
-		var file_path = dir.get_current_dir().plus_file(file)
-		if file == '':
-			break
-		if ext:
-			if check_extension(file, ext):
-				_files.append(file_path)
-		else:
-			_files.append(file_path)
-		file = dir.get_next()
-
-	dir.list_dir_end()
-
-	return _files
-
-# get all files in given directory(and subdirectories, to a given depth) with optional extension filter
-func get_all_files(path: String, ext='', max_depth:=10, _depth:=0, _files:=[]) -> Array:
-	if _depth >= max_depth:
-		return []
-
-	var dir = Directory.new()
-	dir.open(path)
-	dir.list_dir_begin(true, true)
-
-	var file = dir.get_next()
-	while file != '':
-		var file_path = dir.get_current_dir().plus_file(file)
-		if dir.current_is_dir():
-			get_all_files(file_path, ext, max_depth, _depth + 1, _files)
-		else:
-			if ext:
-				if check_extension(file, ext):
-					_files.append(file_path)
-			else:
-				_files.append(file_path)
-		file = dir.get_next()
-	dir.list_dir_end()
-	return _files
-
-# get all files AND folders in a given directory(and subdirectories, to a given depth)
-func get_all_files_and_folders(path: String, max_depth:=10, _depth:=0, _files:=[]) -> Array:
-	if _depth >= max_depth:
-		return []
-
-	var dir = Directory.new()
-	dir.open(path)
-	dir.list_dir_begin(true, true)
-
-	var file = dir.get_next()
-	while file != '':
-		var file_path = dir.get_current_dir().plus_file(file)
-		_files.append(file_path)
-		if dir.current_is_dir():
-			get_all_files_and_folders(file_path, max_depth, _depth + 1, _files)
-		file = dir.get_next()
-	dir.list_dir_end()
-	return _files
-
-# get all folders in a given directory(and subdirectories, to a given depth)
-func get_all_folders(path: String, max_depth:=10, _depth:=0, _files:=[]) -> Array:
-	if _depth >= max_depth:
-		return []
-
-	var dir = Directory.new()
-	dir.open(path)
-	dir.list_dir_begin(true, true)
-
-	var file = dir.get_next()
-	while file != '':
-		var file_path = dir.get_current_dir().plus_file(file)
-		if dir.current_is_dir():
-			_files.append(file_path)
-			get_all_folders(file_path, max_depth, _depth + 1, _files)
-		file = dir.get_next()
-	dir.list_dir_end()
-	return _files
-
-# ******************************************************************************
-
 
 # ******************************************************************************
 

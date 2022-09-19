@@ -76,7 +76,7 @@ func _refresh():
 	var items := {}
 
 	var dir = Directory.new()
-	var files = Diagraph.get_all_files_and_folders(Diagraph.conversation_prefix)
+	var files = Diagraph.files.get_all_files_and_folders(Diagraph.conversation_prefix)
 	files.erase(Diagraph.conversation_prefix.trim_suffix('/'))
 	files.erase(Diagraph.conversation_prefix)
 
