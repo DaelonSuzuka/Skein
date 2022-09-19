@@ -6,16 +6,23 @@ extends GraphEdit
 onready var ContextMenu = preload('res://addons/diagraph/utils/ContextMenu.gd')
 
 onready var node_types = {
-	# 'entry': load('res://addons/diagraph/nodes/EntryNode.tscn'),
-	# 'exit': load('res://addons/diagraph/nodes/ExitNode.tscn'),
+	'entry': load('res://addons/diagraph/nodes/EntryNode.tscn'),
+	'exit': load('res://addons/diagraph/nodes/ExitNode.tscn'),
 	# 'base': load('res://addons/diagraph/nodes/DialogNode.tscn'),
-	# 'speech': load('res://addons/diagraph/nodes/DialogNode.tscn'),
+	'speech': load('res://addons/diagraph/nodes/DialogNode.tscn'),
 	'dialog': load('res://addons/diagraph/nodes/DialogNode.tscn'),
 	'comment': load('res://addons/diagraph/nodes/CommentNode.tscn'),
 	'branch': load('res://addons/diagraph/nodes/BranchNode.tscn'),
 	'jump': load('res://addons/diagraph/nodes/JumpNode.tscn'),
-	# 'subgraph': load('res://addons/diagraph/nodes/SubgraphNode.tscn'),
+	'subgraph': load('res://addons/diagraph/nodes/SubgraphNode.tscn'),
 }
+
+var display_types = [
+	'dialog',
+	'comment',
+	'branch',
+	'jump',
+]
 
 var nodes := {}
 var notify_changes := true
@@ -65,7 +72,7 @@ func on_popup_request(position) -> void:
 	dismiss_ctx()
 	ctx = ContextMenu.new(self, 'new_node_requested')
 	ctx.add_separator('New Node:')
-	for type in node_types:
+	for type in display_types:
 		ctx.add_item(type.capitalize())
 	ctx_position = get_offset_from_mouse()
 	ctx.open(position)
