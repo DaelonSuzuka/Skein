@@ -41,6 +41,8 @@ func _ready():
 	DismissTimer.connect('timeout', self, 'next_line')
 	DismissTimer.one_shot = true
 
+# ------------------------------------------------------------------------------
+
 # input handling shim
 func _input(event):
 	if direct_input:
@@ -94,58 +96,43 @@ func split_text(text):
 	var original = -1
 	var parts_to_concat = []
 
-	for i in len(parts):
-		if parts[i].ends_with('\\'):
-			if original == -1:
-				original = i
-			parts_to_concat.append(i + 1)
-		elif original != -1:
-			for x in parts_to_concat:
-				if x < len(parts):
-					var next_part = parts[x]
-					if ':' in next_part:
-						next_part = strip_name(next_part)
-					parts[original] += '\n' + next_part
-					parts[x] = '#' + parts[x]
-			original = -1
+	# for i in len(parts):
+	# 	if parts[i].ends_with('\\'):
+	# 		if original == -1:
+	# 			original = i
+	# 		parts_to_concat.append(i + 1)
+	# 	elif original != -1:
+	# 		for x in parts_to_concat:
+	# 			if x < len(parts):
+	# 				var next_part = parts[x]
+	# 				if ':' in next_part:
+	# 					next_part = strip_name(next_part)
+	# 				parts[original] += '\n' + next_part
+	# 				parts[x] = '#' + parts[x]
+	# 		original = -1
 
-	return parts
+	return preprocess_lines(parts)
 
 
-# func preprocess_lines(lines):
-# 	var output = []
-# 	var choices = []
+func preprocess_lines(lines):
+	var output = []
+	var choices = []
 
-# 	for line in lines:
-# 		if next_line.begins_with('%'):
-# 			choices.append(line)
-# 		else:
-# 			if choices:
-# 				line = choices[randi() % choices.size() - 1].lstrip('% ')
-# 				choices = []
+	for line in lines:
+		if line.begins_with('%'):
+			choices.append(line)
+		else:
+			if choices:
+				line = choices[randi() % choices.size() - 1].lstrip('% ')
+				choices = []
+			output.append(line)
 	
-# 			output.append(line)
+	# required in case last line is %random
+	if choices:
+		line = choices[randi() % choices.size() - 1].lstrip('% ')
+		output.append(line)
 
-	# var i = 0
-	# while true:
-	# 	if i >= current_data.text.size():
-	# 		break
-	# 	var next_line = current_data.text[current_line + i]
-	# 	if !next_line.begins_with('%'):
-	# 		break
-
-	# 	choices.append(next_line)
-	# 	i += 1
-	
-	# var chosen_line = choices[randi() % choices.size() - 1].lstrip('% ')
-
-	# for choice in choices:
-	# 	var index = current_data.text.find(choice)
-	# 	current_data.text[index] = '#'
-
-	# current_data.text[current_line] = chosen_line
-
-	# return output
+	return output
 
 # ******************************************************************************
 
@@ -161,6 +148,7 @@ var popup_timeout := 1.0
 var exec := true
 var show_name := true
 var name_override = null
+var color_override = null
 var show_portrait := true
 var speed := 1.0
 
@@ -203,12 +191,12 @@ func start(conversation, options={}):
 
 	# set up initial data
 	current_data = nodes[current_node]
-	current_data.text = split_text(current_data.text)
+	current_data.lines = split_text(current_data.text)
 
 	line_count = 0
 	current_line = line_number
-	if line_number == -1 or line_number > current_data.text.size():
-		current_line = current_data.text.size() - 1
+	if line_number == -1 or line_number > current_data.lines.size():
+		current_line = current_data.lines.size() - 1
 
 	# parse options
 	if 'caller' in options:
@@ -252,17 +240,17 @@ func set_node(next_node):
 				current_node = str(nodes[node].id)
 	current_line = 0
 	current_data = nodes[current_node].duplicate(true)
-	current_data.text = split_text(current_data.text)
+	current_data.lines = split_text(current_data.text)
 
 func check_next_line(line_number):
 	if length > 0 and line_count >= length:
 		return
-	if line_number == current_data.text.size():
+	if line_number == current_data.lines.size():
 		if current_data.next == 'choice':
 			display_choices()
 		return
 
-	var new_line = current_data.text[line_number]
+	var new_line = current_data.lines[line_number]
 
 	var skip := false
 	if new_line.length() == 0 or new_line.begins_with('#') or new_line.begins_with('//'):
@@ -290,7 +278,7 @@ func next_line():
 		stop()
 		return
 
-	if current_line == current_data.text.size():
+	if current_line == current_data.lines.size():
 		if current_data.type == 'branch':
 			for b in current_data.branches:
 				var branch = current_data.branches[b]
@@ -312,7 +300,7 @@ func next_line():
 
 		set_node(current_data.next)
 
-	var new_line = current_data.text[current_line]
+	var new_line = current_data.lines[current_line]
 
 	# check for line skip
 	var skip := false
@@ -423,8 +411,8 @@ func next_line():
 func process_inline_choices(marker):
 	var c_num = 0
 	var choices = {}
-	for i in range(current_line, current_data.text.size()):
-		var _line = current_data.text[i]
+	for i in range(current_line, current_data.lines.size()):
+		var _line = current_data.lines[i]
 		if _line.begins_with(marker):
 			c_num += 1
 
@@ -449,6 +437,7 @@ func process_inline_choices(marker):
 			var node = {
 				name = '',
 				text = '',
+				lines = [],
 				next = 'none',
 				type = 'dialog',
 				id = get_id(),
@@ -456,7 +445,7 @@ func process_inline_choices(marker):
 			node.name = str(node.id)
 			choices[c].next = str(node.id)
 			for line in choices[c].body:
-				node.text += line + '\n'
+				node.lines += line + '\n'
 			nodes[str(node.id)] = node
 	return choices
 
@@ -538,14 +527,36 @@ func next_char(use_timer=true):
 		return
 
 	var this_char = line[cursor]
-	var next_char = ''
-	if cursor + 1 < line.length() - 1:
-		next_char = line[cursor + 1]
+	var next_chars = ['', '', '', '', '', '', '', '', '', '', '', '', '']
+
+	next_chars[0] = this_char
+	next_chars[1] = line[cursor + 1] if cursor + 1 < line.length() - 1 else ''
+	next_chars[2] = line[cursor + 2] if cursor + 2 < line.length() - 2 else ''
+	next_chars[3] = line[cursor + 3] if cursor + 3 < line.length() - 3 else ''
+	next_chars[4] = line[cursor + 4] if cursor + 4 < line.length() - 4 else ''
+
 	var cooldown = next_char_cooldown / speed
 
 	match this_char:
+		# future feature
+		# '=':
+		# 	if next_chars[1] == '>': # jump
+		# 		if next_chars[2] == '<': # jump/return
+		# 			var dst = line.split('=>< ')
+		# 			print(dst)
+		# 			jump_to(dst[1])
+		# 			cursor += 3
+		# 			next_char()
+		# 			return
+					
+		# 		var dst = line.split('=> ')
+		# 		print(dst)
+		# 		jump_to(dst[1])
+		# 		cursor += 2
+		# 		next_char()
+		# 		return
 		'{':  # detect commands
-			if next_char == '{':
+			if next_chars[1] == '{':
 				var block = get_block('{{', '}}', ['erase'])
 				if block:
 					if exec:
@@ -560,7 +571,7 @@ func next_char(use_timer=true):
 					cursor += 1
 					next_char()
 		'<':
-			if next_char == '<':
+			if next_chars[1] == '<':
 				var block = get_block('<<', '>>')
 				if block:
 					var cmd = decode_yarn(block)
@@ -578,7 +589,7 @@ func next_char(use_timer=true):
 				if block:
 					print(block)
 		'[':
-			if next_char == '[': # inline random dialog
+			if next_chars[1] == '[': # inline random dialog
 				var block = get_block('[[', ']]', ['erase'])
 				if block:
 					var parts = block.split('|')
