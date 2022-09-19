@@ -18,6 +18,8 @@ var demo_var_path = 'demo_vars.json'
 # ******************************************************************************
 
 func _ready():
+	randomize()
+	
 	Add.disabled = false
 	Key.connect('text_changed', self, 'key_text_changed')
 	Value.connect('text_changed', self, 'value_text_changed')
