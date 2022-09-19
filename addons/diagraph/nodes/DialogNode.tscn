@@ -1,9 +1,9 @@
 [gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://addons/diagraph/nodes/BaseNode.tscn" type="PackedScene" id=1]
-[ext_resource path="res://addons/diagraph/nodes/SpeechNode.gd" type="Script" id=2]
-[ext_resource path="res://addons/diagraph/nodes/Choice.gd" type="Script" id=3]
-[ext_resource path="res://addons/diagraph/nodes/TextEdit.gd" type="Script" id=4]
+[ext_resource path="res://addons/diagraph/nodes/TextEdit.gd" type="Script" id=2]
+[ext_resource path="res://addons/diagraph/nodes/DialogNode.gd" type="Script" id=3]
+[ext_resource path="res://addons/diagraph/nodes/Choice.gd" type="Script" id=4]
 
 [sub_resource type="StyleBoxEmpty" id=1]
 
@@ -65,7 +65,7 @@ slot/5/left_color = Color( 1, 1, 1, 1 )
 slot/5/right_enabled = false
 slot/5/right_type = 0
 slot/5/right_color = Color( 1, 1, 1, 1 )
-script = ExtResource( 2 )
+script = ExtResource( 3 )
 
 [node name="Body" parent="." index="0"]
 margin_right = 389.0
@@ -73,7 +73,7 @@ margin_bottom = 396.0
 
 [node name="Title" parent="Body/Toolbar" index="1"]
 margin_right = 344.0
-text = "Speech"
+text = "Dialog"
 
 [node name="Edit" parent="Body/Toolbar" index="2"]
 margin_left = 351.0
@@ -101,7 +101,7 @@ syntax_highlighting = true
 show_line_numbers = true
 highlight_all_occurrences = true
 wrap_enabled = true
-script = ExtResource( 4 )
+script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -137,7 +137,7 @@ margin_left = 11.0
 margin_top = 284.0
 margin_right = 389.0
 margin_bottom = 309.0
-script = ExtResource( 3 )
+script = ExtResource( 4 )
 
 [node name="Choice" type="LineEdit" parent="Choice1" index="0"]
 margin_right = 177.0
@@ -177,7 +177,7 @@ margin_left = 11.0
 margin_top = 313.0
 margin_right = 389.0
 margin_bottom = 338.0
-script = ExtResource( 3 )
+script = ExtResource( 4 )
 
 [node name="Choice" type="LineEdit" parent="Choice2" index="0"]
 margin_right = 177.0
@@ -217,7 +217,7 @@ margin_left = 11.0
 margin_top = 342.0
 margin_right = 389.0
 margin_bottom = 367.0
-script = ExtResource( 3 )
+script = ExtResource( 4 )
 
 [node name="Choice" type="LineEdit" parent="Choice3" index="0"]
 margin_right = 177.0
@@ -257,7 +257,7 @@ margin_left = 11.0
 margin_top = 371.0
 margin_right = 389.0
 margin_bottom = 396.0
-script = ExtResource( 3 )
+script = ExtResource( 4 )
 
 [node name="Choice" type="LineEdit" parent="Choice4" index="0"]
 margin_right = 177.0

@@ -429,7 +429,10 @@ func create_node(header, body):
 	node.id = fields.get('id', get_id())
 	fields.erase('id')
 
-	node.type = fields.get('type', 'speech')
+	node.type = fields.get('type', 'dialog')
+	# old speech type is now dialog
+	if node.type == 'speech':
+		node.type = 'dialog'
 	fields.erase('type')
 
 	for field in fields:

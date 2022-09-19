@@ -33,6 +33,7 @@ var folder_state = {}
 
 var icon_colors = {
 	'speech': Color.olivedrab,
+	'dialog': Color.olivedrab,
 	'branch': Color.tomato,
 	'comment': Color.steelblue,
 }

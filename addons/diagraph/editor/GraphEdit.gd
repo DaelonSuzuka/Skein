@@ -7,10 +7,11 @@ onready var ContextMenu = preload('res://addons/diagraph/utils/ContextMenu.gd')
 
 onready var node_types = {
 	# 'entry': load('res://addons/diagraph/nodes/EntryNode.tscn'),
-	'comment': load('res://addons/diagraph/nodes/CommentNode.tscn'),
 	# 'exit': load('res://addons/diagraph/nodes/ExitNode.tscn'),
-	# 'base': load('res://addons/diagraph/nodes/SpeechNode.tscn'),
-	'speech': load('res://addons/diagraph/nodes/SpeechNode.tscn'),
+	# 'base': load('res://addons/diagraph/nodes/DialogNode.tscn'),
+	# 'speech': load('res://addons/diagraph/nodes/DialogNode.tscn'),
+	'dialog': load('res://addons/diagraph/nodes/DialogNode.tscn'),
+	'comment': load('res://addons/diagraph/nodes/CommentNode.tscn'),
 	'branch': load('res://addons/diagraph/nodes/BranchNode.tscn'),
 	'jump': load('res://addons/diagraph/nodes/JumpNode.tscn'),
 	# 'subgraph': load('res://addons/diagraph/nodes/SubgraphNode.tscn'),
@@ -104,7 +105,7 @@ func create_node(data=null) -> Node:
 	if data:
 		node = node_types[data.type].instance()
 	else:
-		node = node_types['speech'].instance()
+		node = node_types['dialog'].instance()
 		node.set_id(get_id())
 	add_child(node)
 	if data:
@@ -168,7 +169,7 @@ func request_disconnection(from, from_slot, to, to_slot) -> void:
 	nodes[from].data.connections.erase(to)
 
 func on_connection_from_empty(to, to_slot, release_position) -> void:
-	var data = {type = 'speech', offset = get_offset_from_mouse()}
+	var data = {type = 'dialog', offset = get_offset_from_mouse()}
 	if use_snap:
 		var snap = snap_distance
 		data.offset = data.offset.snapped(Vector2(snap, snap))
@@ -178,7 +179,7 @@ func on_connection_from_empty(to, to_slot, release_position) -> void:
 	request_connection(node.name, 0, to, to_slot)
 
 func on_connection_to_empty(from, from_slot, release_position) -> void:
-	var data = {type = 'speech', offset = get_offset_from_mouse()}
+	var data = {type = 'dialog', offset = get_offset_from_mouse()}
 	if use_snap:
 		var snap = snap_distance
 		data.offset = data.offset.snapped(Vector2(snap, snap))

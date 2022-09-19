@@ -450,7 +450,7 @@ func process_inline_choices(marker):
 				name = '',
 				text = '',
 				next = 'none',
-				type = 'speech',
+				type = 'dialog',
 				id = get_id(),
 			}
 			node.name = str(node.id)
