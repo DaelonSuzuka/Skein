@@ -16,6 +16,17 @@ var data := {
 	connections = {}
 }
 
+var slot_colors := [
+	Color.aqua,
+	Color.orangered,
+	Color.green,
+	Color.yellow,
+	Color.fuchsia,
+	Color.red,
+	Color.teal,
+	Color.lime,
+]
+
 onready var Edit = $Body/Toolbar/Edit
 onready var CloseButton = $Body/Toolbar/Close
 onready var Toolbar = $Body/Toolbar
@@ -90,6 +101,7 @@ func title_bar_ctx(pos: Vector2) -> void:
 	Parent.ctx.set_item_checked(0, bool(data.default))
 	Parent.ctx.add_item('Copy Path')
 	Parent.ctx.add_item('Copy Name')
+	Parent.ctx.add_item('Copy ID')
 	for item in self.get_title_bar_ctx_items():
 		Parent.ctx.add_item(item)
 	Parent.ctx.open(pos)
@@ -108,6 +120,8 @@ func _title_bar_ctx_selection(selection: String):
 			OS.clipboard = path
 		'Copy Name':
 			OS.clipboard = data.name
+		'Copy ID':
+			OS.clipboard = str(data.id)
 
 	self.title_bar_ctx_selection(selection)
 

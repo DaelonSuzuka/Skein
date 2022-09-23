@@ -5,13 +5,6 @@ extends 'BaseNode.gd'
 
 onready var TextEdit = $Body/Text/TextEdit
 
-var slot_colors := [
-	Color.aqua,
-	Color.orangered,
-	Color.green,
-	Color.yellow,
-]
-
 onready var choices = [
 	$Choice1,
 	$Choice2,

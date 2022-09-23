@@ -46,7 +46,7 @@ slot/2/left_type = 0
 slot/2/left_color = Color( 1, 1, 1, 1 )
 slot/2/right_enabled = false
 slot/2/right_type = 0
-slot/2/right_color = Color( 1, 0.27, 0, 1 )
+slot/2/right_color = Color( 1, 0.270588, 0, 1 )
 slot/3/left_enabled = false
 slot/3/left_type = 0
 slot/3/left_color = Color( 1, 1, 1, 1 )
@@ -71,7 +71,13 @@ script = ExtResource( 3 )
 margin_right = 389.0
 margin_bottom = 396.0
 
+[node name="Id" parent="Body/Toolbar" index="0"]
+margin_top = 2.0
+margin_right = 24.0
+margin_bottom = 22.0
+
 [node name="Title" parent="Body/Toolbar" index="1"]
+margin_left = 31.0
 margin_right = 344.0
 text = "Dialog"
 
