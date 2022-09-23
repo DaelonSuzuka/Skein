@@ -31,6 +31,7 @@ func _ready():
 	call_deferred('refresh')
 
 	add_child(sandbox)
+	add_child(files)
 
 	if OS.has_feature('HTML5'):
 		load_builtin_conversations()
