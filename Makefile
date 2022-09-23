@@ -21,8 +21,16 @@ webdeploy: web
 win:
 	$(GODOT) --export "Windows Desktop"
 
+# **************************************************************************** #
+
+BUTLER = butler
+
+ifeq ($(OS),Windows_NT)
+	BUTLER = $(BUTLER).exe
+endif
+
 itch:
-	butler.exe push build/web daelon/diagraph:html5
+	$(BUTLER) push build/web daelon/diagraph:html5
 
 # **************************************************************************** #
 # download godot binary and export templates for linux
