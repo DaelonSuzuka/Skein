@@ -286,7 +286,9 @@ func parse_yarn(text):
 	while i < lines.size():
 		var line = lines[i]
 		if line == '===':  # end of node
-			create_node(header, body)
+			var node = create_node(header, body)
+			nodes[str(node.id)] = node
+			
 			header.clear()
 			body.clear()
 			mode = 'header'
@@ -356,4 +358,4 @@ func create_node(header, body):
 		i += 1
 	node['text'] = _body
 
-	nodes[str(node.id)] = node
+	return node
