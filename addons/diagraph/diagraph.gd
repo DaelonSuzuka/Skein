@@ -59,4 +59,5 @@ func apply_changes():
 	editor_button.text = 'Diagraph'
 
 func save_external_data():
-	apply_changes()
+	if is_instance_valid(editor_instance):
+		apply_changes()
