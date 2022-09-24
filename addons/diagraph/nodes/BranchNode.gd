@@ -57,6 +57,9 @@ func get_data():
 	var data = .get_data()
 	data['next'] = 'branch'
 
+	if !data['extra_choices']:
+		data.erase('extra_choices')
+
 	var connections = {}
 	for to in data.connections:
 		var num = str(data.connections[to][0] + 1)
