@@ -44,6 +44,8 @@ func _exit_tree():
 		if inspector_instance.tree:
 			inspector_instance.tree.queue_free()
 
+# ******************************************************************************
+
 func show_conversation(conversation):
 	make_bottom_panel_item_visible(editor_instance)
 	editor_instance.change_conversation(conversation)
@@ -55,3 +57,6 @@ func apply_changes():
 	editor_instance.save_conversation()
 	editor_instance.save_editor_data()
 	editor_button.text = 'Diagraph'
+
+func save_external_data():
+	apply_changes()
