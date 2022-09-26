@@ -312,6 +312,7 @@ func next_line():
 		cursor = 0
 		line = new_line
 		while cursor < line.length():
+			# check for code blocks
 			if line[cursor] == '{':
 				if line[cursor + 1] == '{':
 					var block = get_block('{{', '}}', ['erase'])
@@ -326,6 +327,7 @@ func next_line():
 					if block:
 						if exec:
 							var result = evaluate(block)
+			# check for directive blocks
 			elif line[cursor] == '<':
 				if line[cursor + 1] == '<':
 					var block = get_block('<<', '>>')
@@ -335,7 +337,6 @@ func next_line():
 							jump_to(cmd.jump)
 							return
 						apply_directive(cmd)
-
 			elif !(line[cursor] in [' ', '\t']):
 				skip2 = false
 			cursor += 1
