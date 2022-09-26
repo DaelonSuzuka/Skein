@@ -364,7 +364,6 @@ func next_line():
 		return
 
 	# do character stuff
-	var color = Color.white
 	var name = ''
 	var parts = new_line.split(':')
 
@@ -406,11 +405,13 @@ func next_line():
 			child.hide()
 		next_speaker.show()
 		next_speaker.idle()
-		if next_speaker.get('color'):
-			color = next_speaker.color
 		current_speaker = next_speaker
 	
+	var color = Color.white
+	if next_speaker.get('color'):
+		color = next_speaker.color
 	change_outline_color(color)
+	
 	Name.text = name if name_override == null else name_override
 	Name.visible = (name != '') if show_name and !popup else false
 	set_line(new_line)
