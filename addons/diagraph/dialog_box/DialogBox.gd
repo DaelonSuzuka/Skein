@@ -16,6 +16,13 @@ signal done
 signal line_finished
 signal character_added(c)
 
+signal actor_joined(actor)
+signal actor_left(actor) # unimplemented
+
+signal speaker_changed(new_speaker, prev_speaker)
+
+# ******************************************************************************
+
 # mandatory nodes
 onready var Name = find_node('Name')
 onready var NextIndicator = find_node('Next')
@@ -79,15 +86,16 @@ func remove_options() -> void:
 
 # ******************************************************************************
 
-var current_character = null
+var current_speaker = null
+var previous_speaker = null
 
 func character_talk(c):
-	if current_character and current_character.has_method('talk'):
-		current_character.talk(c)
+	if current_speaker and current_speaker.has_method('talk'):
+		current_speaker.talk(c)
 
 func character_idle():
-	if current_character and current_character.has_method('idle'):
-		current_character.idle()
+	if current_speaker and current_speaker.has_method('idle'):
+		current_speaker.idle()
 
 # ******************************************************************************
 # utils
@@ -360,6 +368,11 @@ func next_line():
 	var name = ''
 	var parts = new_line.split(':')
 
+	previous_speaker = current_speaker
+
+	var next_speaker = null
+
+	# figure out who's speaking the new line
 	if parts.size() > 1:
 		name = parts[0]
 		if '.' in name:
@@ -367,24 +380,18 @@ func next_line():
 			evaluate(name)
 			name = subparts[0]
 
-		if '/' in name:
-			print('multiple characters not yet supported')
+		# if '/' in name:
+		# 	print('multiple characters not yet supported')
 
 		if name in Diagraph.characters:
-			current_character = null
 			new_line = strip_name(new_line)
-			var character = Portrait.get_node_or_null(name)
-			if !character:
-				character = Diagraph.characters[name]
 
-				var old_parent = character.get_parent()
-				if old_parent:
-					old_parent.remove_child(character)
-				Portrait.add_child(character)
+			var speaker = Diagraph.characters[name]
+			if !Portrait.is_a_parent_of(speaker):
+				Diagraph.utils.reparent_node(speaker, Portrait)
+				emit_signal('actor_joined', speaker)
 
-			current_character = character
-			if character.get('color'):
-				color = character.color
+			next_speaker = speaker
 		else:
 			name = ''
 
@@ -393,12 +400,15 @@ func next_line():
 		next_line()
 		return
 
-	for child in Portrait.get_children():
-		child.hide()
-		if child.name == name:
-			if show_portrait and !popup:
-				child.show()
-			character_idle()
+	if current_speaker != next_speaker:
+		emit_signal('speaker_changed', next_speaker, previous_speaker)
+		for child in Portrait.get_children():
+			child.hide()
+		next_speaker.show()
+		next_speaker.idle()
+		if next_speaker.get('color'):
+			color = next_speaker.color
+		current_speaker = next_speaker
 	
 	change_outline_color(color)
 	Name.text = name if name_override == null else name_override
