@@ -340,7 +340,7 @@ func next_line():
 				if line[cursor + 1] == '<':
 					var block = get_block('<<', '>>')
 					if block:
-						var cmd = decode_yarn(block)
+						var cmd = parse_directive(block)
 						if 'jump' in cmd:
 							jump_to(cmd.jump)
 							return
@@ -411,7 +411,7 @@ func next_line():
 	if next_speaker.get('color'):
 		color = next_speaker.color
 	change_outline_color(color)
-	
+
 	Name.text = name if name_override == null else name_override
 	Name.visible = (name != '') if show_name and !popup else false
 	set_line(new_line)
@@ -587,7 +587,7 @@ func next_char(use_timer=true):
 			if next_chars[1] == '<':
 				var block = get_block('<<', '>>')
 				if block:
-					var cmd = decode_yarn(block)
+					var cmd = parse_directive(block)
 					if 'jump' in cmd:
 						jump_to(cmd.jump)
 						cursor = line.length()
@@ -663,7 +663,7 @@ func parse_bool(value, default):
 		return bool_directive[value]
 	return default
 
-func decode_yarn(block):
+func parse_directive(block):
 	var parts = block.split(' ', true, 1)
 	var result = {}
 	match parts[0]:
