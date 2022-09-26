@@ -16,14 +16,18 @@ signal done
 signal line_finished
 signal character_added(c)
 
+# mandatory nodes
 onready var Name = find_node('Name')
-onready var Next = find_node('Next')
-onready var NameOutline = find_node('NameOutline')
+onready var NextIndicator = find_node('Next')
 onready var TextBox = find_node('TextBox')
-onready var TextBoxOutline = find_node('TextBoxOutline')
-onready var DebugLog = find_node('DebugLog')
 onready var Options = find_node('Options')
 onready var Portrait = find_node('Portrait')
+
+# possibly optional nodes
+onready var NameOutline = find_node_or_null('NameOutline')
+onready var TextBoxOutline = find_node_or_null('TextBoxOutline')
+
+onready var DebugLog = find_node('DebugLog')
 
 var waiting_for_choice := false
 var active := false
@@ -119,6 +123,12 @@ func preprocess_random_lines(lines):
 
 	return output
 
+func change_outline_color(color):
+	if NameOutline:
+		NameOutline.modulate = color
+	if TextBoxOutline:
+		TextBoxOutline.modulate = color
+
 # ******************************************************************************
 
 var nodes := {}
@@ -145,9 +155,8 @@ func start(conversation, options={}):
 	name_override = null
 	active = true
 	caller = null
-	Next.visible = false
-	NameOutline.modulate = Color.white
-	TextBoxOutline.modulate = Color.white
+	NextIndicator.visible = false
+	change_outline_color(Color.white)
 	remove_options()
 
 	# parse conversation string
@@ -160,6 +169,8 @@ func start(conversation, options={}):
 		line_number = int(parts[2])
 
 	nodes = Diagraph.load_conversation(conversation, {}).duplicate(true)
+
+	# TODO: add safety here
 
 	# identify starting node
 	current_node = null
@@ -387,9 +398,8 @@ func next_line():
 			if show_portrait and !popup:
 				child.show()
 			character_idle()
-
-	NameOutline.modulate = color
-	TextBoxOutline.modulate = color
+	
+	change_outline_color(color)
 	Name.text = name if name_override == null else name_override
 	Name.visible = (name != '') if show_name and !popup else false
 	set_line(new_line)
@@ -480,7 +490,7 @@ func set_line(_line):
 		TextBox.bbcode_text = ''
 	continue_previous_line = false
 	DebugLog.text = ''
-	Next.visible = false
+	NextIndicator.visible = false
 	next_char_cooldown = original_cooldown
 	TextTimer.start(next_char_cooldown)
 
@@ -513,7 +523,7 @@ func next_char(use_timer=true):
 		character_idle()
 		TextTimer.stop()
 		line_active = false
-		Next.visible = true
+		NextIndicator.visible = true
 		check_next_line(current_line)
 		return
 
