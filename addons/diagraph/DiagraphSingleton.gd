@@ -32,6 +32,7 @@ func _ready():
 	call_deferred('refresh')
 
 	add_child(sandbox)
+	add_child(watcher)
 	add_child(files)
 	add_child(utils)
 
@@ -41,8 +42,6 @@ func _ready():
 		init_file_watcher()
 
 func init_file_watcher():
-	add_child(watcher)
-
 	for folder in files.get_all_folders(conversation_prefix):
 		watcher.add_scan_directory(folder)
 
