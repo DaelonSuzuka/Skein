@@ -24,8 +24,8 @@ onready var Options = find_node('Options')
 onready var Portrait = find_node('Portrait')
 
 # possibly optional nodes
-onready var NameOutline = find_node_or_null('NameOutline')
-onready var TextBoxOutline = find_node_or_null('TextBoxOutline')
+onready var NameOutline = find_node('NameOutline')
+onready var TextBoxOutline = find_node('TextBoxOutline')
 
 onready var DebugLog = find_node('DebugLog')
 
