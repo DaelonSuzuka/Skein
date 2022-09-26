@@ -6,12 +6,6 @@ func _ready():
 	for child in get_children():
 		child.hide()
 
-# help method for connecting signals
-func try_connect(src, sig, dest, method, args=[], flags=0):
-	if dest.has_method(method):
-		if !src.is_connected(sig, dest, method):
-			src.connect(sig, dest, method, args, flags)
-
 # ******************************************************************************
 # popup handler
 
@@ -38,8 +32,8 @@ func popup_dialog(object, conversation, options={}):
 
 	popup.connect("done", self, '_popup_over')
 
-	try_connect(popup, 'line_finished', object, 'line_finished')
-	try_connect(popup, 'done', object, 'popup_over')
+	Diagraph.utils.try_connect(popup, 'line_finished', object, 'line_finished')
+	Diagraph.utils.try_connect(popup, 'done', object, 'popup_over')
 
 	return popup
 
@@ -58,7 +52,7 @@ func start_dialog(object, conversation, options={}):
 
 	dialog.connect('done', Diagraph.sandbox, 'clear_temp_locals', [], CONNECT_ONESHOT)
 	
-	try_connect(dialog, 'line_finished', object, 'line_finished')
-	try_connect(dialog, 'done', object, 'done', [], CONNECT_ONESHOT)
+	Diagraph.utils.try_connect(dialog, 'line_finished', object, 'line_finished')
+	Diagraph.utils.try_connect(dialog, 'done', object, 'done', [], CONNECT_ONESHOT)
 
 	return dialog

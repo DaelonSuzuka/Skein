@@ -20,6 +20,7 @@ var characters := {}
 var conversations := {}
 var _conversations := {}
 
+var utils = load('res://addons/diagraph/utils/Utils.gd').new()
 var files = load('res://addons/diagraph/utils/FileUtils.gd').new()
 
 signal refreshed
@@ -32,6 +33,7 @@ func _ready():
 
 	add_child(sandbox)
 	add_child(files)
+	add_child(utils)
 
 	if OS.has_feature('HTML5'):
 		load_builtin_conversations()
