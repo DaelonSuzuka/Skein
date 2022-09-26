@@ -150,6 +150,7 @@ var length := -1
 var popup := false
 var popup_timeout := 1.0
 var exec := true
+var assignment := true
 var show_name := true
 var name_override = null
 var color_override = null
@@ -673,12 +674,14 @@ func parse_directive(block):
 			result['speed'] = float(parts[1])
 		'exec':
 			result['exec'] = parse_bool(parts[1], exec)
-		'name':
-			result['name'] = parse_bool(parts[1], show_name)
+		'assignment':
+			result['assignment'] = parse_bool(parts[1], assignment)
+		'show_name':
+			result['show_name'] = parse_bool(parts[1], show_name)
 		'set_name':
 			result['set_name'] = parts[1]
-		'portrait':
-			result['portrait'] = parse_bool(parts[1], show_portrait)
+		'show_portrait':
+			result['show_portrait'] = parse_bool(parts[1], show_portrait)
 	return result
 
 func apply_directive(dir):
@@ -692,13 +695,16 @@ func apply_directive(dir):
 	if 'exec' in dir:
 		exec = dir.exec
 		result = true
-	if 'name' in dir:
+	if 'assignment' in dir:
+		assignment = dir.assignment
+		result = true
+	if 'show_name' in dir:
 		show_name = dir.name
 		result = true
 	if 'set_name' in dir:
 		name_override = dir.set_name if dir.set_name != 'null' else null
 		result = true
-	if 'portrait' in dir:
+	if 'show_portrait' in dir:
 		show_portrait = dir.portrait
 		result = true
 	if 'speed' in dir:
@@ -728,6 +734,24 @@ func evaluate(input: String=''):
 		]
 	)
 
+
+	var is_assignment = false
+	if assignment and '=' in input:
+		var re = RegEx.new()
+		re.compile('[^=][=][^=]')
+		if re.search(input):
+			is_assignment = true
+			ctx.method(
+				'func _do_assignment():',
+				[
+					input,
+				]
+			)
+
 	var context = ctx.build(self)
 	add_child(context)
+
+	if assignment and is_assignment:
+		return Diagraph.sandbox.evaluate('_do_assignment()', context)
+
 	return Diagraph.sandbox.evaluate(input, context)
