@@ -1,11 +1,7 @@
 id: 3161026589
-type: speech
-next: none
+type: dialog
 position: Rect2( -150, -120, 400, 400 )
-connections: {}
-show_choices: False
-choices: {"1": {"choice": "","condition": "","next": ""},"2": {"choice": "","condition": "","next": ""},"3": {"choice": "","condition": "","next": ""},"4": {"choice": "","condition": "","next": ""}}
-title: Speech
+title: Dialog
 ---
 
 ===

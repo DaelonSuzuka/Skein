@@ -4,10 +4,7 @@
 		"type": "comment",
 		"name": "Steak Branch",
 		"text": "",
-		"next": "none",
-		"rect_size": "",
 		"position": "Rect2( 190, 220, 900, 470 )",
-		"offset": "",
 		"connections": {
 
 		},
@@ -18,10 +15,7 @@
 		"type": "comment",
 		"name": "Pizza Branch",
 		"text": "",
-		"next": "none",
-		"rect_size": "",
 		"position": "Rect2( 120, -690, 1240, 610 )",
-		"offset": "",
 		"connections": {
 
 		},
@@ -33,9 +27,7 @@
 		"name": "looking_for_lunch",
 		"text": "Alka: Are you hungry?\nByron: Yeah, I could eat.\nAlka: What do you want?",
 		"next": "choice",
-		"rect_size": "",
 		"position": "Rect2( -410, -210, 400, 400 )",
-		"offset": "",
 		"connections": {
 			"2668139190": [
 				0,
@@ -58,22 +50,18 @@
 		"choices": {
 			"1": {
 				"choice": "Pizza",
-				"condition": "",
 				"next": "2668139190"
 			},
 			"2": {
 				"choice": "Burgers",
-				"condition": "",
 				"next": "4134715227"
 			},
 			"3": {
 				"choice": "A salad?",
-				"condition": "",
 				"next": "4204663500"
 			},
 			"4": {
 				"choice": "Steak!",
-				"condition": "",
 				"next": "1099556929"
 			}
 		}
@@ -84,9 +72,7 @@
 		"name": "Branch",
 		"text": "",
 		"next": "branch",
-		"rect_size": "",
-		"position": "Rect2( 180, -460, 250, 175 )",
-		"offset": "",
+		"position": "Rect2( 180, -460, 250, 287 )",
 		"connections": {
 			"3154986942": [
 				0,
@@ -101,18 +87,6 @@
 			"1": {
 				"condition": "last_meal != 'pizza'",
 				"next": "3154986942"
-			},
-			"2": {
-				"condition": "",
-				"next": "517644291"
-			},
-			"3": {
-				"condition": "",
-				"next": ""
-			},
-			"4": {
-				"condition": "",
-				"next": ""
 			}
 		}
 	},
@@ -121,72 +95,14 @@
 		"type": "speech",
 		"name": "Speech",
 		"text": "Alka: I could go for burgers.",
-		"next": "none",
-		"rect_size": "",
-		"position": "Rect2( 300, -60, 310, 171 )",
-		"offset": "",
-		"connections": {
-
-		},
-		"show_choices": false,
-		"choices": {
-			"1": {
-				"choice": "",
-				"condition": "",
-				"next": ""
-			},
-			"2": {
-				"choice": "",
-				"condition": "",
-				"next": ""
-			},
-			"3": {
-				"choice": "",
-				"condition": "",
-				"next": ""
-			},
-			"4": {
-				"choice": "",
-				"condition": "",
-				"next": ""
-			}
-		}
+		"position": "Rect2( 300, -60, 310, 171 )"
 	},
 	"4204663500": {
 		"id": 4204663500,
 		"type": "speech",
 		"name": "Speech",
 		"text": "Alka: Wait, are you serious?\nByron: Of course not.\nByron: Let's call Lydia and see what she wants.",
-		"next": "none",
-		"rect_size": "",
-		"position": "Rect2( 740, 0, 360, 171 )",
-		"offset": "",
-		"connections": {
-
-		},
-		"show_choices": false,
-		"choices": {
-			"1": {
-				"choice": "",
-				"condition": "",
-				"next": ""
-			},
-			"2": {
-				"choice": "",
-				"condition": "",
-				"next": ""
-			},
-			"3": {
-				"choice": "",
-				"condition": "",
-				"next": ""
-			},
-			"4": {
-				"choice": "",
-				"condition": "",
-				"next": ""
-			}
-		}
+		"position": "Rect2( 740, 0, 360, 171 )"
 	},
 	"1099556929": {
 		"id": 1099556929,
@@ -194,9 +110,7 @@
 		"name": "Branch",
 		"text": "",
 		"next": "branch",
-		"rect_size": "",
-		"position": "Rect2( 260, 360, 250, 175 )",
-		"offset": "",
+		"position": "Rect2( 260, 360, 250, 287 )",
 		"connections": {
 			"3960688578": [
 				0,
@@ -211,18 +125,6 @@
 			"1": {
 				"condition": "wallet > 80",
 				"next": "3960688578"
-			},
-			"2": {
-				"condition": "",
-				"next": "1798784612"
-			},
-			"3": {
-				"condition": "",
-				"next": ""
-			},
-			"4": {
-				"condition": "",
-				"next": ""
 			}
 		}
 	},
@@ -232,9 +134,7 @@
 		"name": "Speech",
 		"text": "Alka: Pizza sounds good, what toppings do you want?",
 		"next": "choice",
-		"rect_size": "",
 		"position": "Rect2( 530, -650, 390, 310 )",
-		"offset": "",
 		"connections": {
 			"1519752278": [
 				1,
@@ -249,23 +149,11 @@
 		"choices": {
 			"1": {
 				"choice": "Pepperoni?",
-				"condition": "",
 				"next": "1353875733"
 			},
 			"2": {
 				"choice": "Hawaiian.",
-				"condition": "",
 				"next": "1519752278"
-			},
-			"3": {
-				"choice": "",
-				"condition": "",
-				"next": ""
-			},
-			"4": {
-				"choice": "",
-				"condition": "",
-				"next": ""
 			}
 		}
 	},
@@ -274,251 +162,48 @@
 		"type": "speech",
 		"name": "Speech",
 		"text": "Alka: ._._._ Get out.",
-		"next": "none",
-		"rect_size": "",
-		"position": "Rect2( 990, -400, 320, 171 )",
-		"offset": "",
-		"connections": {
-
-		},
-		"show_choices": false,
-		"choices": {
-			"1": {
-				"choice": "",
-				"condition": "",
-				"next": ""
-			},
-			"2": {
-				"choice": "",
-				"condition": "",
-				"next": ""
-			},
-			"3": {
-				"choice": "",
-				"condition": "",
-				"next": ""
-			},
-			"4": {
-				"choice": "",
-				"condition": "",
-				"next": ""
-			}
-		}
+		"position": "Rect2( 990, -400, 320, 171 )"
 	},
 	"1353875733": {
 		"id": 1353875733,
 		"type": "speech",
 		"name": "Speech",
 		"text": "Alka: Great, I'll place the order.",
-		"next": "none",
-		"rect_size": "",
-		"position": "Rect2( 990, -640, 320, 171 )",
-		"offset": "",
-		"connections": {
-
-		},
-		"show_choices": false,
-		"choices": {
-			"1": {
-				"choice": "",
-				"condition": "",
-				"next": ""
-			},
-			"2": {
-				"choice": "",
-				"condition": "",
-				"next": ""
-			},
-			"3": {
-				"choice": "",
-				"condition": "",
-				"next": ""
-			},
-			"4": {
-				"choice": "",
-				"condition": "",
-				"next": ""
-			}
-		}
+		"position": "Rect2( 990, -640, 320, 171 )"
 	},
 	"3960688578": {
 		"id": 3960688578,
 		"type": "speech",
 		"name": "Speech",
 		"text": "Alka: Only if it's your treat, Byron!",
-		"next": "none",
-		"rect_size": "",
-		"position": "Rect2( 690, 300, 310, 171 )",
-		"offset": "",
-		"connections": {
-
-		},
-		"show_choices": false,
-		"choices": {
-			"1": {
-				"choice": "",
-				"condition": "",
-				"next": ""
-			},
-			"2": {
-				"choice": "",
-				"condition": "",
-				"next": ""
-			},
-			"3": {
-				"choice": "",
-				"condition": "",
-				"next": ""
-			},
-			"4": {
-				"choice": "",
-				"condition": "",
-				"next": ""
-			}
-		}
+		"position": "Rect2( 690, 300, 310, 171 )"
 	},
 	"1798784612": {
 		"id": 1798784612,
 		"type": "speech",
 		"name": "Speech",
 		"text": "Alka: But you told me you only have {{wallet}} dollars!",
-		"next": "none",
-		"rect_size": "",
-		"position": "Rect2( 690, 490, 330, 171 )",
-		"offset": "",
-		"connections": {
-
-		},
-		"show_choices": false,
-		"choices": {
-			"1": {
-				"choice": "",
-				"condition": "",
-				"next": ""
-			},
-			"2": {
-				"choice": "",
-				"condition": "",
-				"next": ""
-			},
-			"3": {
-				"choice": "",
-				"condition": "",
-				"next": ""
-			},
-			"4": {
-				"choice": "",
-				"condition": "",
-				"next": ""
-			}
-		}
+		"position": "Rect2( 690, 490, 330, 171 )"
 	},
 	"517644291": {
 		"id": 517644291,
 		"type": "speech",
 		"name": "Speech",
 		"text": "Alka: I just had pizza. Can't we have something else?",
-		"next": "none",
-		"rect_size": "",
-		"position": "Rect2( 530, -300, 350, 180 )",
-		"offset": "",
-		"connections": {
-
-		},
-		"show_choices": false,
-		"choices": {
-			"1": {
-				"choice": "",
-				"condition": "",
-				"next": ""
-			},
-			"2": {
-				"choice": "",
-				"condition": "",
-				"next": ""
-			},
-			"3": {
-				"choice": "",
-				"condition": "",
-				"next": ""
-			},
-			"4": {
-				"choice": "",
-				"condition": "",
-				"next": ""
-			}
-		}
+		"position": "Rect2( 530, -300, 350, 180 )"
 	},
 	"1097442878": {
 		"id": 1097442878,
 		"type": "speech",
 		"name": "Speech",
 		"text": "# Welcome to Diagraph\n# This file has an example dialogue that will demonstrate some of Diagraph's features.\n\n\n# Select the card below titled 'looking_for_lunch'\n# Click the 'Run' button on the top toolbar",
-		"next": "none",
-		"rect_size": "",
-		"position": "Rect2( -430, -690, 480, 400 )",
-		"offset": "",
-		"connections": {
-
-		},
-		"show_choices": false,
-		"choices": {
-			"1": {
-				"choice": "",
-				"condition": "",
-				"next": ""
-			},
-			"2": {
-				"choice": "",
-				"condition": "",
-				"next": ""
-			},
-			"3": {
-				"choice": "",
-				"condition": "",
-				"next": ""
-			},
-			"4": {
-				"choice": "",
-				"condition": "",
-				"next": ""
-			}
-		}
+		"position": "Rect2( -430, -690, 480, 400 )"
 	},
 	"2642119551": {
 		"id": 2642119551,
 		"type": "speech",
 		"name": "Speech",
 		"text": "{{self}} {{caller}} {{scene}}\n\n{speed(1)} testing 1 2 3 4",
-		"next": "none",
-		"rect_size": "",
-		"position": "Rect2( -980, -430, 400, 400 )",
-		"offset": "",
-		"connections": {
-
-		},
-		"show_choices": false,
-		"choices": {
-			"1": {
-				"choice": "",
-				"condition": "",
-				"next": ""
-			},
-			"2": {
-				"choice": "",
-				"condition": "",
-				"next": ""
-			},
-			"3": {
-				"choice": "",
-				"condition": "",
-				"next": ""
-			},
-			"4": {
-				"choice": "",
-				"condition": "",
-				"next": ""
-			}
-		}
+		"position": "Rect2( -980, -430, 400, 400 )"
 	}
 }

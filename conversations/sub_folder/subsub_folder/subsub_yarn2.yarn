@@ -1,10 +1,6 @@
 id: 3161026590
-type: speech
-next: none
+type: dialog
 position: Rect2( -410, -180, 430, 540 )
-connections: {}
-show_choices: False
-choices: {"1": {"choice": "","condition": "","next": ""},"2": {"choice": "","condition": "","next": ""},"3": {"choice": "","condition": "","next": ""},"4": {"choice": "","condition": "","next": ""}}
 title: Test1
 ---
 Alka: how much doge do you have?
