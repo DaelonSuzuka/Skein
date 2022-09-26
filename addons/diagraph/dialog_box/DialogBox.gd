@@ -684,7 +684,7 @@ func apply_directive(dir):
 		show_name = dir.name
 		result = true
 	if 'set_name' in dir:
-		name_override = dir.set_name
+		name_override = dir.set_name if dir.set_name != 'null' else null
 		result = true
 	if 'portrait' in dir:
 		show_portrait = dir.portrait
