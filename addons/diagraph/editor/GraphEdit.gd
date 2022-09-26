@@ -304,16 +304,13 @@ func get_nodes() -> Dictionary:
 # ******************************************************************************
 
 func set_data(data: Dictionary) -> void:
-	if 'scroll_offset' in data:
-		scroll_offset = str2var(data.scroll_offset)
-	if 'minimap_enabled' in data:
-		minimap_enabled = data.minimap_enabled
-	if 'minimap_opacity' in data:
-		minimap_opacity = data.minimap_opacity
-	if 'minimap_size' in data:
-		minimap_size = str2var(data.minimap_size)
-	if 'zoom' in data:
-		zoom = data.zoom
+	scroll_offset = str2var(data.get('scroll_offset', 'Vector2( 0, 0 )'))
+	zoom = data.get('zoom', 1)
+	
+	minimap_enabled = data.get('minimap_enabled', true)
+	minimap_opacity = data.get('minimap_opacity', 0.65)
+	minimap_size = str2var(data.get('minimap_size', 'Vector2( 240, 160 )'))
+
 	if 'snap' in data:
 		use_snap = data.snap.on
 		snap_distance = data.snap.step
