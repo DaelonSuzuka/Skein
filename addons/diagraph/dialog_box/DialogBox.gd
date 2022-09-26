@@ -408,7 +408,7 @@ func next_line():
 		current_speaker = next_speaker
 	
 	var color = Color.white
-	if next_speaker.get('color'):
+	if next_speaker and next_speaker.get('color'):
 		color = next_speaker.color
 	change_outline_color(color)
 
