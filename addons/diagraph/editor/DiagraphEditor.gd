@@ -29,6 +29,7 @@ onready var SettingsMenu: MenuButton = find_node('SettingsMenu')
 var plugin = null
 var current_conversation := ''
 var editor_data := {}
+var position := ''
 
 # ******************************************************************************
 
@@ -326,27 +327,33 @@ func next():
 
 # ******************************************************************************
 
-var editor_data_file_name = 'user://editor_data.json'
+var editor_data_file_name = 'user://diagraph/editor_data.json'
 
 func save_editor_data():
 	if !current_conversation:
 		return
-	editor_data['folder_state'] = Tree.folder_state
-	editor_data['current_conversation'] = current_conversation
-	editor_data['font_size'] = theme.default_font.size
-	editor_data['zoom_scroll'] = GraphEdit.zoom_scroll
-	editor_data['left_panel_size'] = LeftPanelSplit.split_offset
-	editor_data['left_panel_collapsed'] = LeftPanelSplit.collapsed
-	editor_data[current_conversation] = GraphEdit.get_data()
-	Diagraph.save_json(editor_data_file_name, editor_data)
+	var data = Diagraph.load_json(editor_data_file_name, {})
+	if !(position in data):
+		data[position] = {
+			'conversation_data' : {}
+		}
+	
+	data[position]['folder_state'] = Tree.folder_state
+	data[position]['current_conversation'] = current_conversation
+	data[position]['font_size'] = theme.default_font.size
+	data[position]['zoom_scroll'] = GraphEdit.zoom_scroll
+	data[position]['left_panel_size'] = LeftPanelSplit.split_offset
+	data[position]['left_panel_collapsed'] = LeftPanelSplit.collapsed
+	data[position]['conversation_data'][current_conversation] = GraphEdit.get_data()
+	Diagraph.save_json(editor_data_file_name, data)
 
 func load_editor_data():
-	var data = Diagraph.load_json(editor_data_file_name)
-	if !data:
+	var data = Diagraph.load_json(editor_data_file_name, {})
+	if !data or !(position in data):
 		editor_data['current_conversation'] = '0 Introduction'
 		load_conversation(editor_data['current_conversation'])
 		return
-	editor_data = data
+	editor_data = data[position]
 
 	if 'folder_state' in editor_data:
 		Tree.folder_state = editor_data['folder_state']
