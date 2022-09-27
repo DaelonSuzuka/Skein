@@ -426,8 +426,9 @@ func next_line():
 		emit_signal('speaker_changed', next_speaker, previous_speaker)
 		for child in Portrait.get_children():
 			child.hide()
-		next_speaker.show()
-		next_speaker.idle()
+		if next_speaker:
+			next_speaker.show()
+			next_speaker.idle()
 		current_speaker = next_speaker
 	
 	var color = Color.white
