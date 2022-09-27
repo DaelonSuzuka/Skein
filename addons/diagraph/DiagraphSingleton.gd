@@ -122,15 +122,8 @@ func _load_conversation(path, default=null):
 
 func load_conversation(path, default=null):
 	# sanitize path by removing node name and/or line number
-	var has_prefix = path.begins_with(Diagraph.prefix)
 	path = path.trim_prefix(Diagraph.prefix)
 	path = path.split(':')[0]
-	
-	# TODO: why the hell was this broken
-	# if has_prefix:
-	# 	path = Diagraph.ensure_prefix(path)
-
-	path = Diagraph.ensure_prefix(path)
 
 	if path in _conversations:
 		path = _conversations[path]
