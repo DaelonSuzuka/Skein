@@ -52,6 +52,7 @@ func start_dialog(object, conversation, options={}):
 
 	dialog.connect('done', Diagraph.sandbox, 'clear_temp_locals', [], CONNECT_ONESHOT)
 	
+	# TODO disconnect this when done?
 	Diagraph.utils.try_connect(dialog, 'line_finished', object, 'line_finished')
 	Diagraph.utils.try_connect(dialog, 'done', object, 'done', [], CONNECT_ONESHOT)
 
