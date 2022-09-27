@@ -105,7 +105,7 @@ func autosave():
 
 func node_changed():
 	if plugin:
-		plugin.editor_button.text = 'Diagraph(*)'
+		plugin.bottom_editor_button.text = 'Diagraph(*)'
 
 func toggle_left_panel():
 	LeftPanelSplit.collapsed = !LeftPanelSplit.collapsed
