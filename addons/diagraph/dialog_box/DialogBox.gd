@@ -667,9 +667,15 @@ func parse_bool(value, default):
 func parse_directive(block):
 	var parts = block.split(' ', true, 1)
 	var result = {}
+
+	# TODO: this entire section is brittle
 	match parts[0]:
 		'jump':
 			result['jump'] = parts[1]
+		'show':
+			result['show'] = true
+		'hide':
+			result['hide'] = true
 		'speed':
 			result['speed'] = float(parts[1])
 		'exec':
@@ -694,6 +700,12 @@ func apply_directive(dir):
 	# 	result = true
 	if 'exec' in dir:
 		exec = dir.exec
+		result = true
+	if 'show' in dir:
+		show()
+		result = true
+	if 'hide' in dir:
+		hide()
 		result = true
 	if 'assignment' in dir:
 		assignment = dir.assignment
