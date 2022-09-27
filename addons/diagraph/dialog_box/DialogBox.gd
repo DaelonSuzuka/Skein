@@ -15,6 +15,8 @@ var next_char_cooldown := original_cooldown
 signal done
 signal line_finished
 signal character_added(c)
+signal yielded
+signal resumed
 
 signal actor_joined(actor)
 signal actor_left(actor) # unimplemented
@@ -38,6 +40,7 @@ onready var DebugLog = find_node('DebugLog')
 
 var waiting_for_choice := false
 var active := false
+var yielding := false
 var direct_input := true
 
 # ******************************************************************************
@@ -223,6 +226,24 @@ func start(conversation, options={}):
 	next_line()
 	show()
 
+func _resume():
+	emit_signal('resumed')
+
+func _yield(object=null, sig="nothing"):
+	# TODO: make this not explode without args
+	active = false
+	yielding = true
+	TextTimer.paused = true
+	emit_signal('yielded')
+
+	object.connect(sig, self, '_resume', [], CONNECT_ONESHOT)
+
+	yield(self, 'resumed')
+
+	TextTimer.paused = false
+	active = true
+	yielding = false
+
 func stop():
 	active = false
 	hide()
@@ -333,9 +354,8 @@ func next_line():
 						break
 				else:
 					var block = get_block('{', '}')
-					if block:
-						if exec:
-							var result = evaluate(block)
+					if block and exec:
+						evaluate(block)
 			# check for directive blocks
 			elif line[cursor] == '<':
 				if line[cursor + 1] == '<':
@@ -396,6 +416,8 @@ func next_line():
 			name = ''
 
 	if skip:
+		if yielding:
+			yield(self, 'resumed')
 		current_line += 1
 		next_line()
 		return
@@ -730,6 +752,7 @@ func evaluate(input: String=''):
 	var ctx = Diagraph.sandbox.get_eval_context()
 
 	ctx.variable('onready var caller = get_parent().caller')
+	ctx.variable('onready var dialog = get_parent()')
 	# ctx.variable('onready var scene = get_parent().caller.owner')
 
 	ctx.variable('var _original_cooldown = ' + str(original_cooldown))
@@ -743,6 +766,12 @@ func evaluate(input: String=''):
 		'func jump(node):',
 		[
 			'get_parent().jump_to(node)',
+		]
+	)
+	ctx.method(
+		'func yield(object=null, sig="nothing"):',
+		[
+			'get_parent()._yield(object, sig)',
 		]
 	)
 
