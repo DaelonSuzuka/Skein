@@ -774,6 +774,12 @@ func evaluate(input: String=''):
 			'get_parent()._yield(object, sig)',
 		]
 	)
+	ctx.method(
+		'func timer(duration):',
+		[
+			'return get_tree().create_timer(duration)',
+		]
+	)
 
 
 	var is_assignment = false
