@@ -182,7 +182,9 @@ func start(conversation, options={}):
 
 	nodes = Diagraph.load_conversation(conversation, {}).duplicate(true)
 
-	# TODO: add safety here
+	if nodes.size() == 0:
+		push_error('loading conversation "%s"failed: is this a real conversation?' % [conversation])
+		return
 
 	# identify starting node
 	current_node = null
@@ -199,11 +201,7 @@ func start(conversation, options={}):
 				current_node = str(node.id)
 
 	# set up initial data
-	current_data = nodes[current_node]
-	current_data.lines = split_text(current_data.text)
-
-	line_count = 0
-	current_line = line_number
+	set_node(current_node)
 	if line_number == -1 or line_number > current_data.lines.size():
 		current_line = current_data.lines.size() - 1
 
@@ -480,7 +478,7 @@ func process_inline_choices(marker):
 			node.name = str(node.id)
 			choices[c].next = str(node.id)
 			for line in choices[c].body:
-				node.lines += line + '\n'
+				node.text += line + '\n'
 			nodes[str(node.id)] = node
 	return choices
 
