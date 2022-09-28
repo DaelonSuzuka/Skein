@@ -81,6 +81,8 @@ func _ready():
 	GraphEdit.connect('node_changed', self, 'node_changed')
 
 	SettingsMenu.add_check_item('Scroll While Zooming', [GraphEdit, 'set_zoom_scroll'])
+	if plugin:
+		SettingsMenu.add_item('Set as Preferred Editor', [plugin, 'set_preferred_editor', position])
 	var sub = SettingsMenu.create_submenu('Set Font Size', 'FontSize')
 	sub.hide_on_item_selection = false
 	SettingsMenu.add_submenu_item('Font Size Reset', 'FontSize', [self, 'reset_font_size'])

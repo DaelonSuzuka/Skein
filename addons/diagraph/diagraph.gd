@@ -3,6 +3,9 @@ extends EditorPlugin
 
 # ******************************************************************************
 
+const settings_prefix = "interface/diagraph/"
+var settings
+
 const singleton_path = 'res://addons/diagraph/DiagraphSingleton.tscn'
 
 const inspector_class = 'res://addons/diagraph/DiagraphInspectorPlugin.gd'
@@ -15,7 +18,6 @@ var editors = {
 	bottom = null,
 }
 
-var preferred_editor := 'editor_bottom'
 var enabled := true
 
 # ******************************************************************************
@@ -30,6 +32,17 @@ func _enter_tree():
 	name = 'Diagraph'
 	# Diagraph.plugin = self
 
+	settings = get_editor_interface().get_editor_settings()
+
+	var property_info = {
+		"name": "preferred_editor",
+		"value": 'bottom',
+		"type": TYPE_STRING,
+		"hint": PROPERTY_HINT_ENUM,
+		"hint_string": "top,bottom"
+	}
+	add_setting(property_info)
+
 	if enabled:
 		inspector_instance = load(inspector_class).new()
 		inspector_instance.plugin = self
@@ -37,13 +50,13 @@ func _enter_tree():
 
 		editors.top = load(editor_class).instance()
 		editors.top.plugin = self
-		editors.top.position = 'editor_top'
+		editors.top.position = 'top'
 		editors.top.visible = false
 		get_editor_interface().get_editor_viewport().add_child(editors.top)
 
 		editors.bottom = load(editor_class).instance()
 		editors.bottom.plugin = self
-		editors.bottom.position = 'editor_bottom'
+		editors.bottom.position = 'bottom'
 		add_control_to_bottom_panel(editors.bottom, 'Diagraph')
 
 func _exit_tree():
@@ -64,9 +77,17 @@ func _exit_tree():
 # ******************************************************************************
 
 func show_conversation(conversation):
+	var preferred_editor = get_setting('preferred_editor')
 	var editor = editors[preferred_editor]
-	make_bottom_panel_item_visible(editor)
-	editor.change_conversation(conversation)
+	if preferred_editor == 'top':
+		get_editor_interface().set_main_screen_editor('Diagraph')
+		editor.change_conversation(conversation)
+	elif preferred_editor == 'bottom':
+		make_bottom_panel_item_visible(editor)
+		editor.change_conversation(conversation)
+
+func set_preferred_editor(editor):
+	set_setting('preferred_editor', editor)
 
 func get_plugin_icon():
 	return load('res://addons/diagraph/resources/diagraph_icon.png')
@@ -93,3 +114,18 @@ func save_external_data():
 		apply_changes()
 	if is_instance_valid(editors.top):
 		apply_changes()
+
+# ******************************************************************************
+
+func add_setting(property_info):
+	property_info.name = settings_prefix + property_info.name
+	settings.add_property_info(property_info)
+	if settings.has_setting(property_info.name):
+		return
+	settings.set(property_info.name, property_info.value)
+
+func set_setting(name: String, value) -> void:
+	settings.set(settings_prefix + name, value)
+
+func get_setting(name: String):
+	return settings.get(settings_prefix + name)
