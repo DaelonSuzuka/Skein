@@ -52,7 +52,7 @@ func _ready() -> void:
 	connect('paste_nodes_request', self, 'paste_nodes_request')
 	connect('popup_request', self, 'on_popup_request')
 
-	connect('_begin_node_move', self, 'contents_changed')
+	connect('_end_node_move', self, 'contents_changed')
 
 func contents_changed():
 	if notify_changes:
@@ -123,6 +123,7 @@ func create_node(data=null) -> Node:
 		node.set_data(data)
 	nodes[str(node.data.id)] = node
 	emit_signal('node_created', node)
+	contents_changed()
 
 	node.connect('close_request', self, 'delete_node', [node])
 	node.connect('changed', self, 'contents_changed')
@@ -145,6 +146,7 @@ func delete_node(node) -> void:
 func rename_node(id, new_name):
 	if str(id) in nodes:
 		nodes[str(id)].rename(new_name)
+		contents_changed()
 
 func select_node(node):
 	# if we get passed a node id, get the actual node instead
@@ -233,6 +235,8 @@ func paste_nodes_request() -> void:
 	for node in new_nodes:
 		node.offset += destination - center
 		node.selected = true
+
+	contents_changed()
 
 # ******************************************************************************
 

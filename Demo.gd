@@ -29,6 +29,7 @@ func _ready():
 	DictBox.remove_child(DictEntry)
 
 	Diagraph.sandbox.add_locals(demo_vars)
+	Diagraph.sandbox.add_local('Diagraph', Diagraph)
 	for key in demo_vars:
 		create_entry(key, demo_vars[key])
 

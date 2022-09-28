@@ -12,16 +12,16 @@ var character_map_path := characters_path + 'other_characters.json'
 var conversation_path := 'conversations/'
 var conversation_prefix := prefix + conversation_path
 
-var sandbox = load('res://addons/diagraph/Sandbox.gd').new()
-var watcher = load('res://addons/diagraph/Watcher.gd').new()
+onready var sandbox = $Sandbox
+onready var watcher = $Watcher
 onready var canvas = get_node('DiagraphCanvas')
 
 var characters := {}
 var conversations := {}
 var _conversations := {}
 
-var utils = load('res://addons/diagraph/utils/Utils.gd').new()
-var files = load('res://addons/diagraph/utils/FileUtils.gd').new()
+onready var utils = $Utils
+onready var files = $Files
 
 signal refreshed
 
@@ -31,15 +31,7 @@ func _ready():
 	validate_paths()
 	call_deferred('refresh')
 
-	add_child(sandbox)
-	add_child(watcher)
-	add_child(files)
-	add_child(utils)
-
-	if OS.has_feature('HTML5'):
-		load_builtin_conversations()
-	else:
-		init_file_watcher()
+	init_file_watcher()
 
 func init_file_watcher():
 	for folder in files.get_all_folders(conversation_prefix):
@@ -120,13 +112,16 @@ func _load_conversation(path, default=null):
 
 # ------------------------------------------------------------------------------
 
+func get_full_path(path: String) -> String:
+	if path in _conversations:
+		path = _conversations[path]
+	return path
+
 func load_conversation(path, default=null):
 	# sanitize path by removing node name and/or line number
 	path = path.trim_prefix(Diagraph.prefix)
 	path = path.split(':')[0]
-
-	if path in _conversations:
-		path = _conversations[path]
+	path = get_full_path(path)
 
 	return _load_conversation(path, default)
 

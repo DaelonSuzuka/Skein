@@ -24,12 +24,17 @@ onready var DialogBox = find_node('DialogBox')
 onready var ToggleRightPanel = find_node('ToggleRightPanel')
 onready var ToggleLeftPanel = find_node('ToggleLeftPanel')
 onready var LeftPanelSplit: HSplitContainer = find_node('LeftPanelSplit')
+onready var RightPanelSplit: HSplitContainer = find_node('RightPanelSplit')
+onready var LeftSidebar: Control = find_node('LeftSidebar')
+onready var RightSidebar: Control = find_node('RightSidebar')
 onready var SettingsMenu: MenuButton = find_node('SettingsMenu')
+
+export var position := 'default'
 
 var plugin = null
 var current_conversation := ''
 var editor_data := {}
-var position := ''
+var ignore_next_refresh := false
 
 # ******************************************************************************
 
@@ -66,6 +71,7 @@ func _ready():
 	DialogFontPlus.connect('pressed', self, 'dialog_font_plus')
 
 	ToggleLeftPanel.connect('pressed', self, 'toggle_left_panel')
+	ToggleRightPanel.connect('pressed', self, 'toggle_right_panel')
 
 	GraphEdit.connect('node_renamed', self, 'node_renamed')
 	GraphEdit.connect('node_created', self, 'node_created')
@@ -86,6 +92,10 @@ func _ready():
 	$AutoSave.connect('timeout', self, 'autosave')
 
 func refresh():
+	if ignore_next_refresh:
+		ignore_next_refresh = false
+		return
+
 	load_editor_data()
 	var zoom_hbox = GraphEdit.get_zoom_hbox()
 	var zoom_container = GraphToolbar.get_node('HBox/ZoomContainer')
@@ -96,7 +106,9 @@ func refresh():
 		load_conversation(current_conversation, true)
 
 func save():
+	ignore_next_refresh = true
 	save_conversation()
+	save_editor_data()
 	Diagraph.refresh()
 
 func autosave():
@@ -104,11 +116,13 @@ func autosave():
 	save_editor_data()
 
 func node_changed():
-	if plugin:
-		plugin.bottom_editor_button.text = 'Diagraph(*)'
+	save()
 
 func toggle_left_panel():
 	LeftPanelSplit.collapsed = !LeftPanelSplit.collapsed
+
+func toggle_right_panel():
+	RightSidebar.visible = !RightSidebar.visible
 
 func reset_font_size():
 	theme.default_font.size = 12
@@ -267,6 +281,7 @@ func node_selected(node):
 
 func node_deleted(id):
 	Tree.delete_item(id)
+	save()
 
 func node_renamed(old, new):
 	Tree.refresh()
@@ -344,6 +359,8 @@ func save_editor_data():
 	data[position]['zoom_scroll'] = GraphEdit.zoom_scroll
 	data[position]['left_panel_size'] = LeftPanelSplit.split_offset
 	data[position]['left_panel_collapsed'] = LeftPanelSplit.collapsed
+	data[position]['right_panel_size'] = RightPanelSplit.split_offset
+	data[position]['right_panel_collapsed'] = RightSidebar.visible
 	data[position]['conversation_data'][current_conversation] = GraphEdit.get_data()
 	Diagraph.save_json(editor_data_file_name, data)
 
@@ -372,3 +389,8 @@ func load_editor_data():
 		LeftPanelSplit.split_offset = editor_data['left_panel_size']
 	if 'left_panel_collapsed' in editor_data:
 		LeftPanelSplit.collapsed = editor_data['left_panel_collapsed']
+
+	if 'right_panel_size' in editor_data:
+		RightPanelSplit.split_offset = editor_data['right_panel_size']
+	if 'right_panel_collapsed' in editor_data:
+		RightSidebar.visible = editor_data['right_panel_collapsed']

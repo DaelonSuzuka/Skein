@@ -119,6 +119,7 @@ theme = ExtResource( 2 )
 script = ExtResource( 4 )
 
 [node name="AutoSave" type="Timer" parent="."]
+wait_time = 0.5
 autostart = true
 
 [node name="LeftPanelSplit" type="HSplitContainer" parent="."]
@@ -126,71 +127,65 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 custom_constants/autohide = 0
 split_offset = 238
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="Sidebar" type="Control" parent="LeftPanelSplit"]
+[node name="LeftSidebar" type="Control" parent="LeftPanelSplit"]
 margin_right = 238.0
 margin_bottom = 896.0
 
-[node name="Panel" type="Panel" parent="LeftPanelSplit/Sidebar"]
+[node name="Panel" type="Panel" parent="LeftPanelSplit/LeftSidebar"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_styles/panel = SubResource( 7 )
 
-[node name="VBoxContainer" type="VBoxContainer" parent="LeftPanelSplit/Sidebar"]
+[node name="VBoxContainer" type="VBoxContainer" parent="LeftPanelSplit/LeftSidebar"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="Toolbar" type="HBoxContainer" parent="LeftPanelSplit/Sidebar/VBoxContainer"]
+[node name="Toolbar" type="HBoxContainer" parent="LeftPanelSplit/LeftSidebar/VBoxContainer"]
 margin_right = 238.0
 margin_bottom = 28.0
 
-[node name="Control" type="Control" parent="LeftPanelSplit/Sidebar/VBoxContainer/Toolbar"]
+[node name="Control" type="Control" parent="LeftPanelSplit/LeftSidebar/VBoxContainer/Toolbar"]
 margin_right = 206.0
 margin_bottom = 28.0
 size_flags_horizontal = 3
 
-[node name="NewFile" type="ToolButton" parent="LeftPanelSplit/Sidebar/VBoxContainer/Toolbar"]
+[node name="NewFile" type="ToolButton" parent="LeftPanelSplit/LeftSidebar/VBoxContainer/Toolbar"]
 visible = false
 margin_right = 28.0
 margin_bottom = 28.0
 hint_tooltip = "New File"
 icon = SubResource( 28 )
 
-[node name="NewFolder" type="ToolButton" parent="LeftPanelSplit/Sidebar/VBoxContainer/Toolbar"]
+[node name="NewFolder" type="ToolButton" parent="LeftPanelSplit/LeftSidebar/VBoxContainer/Toolbar"]
 visible = false
 margin_right = 28.0
 margin_bottom = 28.0
 hint_tooltip = "New Folder"
 icon = SubResource( 22 )
 
-[node name="Refresh" type="ToolButton" parent="LeftPanelSplit/Sidebar/VBoxContainer/Toolbar"]
+[node name="Refresh" type="ToolButton" parent="LeftPanelSplit/LeftSidebar/VBoxContainer/Toolbar"]
 margin_left = 210.0
 margin_right = 238.0
 margin_bottom = 28.0
 hint_tooltip = "Refresh"
 icon = SubResource( 26 )
 
-[node name="CollapseAll" type="ToolButton" parent="LeftPanelSplit/Sidebar/VBoxContainer/Toolbar"]
+[node name="CollapseAll" type="ToolButton" parent="LeftPanelSplit/LeftSidebar/VBoxContainer/Toolbar"]
 visible = false
-margin_left = 138.0
-margin_right = 150.0
-margin_bottom = 25.0
+margin_left = 226.0
+margin_right = 238.0
+margin_bottom = 28.0
 
-[node name="MenuButton" type="MenuButton" parent="LeftPanelSplit/Sidebar/VBoxContainer/Toolbar"]
+[node name="MenuButton" type="MenuButton" parent="LeftPanelSplit/LeftSidebar/VBoxContainer/Toolbar"]
 visible = false
-margin_left = 115.0
-margin_right = 150.0
-margin_bottom = 25.0
+margin_left = 137.0
+margin_right = 238.0
+margin_bottom = 28.0
 size_flags_horizontal = 3
 text = "wut"
 
-[node name="Tree" type="Tree" parent="LeftPanelSplit/Sidebar/VBoxContainer"]
+[node name="Tree" type="Tree" parent="LeftPanelSplit/LeftSidebar/VBoxContainer"]
 margin_top = 32.0
 margin_right = 238.0
 margin_bottom = 896.0
@@ -202,7 +197,7 @@ folder_icon = SubResource( 12 )
 file_icon = SubResource( 34 )
 card_icon = SubResource( 18 )
 
-[node name="TextureRect" type="Button" parent="LeftPanelSplit/Sidebar/VBoxContainer/Tree"]
+[node name="TextureRect" type="Button" parent="LeftPanelSplit/LeftSidebar/VBoxContainer/Tree"]
 visible = false
 margin_right = 40.0
 margin_bottom = 40.0
@@ -211,43 +206,45 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="GraphContainer" type="Control" parent="LeftPanelSplit"]
+[node name="RightPanelSplit" type="HSplitContainer" parent="LeftPanelSplit"]
 margin_left = 246.0
 margin_right = 1596.0
 margin_bottom = 896.0
+split_offset = 1183
 
-[node name="GraphEdit" type="GraphEdit" parent="LeftPanelSplit/GraphContainer"]
+[node name="GraphContainer" type="Control" parent="LeftPanelSplit/RightPanelSplit"]
+margin_right = 1350.0
+margin_bottom = 896.0
+
+[node name="GraphEdit" type="GraphEdit" parent="LeftPanelSplit/RightPanelSplit/GraphContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 right_disconnects = true
-scroll_offset = Vector2( -482.147, -896 )
 snap_distance = 10
-zoom = 1.331
 zoom_min = 0.1
 zoom_max = 5.0
 zoom_step = 1.1
 show_zoom_label = true
-minimap_enabled = false
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="GraphToolbar" type="Control" parent="LeftPanelSplit/GraphContainer"]
+[node name="GraphToolbar" type="Control" parent="LeftPanelSplit/RightPanelSplit/GraphContainer"]
 anchor_right = 1.0
 margin_left = 10.0
 margin_right = -10.0
 margin_bottom = 30.0
 
-[node name="Panel" type="Panel" parent="LeftPanelSplit/GraphContainer/GraphToolbar"]
+[node name="Panel" type="Panel" parent="LeftPanelSplit/RightPanelSplit/GraphContainer/GraphToolbar"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -10.0
 margin_right = 10.0
 
-[node name="HBox" type="HBoxContainer" parent="LeftPanelSplit/GraphContainer/GraphToolbar"]
+[node name="HBox" type="HBoxContainer" parent="LeftPanelSplit/RightPanelSplit/GraphContainer/GraphToolbar"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
@@ -255,61 +252,129 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ToggleLeftPanel" type="Button" parent="LeftPanelSplit/GraphContainer/GraphToolbar/HBox"]
+[node name="ToggleLeftPanel" type="Button" parent="LeftPanelSplit/RightPanelSplit/GraphContainer/GraphToolbar/HBox"]
 margin_right = 28.0
 margin_bottom = 30.0
 toggle_mode = true
 text = "<<"
 flat = true
 
-[node name="ZoomContainer" type="HBoxContainer" parent="LeftPanelSplit/GraphContainer/GraphToolbar/HBox"]
+[node name="ZoomContainer" type="HBoxContainer" parent="LeftPanelSplit/RightPanelSplit/GraphContainer/GraphToolbar/HBox"]
 margin_left = 32.0
-margin_right = 320.0
+margin_right = 32.0
 margin_bottom = 30.0
 
-[node name="SettingsMenu" type="MenuButton" parent="LeftPanelSplit/GraphContainer/GraphToolbar/HBox"]
-margin_left = 324.0
-margin_right = 391.0
+[node name="SettingsMenu" type="MenuButton" parent="LeftPanelSplit/RightPanelSplit/GraphContainer/GraphToolbar/HBox"]
+margin_left = 36.0
+margin_right = 103.0
 margin_bottom = 30.0
 text = "Settings"
 items = [ "Scroll While Zooming", null, 1, false, false, 0, 0, null, "", false, "Set Font Size", null, 0, false, false, 1, 0, null, "FontSize", false ]
 script = ExtResource( 7 )
 
-[node name="ToolsMenu" type="MenuButton" parent="LeftPanelSplit/GraphContainer/GraphToolbar/HBox"]
-margin_left = 395.0
-margin_right = 442.0
+[node name="ToolsMenu" type="MenuButton" parent="LeftPanelSplit/RightPanelSplit/GraphContainer/GraphToolbar/HBox"]
+margin_left = 107.0
+margin_right = 154.0
 margin_bottom = 30.0
 focus_mode = 2
 text = "Tools"
 script = ExtResource( 7 )
 
-[node name="Run" type="Button" parent="LeftPanelSplit/GraphContainer/GraphToolbar/HBox"]
-margin_left = 446.0
-margin_right = 485.0
+[node name="Run" type="Button" parent="LeftPanelSplit/RightPanelSplit/GraphContainer/GraphToolbar/HBox"]
+margin_left = 158.0
+margin_right = 197.0
 margin_bottom = 30.0
 text = "Run"
 flat = true
 
-[node name="Save" type="Button" parent="LeftPanelSplit/GraphContainer/GraphToolbar/HBox"]
-margin_left = 489.0
-margin_right = 532.0
+[node name="Save" type="Button" parent="LeftPanelSplit/RightPanelSplit/GraphContainer/GraphToolbar/HBox"]
+visible = false
+margin_left = 201.0
+margin_right = 244.0
 margin_bottom = 30.0
 text = "Save"
 flat = true
 
-[node name="Spacer" type="Control" parent="LeftPanelSplit/GraphContainer/GraphToolbar/HBox"]
-margin_left = 536.0
+[node name="Spacer" type="Control" parent="LeftPanelSplit/RightPanelSplit/GraphContainer/GraphToolbar/HBox"]
+margin_left = 201.0
 margin_right = 1298.0
 margin_bottom = 30.0
 size_flags_horizontal = 3
 
-[node name="ToggleRightPanel" type="Button" parent="LeftPanelSplit/GraphContainer/GraphToolbar/HBox"]
+[node name="ToggleRightPanel" type="Button" parent="LeftPanelSplit/RightPanelSplit/GraphContainer/GraphToolbar/HBox"]
 margin_left = 1302.0
 margin_right = 1330.0
 margin_bottom = 30.0
 toggle_mode = true
 text = ">>"
 flat = true
+
+[node name="RightSidebar" type="Control" parent="LeftPanelSplit/RightPanelSplit"]
+visible = false
+margin_left = 1191.0
+margin_right = 1350.0
+margin_bottom = 896.0
+
+[node name="Panel" type="Panel" parent="LeftPanelSplit/RightPanelSplit/RightSidebar"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/panel = SubResource( 7 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LeftPanelSplit/RightPanelSplit/RightSidebar"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Toolbar" type="HBoxContainer" parent="LeftPanelSplit/RightPanelSplit/RightSidebar/VBoxContainer"]
+margin_right = 159.0
+margin_bottom = 28.0
+
+[node name="Control" type="Control" parent="LeftPanelSplit/RightPanelSplit/RightSidebar/VBoxContainer/Toolbar"]
+margin_right = 127.0
+margin_bottom = 28.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="NewFile" type="ToolButton" parent="LeftPanelSplit/RightPanelSplit/RightSidebar/VBoxContainer/Toolbar"]
+visible = false
+margin_right = 28.0
+margin_bottom = 28.0
+hint_tooltip = "New File"
+icon = SubResource( 28 )
+
+[node name="NewFolder" type="ToolButton" parent="LeftPanelSplit/RightPanelSplit/RightSidebar/VBoxContainer/Toolbar"]
+visible = false
+margin_right = 28.0
+margin_bottom = 28.0
+hint_tooltip = "New Folder"
+icon = SubResource( 22 )
+
+[node name="Refresh" type="ToolButton" parent="LeftPanelSplit/RightPanelSplit/RightSidebar/VBoxContainer/Toolbar"]
+margin_left = 131.0
+margin_right = 159.0
+margin_bottom = 28.0
+hint_tooltip = "Refresh"
+icon = SubResource( 26 )
+
+[node name="CollapseAll" type="ToolButton" parent="LeftPanelSplit/RightPanelSplit/RightSidebar/VBoxContainer/Toolbar"]
+visible = false
+margin_left = 226.0
+margin_right = 238.0
+margin_bottom = 28.0
+
+[node name="MenuButton" type="MenuButton" parent="LeftPanelSplit/RightPanelSplit/RightSidebar/VBoxContainer/Toolbar"]
+visible = false
+margin_left = 137.0
+margin_right = 238.0
+margin_bottom = 28.0
+focus_mode = 2
+size_flags_horizontal = 3
+text = "wut"
+
+[node name="Tree" type="Tree" parent="LeftPanelSplit/RightPanelSplit/RightSidebar/VBoxContainer"]
+margin_top = 32.0
+margin_right = 159.0
+margin_bottom = 896.0
+size_flags_vertical = 3
 
 [node name="ConfirmClear" type="ConfirmationDialog" parent="."]
 anchor_left = 0.5

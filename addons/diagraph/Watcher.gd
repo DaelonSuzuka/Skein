@@ -1,3 +1,4 @@
+tool
 extends Node
 
 var _file := File.new()

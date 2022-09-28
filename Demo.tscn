@@ -17,22 +17,35 @@ anchor_bottom = 1.0
 theme = ExtResource( 3 )
 custom_constants/autohide = 0
 split_offset = -175
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="DiagraphEditor" parent="HSplitContainer" instance=ExtResource( 2 )]
+[node name="VSplitContainer" type="VSplitContainer" parent="HSplitContainer"]
+margin_right = 1600.0
+margin_bottom = 900.0
+size_flags_horizontal = 3
+
+[node name="DiagraphEditor" parent="HSplitContainer/VSplitContainer" instance=ExtResource( 2 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 0.0
 margin_top = 0.0
-margin_right = 1737.0
-margin_bottom = 1200.0
+margin_right = 1600.0
+margin_bottom = 446.0
+position = "top"
+
+[node name="DiagraphEditor2" parent="HSplitContainer/VSplitContainer" instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = 454.0
+margin_right = 1600.0
+margin_bottom = 900.0
+position = "bottom"
 
 [node name="Control" type="Control" parent="HSplitContainer"]
-margin_left = 1745.0
-margin_right = 1920.0
-margin_bottom = 1200.0
+visible = false
+margin_left = 1425.0
+margin_right = 1600.0
+margin_bottom = 900.0
 
 [node name="Panel" type="Panel" parent="HSplitContainer/Control"]
 modulate = Color( 0.537255, 0.537255, 0.537255, 1 )
@@ -58,7 +71,7 @@ margin_right = 169.0
 [node name="Label" type="Label" parent="HSplitContainer/Control/VBoxContainer"]
 margin_top = 4.0
 margin_right = 169.0
-margin_bottom = 29.0
+margin_bottom = 32.0
 hint_tooltip = "These variables can be referenced inside your dialogues or in Branch nodes or Choice Conditions."
 mouse_filter = 1
 size_flags_horizontal = 3
@@ -66,19 +79,19 @@ text = "Game Variables:"
 autowrap = true
 
 [node name="HSeparator" type="HSeparator" parent="HSplitContainer/Control/VBoxContainer"]
-margin_top = 33.0
+margin_top = 36.0
 margin_right = 169.0
-margin_bottom = 37.0
+margin_bottom = 40.0
 
 [node name="ScrollContainer" type="ScrollContainer" parent="HSplitContainer/Control/VBoxContainer"]
-margin_top = 41.0
+margin_top = 44.0
 margin_right = 169.0
-margin_bottom = 1154.0
+margin_bottom = 854.0
 size_flags_vertical = 3
 
 [node name="DictBox" type="VBoxContainer" parent="HSplitContainer/Control/VBoxContainer/ScrollContainer"]
 margin_right = 169.0
-margin_bottom = 1113.0
+margin_bottom = 810.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
@@ -103,14 +116,14 @@ size_flags_horizontal = 3
 placeholder_text = "Value"
 
 [node name="HSeparator2" type="HSeparator" parent="HSplitContainer/Control/VBoxContainer"]
-margin_top = 1158.0
+margin_top = 858.0
 margin_right = 169.0
-margin_bottom = 1162.0
+margin_bottom = 862.0
 
 [node name="Control" type="Control" parent="HSplitContainer/Control/VBoxContainer"]
-margin_top = 1166.0
+margin_top = 866.0
 margin_right = 169.0
-margin_bottom = 1196.0
+margin_bottom = 896.0
 rect_min_size = Vector2( 0, 30 )
 size_flags_horizontal = 3
 
@@ -123,28 +136,28 @@ __meta__ = {
 }
 
 [node name="Key" type="LineEdit" parent="HSplitContainer/Control/VBoxContainer/Control/HBoxContainer"]
-margin_right = 63.0
-margin_bottom = 27.0
+margin_right = 61.0
+margin_bottom = 28.0
 size_flags_horizontal = 3
 placeholder_text = "Key"
 
 [node name="Value" type="LineEdit" parent="HSplitContainer/Control/VBoxContainer/Control/HBoxContainer"]
-margin_left = 67.0
-margin_right = 131.0
-margin_bottom = 27.0
+margin_left = 65.0
+margin_right = 126.0
+margin_bottom = 28.0
 size_flags_horizontal = 3
 placeholder_text = "Value"
 
 [node name="Add" type="Button" parent="HSplitContainer/Control/VBoxContainer/Control/HBoxContainer"]
-margin_left = 135.0
+margin_left = 130.0
 margin_right = 169.0
-margin_bottom = 27.0
+margin_bottom = 28.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.5
 disabled = true
 text = "Add"
 
 [node name="Control2" type="Control" parent="HSplitContainer/Control/VBoxContainer"]
-margin_top = 1200.0
+margin_top = 900.0
 margin_right = 169.0
-margin_bottom = 1200.0
+margin_bottom = 900.0
