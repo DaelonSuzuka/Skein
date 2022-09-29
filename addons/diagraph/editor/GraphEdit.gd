@@ -29,11 +29,6 @@ var notify_changes := true
 
 signal zoom_changed(zoom)
 
-var zoom_scroll := false setget set_zoom_scroll
-
-func set_zoom_scroll(state):
-	zoom_scroll = state
-
 signal node_created(node)
 signal node_deleted(id)
 signal node_renamed(old, new)
