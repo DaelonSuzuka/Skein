@@ -15,6 +15,8 @@ var next_char_cooldown := original_cooldown
 signal done
 signal line_finished
 signal character_added(c)
+signal line_started(line_number)
+signal node_started(id)
 signal yielded
 signal resumed
 
@@ -266,6 +268,7 @@ func set_node(next_node):
 	current_line = 0
 	current_data = nodes[current_node].duplicate(true)
 	current_data.lines = split_text(current_data.text)
+	emit_signal('node_started', current_data.id)
 
 func check_next_line(line_number):
 	if length > 0 and line_count >= length:
@@ -527,6 +530,8 @@ func set_line(_line):
 	NextIndicator.visible = false
 	next_char_cooldown = original_cooldown
 	TextTimer.start(next_char_cooldown)
+	
+	emit_signal('line_started', current_line)
 
 func skip_space():
 	if cursor < line.length():
