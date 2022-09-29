@@ -180,9 +180,9 @@ func save_json(path, data):
 	dir.make_dir_recursive(path.get_base_dir())
 
 	var f = File.new()
-	f.open(path, File.WRITE)
-	f.store_string(JSON.print(data, '\t'))
-	f.close()
+	if f.open(path, File.WRITE) == OK:
+		f.store_string(JSON.print(data, '\t'))
+		f.close()
 
 func load_json(path, default=null):
 	if !path.begins_with('res://') and !path.begins_with('user://'):
@@ -190,12 +190,12 @@ func load_json(path, default=null):
 	var result = default
 	var f = File.new()
 	if f.file_exists(path):
-		f.open(path, File.READ)
-		var text = f.get_as_text()
-		f.close()
-		var parse = JSON.parse(text)
-		if parse.result is Dictionary:
-			result = parse.result
+		if f.open(path, File.READ) == OK:
+			var text = f.get_as_text()
+			f.close()
+			var parse = JSON.parse(text)
+			if parse.result is Dictionary:
+				result = parse.result
 	return result
 
 # ******************************************************************************
@@ -212,9 +212,9 @@ func save_yarn(path, data):
 	var out = convert_nodes_to_yarn(data)
 
 	var f = File.new()
-	f.open(path, File.WRITE)
-	f.store_string(out)
-	f.close()
+	if f.open(path, File.WRITE) == OK:
+		f.store_string(out)
+		f.close()
 
 func convert_nodes_to_yarn(data):
 	var out = ''
@@ -255,12 +255,12 @@ func load_yarn(path, default=null):
 
 	var f = File.new()
 	if f.file_exists(path):
-		f.open(path, File.READ)
-		var text = f.get_as_text()
-		f.close()
-		parse_yarn(text)
-		if nodes:
-			result = nodes
+		if f.open(path, File.READ) == OK:
+			var text = f.get_as_text()
+			f.close()
+			parse_yarn(text)
+			if nodes:
+				result = nodes
 	return result
 
 var nodes := {}
