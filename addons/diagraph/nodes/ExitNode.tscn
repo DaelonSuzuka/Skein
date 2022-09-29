@@ -1,14 +1,36 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://addons/diagraph/nodes/ExitNode.gd" type="Script" id=1]
 [ext_resource path="res://addons/diagraph/nodes/BaseNode.tscn" type="PackedScene" id=2]
+[ext_resource path="res://addons/diagraph/resources/vector_icons/fonts/MaterialIcons.ttf" type="DynamicFontData" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+size = 20
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 20
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 20
+font_data = ExtResource( 3 )
 
 [node name="1" instance=ExtResource( 2 )]
 slot/0/left_enabled = true
 script = ExtResource( 1 )
 
-[node name="Title" parent="Body/Toolbar" index="1"]
+[node name="Title" parent="Body/Toolbar" index="2"]
 text = "Exit"
+
+[node name="Play" parent="Body/Toolbar" index="3"]
+custom_fonts/font = SubResource( 1 )
+
+[node name="Edit" parent="Body/Toolbar" index="4"]
+custom_fonts/font = SubResource( 2 )
+
+[node name="Close" parent="Body/Toolbar" index="5"]
+custom_fonts/font = SubResource( 3 )
 
 [node name="Control" type="Control" parent="Body" index="1"]
 anchor_right = 1.0

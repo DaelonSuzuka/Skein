@@ -145,7 +145,7 @@ func _body_ctx_selection(selection: String):
 func set_id(id) -> void:
 	data.id = id
 	name = str(id)
-	Id.text = str(data.id) + ' | '
+	Id.text = str(data.id)
 
 func rename(new_name):
 	Title.text = new_name

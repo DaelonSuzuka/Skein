@@ -8,17 +8,13 @@ onready var Tree: Tree = find_node('Tree')
 onready var ConfirmClear: ConfirmationDialog = find_node('ConfirmClear')
 onready var ConfirmDelete: ConfirmationDialog = find_node('ConfirmDelete')
 onready var Run = find_node('Run')
+# onready var Play = find_node('Play')
 onready var ConfirmationDimmer = find_node('ConfirmationDimmer')
 onready var Refresh = find_node('Refresh')
-onready var NewFile = find_node('NewFile')
-onready var NewFolder = find_node('NewFolder')
-onready var Save = find_node('Save')
 onready var Stop = find_node('Stop')
 onready var Next = find_node('Next')
 onready var Debug = find_node('Debug')
 onready var Preview = find_node('Preview')
-onready var DialogFontMinus = find_node('DialogFontMinus')
-onready var DialogFontPlus = find_node('DialogFontPlus')
 onready var GraphToolbar = find_node('GraphToolbar')
 onready var DialogBox = find_node('DialogBox')
 onready var ToggleRightPanel = find_node('ToggleRightPanel')
@@ -40,7 +36,7 @@ var ignore_next_refresh := false
 
 func _ready():
 	Run.connect('pressed', self, 'run')
-	Save.connect('pressed', self, 'save')
+	# Play.connect('pressed', self, 'run')
 	Stop.connect('pressed', self, 'stop')
 	Next.connect('pressed', self, 'next')
 	Debug.connect('toggled', $Preview/DialogBox/DebugLog, 'set_visible')
@@ -67,9 +63,6 @@ func _ready():
 	Tree.connect('delete_node', GraphEdit, 'delete_node')
 	Tree.connect('run_node', self, 'run')
 
-	DialogFontMinus.connect('pressed', self, 'dialog_font_minus')
-	DialogFontPlus.connect('pressed', self, 'dialog_font_plus')
-
 	ToggleLeftPanel.connect('pressed', self, 'toggle_left_panel')
 	ToggleRightPanel.connect('pressed', self, 'toggle_right_panel')
 
@@ -80,7 +73,6 @@ func _ready():
 
 	GraphEdit.connect('node_changed', self, 'node_changed')
 
-	SettingsMenu.add_check_item('Scroll While Zooming', [GraphEdit, 'set_zoom_scroll'])
 	if plugin:
 		SettingsMenu.add_item('Set as Preferred Editor', [plugin, 'set_preferred_editor', position])
 	var sub = SettingsMenu.create_submenu('Set Font Size', 'FontSize')
@@ -100,7 +92,7 @@ func refresh():
 
 	load_editor_data()
 	var zoom_hbox = GraphEdit.get_zoom_hbox()
-	var zoom_container = GraphToolbar.get_node('HBox/ZoomContainer')
+	var zoom_container = GraphToolbar.find_node('ZoomContainer')
 	zoom_hbox.get_parent().remove_child(zoom_hbox)
 	zoom_container.add_child(zoom_hbox)
 
@@ -121,7 +113,7 @@ func node_changed():
 	save()
 
 func toggle_left_panel():
-	LeftPanelSplit.collapsed = !LeftPanelSplit.collapsed
+	LeftSidebar.visible = !LeftSidebar.visible
 
 func toggle_right_panel():
 	RightSidebar.visible = !RightSidebar.visible
@@ -373,10 +365,9 @@ func save_editor_data():
 	
 	data[position]['folder_state'] = Tree.folder_state
 	data[position]['current_conversation'] = current_conversation
-	data[position]['font_size'] = theme.default_font.size
-	data[position]['zoom_scroll'] = GraphEdit.zoom_scroll
+	# data[position]['font_size'] = theme.default_font.size
 	data[position]['left_panel_size'] = LeftPanelSplit.split_offset
-	data[position]['left_panel_collapsed'] = LeftPanelSplit.collapsed
+	data[position]['left_panel_collapsed'] = LeftSidebar.visible
 	data[position]['right_panel_size'] = RightPanelSplit.split_offset
 	data[position]['right_panel_collapsed'] = RightSidebar.visible
 	data[position]['conversation_data'][current_conversation] = GraphEdit.get_data()
@@ -395,18 +386,13 @@ func load_editor_data():
 	if 'current_conversation' in editor_data:
 		load_conversation(editor_data['current_conversation'])
 
-	if 'font_size' in editor_data:
-		theme.default_font.size = editor_data['font_size']
-
-	if 'zoom_scroll' in editor_data:
-		var state = editor_data['zoom_scroll']
-		GraphEdit.zoom_scroll = state
-		SettingsMenu.set_item_checked('Scroll While Zooming', state)
+	# if 'font_size' in editor_data:
+	# 	theme.default_font.size = editor_data['font_size']
 
 	if 'left_panel_size' in editor_data:
 		LeftPanelSplit.split_offset = editor_data['left_panel_size']
 	if 'left_panel_collapsed' in editor_data:
-		LeftPanelSplit.collapsed = editor_data['left_panel_collapsed']
+		LeftSidebar.visible = editor_data['left_panel_collapsed']
 
 	if 'right_panel_size' in editor_data:
 		RightPanelSplit.split_offset = editor_data['right_panel_size']

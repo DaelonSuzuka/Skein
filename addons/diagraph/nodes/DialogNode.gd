@@ -3,7 +3,7 @@ extends 'BaseNode.gd'
 
 # ******************************************************************************
 
-onready var TextEdit = $Body/Text/TextEdit
+onready var TextEdit = find_node('TextEdit')
 
 onready var choices = [
 	$Choice1,
@@ -109,7 +109,6 @@ func set_data(new_data):
 # ******************************************************************************
 
 func set_choices_enabled(state):
-	$Body/Text/ChoiceTitles.visible = state
 	$Choice1.visible = state
 	$Choice2.visible = state
 	$Choice3.visible = state
