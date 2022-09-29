@@ -332,15 +332,31 @@ func run():
 		DialogBox = null
 	DialogBox = load('res://addons/diagraph/dialog_box/EditorDialogBox.tscn').instance()
 	Preview.add_child(DialogBox)
-	DialogBox.connect('done', $Preview, 'hide')
+	DialogBox.connect('done', self, 'dismiss_preview')
+	DialogBox.connect('line_started', self, 'line_started')
+	DialogBox.connect('node_started', self, 'node_started')
+
 	DialogBox.start(conversation, {exec = false})
 
 func stop():
-	$Preview.hide()
 	DialogBox.stop()
+	dismiss_preview()
+
+func dismiss_preview():
+	$Preview.hide()
+	GraphEdit.unhighlight_all_nodes()
 
 func next():
 	DialogBox.next_line()
+
+func line_started(id, line_number):
+	var node = GraphEdit.get_node(id)
+	if node and node.has_method('highlight_line'):
+		node.highlight_line(line_number)
+
+func node_started(id):
+	GraphEdit.focus_node(id)
+	GraphEdit.highlight_node(id)
 
 # ******************************************************************************
 

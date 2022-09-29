@@ -247,18 +247,22 @@ func get_selected_nodes() -> Array:
 			selected_nodes.append(child)
 	return selected_nodes
 
-func get_node_by_name(name: String):
+func get_node(id):
+	var node = null
+	if id in nodes:
+		node = nodes[id]
+	else:
+		node = get_node_by_name(id)
+	return node
+
+func get_node_by_name(name):
 	for node in nodes.values():
 		if is_instance_valid(node) and node.data.name == name:
 			return node
 	return null
 
-func focus_node(name: String):
-	var node = null
-	if name in nodes:
-		node = nodes[name]
-	else:
-		node = get_node_by_name(name)
+func focus_node(name) -> void:
+	var node = get_node(name)
 	if node:
 		var node_center = (node.offset + (node.rect_size / 2)) * zoom
 		scroll_offset = node_center - (rect_size / 2)
@@ -279,6 +283,20 @@ func focus_node(name: String):
 # 			center += (node.offset + (node.rect_size / 2)) * zoom
 
 # 		scroll_offset = center - (rect_size / 2)
+
+# ------------------------------------------------------------------------------
+
+func unhighlight_all_nodes():
+	for node in nodes.values():
+		node.overlay = GraphNode.OVERLAY_DISABLED
+		if node.has_method('unhighlight_lines'):
+			node.unhighlight_lines()
+
+func highlight_node(name) -> void:
+	unhighlight_all_nodes()
+	var node = get_node(name)
+	if node:
+		node.overlay = GraphNode.OVERLAY_BREAKPOINT
 
 # ******************************************************************************
 

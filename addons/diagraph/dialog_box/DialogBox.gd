@@ -15,7 +15,7 @@ var next_char_cooldown := original_cooldown
 signal done
 signal line_finished
 signal character_added(c)
-signal line_started(line_number)
+signal line_started(id, line_number)
 signal node_started(id)
 signal yielded
 signal resumed
@@ -145,7 +145,7 @@ func change_outline_color(color):
 # ******************************************************************************
 
 var nodes := {}
-var current_node = 0
+var current_node = null
 var current_line := 0
 var current_data := {}
 var continue_previous_line := false
@@ -462,6 +462,7 @@ func process_inline_choices(marker):
 				condition = '',
 				next = next,
 				body = [],
+				location = i,
 			}
 		if _line.begins_with('    '):
 			choices[str(c_num)].body.append(_line.trim_prefix('    '))
@@ -476,13 +477,19 @@ func process_inline_choices(marker):
 				lines = [],
 				next = 'none',
 				type = 'dialog',
-				id = get_id(),
+				id = str(get_id()),
+				original_node = current_node,
+				line_offset = choices[c].location + 1
 			}
-			node.name = str(node.id)
-			choices[c].next = str(node.id)
+
+			if 'original_node' in current_data:
+				node.original_node = current_data.original_node
+				node.line_offset += current_data.line_offset
+			node.name = node.id
+			choices[c].next = node.id
 			for line in choices[c].body:
 				node.text += line + '\n'
-			nodes[str(node.id)] = node
+			nodes[node.id] = node
 	return choices
 
 func display_choices():
@@ -531,7 +538,10 @@ func set_line(_line):
 	next_char_cooldown = original_cooldown
 	TextTimer.start(next_char_cooldown)
 	
-	emit_signal('line_started', current_line)
+	if 'original_node' in current_data:
+		emit_signal('line_started', current_data.original_node, current_data.line_offset + current_line)
+	else:
+		emit_signal('line_started', current_node, current_line)
 
 func skip_space():
 	if cursor < line.length():

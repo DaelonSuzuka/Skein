@@ -49,6 +49,15 @@ func index_pressed(index):
 			set_choices_enabled(state)
 			emit_signal('changed')
 
+func highlight_line(line_number):
+	TextEdit.highlight_current_line = true
+	TextEdit.cursor_set_line(line_number)
+
+func unhighlight_lines():
+	TextEdit.highlight_current_line = false
+	TextEdit.deselect()
+
+
 # ******************************************************************************
 
 func get_data():
