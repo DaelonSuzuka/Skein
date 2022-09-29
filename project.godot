@@ -37,8 +37,10 @@ HyperLog="*res://addons/hyperlog/hyperlog.tscn"
 
 [debug]
 
+gdscript/completion/autocomplete_setters_and_getters=true
 gdscript/warnings/unused_variable=false
 gdscript/warnings/unused_argument=false
+gdscript/warnings/unused_signal=false
 gdscript/warnings/return_value_discarded=false
 
 [display]
@@ -48,7 +50,7 @@ window/size/height=900
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/Iconify/plugin.cfg", "res://addons/diagraph/plugin.cfg", "res://addons/godot-plugin-refresher/plugin.cfg", "res://addons/godot_sfxr/plugin.cfg", "res://addons/hyperlog/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/diagraph/plugin.cfg", "res://addons/godot-plugin-refresher/plugin.cfg", "res://addons/godot_sfxr/plugin.cfg", "res://addons/hyperlog/plugin.cfg" )
 
 [physics]
 
