@@ -103,7 +103,6 @@ func save():
 	ignore_next_refresh = true
 	save_conversation()
 	save_editor_data()
-	Diagraph.refresh()
 
 func autosave():
 	# save_conversation()
