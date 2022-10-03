@@ -1,6 +1,8 @@
 tool
 extends Node
 
+# ******************************************************************************
+
 var _file := File.new()
 var _directory := Directory.new()
 
@@ -21,9 +23,13 @@ signal files_deleted(files)
 
 signal files_changed()
 
+# ******************************************************************************
+
 func _ready() -> void:
 	_current_delay = scan_delay
 	_remaining_steps = scan_step
+
+# ------------------------------------------------------------------------------
 
 func add_scan_directory(directory: String):
 	if directory.begins_with("res://") or directory.begins_with("user://"):
@@ -34,6 +40,8 @@ func remove_scan_directory(directory: String):
 	if directory.begins_with("res://") or directory.begins_with("user://"):
 		directory = ProjectSettings.globalize_path(directory)
 	_to_delete.append(directory)
+
+# ------------------------------------------------------------------------------
 
 func _process(delta: float) -> void:
 	if _directory_list.empty():

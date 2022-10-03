@@ -34,9 +34,11 @@ func _ready():
 	init_file_watcher()
 
 func init_file_watcher():
+	watcher.add_scan_directory(conversation_prefix)
 	for folder in files.get_all_folders(conversation_prefix):
 		watcher.add_scan_directory(folder)
 
+	watcher.add_scan_directory(characters_prefix)
 	for folder in files.get_all_folders(characters_prefix):
 		watcher.add_scan_directory(folder)
 
