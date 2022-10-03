@@ -355,6 +355,7 @@ size = 24
 icon_name = "chevron-right"
 
 [node name="RightSidebar" type="Control" parent="LeftPanelSplit/RightPanelSplit"]
+visible = false
 material = SubResource( 64 )
 margin_left = 1191.0
 margin_right = 1350.0

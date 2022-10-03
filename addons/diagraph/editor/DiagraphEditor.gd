@@ -66,6 +66,9 @@ func _ready():
 	ToggleLeftPanel.connect('pressed', self, 'toggle_left_panel')
 	ToggleRightPanel.connect('pressed', self, 'toggle_right_panel')
 
+	# right sidebar should be closed by default
+	RightSidebar.hide()
+
 	GraphEdit.connect('node_renamed', self, 'node_renamed')
 	GraphEdit.connect('node_created', self, 'node_created')
 	GraphEdit.connect('node_deleted', self, 'node_deleted')
