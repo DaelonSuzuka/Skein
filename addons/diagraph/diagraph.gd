@@ -32,7 +32,8 @@ func _enter_tree():
 	name = 'Diagraph'
 	# Diagraph.plugin = self
 
-	add_tool_menu_item('Update Diagraph', self, 'update_diagraph')
+	add_tool_menu_item('Download Master', self, 'update_diagraph')
+	add_tool_menu_item('Unzip Archive', self, 'unzip_archive')
 
 	settings = get_editor_interface().get_editor_settings()
 
@@ -62,7 +63,8 @@ func _enter_tree():
 		add_control_to_bottom_panel(editors.bottom, 'Diagraph')
 
 func _exit_tree():
-	remove_tool_menu_item('Update Diagraph')
+	remove_tool_menu_item('Download Master')
+	remove_tool_menu_item('Unzip Archive')
 
 	if enabled:
 		if editors.top:
@@ -137,20 +139,54 @@ func get_setting(name: String):
 # ******************************************************************************
 
 const diagraph_url = 'https://raw.githubusercontent.com/DaelonSuzuka/Diagraph/master/addons/diagraph/'
+const master_zip_url = 'https://github.com/DaelonSuzuka/Diagraph/archive/refs/heads/master.zip'
+const master_zip_path = 'res://master.zip'
 
 func update_diagraph(ud):
-	print('beep boop')
-
 	var http_request = HTTPRequest.new()
 	add_child(http_request)
+	http_request.download_file = master_zip_path
+	http_request.use_threads = true
 	http_request.connect("request_completed", self, "_http_request_completed")
 
-	var error = http_request.request(diagraph_url + 'plugin.cfg')
+	var error = http_request.request(master_zip_url)
 	if error != OK:
 		push_error("An error occurred in the HTTP request.")
 
-
-# Called when the HTTP request is completed.
 func _http_request_completed(result, response_code, headers, body):
 	print('_http_request_completed')
 	print(body.get_string_from_ascii())
+	unzip_archive(0)
+
+func unzip_archive(ud):
+	print('unzipping')
+	var unzip = load('res://addons/diagraph/utils/GDUnzip.gd').new()
+	var loaded = unzip.load(master_zip_path)
+
+	var files = {}
+
+	for f in unzip.files:
+		if f.begins_with('Diagraph-master/addons/diagraph'):
+			if f.ends_with('/'): # skip folders
+				continue
+			files[f] = unzip.uncompress(f)
+
+	for f in files:
+		var path = f.replace('Diagraph-master/', 'res://')
+
+		var file = File.new()
+		if file.file_exists(path):
+			if file.open(path, File.READ) == OK:
+				var new = files[f]
+				var existing = file.get_buffer(file.get_len())
+
+				if new == existing:
+					continue
+
+				if file.open(path, File.WRITE) == OK:
+					file.store_buffer(files[f])
+		else:
+			if file.open(path, File.WRITE) == OK:
+				file.store_buffer(files[f])
+
+		file.close()
