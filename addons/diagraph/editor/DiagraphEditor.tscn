@@ -342,6 +342,13 @@ margin_bottom = 32.0
 rect_min_size = Vector2( 0, 32 )
 size_flags_horizontal = 3
 
+[node name="Search" type="LineEdit" parent="LeftPanelSplit/RightPanelSplit/GraphContainer/GraphToolbar/HBox"]
+margin_left = 805.0
+margin_right = 1310.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+placeholder_text = "Search"
+
 [node name="ToggleRightPanel" type="Button" parent="LeftPanelSplit/RightPanelSplit/GraphContainer/GraphToolbar/HBox"]
 margin_left = 1147.0
 margin_right = 1183.0
