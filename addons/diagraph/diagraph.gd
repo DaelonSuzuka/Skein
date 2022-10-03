@@ -32,6 +32,8 @@ func _enter_tree():
 	name = 'Diagraph'
 	# Diagraph.plugin = self
 
+	add_tool_menu_item('Update Diagraph', self, 'update_diagraph')
+
 	settings = get_editor_interface().get_editor_settings()
 
 	var property_info = {
@@ -60,6 +62,8 @@ func _enter_tree():
 		add_control_to_bottom_panel(editors.bottom, 'Diagraph')
 
 func _exit_tree():
+	remove_tool_menu_item('Update Diagraph')
+
 	if enabled:
 		if editors.top:
 			editors.top.free()
@@ -129,3 +133,24 @@ func set_setting(name: String, value) -> void:
 
 func get_setting(name: String):
 	return settings.get(settings_prefix + name)
+
+# ******************************************************************************
+
+const diagraph_url = 'https://raw.githubusercontent.com/DaelonSuzuka/Diagraph/master/addons/diagraph/'
+
+func update_diagraph(ud):
+	print('beep boop')
+
+	var http_request = HTTPRequest.new()
+	add_child(http_request)
+	http_request.connect("request_completed", self, "_http_request_completed")
+
+	var error = http_request.request(diagraph_url + 'plugin.cfg')
+	if error != OK:
+		push_error("An error occurred in the HTTP request.")
+
+
+# Called when the HTTP request is completed.
+func _http_request_completed(result, response_code, headers, body):
+	print('_http_request_completed')
+	print(body.get_string_from_ascii())
