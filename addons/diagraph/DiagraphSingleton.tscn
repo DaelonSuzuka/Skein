@@ -4,8 +4,8 @@
 [ext_resource path="res://addons/diagraph/dialog_box/DialogBox.tscn" type="PackedScene" id=2]
 [ext_resource path="res://addons/diagraph/DiagraphCanvas.gd" type="Script" id=3]
 [ext_resource path="res://addons/diagraph/utils/FileUtils.gd" type="Script" id=4]
-[ext_resource path="res://addons/diagraph/Sandbox.gd" type="Script" id=5]
-[ext_resource path="res://addons/diagraph/Watcher.gd" type="Script" id=6]
+[ext_resource path="res://addons/diagraph/utils/Sandbox.gd" type="Script" id=5]
+[ext_resource path="res://addons/diagraph/utils/Watcher.gd" type="Script" id=6]
 [ext_resource path="res://addons/diagraph/utils/Utils.gd" type="Script" id=7]
 
 [node name="Diagraph" type="Node"]
