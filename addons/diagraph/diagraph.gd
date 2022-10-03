@@ -155,24 +155,26 @@ func update_diagraph(ud):
 
 func _http_request_completed(result, response_code, headers, body):
 	print('_http_request_completed')
-	print(body.get_string_from_ascii())
-	unzip_archive(0)
+	# unzip_archive(0)
 
 func unzip_archive(ud):
 	print('unzipping')
 	var unzip = load('res://addons/diagraph/utils/GDUnzip.gd').new()
 	var loaded = unzip.load(master_zip_path)
 
+	var existing_files = Diagraph.files.get_all_files('res://addons/diagraph')
+	var checked_files = []
 	var files = {}
 
 	for f in unzip.files:
-		if f.begins_with('Diagraph-master/addons/diagraph'):
+		if 'addons/diagraph' in f:
 			if f.ends_with('/'): # skip folders
 				continue
 			files[f] = unzip.uncompress(f)
 
 	for f in files:
 		var path = f.replace('Diagraph-master/', 'res://')
+		checked_files.append(path)
 
 		var file = File.new()
 		if file.file_exists(path):
@@ -190,3 +192,10 @@ func unzip_archive(ud):
 				file.store_buffer(files[f])
 
 		file.close()
+
+	var dir = Directory.new()
+	for f in existing_files:
+		if not(f in checked_files):
+			dir.remove(f)
+
+	dir.remove(master_zip_path)
