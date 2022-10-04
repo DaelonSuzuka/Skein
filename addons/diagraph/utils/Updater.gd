@@ -7,6 +7,7 @@ const master_zip_url = 'https://github.com/DaelonSuzuka/Diagraph/archive/refs/he
 const master_zip_path = 'res://master.zip'
 
 signal download_complete
+signal update_complete
 signal file_decompressed
 signal file_updated
 
@@ -67,3 +68,5 @@ func unzip_and_apply_update():
 			dir.remove(f)
 
 	dir.remove(master_zip_path)
+
+	emit_signal('update_complete')
