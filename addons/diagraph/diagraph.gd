@@ -166,7 +166,7 @@ func check_for_updates():
 
 func download_complete():
 	status_label.text = 'Download complete, updating Diagraph'
-	updater.unzip_and_apply_update()
+	updater.call_deferred('unzip_and_apply_update')
 
 func update_complete():
 	status_label.text = 'Update complete'
