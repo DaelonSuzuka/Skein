@@ -159,11 +159,13 @@ func check_for_updates():
 	update_dialog.popup_centered()
 
 	updater = preload('utils/Updater.gd').new()
-	updater.connect('download_complete', updater, 'unzip_and_apply_update', [], CONNECT_ONESHOT)
+	updater.connect('download_complete', self, 'download_complete', [], CONNECT_ONESHOT)
 	add_child(updater)
 	updater.download_update()
-	
+
+func download_complete():
 	status_label.text = 'Update complete'
+	updater.unzip_and_apply_update()
 
 # ******************************************************************************
 
