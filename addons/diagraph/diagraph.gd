@@ -32,8 +32,11 @@ func _enter_tree():
 	name = 'Diagraph'
 	# Diagraph.plugin = self
 
-	add_tool_menu_item('Download Master', self, 'update_diagraph')
-	add_tool_menu_item('Unzip Archive', self, 'unzip_archive')
+	var menu = preload('utils/ContextMenu.gd').new(self, 'tool_submenu_selected')
+	menu.add_item('Check for Updates')
+
+	remove_child(menu)
+	add_tool_submenu_item('Diagraph', menu)
 
 	settings = get_editor_interface().get_editor_settings()
 
@@ -63,8 +66,7 @@ func _enter_tree():
 		add_control_to_bottom_panel(editors.bottom, 'Diagraph')
 
 func _exit_tree():
-	remove_tool_menu_item('Download Master')
-	remove_tool_menu_item('Unzip Archive')
+	remove_tool_menu_item('Diagraph')
 
 	if enabled:
 		if editors.top:
@@ -138,64 +140,40 @@ func get_setting(name: String):
 
 # ******************************************************************************
 
-const diagraph_url = 'https://raw.githubusercontent.com/DaelonSuzuka/Diagraph/master/addons/diagraph/'
-const master_zip_url = 'https://github.com/DaelonSuzuka/Diagraph/archive/refs/heads/master.zip'
-const master_zip_path = 'res://master.zip'
+func tool_submenu_selected(selected):
+	if selected == 'Check for Updates':
+		check_for_updates()
 
-func update_diagraph(ud):
-	var http_request = HTTPRequest.new()
-	add_child(http_request)
-	http_request.download_file = master_zip_path
-	http_request.use_threads = true
-	http_request.connect("request_completed", self, "_http_request_completed")
+var updater
+var update_dialog
+var status_label
 
-	var error = http_request.request(master_zip_url)
-	if error != OK:
-		push_error("An error occurred in the HTTP request.")
+func check_for_updates():
+	update_dialog = AcceptDialog.new()
+	var vbox = VBox.new(update_dialog)
+	status_label = vbox.add(Label.new())
 
-func _http_request_completed(result, response_code, headers, body):
-	print('_http_request_completed')
-	# unzip_archive(0)
+	status_label.text = 'Updating Diagraph plugin'
 
-func unzip_archive(ud):
-	print('unzipping')
-	var unzip = load('res://addons/diagraph/utils/GDUnzip.gd').new()
-	var loaded = unzip.load(master_zip_path)
+	get_editor_interface().get_editor_viewport().add_child(update_dialog)
+	update_dialog.popup_centered()
 
-	var existing_files = Diagraph.files.get_all_files('res://addons/diagraph')
-	var checked_files = []
-	var files = {}
+	updater = preload('utils/Updater.gd').new()
+	updater.connect('download_complete', updater, 'unzip_and_apply_update', [], CONNECT_ONESHOT)
+	add_child(updater)
+	updater.download_update()
+	
+	status_label.text = 'Update complete'
 
-	for f in unzip.files:
-		if 'addons/diagraph' in f:
-			if f.ends_with('/'): # skip folders
-				continue
-			files[f] = unzip.uncompress(f)
+# ******************************************************************************
 
-	for f in files:
-		var path = f.replace('Diagraph-master/', 'res://')
-		checked_files.append(path)
+class VBox:
+	extends VBoxContainer
 
-		var file = File.new()
-		if file.file_exists(path):
-			if file.open(path, File.READ) == OK:
-				var new = files[f]
-				var existing = file.get_buffer(file.get_len())
+	func _init(parent=null):
+		if parent:
+			parent.add_child(self)
 
-				if new == existing:
-					continue
-
-				if file.open(path, File.WRITE) == OK:
-					file.store_buffer(files[f])
-		else:
-			if file.open(path, File.WRITE) == OK:
-				file.store_buffer(files[f])
-
-		file.close()
-
-	var dir = Directory.new()
-	for f in existing_files:
-		if not(f in checked_files):
-			dir.remove(f)
-
-	dir.remove(master_zip_path)
+	func add(object):
+		add_child(object)
+		return object
