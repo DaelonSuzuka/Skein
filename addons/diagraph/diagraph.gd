@@ -153,19 +153,23 @@ func check_for_updates():
 	var vbox = VBox.new(update_dialog)
 	status_label = vbox.add(Label.new())
 
-	status_label.text = 'Updating Diagraph plugin'
+	status_label.text = 'Downloading update package'
 
 	get_editor_interface().get_editor_viewport().add_child(update_dialog)
 	update_dialog.popup_centered()
 
 	updater = preload('utils/Updater.gd').new()
 	updater.connect('download_complete', self, 'download_complete', [], CONNECT_ONESHOT)
+	updater.connect('update_complete', self, 'update_complete', [], CONNECT_ONESHOT)
 	add_child(updater)
 	updater.download_update()
 
 func download_complete():
-	status_label.text = 'Update complete'
+	status_label.text = 'Download complete, updating Diagraph'
 	updater.unzip_and_apply_update()
+
+func update_complete():
+	status_label.text = 'Update complete'
 
 # ******************************************************************************
 
