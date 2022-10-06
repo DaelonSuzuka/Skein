@@ -1,0 +1,135 @@
+id: 4255915767
+type: dialog
+position: Rect2( -120, -160, 400, 290 )
+title: IsotopeDemo
+---
+// comments
+# other comments
+Pico: Ash! We have to get out of here!
+Sentinel: Please remain in your current position for evaluation and detention
+-> Ash: Why are there Sentinels chasing us?
+	Pico: I'm not sure, but they don't seem friendly!
+-> Ash: Can't we just fight them off?
+	Pico: There's too many, we gotta run!
+
+===
+id: 1357147643
+type: dialog
+position: Rect2( 330, -150, 400, 400 )
+title: IDSewer
+---
+<<set_name ???>>
+Ash: Pico, where does this lead?
+<<set_name null>>
+Pico: I think that leads to the maintenance tunnels underneath the city. I think it's not very clea-
+Sentinel: Targets located, moving in for apprehension and dissolution
+Ash: Well, anywhere's better than here!
+
+===
+id: 2421269435
+type: dialog
+position: Rect2( -560, -140, 400, 400 )
+title: GOWorker
+---
+
+[[hi|howdy|ahoy]]
+
+Worker: I'm evaluating the environmental impact of digital markets on local digital wildlife
+
+===
+id: 2305645933
+type: dialog
+position: Rect2( -450, 320, 400, 400 )
+title: GOWorkerGenerated
+---
+
+
+Worker: I'm {$researching} the {$effect} of {$badthing} on {$goodthing}
+
+===
+id: 554801509
+type: dialog
+position: Rect2( -730, -660, 390, 210 )
+title: RandomChoice
+---
+[[hello|ahoy|howdy]]\
+[[hello|ahoy|howdy]]
+[[hello|ahoy|howdy]]
+[[hello|ahoy|howdy]]
+===
+id: 290479186
+type: dialog
+position: Rect2( -180, -630, 400, 400 )
+title: RandomLines
+---
+Nathan: I will say this.
+% Nathan: And then I might say this
+% Nathan: Or maybe this
+% Nathan: Or even this?
+
+Nathan: Random letter?
+% Nathan: A
+% Nathan: B
+% Nathan: C
+
+Nathan: Random number?
+% Nathan: 1
+% Nathan: 2
+% Nathan: 3
+===
+id: 1534281627
+type: dialog
+position: Rect2( 400, -630, 312, 155 )
+title: RandomJump
+---
+Where will we go?
+% <<jump 1534281627>>
+% <<jump B>>
+% <<jump C>>
+===
+id: 2590786479
+type: dialog
+position: Rect2( 790, -680, 312, 155 )
+title: A
+---
+
+===
+id: 3413229452
+type: dialog
+position: Rect2( 790, -520, 312, 155 )
+title: B
+---
+Nathan: Jumped to B
+===
+id: 3041935293
+type: dialog
+position: Rect2( 790, -360, 312, 155 )
+title: C
+---
+Nathan: Jumped to C
+===
+id: 3472632069
+type: dialog
+position: Rect2( -1210, -650, 400, 400 )
+title: Dialog
+---
+Jumping... <<jump RandomChoice>>
+===
+id: 45950128
+type: dialog
+position: Rect2( 1360, -600, 440, 390 )
+title: Yield
+---
+<<exec 1>>
+
+before yield
+
+<<hide>>
+{yield(timer(3.0), 'timeout')}
+<<show>>
+
+after yield
+
+
+
+===
