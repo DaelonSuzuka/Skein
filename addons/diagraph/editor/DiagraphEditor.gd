@@ -35,6 +35,9 @@ var ignore_next_refresh := false
 # ******************************************************************************
 
 func _ready():
+	if Engine.editor_hint:
+		return
+
 	Run.connect('pressed', self, 'run')
 	# Play.connect('pressed', self, 'run')
 	Stop.connect('pressed', self, 'stop')
@@ -85,6 +88,10 @@ func _ready():
 	SettingsMenu.add_submenu_item('Font Size -', 'FontSize', [self, 'set_font_size', -1])
 
 	Diagraph.connect('refreshed', self, 'refresh')
+	
+	DialogBox.connect('done', self, 'dismiss_preview')
+	DialogBox.connect('line_started', self, 'line_started')
+	DialogBox.connect('node_started', self, 'node_started')
 
 	$AutoSave.connect('timeout', self, 'autosave')
 
@@ -319,16 +326,6 @@ func run():
 	save_conversation()
 	save_editor_data()
 	$Preview.show()
-
-	if DialogBox:
-		Preview.remove_child(DialogBox)
-		DialogBox.queue_free()
-		DialogBox = null
-	DialogBox = load('res://addons/diagraph/dialog_box/EditorDialogBox.tscn').instance()
-	Preview.add_child(DialogBox)
-	DialogBox.connect('done', self, 'dismiss_preview')
-	DialogBox.connect('line_started', self, 'line_started')
-	DialogBox.connect('node_started', self, 'node_started')
 
 	DialogBox.start(conversation, {exec = false})
 
