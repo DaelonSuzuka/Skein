@@ -195,7 +195,7 @@ func on_connection_to_empty(from, from_slot, release_position) -> void:
 
 # ******************************************************************************
 
-func delete_nodes_request() -> void:
+func delete_nodes_request(_arg) -> void:
 	for node in get_selected_nodes():
 		delete_node(node)
 
