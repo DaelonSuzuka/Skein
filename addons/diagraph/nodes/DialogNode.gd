@@ -4,6 +4,7 @@ extends 'BaseNode.gd'
 # ******************************************************************************
 
 onready var TextEdit = find_node('TextEdit')
+var scrollbar = null
 
 onready var choices = [
 	$Choice1,
@@ -32,10 +33,34 @@ func _ready():
 		c.Choice.connect('text_changed', self, 'on_change')
 		c.Condition.connect('text_changed', self, 'on_change')
 
+	for child in TextEdit.get_children():
+		if child is VScrollBar:
+			scrollbar = child
+
 	set_slot_color_right(1, slot_colors[0])
 	set_slot_color_right(2, slot_colors[1])
 	set_slot_color_right(3, slot_colors[2])
 	set_slot_color_right(4, slot_colors[3])
+
+var has_mouse := false
+
+func _input(event: InputEvent) -> void:
+	if !(event is InputEventMouseMotion):
+		return
+
+	if !scrollbar.visible:
+		return
+
+	var local_event = make_input_local(event)
+
+	if Rect2(Vector2(), rect_size).has_point(local_event.position):
+		if !has_mouse:
+			has_mouse = true
+			get_parent().zoom_step = 1.0
+	else:
+		if has_mouse:
+			has_mouse = false
+			get_parent().zoom_step = 1.1
 
 func on_change(arg=null):
 	emit_signal('changed')
