@@ -1,46 +1,21 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://addons/diagraph/nodes/BaseNode.tscn" type="PackedScene" id=1]
 [ext_resource path="res://addons/diagraph/nodes/BranchNode.gd" type="Script" id=2]
 [ext_resource path="res://addons/diagraph/resources/vector_icons/fonts/MaterialIcons.ttf" type="DynamicFontData" id=3]
-[ext_resource path="res://addons/diagraph/nodes/Branch.gd" type="Script" id=4]
+[ext_resource path="res://addons/diagraph/nodes/Branch.tscn" type="PackedScene" id=5]
 
-[sub_resource type="DynamicFont" id=8]
+[sub_resource type="DynamicFont" id=1]
 size = 20
 font_data = ExtResource( 3 )
 
-[sub_resource type="DynamicFont" id=9]
+[sub_resource type="DynamicFont" id=2]
 size = 20
 font_data = ExtResource( 3 )
 
-[sub_resource type="DynamicFont" id=10]
+[sub_resource type="DynamicFont" id=3]
 size = 20
 font_data = ExtResource( 3 )
-
-[sub_resource type="StyleBoxEmpty" id=1]
-
-[sub_resource type="StyleBoxEmpty" id=2]
-
-[sub_resource type="StyleBoxEmpty" id=3]
-
-[sub_resource type="StyleBoxEmpty" id=4]
-
-[sub_resource type="StyleBoxEmpty" id=5]
-
-[sub_resource type="Image" id=11]
-data = {
-"data": PoolByteArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 223, 223, 223, 0, 224, 224, 224, 0, 224, 224, 224, 0, 223, 223, 223, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 223, 223, 223, 0, 223, 223, 223, 180, 224, 224, 224, 255, 224, 224, 224, 255, 223, 223, 223, 180, 223, 223, 223, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 223, 223, 223, 0, 223, 223, 223, 168, 224, 224, 224, 255, 224, 224, 224, 255, 223, 223, 223, 168, 223, 223, 223, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 214, 214, 214, 0, 214, 214, 214, 19, 223, 223, 223, 234, 223, 223, 223, 234, 214, 214, 214, 19, 214, 214, 214, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 217, 217, 217, 0, 221, 221, 221, 84, 221, 221, 221, 84, 217, 217, 217, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 221, 221, 221, 0, 221, 221, 221, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ),
-"format": "RGBA8",
-"height": 16,
-"mipmaps": false,
-"width": 16
-}
-
-[sub_resource type="ImageTexture" id=7]
-flags = 0
-flags = 0
-image = SubResource( 11 )
-size = Vector2( 16, 16 )
 
 [node name="1" instance=ExtResource( 1 )]
 margin_right = 250.0
@@ -74,31 +49,7 @@ slot/5/left_type = 0
 slot/5/left_color = Color( 1, 1, 1, 1 )
 slot/5/right_enabled = false
 slot/5/right_type = 0
-slot/5/right_color = Color( 1, 0, 1, 1 )
-slot/6/left_enabled = false
-slot/6/left_type = 0
-slot/6/left_color = Color( 1, 1, 1, 1 )
-slot/6/right_enabled = false
-slot/6/right_type = 0
-slot/6/right_color = Color( 1, 0, 0, 1 )
-slot/7/left_enabled = false
-slot/7/left_type = 0
-slot/7/left_color = Color( 1, 1, 1, 1 )
-slot/7/right_enabled = false
-slot/7/right_type = 0
-slot/7/right_color = Color( 0, 0.501961, 0.501961, 1 )
-slot/8/left_enabled = false
-slot/8/left_type = 0
-slot/8/left_color = Color( 1, 1, 1, 1 )
-slot/8/right_enabled = false
-slot/8/right_type = 0
-slot/8/right_color = Color( 0, 1, 0, 1 )
-slot/9/left_enabled = false
-slot/9/left_type = 0
-slot/9/left_color = Color( 1, 1, 1, 1 )
-slot/9/right_enabled = false
-slot/9/right_type = 0
-slot/9/right_color = Color( 1, 1, 1, 1 )
+slot/5/right_color = Color( 1, 1, 1, 1 )
 script = ExtResource( 2 )
 
 [node name="Body" parent="." index="0"]
@@ -112,18 +63,18 @@ margin_right = 173.0
 text = "Branch"
 
 [node name="Play" parent="Body/Toolbar" index="3"]
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 1 )
 
 [node name="Edit" parent="Body/Toolbar" index="4"]
 margin_left = 173.0
 margin_right = 205.0
-custom_fonts/font = SubResource( 9 )
+custom_fonts/font = SubResource( 2 )
 items = [ "Show Extra Branches", null, 1, false, false, 0, 0, null, "", false ]
 
 [node name="Close" parent="Body/Toolbar" index="5"]
 margin_left = 205.0
 margin_right = 237.0
-custom_fonts/font = SubResource( 10 )
+custom_fonts/font = SubResource( 3 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Body" index="1"]
 visible = false
@@ -133,8 +84,9 @@ size_flags_vertical = 3
 alignment = 2
 
 [node name="Label" type="Label" parent="Body/VBoxContainer" index="0"]
+margin_top = 18.0
 margin_right = 228.0
-margin_bottom = 27.0
+margin_bottom = 45.0
 size_flags_horizontal = 3
 size_flags_vertical = 0
 text = "Conditions:"
@@ -142,284 +94,26 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Branch1" type="HBoxContainer" parent="." index="1"]
-margin_left = 11.0
-margin_top = 38.0
-margin_right = 239.0
-margin_bottom = 65.0
-script = ExtResource( 4 )
+[node name="Branch1" parent="." index="1" instance=ExtResource( 5 )]
 
-[node name="Condition" type="LineEdit" parent="Branch1" index="0"]
-margin_right = 206.0
-margin_bottom = 27.0
-size_flags_horizontal = 3
-placeholder_text = "Condition"
-
-[node name="Menu" type="MenuButton" parent="Branch1" index="1"]
-visible = false
-margin_left = 177.0
-margin_right = 206.0
-margin_bottom = 27.0
-focus_mode = 2
-custom_styles/hover = SubResource( 1 )
-custom_styles/pressed = SubResource( 2 )
-custom_styles/focus = SubResource( 3 )
-custom_styles/disabled = SubResource( 4 )
-custom_styles/normal = SubResource( 5 )
-text = "1"
-icon = SubResource( 7 )
-items = [ "Add Choice", null, 0, false, false, 0, 0, null, "", false, "test2", null, 0, false, false, 1, 0, null, "", false ]
-
-[node name="Label" type="Label" parent="Branch1" index="2"]
-margin_left = 210.0
-margin_right = 228.0
-margin_bottom = 27.0
-text = "1"
-
-[node name="Branch2" type="HBoxContainer" parent="." index="2"]
-margin_left = 11.0
+[node name="Branch2" parent="." index="2" instance=ExtResource( 5 )]
 margin_top = 69.0
-margin_right = 239.0
 margin_bottom = 96.0
-script = ExtResource( 4 )
+number = 2
 
-[node name="Condition" type="LineEdit" parent="Branch2" index="0"]
-margin_right = 206.0
-margin_bottom = 27.0
-size_flags_horizontal = 3
-placeholder_text = "Condition"
-
-[node name="Menu" type="MenuButton" parent="Branch2" index="1"]
-visible = false
-margin_left = 183.0
-margin_right = 209.0
-margin_bottom = 25.0
-focus_mode = 2
-custom_styles/hover = SubResource( 1 )
-custom_styles/pressed = SubResource( 2 )
-custom_styles/focus = SubResource( 3 )
-custom_styles/disabled = SubResource( 4 )
-custom_styles/normal = SubResource( 5 )
-text = "2"
-icon = SubResource( 7 )
-items = [ "Add Choice", null, 0, false, false, 0, 0, null, "", false, "test2", null, 0, false, false, 1, 0, null, "", false ]
-
-[node name="Label" type="Label" parent="Branch2" index="2"]
-margin_left = 210.0
-margin_right = 228.0
-margin_bottom = 27.0
-text = "2"
-
-[node name="Branch3" type="HBoxContainer" parent="." index="3"]
-margin_left = 11.0
+[node name="Branch3" parent="." index="3" instance=ExtResource( 5 )]
 margin_top = 100.0
-margin_right = 239.0
 margin_bottom = 127.0
-script = ExtResource( 4 )
+number = 3
 
-[node name="Condition" type="LineEdit" parent="Branch3" index="0"]
-margin_right = 206.0
-margin_bottom = 27.0
-size_flags_horizontal = 3
-placeholder_text = "Condition"
-
-[node name="Menu" type="MenuButton" parent="Branch3" index="1"]
-visible = false
-margin_left = 183.0
-margin_right = 209.0
-margin_bottom = 25.0
-focus_mode = 2
-custom_styles/hover = SubResource( 1 )
-custom_styles/pressed = SubResource( 2 )
-custom_styles/focus = SubResource( 3 )
-custom_styles/disabled = SubResource( 4 )
-custom_styles/normal = SubResource( 5 )
-text = "3"
-icon = SubResource( 7 )
-items = [ "Add Choice", null, 0, false, false, 0, 0, null, "", false, "test2", null, 0, false, false, 1, 0, null, "", false ]
-
-[node name="Label" type="Label" parent="Branch3" index="2"]
-margin_left = 210.0
-margin_right = 228.0
-margin_bottom = 27.0
-text = "3"
-
-[node name="Branch4" type="HBoxContainer" parent="." index="4"]
-margin_left = 11.0
+[node name="Branch4" parent="." index="4" instance=ExtResource( 5 )]
 margin_top = 131.0
-margin_right = 239.0
 margin_bottom = 158.0
-script = ExtResource( 4 )
+number = 4
 
-[node name="Condition" type="LineEdit" parent="Branch4" index="0"]
-margin_right = 206.0
-margin_bottom = 27.0
-size_flags_horizontal = 3
-placeholder_text = "Condition"
-
-[node name="Menu" type="MenuButton" parent="Branch4" index="1"]
-visible = false
-margin_left = 183.0
-margin_right = 209.0
-margin_bottom = 25.0
-focus_mode = 2
-custom_styles/hover = SubResource( 1 )
-custom_styles/pressed = SubResource( 2 )
-custom_styles/focus = SubResource( 3 )
-custom_styles/disabled = SubResource( 4 )
-custom_styles/normal = SubResource( 5 )
-text = "4"
-icon = SubResource( 7 )
-items = [ "Add Choice", null, 0, false, false, 0, 0, null, "", false, "test2", null, 0, false, false, 1, 0, null, "", false ]
-
-[node name="Label" type="Label" parent="Branch4" index="2"]
-margin_left = 210.0
-margin_right = 228.0
-margin_bottom = 27.0
-text = "4"
-
-[node name="Branch5" type="HBoxContainer" parent="." index="5"]
-visible = false
-margin_left = 11.0
-margin_top = 159.0
-margin_right = 239.0
-margin_bottom = 187.0
-script = ExtResource( 4 )
-
-[node name="Condition" type="LineEdit" parent="Branch5" index="0"]
-margin_right = 208.0
-margin_bottom = 28.0
-size_flags_horizontal = 3
-placeholder_text = "Condition"
-
-[node name="Menu" type="MenuButton" parent="Branch5" index="1"]
-visible = false
-margin_left = 183.0
-margin_right = 209.0
-margin_bottom = 25.0
-focus_mode = 2
-custom_styles/hover = SubResource( 1 )
-custom_styles/pressed = SubResource( 2 )
-custom_styles/focus = SubResource( 3 )
-custom_styles/disabled = SubResource( 4 )
-custom_styles/normal = SubResource( 5 )
-text = "1"
-icon = SubResource( 7 )
-items = [ "Add Choice", null, 0, false, false, 0, 0, null, "", false, "test2", null, 0, false, false, 1, 0, null, "", false ]
-
-[node name="Label" type="Label" parent="Branch5" index="2"]
-margin_left = 212.0
-margin_right = 228.0
-margin_bottom = 28.0
-text = "5"
-
-[node name="Branch6" type="HBoxContainer" parent="." index="6"]
-visible = false
-margin_left = 11.0
-margin_top = 191.0
-margin_right = 239.0
-margin_bottom = 219.0
-script = ExtResource( 4 )
-
-[node name="Condition" type="LineEdit" parent="Branch6" index="0"]
-margin_right = 208.0
-margin_bottom = 28.0
-size_flags_horizontal = 3
-placeholder_text = "Condition"
-
-[node name="Menu" type="MenuButton" parent="Branch6" index="1"]
-visible = false
-margin_left = 183.0
-margin_right = 209.0
-margin_bottom = 25.0
-focus_mode = 2
-custom_styles/hover = SubResource( 1 )
-custom_styles/pressed = SubResource( 2 )
-custom_styles/focus = SubResource( 3 )
-custom_styles/disabled = SubResource( 4 )
-custom_styles/normal = SubResource( 5 )
-text = "2"
-icon = SubResource( 7 )
-items = [ "Add Choice", null, 0, false, false, 0, 0, null, "", false, "test2", null, 0, false, false, 1, 0, null, "", false ]
-
-[node name="Label" type="Label" parent="Branch6" index="2"]
-margin_left = 212.0
-margin_right = 228.0
-margin_bottom = 28.0
-text = "6"
-
-[node name="Branch7" type="HBoxContainer" parent="." index="7"]
-visible = false
-margin_left = 11.0
-margin_top = 223.0
-margin_right = 239.0
-margin_bottom = 251.0
-script = ExtResource( 4 )
-
-[node name="Condition" type="LineEdit" parent="Branch7" index="0"]
-margin_right = 208.0
-margin_bottom = 28.0
-size_flags_horizontal = 3
-placeholder_text = "Condition"
-
-[node name="Menu" type="MenuButton" parent="Branch7" index="1"]
-visible = false
-margin_left = 183.0
-margin_right = 209.0
-margin_bottom = 25.0
-focus_mode = 2
-custom_styles/hover = SubResource( 1 )
-custom_styles/pressed = SubResource( 2 )
-custom_styles/focus = SubResource( 3 )
-custom_styles/disabled = SubResource( 4 )
-custom_styles/normal = SubResource( 5 )
-text = "3"
-icon = SubResource( 7 )
-items = [ "Add Choice", null, 0, false, false, 0, 0, null, "", false, "test2", null, 0, false, false, 1, 0, null, "", false ]
-
-[node name="Label" type="Label" parent="Branch7" index="2"]
-margin_left = 212.0
-margin_right = 228.0
-margin_bottom = 28.0
-text = "7"
-
-[node name="Branch8" type="HBoxContainer" parent="." index="8"]
-visible = false
-margin_left = 11.0
-margin_top = 255.0
-margin_right = 239.0
-margin_bottom = 283.0
-script = ExtResource( 4 )
-
-[node name="Condition" type="LineEdit" parent="Branch8" index="0"]
-margin_right = 208.0
-margin_bottom = 28.0
-size_flags_horizontal = 3
-placeholder_text = "Condition"
-
-[node name="Menu" type="MenuButton" parent="Branch8" index="1"]
-visible = false
-margin_left = 183.0
-margin_right = 209.0
-margin_bottom = 25.0
-focus_mode = 2
-custom_styles/hover = SubResource( 1 )
-custom_styles/pressed = SubResource( 2 )
-custom_styles/focus = SubResource( 3 )
-custom_styles/disabled = SubResource( 4 )
-custom_styles/normal = SubResource( 5 )
-text = "4"
-icon = SubResource( 7 )
-items = [ "Add Choice", null, 0, false, false, 0, 0, null, "", false, "test2", null, 0, false, false, 1, 0, null, "", false ]
-
-[node name="Label" type="Label" parent="Branch8" index="2"]
-margin_left = 212.0
-margin_right = 228.0
-margin_bottom = 28.0
-text = "8"
-
-[node name="Control" type="Control" parent="." index="9"]
+[node name="Control" type="Control" parent="." index="5"]
 margin_left = 11.0
 margin_top = 162.0
 margin_right = 239.0
-margin_bottom = 162.0
+margin_bottom = 165.0
+rect_min_size = Vector2( 0, 3 )
