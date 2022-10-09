@@ -1,7 +1,17 @@
 from pathlib import Path
+import hashlib
+import json
 
 
 files = Path('addons/diagraph').rglob('*.*')
 
-with open('file_list.txt', 'w') as f:
-    f.write('\n'.join(file.as_posix() for file in files))
+data = []
+
+for f in files:
+    data.append({
+        'path': f.as_posix(),
+        'hash': hashlib.sha1(f.read_bytes()).hexdigest(),
+    })
+
+with open('file_list.json', 'w') as f:
+    f.write(json.dumps(data, indent=4))
