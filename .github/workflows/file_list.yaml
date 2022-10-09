@@ -1,0 +1,23 @@
+name: File List
+on: 
+  push:
+    branches:
+      - master
+
+jobs:
+  build-file-list:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+          architecture: 'x64'
+          cache: 'pip'
+      - run: python make_file_list.py
+
+      - name: Upload List
+        uses: actions/upload-artifact@v3.1.0
+        with:
+          name: file_list
+          path: file_list.txt
