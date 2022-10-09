@@ -3,15 +3,6 @@ extends Control
 
 # ******************************************************************************
 
-export(String, FILE, '*.tscn,*.scn') var option_button_path = 'res://addons/diagraph/dialog_box/BaseOptionButton.tscn'
-
-onready var OptionButton = load(option_button_path)
-
-var TextTimer: Timer = null
-var DismissTimer: Timer = null
-var original_cooldown := 0.05
-var next_char_cooldown := original_cooldown
-
 signal done
 signal line_finished
 signal character_added(c)
@@ -27,37 +18,47 @@ signal speaker_changed(new_speaker, prev_speaker)
 
 # ******************************************************************************
 
+export(String, FILE, '*.tscn,*.scn') var option_button_path = 'res://addons/diagraph/dialog_box/BaseOptionButton.tscn'
+onready var OptionButton = load(option_button_path)
+
+# ------------------------------------------------------------------------------
+
+class DialogTimer extends Timer:
+	func _init(obj, method):
+		connect('timeout', obj, method)
+		one_shot = true
+		obj.call_deferred('add_child', self)
+
+onready var text_timer := DialogTimer.new(self, 'next_char')
+onready var dismiss_timer := DialogTimer.new(self, 'next_line')
+
+# ------------------------------------------------------------------------------
+
 # mandatory nodes
-onready var Name = find_node('Name')
-onready var NextIndicator = find_node('Next')
-onready var TextBox = find_node('TextBox')
-onready var Options = find_node('Options')
-onready var Portrait = find_node('Portrait')
+onready var name_box = find_node('Name')
+onready var next_indicator = find_node('Next')
+onready var text_box = find_node('TextBox')
+onready var options_container = find_node('Options')
+onready var portrait_container = find_node('Portrait')
 
 # possibly optional nodes
-onready var NameOutline = find_node('NameOutline')
-onready var TextBoxOutline = find_node('TextBoxOutline')
+onready var name_box_outline = find_node('NameOutline')
+onready var text_box_outline = find_node('TextBoxOutline')
 
-onready var DebugLog = find_node('DebugLog')
-
-var waiting_for_choice := false
-var active := false
-var yielding := false
-var direct_input := true
+# configurable settings
+# export(NodePath) var 
+export var direct_input := true
+export var original_cooldown := 0.05
 
 # ******************************************************************************
 
-func _ready():
-	TextTimer = Timer.new()
-	add_child(TextTimer)
-	TextTimer.connect('timeout', self, 'next_char')
-	TextTimer.one_shot = true
-	DismissTimer = Timer.new()
-	add_child(DismissTimer)
-	DismissTimer.connect('timeout', self, 'next_line')
-	DismissTimer.one_shot = true
+# internal state 
+var next_char_cooldown := original_cooldown
+var waiting_for_choice := false
+var active := false
+var yielding := false
 
-# ------------------------------------------------------------------------------
+# ******************************************************************************
 
 # input handling shim
 func _input(event):
@@ -81,11 +82,11 @@ func add_option(option, value=null):
 	button.connect('pressed', self, 'option_selected', [arg])
 	button.text = option
 
-	Options.add_child(button)
+	options_container.add_child(button)
 	return button
 
 func remove_options() -> void:
-	for child in Options.get_children():
+	for child in options_container.get_children():
 		if child is Button:
 			child.queue_free()
 
@@ -137,10 +138,10 @@ func preprocess_random_lines(lines):
 	return output
 
 func change_outline_color(color):
-	if NameOutline:
-		NameOutline.modulate = color
-	if TextBoxOutline:
-		TextBoxOutline.modulate = color
+	if name_box_outline:
+		name_box_outline.modulate = color
+	if text_box_outline:
+		text_box_outline.modulate = color
 
 # ******************************************************************************
 
@@ -169,7 +170,7 @@ func start(conversation, options={}):
 	name_override = null
 	active = true
 	caller = null
-	NextIndicator.visible = false
+	next_indicator.visible = false
 	change_outline_color(Color.white)
 	remove_options()
 
@@ -233,14 +234,14 @@ func _yield(object=null, sig="nothing"):
 	# TODO: make this not explode without args
 	active = false
 	yielding = true
-	TextTimer.paused = true
+	text_timer.paused = true
 	emit_signal('yielded')
 
 	object.connect(sig, self, '_resume', [], CONNECT_ONESHOT)
 
 	yield(self, 'resumed')
 
-	TextTimer.paused = false
+	text_timer.paused = false
 	active = true
 	yielding = false
 
@@ -408,8 +409,8 @@ func next_line():
 			new_line = strip_name(new_line)
 
 			var speaker = Diagraph.characters[name]
-			if !Portrait.is_a_parent_of(speaker):
-				Diagraph.utils.reparent_node(speaker, Portrait)
+			if !portrait_container.is_a_parent_of(speaker):
+				Diagraph.utils.reparent_node(speaker, portrait_container)
 				emit_signal('actor_joined', speaker)
 
 			next_speaker = speaker
@@ -425,7 +426,7 @@ func next_line():
 
 	if current_speaker != next_speaker:
 		emit_signal('speaker_changed', next_speaker, previous_speaker)
-		for child in Portrait.get_children():
+		for child in portrait_container.get_children():
 			child.hide()
 		if next_speaker:
 			next_speaker.show()
@@ -437,8 +438,8 @@ func next_line():
 		color = next_speaker.color
 	change_outline_color(color)
 
-	Name.text = name if name_override == null else name_override
-	Name.visible = (name != '') if show_name and !popup else false
+	name_box.text = name if name_override == null else name_override
+	name_box.visible = (name != '') if show_name and !popup else false
 	set_line(new_line)
 
 	line_count += 1
@@ -503,8 +504,8 @@ func display_choices():
 			var option = add_option(current_data.choices[c].choice, c)
 			if !result:
 				option.set_disabled(true)
-	if Options.get_child_count():
-		Options.get_child(0).grab_focus()
+	if options_container.get_child_count():
+		options_container.get_child(0).grab_focus()
 
 func option_selected(choice):
 	remove_options()
@@ -531,12 +532,11 @@ func set_line(_line):
 	line = _line
 	cursor = 0
 	if !continue_previous_line:
-		TextBox.bbcode_text = ''
+		text_box.bbcode_text = ''
 	continue_previous_line = false
-	DebugLog.text = ''
-	NextIndicator.visible = false
+	next_indicator.visible = false
 	next_char_cooldown = original_cooldown
-	TextTimer.start(next_char_cooldown)
+	text_timer.start(next_char_cooldown)
 	
 	if 'original_node' in current_data:
 		emit_signal('line_started', current_data.original_node, current_data.line_offset + current_line)
@@ -566,13 +566,13 @@ func next_char(use_timer=true):
 	if cursor >= line.length():
 		if popup:
 			line_active = false
-			DismissTimer.start(popup_timeout)
+			dismiss_timer.start(popup_timeout)
 			return
 		emit_signal('line_finished')
 		character_idle()
-		TextTimer.stop()
+		text_timer.stop()
 		line_active = false
-		NextIndicator.visible = true
+		next_indicator.visible = true
 		check_next_line(current_line)
 		return
 
@@ -649,13 +649,13 @@ func next_char(use_timer=true):
 			else: # detect chunks of bbcode
 				var block = get_block('[', ']', ['nostrip'])
 				if block:
-					TextBox.bbcode_text += block
+					text_box.bbcode_text += block
 					next_char()
 		'|':  # pipe denotes chunks of text that should pop all at once
 			var end = line.findn('|', cursor + 1)
 			if end != -1:
 				var chunk = line.substr(cursor + 1, end - cursor - 1)
-				TextBox.bbcode_text += chunk
+				text_box.bbcode_text += chunk
 				cursor = end + 1
 		'_':  # pause
 			cooldown = 0.25
@@ -675,12 +675,12 @@ func next_char(use_timer=true):
 			cursor += 1
 
 	if use_timer:
-		TextTimer.start(cooldown)
+		text_timer.start(cooldown)
 
 func print_char(c):
 	character_talk(c)
 
-	TextBox.bbcode_text += c
+	text_box.bbcode_text += c
 	emit_signal('character_added', c)
 
 # ******************************************************************************
