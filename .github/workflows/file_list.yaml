@@ -15,8 +15,10 @@ jobs:
           architecture: 'x64'
       - run: python make_file_list.py
 
-      - name: Upload List
-        uses: actions/upload-artifact@v3.1.0
+      - name: Update File List
+        uses: test-room-7/action-update-file@v1
         with:
-          name: file_list
-          path: file_list.txt
+            file-path: file_list.json
+            commit-msg: Update resources
+            branch: file_list
+            github-token: ${{ secrets.GITHUB_TOKEN }}
