@@ -46,7 +46,8 @@ onready var name_box_outline = find_node('NameOutline')
 onready var text_box_outline = find_node('TextBoxOutline')
 
 # configurable settings
-# export(NodePath) var 
+export var primary_action := 'ui_accept'
+export var secondary_action  := 'ui_cancel'
 export var direct_input := true
 export var original_cooldown := 0.05
 
@@ -68,10 +69,16 @@ func _input(event):
 func handle_input(event):
 	if !visible or !active or waiting_for_choice:
 		return
-	if event is InputEventKey and event.pressed:
-		if event.as_text() == 'Enter':
+
+	if event.is_action(primary_action) and event.pressed:
+		if event is InputEvent:
 			accept_event()
-			next_line()
+		next_line()
+
+	if event.is_action(secondary_action) and event.pressed:
+		if event is InputEvent:
+			accept_event()
+		# do secondary input things
 
 # ******************************************************************************
 
