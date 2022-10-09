@@ -49,12 +49,12 @@ onready var text_box_outline = find_node('TextBoxOutline')
 export var primary_action := 'ui_accept'
 export var secondary_action  := 'ui_cancel'
 export var direct_input := true
-export var original_cooldown := 0.05
+export var text_cooldown := 0.05
 
 # ******************************************************************************
 
 # internal state 
-var next_char_cooldown := original_cooldown
+var next_char_cooldown := text_cooldown
 var waiting_for_choice := false
 var active := false
 var yielding := false
@@ -542,7 +542,7 @@ func set_line(_line):
 		text_box.bbcode_text = ''
 	continue_previous_line = false
 	next_indicator.visible = false
-	next_char_cooldown = original_cooldown
+	next_char_cooldown = text_cooldown
 	text_timer.start(next_char_cooldown)
 	
 	if 'original_node' in current_data:
@@ -776,9 +776,9 @@ func evaluate(input: String=''):
 	ctx.variable('onready var dialog = get_parent()')
 	# ctx.variable('onready var scene = get_parent().caller.owner')
 
-	ctx.variable('var _original_cooldown = ' + str(original_cooldown))
+	ctx.variable('var _text_cooldown = ' + str(text_cooldown))
 	ctx.method(
-		'func speed(value=_original_cooldown):',
+		'func speed(value=_text_cooldown):',
 		[
 			'get_parent().next_char_cooldown = value',
 		]
