@@ -25,7 +25,7 @@
     },
     {
         "path": "addons/diagraph/diagraph.gd",
-        "hash": "c1f54411c4167056abaf2a652f8c395b941c35a8"
+        "hash": "bec1cb7e79bdd1af420a316aa98e5b8d5d7dd248"
     },
     {
         "path": "addons/diagraph/DiagraphCanvas.gd",
@@ -317,7 +317,7 @@
     },
     {
         "path": "addons/diagraph/utils/Updater.gd",
-        "hash": "e51eaa1c113832a55554fbe9aad861ec38373e3b"
+        "hash": "9e0e0f030778adfa9d82e9ec08523ca168f5c17a"
     },
     {
         "path": "addons/diagraph/utils/GDUnzip.gd",
