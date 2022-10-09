@@ -317,7 +317,7 @@
     },
     {
         "path": "addons/diagraph/utils/Updater.gd",
-        "hash": "9e0e0f030778adfa9d82e9ec08523ca168f5c17a"
+        "hash": "b19acf721275e41c76081a63ca4bfaa0679fcf47"
     },
     {
         "path": "addons/diagraph/utils/GDUnzip.gd",
