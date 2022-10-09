@@ -78,7 +78,6 @@ func unzip_and_apply_update():
 	var checked_files = []
 
 	for f in file_data:
-		print(f)
 		checked_files.append(f)
 
 		var file = File.new()
