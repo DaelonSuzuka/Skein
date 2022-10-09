@@ -69,33 +69,32 @@ func recieve_file_list(result, response_code, headers, body):
 		progress_bar.max_value = len(file_list)
 
 func recieve_file(result, response_code, headers, body, path):
-	file_data[path] = body
+	file_data['res://' + path] = body
 
 # ******************************************************************************
 
 func unzip_and_apply_update():
 	var existing_files = Diagraph.files.get_all_files('res://addons/diagraph')
 	var checked_files = []
-	var files = {}
 
 	for f in file_data:
-		var path = f.replace('Diagraph-master/', 'res://')
-		checked_files.append(path)
+		print(f)
+		checked_files.append(f)
 
 		var file = File.new()
-		if file.file_exists(path):
-			if file.open(path, File.READ) == OK:
-				var new = files[f]
+		if file.file_exists(f):
+			if file.open(f, File.READ) == OK:
+				var new = file_data[f]
 				var existing = file.get_buffer(file.get_len())
 
 				if new == existing:
 					continue
 
-				if file.open(path, File.WRITE) == OK:
-					file.store_buffer(files[f])
+				if file.open(f, File.WRITE) == OK:
+					file.store_buffer(file_data[f])
 		else:
-			if file.open(path, File.WRITE) == OK:
-				file.store_buffer(files[f])
+			if file.open(f, File.WRITE) == OK:
+				file.store_buffer(file_data[f])
 
 		file.close()
 
