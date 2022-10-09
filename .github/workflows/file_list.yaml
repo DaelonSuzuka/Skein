@@ -16,7 +16,7 @@ jobs:
       - run: python make_file_list.py
 
       - name: Update File List
-        uses: test-room-7/action-update-file@v1
+        uses: test-room-7/action-update-file@v1.6.0
         with:
             file-path: file_list.json
             commit-msg: Update resources
