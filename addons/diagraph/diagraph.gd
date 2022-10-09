@@ -147,29 +147,33 @@ func tool_submenu_selected(selected):
 var updater
 var update_dialog
 var status_label
+var progress_bar
 
 func check_for_updates():
 	update_dialog = AcceptDialog.new()
 	var vbox = VBox.new(update_dialog)
 	status_label = vbox.add(Label.new())
+	progress_bar = vbox.add(ProgressBar.new())
 
-	status_label.text = 'Downloading update package'
+	# progress_bar.visible = false
+	update_dialog.get_ok().disabled = true
+	update_dialog.window_title = 'Diagraph Self-Update'
 
 	get_editor_interface().get_editor_viewport().add_child(update_dialog)
-	update_dialog.popup_centered()
+	update_dialog.popup_centered(Vector2(400, 250))
 
 	updater = preload('utils/Updater.gd').new()
 	updater.connect('download_complete', self, 'download_complete', [], CONNECT_ONESHOT)
 	updater.connect('update_complete', self, 'update_complete', [], CONNECT_ONESHOT)
 	add_child(updater)
-	updater.download_update()
+	updater.get_file_list(status_label, progress_bar)
 
 func download_complete():
 	status_label.text = 'Download complete, updating Diagraph'
-	updater.call_deferred('unzip_and_apply_update')
 
 func update_complete():
 	status_label.text = 'Update complete'
+	update_dialog.get_ok().disabled = false
 
 # ******************************************************************************
 
