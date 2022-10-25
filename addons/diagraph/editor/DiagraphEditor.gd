@@ -35,7 +35,7 @@ var ignore_next_refresh := false
 # ******************************************************************************
 
 func _ready():
-	if Engine.editor_hint:
+	if Engine.editor_hint and !plugin:
 		return
 
 	Run.connect('pressed', self, 'run')
