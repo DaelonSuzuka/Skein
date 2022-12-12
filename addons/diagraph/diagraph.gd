@@ -18,7 +18,7 @@ var editors = {
 	bottom = null,
 }
 
-var enabled := false
+var enabled := true
 
 # ******************************************************************************
 
@@ -56,13 +56,13 @@ func _enter_tree():
 
 		editors.top = load(editor_class).instantiate()
 		editors.top.plugin = self
-		editors.top.position = 'top'
+		editors.top.location = 'top'
 		editors.top.visible = false
 		get_editor_interface().get_editor_main_screen().add_child(editors.top)
 
 		editors.bottom = load(editor_class).instantiate()
 		editors.bottom.plugin = self
-		editors.bottom.position = 'bottom'
+		editors.bottom.location = 'bottom'
 		add_control_to_bottom_panel(editors.bottom, 'Diagraph')
 
 func _exit_tree():
@@ -163,8 +163,8 @@ func check_for_updates():
 	update_dialog.popup_centered(Vector2(400, 250))
 
 	updater = preload('utils/Updater.gd').new()
-	updater.connect('download_complete', Callable(self,'download_complete').bind(),CONNECT_ONE_SHOT)
-	updater.connect('update_complete', Callable(self,'update_complete').bind(),CONNECT_ONE_SHOT)
+	updater.download_complete.connect(self.download_complete, CONNECT_ONE_SHOT)
+	updater.update_complete.connect(self.update_complete, CONNECT_ONE_SHOT)
 	add_child(updater)
 	updater.get_file_list(status_label, progress_bar)
 

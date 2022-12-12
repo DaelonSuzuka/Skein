@@ -16,6 +16,8 @@ visible = false
 script = ExtResource("2_qtay1")
 
 [node name="DialogBox" parent="DiagraphCanvas" instance=ExtResource("3_dva1l")]
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Sandbox" type="Node" parent="."]
 script = ExtResource("2_whe0k")

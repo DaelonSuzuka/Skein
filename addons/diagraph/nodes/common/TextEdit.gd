@@ -4,7 +4,7 @@ extends TextEdit
 # ******************************************************************************
 
 func _ready():
-	connect('request_completion', Callable(self,'request_completion'))
+	request_completion.connect(self.request_completion)
 
 func request_completion():
 	print('request_completion')

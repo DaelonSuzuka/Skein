@@ -86,7 +86,7 @@ func _ready():
 	SettingsMenu.add_submenu_item('Font Size +', 'FontSize', [self, 'set_font_size', 1])
 	SettingsMenu.add_submenu_item('Font Size -', 'FontSize', [self, 'set_font_size', -1])
 
-	Diagraph.connect('refreshed', Callable(self,'refresh'))
+	Diagraph.refreshed.connect(self.refresh)
 	
 	DialogBox.done.connect(self.dismiss_preview)
 	DialogBox.line_started.connect(self.line_started)

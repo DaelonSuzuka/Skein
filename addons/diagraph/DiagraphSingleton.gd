@@ -44,7 +44,7 @@ func init_file_watcher():
 	# for folder in files.get_all_folders(characters_prefix):
 	# 	watcher.add_scan_directory(folder)
 
-	# watcher.connect('files_changed', Callable(self,'refresh'))
+	# watcher.pressed.connect(self.refresh)
 
 func refresh():
 	load_conversations()

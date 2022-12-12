@@ -42,7 +42,7 @@ cache/0/16/0/underline_thickness = 0.0
 cache/0/16/0/scale = 1.0
 cache/0/16/0/kerning_overrides/16/0 = Vector2(0, 0)
 
-[sub_resource type="Image" id="Image_fslyw"]
+[sub_resource type="Image" id="Image_bbk7p"]
 data = {
 "data": PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 223, 223, 223, 0, 224, 224, 224, 0, 224, 224, 224, 0, 223, 223, 223, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 223, 223, 223, 0, 223, 223, 223, 180, 224, 224, 224, 255, 224, 224, 224, 255, 223, 223, 223, 180, 223, 223, 223, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 223, 223, 223, 0, 223, 223, 223, 168, 224, 224, 224, 255, 224, 224, 224, 255, 223, 223, 223, 168, 223, 223, 223, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 214, 214, 214, 0, 214, 214, 214, 19, 223, 223, 223, 234, 223, 223, 223, 234, 214, 214, 214, 19, 214, 214, 214, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 217, 217, 217, 0, 221, 221, 221, 84, 221, 221, 221, 84, 217, 217, 217, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 221, 221, 221, 0, 221, 221, 221, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 "format": "RGBA8",
@@ -52,7 +52,7 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="7"]
-image = SubResource("Image_fslyw")
+image = SubResource("Image_bbk7p")
 
 [node name="1" instance=ExtResource("1")]
 offset_right = 400.0
@@ -106,48 +106,32 @@ slot/5/right_icon = null
 slot/5/draw_stylebox = true
 script = ExtResource("3")
 
-[node name="Body" parent="." index="0"]
-layout_mode = 2
-
 [node name="Toolbar" parent="Body" index="0"]
-layout_mode = 1
 offset_left = 0.0
 offset_top = 0.0
 offset_right = 0.0
 offset_bottom = 23.0
 
-[node name="Id" parent="Body/Toolbar" index="0"]
-layout_mode = 2
-
-[node name="Seperator" parent="Body/Toolbar" index="1"]
-layout_mode = 2
-
 [node name="Panel" parent="Body/Toolbar/Seperator" index="0"]
-layout_mode = 1
 offset_left = 0.0
 offset_top = 0.0
 offset_right = 0.0
 offset_bottom = 0.0
 
 [node name="Title" parent="Body/Toolbar" index="2"]
-layout_mode = 2
 text = "Dialog"
 
 [node name="Play" parent="Body/Toolbar" index="3"]
-layout_mode = 2
 custom_fonts/font = SubResource("8")
 
 [node name="Edit" parent="Body/Toolbar" index="4"]
-layout_mode = 2
 custom_fonts/font = SubResource("9")
 items = ["Choices", null, 1, false, false, 0, 0, null, "", false]
 
 [node name="Close" parent="Body/Toolbar" index="5"]
-layout_mode = 2
 custom_fonts/font = SubResource("10")
 
 [node name="TextEdit" type="TextEdit" parent="Body" index="1"]
-layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -168,107 +152,88 @@ script = ExtResource("4_3h4dg")
 
 [node name="Choice1" type="HBoxContainer" parent="." index="1"]
 visible = false
-layout_mode = 2
 script = ExtResource("4")
 
 [node name="Choice" type="LineEdit" parent="Choice1" index="0"]
-layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Option"
 
 [node name="Condition" type="LineEdit" parent="Choice1" index="1"]
-layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Condition"
 
 [node name="Menu" type="MenuButton" parent="Choice1" index="2"]
 visible = false
-layout_mode = 2
 focus_mode = 2
 text = "1"
 icon = SubResource("7")
 
 [node name="Label" type="Label" parent="Choice1" index="3"]
-layout_mode = 2
 text = "1"
 
 [node name="Choice2" type="HBoxContainer" parent="." index="2"]
 visible = false
-layout_mode = 2
 script = ExtResource("4")
 
 [node name="Choice" type="LineEdit" parent="Choice2" index="0"]
-layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Option"
 
 [node name="Condition" type="LineEdit" parent="Choice2" index="1"]
-layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Condition"
 
 [node name="Menu" type="MenuButton" parent="Choice2" index="2"]
 visible = false
-layout_mode = 2
 focus_mode = 2
 text = "2"
 icon = SubResource("7")
 
 [node name="Label" type="Label" parent="Choice2" index="3"]
-layout_mode = 2
 text = "2"
 
 [node name="Choice3" type="HBoxContainer" parent="." index="3"]
 visible = false
-layout_mode = 2
 script = ExtResource("4")
 
 [node name="Choice" type="LineEdit" parent="Choice3" index="0"]
-layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Option"
 
 [node name="Condition" type="LineEdit" parent="Choice3" index="1"]
-layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Condition"
 
 [node name="Menu" type="MenuButton" parent="Choice3" index="2"]
 visible = false
-layout_mode = 2
 focus_mode = 2
 text = "3"
 icon = SubResource("7")
 
 [node name="Label" type="Label" parent="Choice3" index="3"]
-layout_mode = 2
 text = "3"
 
 [node name="Choice4" type="HBoxContainer" parent="." index="4"]
 visible = false
-layout_mode = 2
 script = ExtResource("4")
 
 [node name="Choice" type="LineEdit" parent="Choice4" index="0"]
-layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Option"
 
 [node name="Condition" type="LineEdit" parent="Choice4" index="1"]
-layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Condition"
 
 [node name="Menu" type="MenuButton" parent="Choice4" index="2"]
 visible = false
-layout_mode = 2
 focus_mode = 2
 text = "4"
 icon = SubResource("7")
 
 [node name="Label" type="Label" parent="Choice4" index="3"]
-layout_mode = 2
 text = "4"
 
 [node name="Control" type="Control" parent="." index="5"]
-layout_mode = 2
+layout_mode = 3
+anchors_preset = 0

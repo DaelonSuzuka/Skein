@@ -22,7 +22,7 @@ func _init(obj=null, cb=null, arg1=null, arg2=null):
 	if arg2:
 		args.append(arg2)
 
-	connect('index_pressed', Callable(self,'_on_index_pressed').bind(args))
+	index_pressed.connect(self._on_index_pressed.bind(args))
 
 func open(pos=null):
 	if pos:

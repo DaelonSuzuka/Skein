@@ -11,7 +11,7 @@ var extra_branches = []
 # ******************************************************************************
 
 func _ready():
-	Edit.get_popup().connect('index_pressed', Callable(self,'index_pressed'))
+	Edit.get_popup().index_pressed.connect(self.index_pressed)
 
 	for i in range(8):
 		set_slot_enabled_right(i + 1, true)
@@ -29,7 +29,7 @@ func _ready():
 	data['branches'] = {}
 	for b in branches:
 		data['branches'][b.name] = {'condition': ''}
-		b.condition.connect('text_changed', Callable(self,'on_change'))
+		b.condition.text_changed.connect(self.on_change)
 
 func on_change(arg=null):
 	emit_signal('changed')

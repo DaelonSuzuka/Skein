@@ -16,7 +16,7 @@ var scrollbar = null
 # ******************************************************************************
 
 func _ready():
-	Edit.get_popup().connect('index_pressed', Callable(self,'index_pressed'))
+	Edit.get_popup().index_pressed.connect(self.index_pressed)
 
 	data['show_choices'] = false
 	set_choices_enabled(false)
@@ -26,12 +26,12 @@ func _ready():
 	for c in choices:
 		data['choices'][str(c.name)[6]] = {}
 
-	#text_edit.refresh_colors()
-	Diagraph.connect('refreshed', Callable(text_edit,'refresh_colors'))
-	#text_edit.connect('text_changed', Callable(self,'on_change'))
+	# text_edit.refresh_colors()
+	# Diagraph.refreshed.connect(text_edit.refresh_colors)
+	# text_edit.text_changed.connect(self.on_change)
 	for c in choices:
-		c.choice.connect('text_changed', Callable(self,'on_change'))
-		c.condition.connect('text_changed', Callable(self,'on_change'))
+		c.choice.text_changed.connect(self.on_change)
+		c.condition.text_changed.connect(self.on_change)
 
 	for child in text_edit.get_children():
 		if child is VScrollBar:

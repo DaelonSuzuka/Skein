@@ -1,6 +1,6 @@
 id: 3161026590
 type: dialog
-position: Rect2( -410, -180, 430, 540 )
+position: Rect2(-410, -180, 430, 540)
 title: Test1
 ---
 Alka: how much doge do you have?
@@ -19,7 +19,7 @@ Alka: how much doge do you have?
 ===
 id: 3161026588
 type: dialog
-position: Rect2( 70, -70, 312, 170 )
+position: Rect2(70, -70, 312, 170)
 title: UrPoor
 ---
 
@@ -28,7 +28,7 @@ Alka: lol ur poor
 ===
 id: 3161026589
 type: dialog
-position: Rect2( 450, 0, 400, 400 )
+position: Rect2(450, 0, 400, 400)
 title: YarnSyntax
 ---
 Alka: Hi there! What do you feel like doing today?
@@ -43,7 +43,7 @@ Player: Sounds good!
 ===
 id: 90126687
 type: dialog
-position: Rect2( -930, -90, 400, 400 )
+position: Rect2(-930, -90, 400, 400)
 title: Dialog
 ---
 Alka:  bye! <test>

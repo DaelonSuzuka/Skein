@@ -50,7 +50,7 @@ func start_dialog(object, conversation, options={}):
 	options['caller'] = object
 	dialog.start(conversation, options)
 
-	dialog.connect('done', Callable(Diagraph.sandbox,'clear_temp_locals').bind(),CONNECT_ONE_SHOT)
+	dialog.done.connect(Diagraph.sandbox.clear_temp_locals ,CONNECT_ONE_SHOT)
 	
 	# TODO disconnect this when done?
 	# Diagraph.utils.try_connect(dialog, Callable('line_finished',object).bind('line_finished'))

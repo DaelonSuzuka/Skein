@@ -24,13 +24,13 @@ signal speaker_changed(new_speaker, prev_speaker)
 # ------------------------------------------------------------------------------
 
 class DialogTimer extends Timer:
-	func _init(obj,method):
-		connect('timeout', Callable(obj,method))
+	func _init(obj, method):
+		timeout.connect(method)
 		one_shot = true
 		obj.call_deferred('add_child', self)
 
-@onready var text_timer := DialogTimer.new(self, 'next_char')
-@onready var dismiss_timer := DialogTimer.new(self, 'next_line')
+@onready var text_timer := DialogTimer.new(self, self.next_char)
+@onready var dismiss_timer := DialogTimer.new(self, self.next_line)
 
 # ------------------------------------------------------------------------------
 
@@ -86,7 +86,7 @@ func add_option(option, value=null):
 	var button = option_button.instantiate()
 
 	var arg = value if value else option
-	button.connect('pressed', Callable(self,'option_selected').bind(arg))
+	button.pressed.connect(self.option_selected.bind(arg))
 	button.text = option
 
 	options_container.add_child(button)

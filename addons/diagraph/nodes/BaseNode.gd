@@ -39,13 +39,13 @@ signal changed
 # ******************************************************************************
 
 func _ready() -> void:
-	CloseButton.connect('pressed', Callable(self,'emit_signal').bind('close_request'))
-	connect('resize_request', Callable(self,'resize_request'))
-	connect('gui_input', Callable(self,'_gui_input'))
+	CloseButton.pressed.connect(self.emit_signal.bind('close_request'))
+	resize_request.connect(self._resize_request)
+	gui_input.connect(self._gui_input)
 
-	Title.connect('text_changed', Callable(self,'renamed'))
+	Title.text_changed.connect(self.renamed)
 
-func resize_request(new_minsize: Vector2) -> void:
+func _resize_request(new_minsize: Vector2) -> void:
 	emit_signal('changed')
 	if get_parent().use_snap:
 		var snap = get_parent().get_snap()

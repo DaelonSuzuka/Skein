@@ -35,7 +35,7 @@ window/size/height=900
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/diagraph/plugin.cfg", "res://addons/godot_sfxr/plugin.cfg")
+enabled=PackedStringArray("res://addons/diagraph/plugin.cfg")
 
 [physics]
 

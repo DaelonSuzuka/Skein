@@ -1,6 +1,6 @@
 id: 4255915767
 type: dialog
-position: Rect2( -120, -160, 400, 290 )
+position: Rect2(-120, -160, 400, 290)
 title: IsotopeDemo
 ---
 // comments
@@ -15,7 +15,7 @@ Sentinel: Please remain in your current position for evaluation and detention
 ===
 id: 1357147643
 type: dialog
-position: Rect2( 330, -150, 400, 400 )
+position: Rect2(330, -150, 400, 400)
 title: IDSewer
 ---
 <<set_name ???>>
@@ -28,7 +28,7 @@ Ash: Well, anywhere's better than here!
 ===
 id: 2421269435
 type: dialog
-position: Rect2( -560, -140, 400, 400 )
+position: Rect2(-560, -140, 400, 400)
 title: GOWorker
 ---
 
@@ -39,7 +39,7 @@ Worker: I'm evaluating the environmental impact of digital markets on local digi
 ===
 id: 2305645933
 type: dialog
-position: Rect2( -450, 320, 400, 400 )
+position: Rect2(-450, 320, 400, 400)
 title: GOWorkerGenerated
 ---
 
@@ -49,7 +49,7 @@ Worker: I'm {$researching} the {$effect} of {$badthing} on {$goodthing}
 ===
 id: 554801509
 type: dialog
-position: Rect2( -730, -660, 390, 210 )
+position: Rect2(-730, -660, 390, 210)
 title: RandomChoice
 ---
 [[hello|ahoy|howdy]]\
@@ -59,7 +59,7 @@ title: RandomChoice
 ===
 id: 290479186
 type: dialog
-position: Rect2( -180, -630, 400, 400 )
+position: Rect2(-180, -630, 400, 400)
 title: RandomLines
 ---
 Nathan: I will say this.
@@ -79,7 +79,7 @@ Nathan: Random number?
 ===
 id: 1534281627
 type: dialog
-position: Rect2( 400, -630, 312, 155 )
+position: Rect2(400, -630, 312, 155)
 title: RandomJump
 ---
 Where will we go?
@@ -89,35 +89,35 @@ Where will we go?
 ===
 id: 2590786479
 type: dialog
-position: Rect2( 790, -680, 312, 155 )
+position: Rect2(790, -680, 312, 155)
 title: A
 ---
 
 ===
 id: 3413229452
 type: dialog
-position: Rect2( 790, -520, 312, 155 )
+position: Rect2(790, -520, 312, 155)
 title: B
 ---
 Nathan: Jumped to B
 ===
 id: 3041935293
 type: dialog
-position: Rect2( 790, -360, 312, 155 )
+position: Rect2(790, -360, 312, 155)
 title: C
 ---
 Nathan: Jumped to C
 ===
 id: 3472632069
 type: dialog
-position: Rect2( -1210, -650, 400, 400 )
+position: Rect2(-1210, -650, 400, 400)
 title: Dialog
 ---
 Jumping... <<jump RandomChoice>>
 ===
 id: 45950128
 type: dialog
-position: Rect2( 1360, -600, 440, 390 )
+position: Rect2(1360, -600, 440, 390)
 title: Yield
 ---
 <<exec 1>>

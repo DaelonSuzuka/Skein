@@ -120,8 +120,8 @@ func create_node(data=null) -> Node:
 	emit_signal('node_created', node)
 	contents_changed()
 
-	node.connect('close_request', Callable(self,'delete_node').bind(node))
-	node.connect('changed', Callable(self,'contents_changed'))
+	node.close_request.connect(self.delete_node.bind(node))
+	node.changed.connect(self.contents_changed)
 
 	return node
 

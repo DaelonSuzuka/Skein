@@ -30,11 +30,11 @@ func add_control():
 	select_button = hbox.add(Button.new())
 	select_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	select_button.text = 'Select'
-	select_button.connect('pressed', Callable(self,'select_conversation'))
+	select_button.pressed.connect(self.select_conversation)
 
 	edit_button = hbox.add(Button.new())
 	edit_button.text = 'Show'
-	edit_button.connect('pressed', Callable(self,'open_conversation'))
+	edit_button.pressed.connect(self.open_conversation)
 
 	ep.add_child(hbox)
 	ep.label = 'Conversation'
@@ -62,7 +62,7 @@ func select_conversation():
 	tree.refresh()
 
 	plugin.get_editor_interface().get_editor_main_screen().add_child(selector)
-	selector.get_ok_button().connect('pressed', Callable(self,'accepted'))
+	selector.get_ok_button().pressed.connect(self.accepted)
 	selector.popup_centered(Vector2(1000, 985))
 
 func accepted():

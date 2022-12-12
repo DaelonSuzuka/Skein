@@ -44,13 +44,13 @@ func _ready():
 	hide_root = true
 	allow_rmb_select = true
 
-	connect('item_selected', Callable(self,'_on_item_selected'))
-	connect('gui_input', Callable(self,'_on_gui_input'))
-	connect('item_edited', Callable(self,'_on_item_edited'))
-	connect('item_activated', Callable(self,'_on_item_activated'))
+	item_selected.connect(self._on_item_selected)
+	gui_input.connect(self._on_gui_input)
+	item_edited.connect(self._on_item_edited)
+	item_activated.connect(self._on_item_activated)
 
-	if !is_connected('item_collapsed', Callable(self,'_on_item_collapsed')):
-		connect('item_collapsed', Callable(self,'_on_item_collapsed'))
+	if !item_collapsed.is_connected(self._on_item_collapsed):
+		item_collapsed.connect(self._on_item_collapsed)
 
 var refresh_countdown = 0
 
@@ -70,8 +70,8 @@ func _refresh():
 	root.set_meta('path', '')
 	root.set_meta('type', 'folder')
 
-	if is_connected('item_collapsed', Callable(self,'_on_item_collapsed')):
-		disconnect('item_collapsed', Callable(self,'_on_item_collapsed'))
+	if item_collapsed.is_connected(self._on_item_collapsed):
+		item_collapsed.disconnect(self._on_item_collapsed)
 
 	var items := {}
 
@@ -139,8 +139,8 @@ func _refresh():
 			var id = node.split(':')[1]
 			create_node_item(item, data.file, nodes[id])
 
-	if !is_connected('item_collapsed', Callable(self,'_on_item_collapsed')):
-		connect('item_collapsed', Callable(self,'_on_item_collapsed'))
+	if !item_collapsed.is_connected(self._on_item_collapsed):
+		item_collapsed.connect(self._on_item_collapsed)
 
 func create_file_item(parent, path):
 	var item = create_item(parent)

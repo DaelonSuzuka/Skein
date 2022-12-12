@@ -21,9 +21,9 @@ func _ready():
 	randomize()
 	
 	Add.disabled = false
-	Key.connect('text_changed', Callable(self,'key_text_changed'))
-	Value.connect('text_changed', Callable(self,'value_text_changed'))
-	Add.connect('pressed', Callable(self,'add_pressed'))
+	Key.text_changed.connect(self.key_text_changed)
+	Value.text_changed.connect(self.value_text_changed)
+	Add.pressed.connect(self.add_pressed)
 	update_add_button()
 	demo_vars = Diagraph.load_json(demo_var_path, demo_vars)
 	DictBox.remove_child(DictEntry)
@@ -64,7 +64,7 @@ func create_entry(key, value):
 	var entry_value = entry.get_node('DictValue')
 	entry_key.text = key
 	entry_value.text = str(value)
-	entry_value.connect('text_changed', Callable(self,'entry_changed').bind(key))
+	entry_value.text_changed.connect(self.entry_changed.bind(key))
 	DictBox.add_child(entry)
 	entry.show()
 
