@@ -308,11 +308,11 @@ func run():
 	var entry = ''
 	if selection.size() == 1:
 		var node = selection[0]
-		entry = node.name
+		entry = str(node.name)
 	else:
 		for node in graphedit.nodes.values():
 			if node.data.default:
-				entry = node.name
+				entry = str(node.name)
 
 	if entry:
 		conversation += ':' + entry

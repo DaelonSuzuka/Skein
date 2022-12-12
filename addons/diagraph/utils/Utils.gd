@@ -15,10 +15,10 @@ func reparent_node(node:Node, new_parent:Node, legible_unique_name:=false) -> vo
 
 # ******************************************************************************
 
-func try_connect(src, Callable(sig,dest).bind(method),args=[],flags=0):
+func try_connect(src, sig, dest, method, args=[], flags=0):
 	if dest.has_method(method):
 		if !src.is_connected(sig, Callable(dest,method)):
-			src.connect(sig, Callable(dest,method).bind(args),flags)
+			src.connect(sig, Callable(dest, method).bind(args),flags)
 
 # ******************************************************************************
 
