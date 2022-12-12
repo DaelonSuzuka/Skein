@@ -1,17 +1,17 @@
-tool
+@tool
 extends Tree
 
 # ******************************************************************************
 
-onready var ContextMenu = preload('res://addons/diagraph/utils/ContextMenu.gd')
+@onready var ContextMenu = preload('res://addons/diagraph/utils/ContextMenu.gd')
 
 var root: TreeItem = null
 var convos: TreeItem = null
 var chars: TreeItem = null
 
-export var folder_icon: ImageTexture
-export var file_icon: ImageTexture
-export var card_icon: ImageTexture
+@export var folder_icon: ImageTexture
+@export var file_icon: ImageTexture
+@export var card_icon: ImageTexture
 
 signal folder_collapsed
 signal create_folder(path)
@@ -32,10 +32,10 @@ signal run_node
 var folder_state = {}
 
 var icon_colors = {
-	'speech': Color.olivedrab,
-	'dialog': Color.olivedrab,
-	'branch': Color.tomato,
-	'comment': Color.steelblue,
+	'speech': Color.OLIVE_DRAB,
+	'dialog': Color.OLIVE_DRAB,
+	'branch': Color.TOMATO,
+	'comment': Color.STEEL_BLUE,
 }
 
 # ******************************************************************************
@@ -44,13 +44,13 @@ func _ready():
 	hide_root = true
 	allow_rmb_select = true
 
-	connect('item_selected', self, '_on_item_selected')
-	connect('gui_input', self, '_on_gui_input')
-	connect('item_edited', self, '_on_item_edited')
-	connect('item_activated', self, '_on_item_activated')
+	connect('item_selected', Callable(self,'_on_item_selected'))
+	connect('gui_input', Callable(self,'_on_gui_input'))
+	connect('item_edited', Callable(self,'_on_item_edited'))
+	connect('item_activated', Callable(self,'_on_item_activated'))
 
-	if !is_connected('item_collapsed', self, '_on_item_collapsed'):
-		connect('item_collapsed', self, '_on_item_collapsed')
+	if !is_connected('item_collapsed', Callable(self,'_on_item_collapsed')):
+		connect('item_collapsed', Callable(self,'_on_item_collapsed'))
 
 var refresh_countdown = 0
 
@@ -70,12 +70,12 @@ func _refresh():
 	root.set_meta('path', '')
 	root.set_meta('type', 'folder')
 
-	if is_connected('item_collapsed', self, '_on_item_collapsed'):
-		disconnect('item_collapsed', self, '_on_item_collapsed')
+	if is_connected('item_collapsed', Callable(self,'_on_item_collapsed')):
+		disconnect('item_collapsed', Callable(self,'_on_item_collapsed'))
 
 	var items := {}
 
-	var dir = Directory.new()
+	var dir := DirAccess.open(Diagraph.conversation_prefix)
 	var files = Diagraph.files.get_all_files_and_folders(Diagraph.conversation_prefix)
 	files.erase(Diagraph.conversation_prefix.trim_suffix('/'))
 	files.erase(Diagraph.conversation_prefix)
@@ -122,7 +122,7 @@ func _refresh():
 
 		if data.path.get_file() == current_conversation:
 			item.collapsed = false
-			item.set_icon_modulate(0, Color.white)
+			item.set_icon_modulate(0, Color.WHITE)
 
 		var nodes = Diagraph.load_conversation(data.path, {})
 
@@ -139,8 +139,8 @@ func _refresh():
 			var id = node.split(':')[1]
 			create_node_item(item, data.file, nodes[id])
 
-	if !is_connected('item_collapsed', self, '_on_item_collapsed'):
-		connect('item_collapsed', self, '_on_item_collapsed')
+	if !is_connected('item_collapsed', Callable(self,'_on_item_collapsed')):
+		connect('item_collapsed', Callable(self,'_on_item_collapsed'))
 
 func create_file_item(parent, path):
 	var item = create_item(parent)
@@ -149,8 +149,8 @@ func create_file_item(parent, path):
 	item.set_meta('name', path.get_file())
 	item.set_text(0, path.get_file())
 	item.set_icon(0, file_icon)
-	item.set_icon_modulate(0, Color.silver)
-	item.set_tooltip(0, path)
+	item.set_icon_modulate(0, Color.SILVER)
+	item.set_tooltip_text(0, path)
 
 	# item.disable_folding = true
 	item.collapsed = true
@@ -166,7 +166,7 @@ func create_node_item(parent, path, node):
 	item.set_meta('name', node.name)
 	item.set_icon(0, card_icon)
 	item.set_icon_modulate(0, icon_colors[node.type])
-	item.set_tooltip(0, node.type)
+	item.set_tooltip_text(0, node.type)
 	return item
 
 func create_folder_item(parent, path):
@@ -178,12 +178,12 @@ func create_folder_item(parent, path):
 	else:
 		folder_state[p] = {'collapsed': false}
 
-	item.set_custom_color(0, Color.darkgray)
+	item.set_custom_color(0, Color.DARK_GRAY)
 	item.set_meta('type', 'folder')
 	item.set_meta('path', path.trim_prefix(Diagraph.conversation_prefix))
 	item.set_text(0, path.get_file())
 	item.set_meta('name', path.get_file())
-	item.set_tooltip(0, path.trim_prefix(Diagraph.conversation_prefix))
+	item.set_tooltip_text(0, path.trim_prefix(Diagraph.conversation_prefix))
 	return item
 
 # ******************************************************************************
@@ -224,11 +224,11 @@ func _on_item_activated():
 
 	match type:
 		'file':
-			emit_signal('change_conversation', path)
+			change_conversation.emit(path)
 		'folder':
 			pass
 		'node':
-			emit_signal('focus_node', path)
+			focus_node.emit(path)
 
 # ******************************************************************************
 
@@ -261,7 +261,7 @@ func _on_item_edited():
 		path = path.trim_prefix('/')
 		item.set_meta('path', path)
 		item.set_meta('name', name)
-		item.set_tooltip(0, path)
+		item.set_tooltip_text(0, path)
 
 	match type:
 		'file':
@@ -270,7 +270,7 @@ func _on_item_edited():
 			else:
 				var new_path = path.trim_suffix(item.get_meta('name')) + name
 				item.set_meta('path', new_path)
-				item.set_tooltip(0, new_path)
+				item.set_tooltip_text(0, new_path)
 				emit_signal('rename_conversation', path, new_path)
 		'folder':
 			if new:
@@ -279,11 +279,11 @@ func _on_item_edited():
 			else:
 				var new_path = path.trim_suffix(path.get_file()) + name + '/'
 				item.set_meta('path', new_path)
-				item.set_tooltip(0, new_path)
+				item.set_tooltip_text(0, new_path)
 				emit_signal('rename_folder', path, new_path)
 		'node':
 			var id = item.get_meta('id')
-			item.set_tooltip(0, name)
+			item.set_tooltip_text(0, name)
 			emit_signal('rename_node', id, name)
 
 # ******************************************************************************
@@ -336,7 +336,7 @@ func open_context_menu(position) -> void:
 			'file':
 				if item.get_meta('path').ends_with('json'):
 					ctx.add_item('Convert to Yarn')
-				ctx.add_item('Copy Path')
+				ctx.add_item('Copy Path3D')
 				ctx.add_item('Rename')
 				ctx.add_item('Delete')
 			'folder':
@@ -346,7 +346,7 @@ func open_context_menu(position) -> void:
 				ctx.add_item('Delete')
 			'node':
 				ctx.add_item('Run')
-				ctx.add_item('Copy Path')
+				ctx.add_item('Copy Path3D')
 				ctx.add_item('Rename')
 				ctx.add_item('Delete')
 	else:
@@ -376,7 +376,7 @@ func context_menu_item_selected(selection: String) -> void:
 			item.set_meta('name', 'new')
 			item.set_meta('type', 'file')
 			item.set_icon(0, file_icon)
-			item.set_icon_modulate(0, Color.silver)
+			item.set_icon_modulate(0, Color.SILVER)
 			item.set_editable(0, true)
 			item.set_icon(0, file_icon)
 			item.select(0)
@@ -389,7 +389,7 @@ func context_menu_item_selected(selection: String) -> void:
 			item.set_editable(0, true)
 			item.select(0)
 			call_deferred('edit_selected')
-		'Copy Path':
+		'Copy Path3D':
 			var item = get_selected()
 			var path = item.get_meta('path')
 			path = path.replace('.yarn', '')
@@ -417,7 +417,7 @@ func context_menu_item_selected(selection: String) -> void:
 
 # ******************************************************************************
 
-func get_drag_data(position):
+func _get_drag_data(position):
 	set_drop_mode_flags(DROP_MODE_INBETWEEN | DROP_MODE_ON_ITEM)
 
 	var preview = Label.new()

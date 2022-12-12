@@ -2,11 +2,11 @@ extends CanvasLayer
 
 # ******************************************************************************
 
-onready var DictBox = find_node('DictBox')
-onready var DictEntry = find_node('DictEntry')
-onready var Key = find_node('Key')
-onready var Value = find_node('Value')
-onready var Add = find_node('Add')
+@onready var DictBox = find_child('DictBox')
+@onready var DictEntry = find_child('DictEntry')
+@onready var Key = find_child('Key')
+@onready var Value = find_child('Value')
+@onready var Add = find_child('Add')
 
 var demo_vars := {
 	'test': 'beep',
@@ -21,9 +21,9 @@ func _ready():
 	randomize()
 	
 	Add.disabled = false
-	Key.connect('text_changed', self, 'key_text_changed')
-	Value.connect('text_changed', self, 'value_text_changed')
-	Add.connect('pressed', self, 'add_pressed')
+	Key.connect('text_changed', Callable(self,'key_text_changed'))
+	Value.connect('text_changed', Callable(self,'value_text_changed'))
+	Add.connect('pressed', Callable(self,'add_pressed'))
 	update_add_button()
 	demo_vars = Diagraph.load_json(demo_var_path, demo_vars)
 	DictBox.remove_child(DictEntry)
@@ -44,9 +44,9 @@ func update_add_button():
 
 func check_string_types(text):
 	var value = text
-	if text.is_valid_integer():
+	if text.is_valid_int():
 		value = text.to_int()
-	elif text.is_valid_integer():
+	elif text.is_valid_int():
 		value = text.to_float()
 	return value
 
@@ -64,7 +64,7 @@ func create_entry(key, value):
 	var entry_value = entry.get_node('DictValue')
 	entry_key.text = key
 	entry_value.text = str(value)
-	entry_value.connect('text_changed', self, 'entry_changed', [key])
+	entry_value.connect('text_changed', Callable(self,'entry_changed').bind(key))
 	DictBox.add_child(entry)
 	entry.show()
 

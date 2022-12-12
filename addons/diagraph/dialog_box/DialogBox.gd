@@ -1,4 +1,4 @@
-tool
+@tool
 extends Control
 
 # ******************************************************************************
@@ -18,38 +18,38 @@ signal speaker_changed(new_speaker, prev_speaker)
 
 # ******************************************************************************
 
-export(String, FILE, '*.tscn,*.scn') var option_button_path = 'res://addons/diagraph/dialog_box/BaseOptionButton.tscn'
-onready var OptionButton = load(option_button_path)
+@export var option_button_path = 'res://addons/diagraph/dialog_box/BaseOptionButton.tscn' # (String, FILE, '*.tscn,*.scn')
+@onready var option_button = load(option_button_path)
 
 # ------------------------------------------------------------------------------
 
 class DialogTimer extends Timer:
-	func _init(obj, method):
-		connect('timeout', obj, method)
+	func _init(obj,method):
+		connect('timeout', Callable(obj,method))
 		one_shot = true
 		obj.call_deferred('add_child', self)
 
-onready var text_timer := DialogTimer.new(self, 'next_char')
-onready var dismiss_timer := DialogTimer.new(self, 'next_line')
+@onready var text_timer := DialogTimer.new(self, 'next_char')
+@onready var dismiss_timer := DialogTimer.new(self, 'next_line')
 
 # ------------------------------------------------------------------------------
 
 # mandatory nodes
-onready var name_box = find_node('Name')
-onready var next_indicator = find_node('Next')
-onready var text_box = find_node('TextBox')
-onready var options_container = find_node('Options')
-onready var portrait_container = find_node('Portrait')
+@onready var name_box = find_child('Name')
+@onready var next_indicator = find_child('Next')
+@onready var text_box = find_child('TextBox')
+@onready var options_container = find_child('Options')
+@onready var portrait_container = find_child('Portrait')
 
 # possibly optional nodes
-onready var name_box_outline = find_node('NameOutline')
-onready var text_box_outline = find_node('TextBoxOutline')
+@onready var name_box_outline = find_child('NameOutline')
+@onready var text_box_outline = find_child('TextBoxOutline')
 
 # configurable settings
-export var primary_action := 'ui_accept'
-export var secondary_action  := 'ui_cancel'
-export var direct_input := true
-export var text_cooldown := 0.05
+@export var primary_action := 'ui_accept'
+@export var secondary_action  := 'ui_cancel'
+@export var direct_input := true
+@export var text_cooldown := 0.05
 
 # ******************************************************************************
 
@@ -83,10 +83,10 @@ func handle_input(event):
 # ******************************************************************************
 
 func add_option(option, value=null):
-	var button = OptionButton.instance()
+	var button = option_button.instantiate()
 
 	var arg = value if value else option
-	button.connect('pressed', self, 'option_selected', [arg])
+	button.connect('pressed', Callable(self,'option_selected').bind(arg))
 	button.text = option
 
 	options_container.add_child(button)
@@ -178,7 +178,7 @@ func start(conversation, options={}):
 	active = true
 	caller = null
 	next_indicator.visible = false
-	change_outline_color(Color.white)
+	change_outline_color(Color.WHITE)
 	remove_options()
 
 	# parse conversation string
@@ -244,9 +244,9 @@ func _yield(object=null, sig="nothing"):
 	text_timer.paused = true
 	emit_signal('yielded')
 
-	object.connect(sig, self, '_resume', [], CONNECT_ONESHOT)
+	object.connect(sig, Callable(self,'_resume').bind(),CONNECT_ONE_SHOT)
 
-	yield(self, 'resumed')
+	await self.resumed
 
 	text_timer.paused = false
 	active = true
@@ -416,7 +416,7 @@ func next_line():
 			new_line = strip_name(new_line)
 
 			var speaker = Diagraph.characters[name]
-			if !portrait_container.is_a_parent_of(speaker):
+			if !portrait_container.is_ancestor_of(speaker):
 				Diagraph.utils.reparent_node(speaker, portrait_container)
 				emit_signal('actor_joined', speaker)
 
@@ -426,7 +426,7 @@ func next_line():
 
 	if skip:
 		if yielding:
-			yield(self, 'resumed')
+			await self.resumed
 		current_line += 1
 		next_line()
 		return
@@ -440,7 +440,7 @@ func next_line():
 			next_speaker.idle()
 		current_speaker = next_speaker
 	
-	var color = Color.white
+	var color = Color.WHITE
 	if next_speaker and next_speaker.get('color'):
 		color = next_speaker.color
 	change_outline_color(color)
@@ -539,7 +539,7 @@ func set_line(_line):
 	line = _line
 	cursor = 0
 	if !continue_previous_line:
-		text_box.bbcode_text = ''
+		text_box.text = ''
 	continue_previous_line = false
 	next_indicator.visible = false
 	next_char_cooldown = text_cooldown
@@ -564,8 +564,8 @@ func get_block(start_string, end_string, options=[]):
 		skip_space()
 		if !('nostrip' in options):
 			result = result.lstrip(start_string).rstrip(end_string)
-		if 'erase' in options:
-			line.erase(cursor, end - cursor + len(end_string))
+		# if 'erase' in options:
+		# 	line.erase(cursor, end - cursor + len(end_string))
 
 	return result
 
@@ -656,13 +656,13 @@ func next_char(use_timer=true):
 			else: # detect chunks of bbcode
 				var block = get_block('[', ']', ['nostrip'])
 				if block:
-					text_box.bbcode_text += block
+					text_box.text += block
 					next_char()
 		'|':  # pipe denotes chunks of text that should pop all at once
 			var end = line.findn('|', cursor + 1)
 			if end != -1:
 				var chunk = line.substr(cursor + 1, end - cursor - 1)
-				text_box.bbcode_text += chunk
+				text_box.text += chunk
 				cursor = end + 1
 		'_':  # pause
 			cooldown = 0.25
@@ -687,15 +687,15 @@ func next_char(use_timer=true):
 func print_char(c):
 	character_talk(c)
 
-	text_box.bbcode_text += c
+	text_box.text += c
 	emit_signal('character_added', c)
 
 # ******************************************************************************
 # directive stuff
 
 var bool_directive = {
-	'on': true,
-	'off': false,
+	'checked': true,
+	'unchecked': false,
 	'true': true,
 	'false': false,
 	'1': true,
@@ -790,9 +790,9 @@ func evaluate(input: String=''):
 		]
 	)
 	ctx.method(
-		'func yield(object=null, sig="nothing"):',
+		'func await object=null.sig=nothing:',
 		[
-			'get_parent()._yield(object, sig)',
+			'get_parent()._await object.sig',
 		]
 	)
 	ctx.method(

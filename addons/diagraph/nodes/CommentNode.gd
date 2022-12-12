@@ -1,27 +1,27 @@
-tool
+@tool
 extends 'BaseNode.gd'
 
 # ******************************************************************************
 
-onready var ColorPicker = find_node('ColorPickerButton')
-onready var Tooltip = find_node('Tooltip')
-onready var TooltipBG = find_node('TooltipBG')
+@onready var color_picker = find_child('ColorPickerButton')
+@onready var Tooltip = find_child('Tooltip')
+@onready var TooltipBG = find_child('TooltipBG')
 
 # ******************************************************************************
 
 func _ready():
-	ColorPicker.get_picker()
-	ColorPicker.get_popup()
-	ColorPicker.connect('color_changed', self, 'set_color')
+	color_picker.get_picker()
+	color_picker.get_popup()
+	color_picker.color_changed.connect(self.set_color)
 	Tooltip.hide()
-	Title.connect('text_changed', Tooltip, 'set_text')
+	Title.text_changed.connect(Tooltip.set_text)
 
 	var parent = get_parent()
 	if parent is GraphEdit:
-		connect('offset_changed', self, 'offset_changed')
-		parent.connect('_begin_node_move', self, 'begin_move')
-		parent.connect('_end_node_move', self, 'end_move')
-		parent.connect('zoom_changed', self, 'zoom_changed')
+		position_offset_changed.connect(self._position_offset_changed)
+		parent.begin_node_move.connect(self.begin_move)
+		parent.end_node_move.connect(self.end_move)
+		parent.zoom_changed.connect(self.zoom_changed)
 		zoom_changed(parent.zoom)
 
 func set_color(color):
@@ -39,21 +39,21 @@ func begin_move():
 		return
 	dragging = true
 	drag_children.clear()
-	start_pos = offset
+	start_pos = position_offset
 
-	var own_region = Rect2(offset, rect_size)
+	var own_region = Rect2(position_offset, size)
 	for node in get_parent().nodes.values():
 		if node == self or !is_instance_valid(node):
 			continue
-		var node_region = Rect2(node.offset, node.rect_size)
+		var node_region = Rect2(node.position_offset, node.size)
 		if own_region.encloses(node_region):
-			drag_children[node] = node.offset
+			drag_children[node] = node.position_offset
 
-func offset_changed():
-	var difference = start_pos - offset
+func _position_offset_changed():
+	var difference = start_pos - position_offset
 	for child in drag_children:
 		var start = drag_children[child]
-		child.offset = start - difference
+		child.position_offset = start - difference
 
 func end_move():
 	if !selected:
@@ -74,8 +74,8 @@ func zoom_changed(zoom):
 	var width = max(round(1 / zoom), 1) as int
 
 	set_stylebox_borders(theme.get_stylebox('comment', 'GraphNode'), width)
-	set_stylebox_borders(theme.get_stylebox('commentfocus', 'GraphNode'), width)
-	set_stylebox_borders(TooltipBG.get_stylebox('panel'), width)
+	set_stylebox_borders(theme.get_stylebox('comment_focus', 'GraphNode'), width)
+	# set_stylebox_borders(TooltipBG.get_stylebox('panel'), width)
 
 	if zoom < .8:
 		Tooltip.show()
@@ -84,8 +84,8 @@ func zoom_changed(zoom):
 # ******************************************************************************
 
 func get_data():
-	var data = .get_data()
-	data['color'] = ColorPicker.color.to_html()
+	var data = super.get_data()
+	data['color'] = color_picker.color.to_html()
 	return data
 
 func set_data(new_data):
@@ -94,5 +94,5 @@ func set_data(new_data):
 	if 'color' in new_data:
 		self_modulate = Color(new_data.color)
 		TooltipBG.modulate = Color(new_data.color)
-		ColorPicker.color = Color(new_data.color)
-	.set_data(new_data)
+		color_picker.color = Color(new_data.color)
+	super.set_data(new_data)

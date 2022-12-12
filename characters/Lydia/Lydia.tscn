@@ -1,8 +1,8 @@
 [gd_scene load_steps=22 format=2]
 
-[ext_resource path="res://characters/Lydia/Lydia_Portrait.png" type="Texture" id=1]
+[ext_resource path="res://characters/Lydia/Lydia_Portrait.png" type="Texture2D" id=1]
 [ext_resource path="res://characters/Character.gd" type="Script" id=2]
-[ext_resource path="res://characters/64xportrait_frame.png" type="Texture" id=7]
+[ext_resource path="res://characters/64xportrait_frame.png" type="Texture2D" id=7]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -104,10 +104,10 @@ scale = Vector2( 2, 2 )
 script = ExtResource( 2 )
 color = Color( 0.811765, 0.313726, 0.211765, 1 )
 
-[node name="Pane" type="AnimatedSprite" parent="."]
+[node name="Pane" type="AnimatedSprite2D" parent="."]
 frames = SubResource( 1 )
 
-[node name="Portrait" type="AnimatedSprite" parent="."]
+[node name="Portrait" type="AnimatedSprite2D" parent="."]
 frames = SubResource( 18 )
 animation = "talking"
 frame = 7

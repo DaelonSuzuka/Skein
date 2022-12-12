@@ -1,9 +1,9 @@
-tool
+@tool
 extends Button
 
 # ******************************************************************************
 
-export(String, 
+@export(String, 
 	"AntDesign", 
 	"Entypo", 
 	"EvilIcons", 
@@ -18,14 +18,14 @@ export(String,
 	"Octicons", 
 	"SimpleLineIcons", 
 	"Zocial")\
-	var icon_set = "Ionicons" setget _set_icon_set
+	var icon_set = "Ionicons" : set = _set_icon_set
 
-export(int, 0, 1000, 1) var size = 16 setget _set_size
-export var icon_name = "ios-analytics" setget _set_icon
-export var filter = false setget _set_filter
+@export var size = 16 setget _set_size # (int, 0, 1000, 1)
+@export var icon_name = "ios-analytics" : set = _set_icon
+@export var filter = false : set = _set_filter
 
 var Cheatsheet = {}
-var _font = DynamicFont.new()
+var _font = FontFile.new()
 
 func _set_size(p_size):
 	size = p_size
@@ -48,7 +48,7 @@ func _set_icon_set(name):
 	var font = load(str('res://addons/diagraph/resources/vector_icons/fonts/', name, ".gd"))
 	if font != null:
 		self.Cheatsheet = font.Cheatsheet
-		_font = DynamicFont.new()
+		_font = FontFile.new()
 		_font.set_font_data(font.FontData)
 		set("custom_fonts/font", _font)
 		update_content()

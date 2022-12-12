@@ -1,9 +1,9 @@
-tool
+@tool
 extends Control
 
 # ******************************************************************************
 
-export var text := '' setget set_text
+@export var text := '' : set = set_text
 
 func set_text(new_text):
 	text = new_text
@@ -13,17 +13,17 @@ func set_text(new_text):
 
 signal text_changed(new_text)
 
-onready var line_edit = $LineEdit
-onready var label = $Label
+@onready var line_edit = $LineEdit
+@onready var label = $Label
 
 # ******************************************************************************
 
 func _ready():
 	set_text(text)
 	line_edit.hide()
-	line_edit.connect('focus_exited', self, 'reject')
-	line_edit.connect('gui_input', self, 'line_edit_input')
-	label.connect('gui_input', self, 'label_gui_input')
+	line_edit.focus_exited.connect(self.reject)
+	line_edit.gui_input.connect(self.line_edit_input)
+	label.gui_input.connect(self.label_gui_input)
 
 func line_edit_input(event):
 	if event is InputEventKey and event.pressed:
@@ -37,7 +37,7 @@ func line_edit_input(event):
 
 func label_gui_input(event):
 	if event is InputEventMouseButton and event.button_index == 1:
-		if event.doubleclick:
+		if event.double_click:
 			start_editing()
 			accept_event()
 
@@ -48,7 +48,7 @@ func start_editing():
 	label.hide()
 	line_edit.show()
 	line_edit.grab_focus()
-	line_edit.caret_position = line_edit.text.length()
+	line_edit.caret_column = line_edit.text.length()
 	line_edit.select_all()
 
 func accept():

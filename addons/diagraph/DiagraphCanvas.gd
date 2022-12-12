@@ -18,22 +18,22 @@ func _process(delta):
 			var pos = object.get_global_transform_with_canvas().origin
 			if object.get('tooltip_offset'):
 				pos.y += object.tooltip_offset
-			popup.rect_position = pos
+			popup.position = pos
 
 func _register_popup(popup, object):
 	add_child(popup)
 	_popups[popup] = object
 
 func popup_dialog(object, conversation, options={}):
-	var popup = load('res://addons/diagraph/dialog_box/PopupDialogBox.tscn').instance()
+	var popup = load('res://addons/diagraph/dialog_box/PopupDialogBox.tscn').instantiate()
 	_register_popup(popup, object)
 	options['caller'] = object
 	popup.start(conversation, options)
 
-	popup.connect("done", self, '_popup_over')
+	popup.connect("done", Callable(self,'_popup_over'))
 
-	Diagraph.utils.try_connect(popup, 'line_finished', object, 'line_finished')
-	Diagraph.utils.try_connect(popup, 'done', object, 'popup_over')
+	# Diagraph.utils.try_connect(popup, Callable('line_finished',object).bind('line_finished'))
+	# Diagraph.utils.try_connect(popup, Callable('done',object).bind('popup_over'))
 
 	return popup
 
@@ -50,10 +50,10 @@ func start_dialog(object, conversation, options={}):
 	options['caller'] = object
 	dialog.start(conversation, options)
 
-	dialog.connect('done', Diagraph.sandbox, 'clear_temp_locals', [], CONNECT_ONESHOT)
+	dialog.connect('done', Callable(Diagraph.sandbox,'clear_temp_locals').bind(),CONNECT_ONE_SHOT)
 	
 	# TODO disconnect this when done?
-	Diagraph.utils.try_connect(dialog, 'line_finished', object, 'line_finished')
-	Diagraph.utils.try_connect(dialog, 'done', object, 'done', [], CONNECT_ONESHOT)
+	# Diagraph.utils.try_connect(dialog, Callable('line_finished',object).bind('line_finished'))
+	# Diagraph.utils.try_connect(dialog, Callable('done',object).bind('done'),[],CONNECT_ONE_SHOT)
 
 	return dialog

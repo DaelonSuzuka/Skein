@@ -1,4 +1,4 @@
-tool
+@tool
 extends Node
 
 # ******************************************************************************
@@ -17,13 +17,12 @@ func check_extension(file, ext=null) -> bool:
 # get all files in given directory with optional extension filter
 func get_files(path: String, ext='') -> Array:
 	var _files = []
-	var dir = Directory.new()
-	dir.open(path)
-	dir.list_dir_begin(true, true)
+	var dir := DirAccess.open(path)
+	dir.list_dir_begin()
 
 	var file = dir.get_next()
 	while true:
-		var file_path = dir.get_current_dir().plus_file(file)
+		var file_path = dir.get_current_dir().path_join(file)
 		if file == '':
 			break
 		if ext:
@@ -42,13 +41,12 @@ func get_all_files(path: String, ext='', max_depth:=10, _depth:=0, _files:=[]) -
 	if _depth >= max_depth:
 		return []
 
-	var dir = Directory.new()
-	dir.open(path)
-	dir.list_dir_begin(true, true)
+	var dir := DirAccess.open(path)
+	dir.list_dir_begin()
 
 	var file = dir.get_next()
 	while file != '':
-		var file_path = dir.get_current_dir().plus_file(file)
+		var file_path = dir.get_current_dir().path_join(file)
 		if dir.current_is_dir():
 			get_all_files(file_path, ext, max_depth, _depth + 1, _files)
 		else:
@@ -66,13 +64,12 @@ func get_all_files_and_folders(path: String, max_depth:=10, _depth:=0, _files:=[
 	if _depth >= max_depth:
 		return []
 
-	var dir = Directory.new()
-	dir.open(path)
-	dir.list_dir_begin(true, true)
+	var dir := DirAccess.open(path)
+	dir.list_dir_begin()
 
 	var file = dir.get_next()
 	while file != '':
-		var file_path = dir.get_current_dir().plus_file(file)
+		var file_path = dir.get_current_dir().path_join(file)
 		_files.append(file_path)
 		if dir.current_is_dir():
 			get_all_files_and_folders(file_path, max_depth, _depth + 1, _files)
@@ -85,13 +82,12 @@ func get_all_folders(path: String, max_depth:=10, _depth:=0, _files:=[]) -> Arra
 	if _depth >= max_depth:
 		return []
 
-	var dir = Directory.new()
-	dir.open(path)
-	dir.list_dir_begin(true, true)
+	var dir := DirAccess.open(path)
+	dir.list_dir_begin() # TODOGODOT4 fill missing arguments https://github.com/godotengine/godot/pull/40547
 
 	var file = dir.get_next()
 	while file != '':
-		var file_path = dir.get_current_dir().plus_file(file)
+		var file_path = dir.get_current_dir().path_join(file)
 		if dir.current_is_dir():
 			_files.append(file_path)
 			get_all_folders(file_path, max_depth, _depth + 1, _files)

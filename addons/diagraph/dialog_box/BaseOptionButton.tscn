@@ -61,9 +61,9 @@ corner_detail = 1
 anti_aliasing = false
 
 [node name="Button" type="Button"]
-margin_right = 70.0
-margin_bottom = 47.0
-rect_min_size = Vector2( 70, 0 )
+offset_right = 70.0
+offset_bottom = 47.0
+minimum_size = Vector2( 70, 0 )
 custom_styles/hover = SubResource( 16 )
 custom_styles/pressed = SubResource( 17 )
 custom_styles/focus = SubResource( 20 )

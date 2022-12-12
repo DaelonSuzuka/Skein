@@ -104,7 +104,7 @@ const Cheatsheet = {
 	"magnet": "\uE016",
 	"magnifier": "\uE090",
 	"magnifier-add": "\uE091",
-	"magnifier-remove": "\uE092",
+	"magnifier-remove_at": "\uE092",
 	"map": "\uE033",
 	"menu": "\uE601",
 	"microphone": "\uE063",
@@ -187,7 +187,7 @@ const Cheatsheet = {
 	"vector": "\uE02B",
 	"volume-1": "\uE09F",
 	"volume-2": "\uE0A0",
-	"volume-off": "\uE0A1",
+	"volume-unchecked": "\uE0A1",
 	"wallet": "\uE02A",
 	"wrench": "\uE052"
 }

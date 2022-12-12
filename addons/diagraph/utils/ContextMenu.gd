@@ -1,4 +1,4 @@
-tool
+@tool
 extends PopupMenu
 
 # ******************************************************************************
@@ -8,13 +8,13 @@ signal item_selected(item)
 # ******************************************************************************
 
 func _init(obj=null, cb=null, arg1=null, arg2=null):
-	set_hide_on_window_lose_focus(true)
+	# set_hide_on_window_lose_focus(true)
 
 	if obj:
 		obj.add_child(self)
 
-	if obj and cb:
-		connect('item_selected', obj, cb)
+	# if cb != null:
+	# 	item_selected.connect(cb)
 
 	var args = []
 	if arg1:
@@ -22,11 +22,11 @@ func _init(obj=null, cb=null, arg1=null, arg2=null):
 	if arg2:
 		args.append(arg2)
 
-	connect('index_pressed', self, '_on_index_pressed', args)
+	connect('index_pressed', Callable(self,'_on_index_pressed').bind(args))
 
 func open(pos=null):
 	if pos:
-		rect_position = pos
+		position = pos
 	popup()
 
 func _on_index_pressed(idx, args=[]):

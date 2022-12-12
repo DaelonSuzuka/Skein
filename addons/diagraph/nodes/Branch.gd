@@ -1,16 +1,16 @@
-tool
+@tool
 extends HBoxContainer
 
 # ******************************************************************************
 
-onready var Condition = $Condition
-onready var Label = $Label
+@onready var condition = $Condition
+@onready var label = $Label
 
-export var number = 1 setget set_number
+@export var number = 1 : set = set_number
 func set_number(value):
 	number = value
 	if is_inside_tree():
-		Label.text = str(value)
+		label.text = str(value)
 
 
 # ******************************************************************************
@@ -22,9 +22,9 @@ func _ready() -> void:
 
 func get_data():
 	var data = {}
-	if Condition.text:
-		data.condition = Condition.text
+	if condition.text:
+		data.condition = condition.text
 	return data
 
 func set_data(data):
-	Condition.text = data.get('condition', '')
+	condition.text = data.get('condition', '')

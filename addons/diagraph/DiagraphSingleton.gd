@@ -1,4 +1,4 @@
-tool
+@tool
 extends Node
 
 # ******************************************************************************
@@ -12,42 +12,44 @@ var character_map_path := characters_path + 'other_characters.json'
 var conversation_path := 'conversations/'
 var conversation_prefix := prefix + conversation_path
 
-onready var sandbox = $Sandbox
-onready var watcher = $Watcher
-onready var canvas = get_node('DiagraphCanvas')
+@onready var sandbox = $Sandbox
+@onready var watcher = $Watcher
+@onready var canvas = get_node('DiagraphCanvas')
 
 var characters := {}
 var conversations := {}
 var _conversations := {}
 
-onready var utils = $Utils
-onready var files = $Files
+@onready var utils = $Utils
+@onready var files = $Files
 
 signal refreshed
 
 # ******************************************************************************
 
 func _ready():
+	print('help')
 	validate_paths()
 	call_deferred('refresh')
 
 	init_file_watcher()
 
 func init_file_watcher():
-	watcher.add_scan_directory(conversation_prefix)
-	for folder in files.get_all_folders(conversation_prefix):
-		watcher.add_scan_directory(folder)
+	pass
+	# watcher.add_scan_directory(conversation_prefix)
+	# for folder in files.get_all_folders(conversation_prefix):
+	# 	watcher.add_scan_directory(folder)
 
-	watcher.add_scan_directory(characters_prefix)
-	for folder in files.get_all_folders(characters_prefix):
-		watcher.add_scan_directory(folder)
+	# watcher.add_scan_directory(characters_prefix)
+	# for folder in files.get_all_folders(characters_prefix):
+	# 	watcher.add_scan_directory(folder)
 
-	watcher.connect('files_changed', self, 'refresh')
+	# watcher.connect('files_changed', Callable(self,'refresh'))
 
 func refresh():
 	load_conversations()
 	load_characters()
-	emit_signal('refreshed')
+	refreshed.emit()
 
 func load_conversations():
 	conversations.clear()
@@ -79,7 +81,7 @@ func load_builtin_conversations():
 func load_characters():
 	characters.clear()
 	for file in files.get_all_files('res://' + characters_path, '.tscn'):
-		var c = load(file).instance()
+		var c = load(file).instantiate()
 		characters[c.name] = c
 		add_child(c)
 		c.hide()
@@ -87,15 +89,14 @@ func load_characters():
 	# for folder in files.get_files('res://' + characters_path):
 	# 	for file in files.get_files('res://' + characters_path + folder, '.tscn'):
 	# 		var file = 'res://' + characters_path + folder + '/' + file
-	# 		if dir.file_exists(file):
-	# 			var c = load(file).instance()
+	# 		if DirAccess.file_exists(file):
+	# 			var c = load(file).instantiate()
 	# 			characters[c.name] = c
 
-	# var dir := Directory.new()
 	# var char_map = load_json(character_map_path, {})
 	# for name in char_map:
-	# 	if dir.file_exists(char_map[name]):
-	# 		characters[name] = load(char_map[name]).instance()
+	# 	if DirAccess.file_exists(char_map[name]):
+	# 		characters[name] = load(char_map[name]).instantiate()
 
 # ******************************************************************************
 
@@ -128,7 +129,7 @@ func load_conversation(path, default=null):
 	return _load_conversation(path, default)
 
 func save_conversation(path, data):
-	if !data:
+	if data == null or data == {}:
 		# print("can't save empty data")
 		return
 	if path.begins_with(prefix):
@@ -154,9 +155,9 @@ func ensure_prefix(path):
 		return path
 
 	if path.begins_with(conversation_path):
-		path = prefix.plus_file(path)
+		path = prefix + path
 	else:
-		path = conversation_prefix.plus_file(path)
+		path = conversation_prefix + path
 
 	return path
 
@@ -164,59 +165,57 @@ func path_to_name(path):
 	return path.trim_prefix(conversation_prefix)
 
 func validate_paths():
-	var dir = Directory.new()
-	if !dir.dir_exists(characters_prefix):
-		dir.make_dir_recursive(prefix + characters_path)
-	if !dir.dir_exists(conversation_prefix):
-		dir.make_dir_recursive(conversation_prefix)
+	if !DirAccess.dir_exists_absolute(characters_prefix):
+		DirAccess.make_dir_recursive_absolute(characters_prefix)
+	if !DirAccess.dir_exists_absolute(conversation_prefix):
+		DirAccess.make_dir_recursive_absolute(conversation_prefix)
 
 # ******************************************************************************
 
 func save_json(path, data):
-	if !data:
+	if data == null or data == {}:
 		return
 	if !path.begins_with('res://') and !path.begins_with('user://'):
 		path = Diagraph.prefix + path
 
-	var dir = Directory.new()
-	dir.make_dir_recursive(path.get_base_dir())
+	DirAccess.make_dir_recursive_absolute(path.get_base_dir())
 
-	var f = File.new()
-	if f.open(path, File.WRITE) == OK:
-		f.store_string(JSON.print(data, '\t'))
-		f.close()
+	var f = FileAccess.open(path, FileAccess.WRITE)
+	if f.is_open():
+		f.store_string(JSON.stringify(data, '\t'))
 
 func load_json(path, default=null):
 	if !path.begins_with('res://') and !path.begins_with('user://'):
 		path = Diagraph.prefix + path
 	var result = default
-	var f = File.new()
-	if f.file_exists(path):
-		if f.open(path, File.READ) == OK:
-			var text = f.get_as_text()
-			f.close()
-			var parse = JSON.parse(text)
-			if parse.result is Dictionary:
-				result = parse.result
+
+	var f = FileAccess.open(path, FileAccess.READ)
+	if f.is_open():
+		var text = f.get_as_text()
+
+		var parse = JSON.parse_string(text)
+		# var test_json_conv = JSON.new()
+		# test_json_conv.parse(text)
+		# var parse = test_json_conv.get_data()
+		if parse is Dictionary:
+			result = parse
 	return result
 
 # ******************************************************************************
 
 func save_yarn(path, data):
-	if !data:
+	if data == null or data == {}:
 		return
 	if !path.begins_with('res://') and !path.begins_with('user://'):
 		path = Diagraph.prefix + path
 
-	var dir = Directory.new()
-	dir.make_dir_recursive(path.get_base_dir())
+	DirAccess.make_dir_recursive_absolute(path.get_base_dir())
 
 	var out = convert_nodes_to_yarn(data)
 
-	var f = File.new()
-	if f.open(path, File.WRITE) == OK:
+	var f = FileAccess.open(path, FileAccess.WRITE)
+	if f.is_open():
 		f.store_string(out)
-		f.close()
 
 func convert_nodes_to_yarn(data):
 	var out = ''
@@ -230,15 +229,15 @@ func convert_nodes_to_yarn(data):
 		var text = node['text']
 		node.erase('text')
 
-		node.erase('rect_size')
+		node.erase('size')
 		node.erase('offset')
 
 		if 'connections' in node:
-			node.connections = var2str(node.connections).replace('\n', '')
+			node.connections = var_to_str(node.connections).replace('\n', '')
 		if 'choices' in node:
-			node.choices = var2str(node.choices).replace('\n', '')
+			node.choices = var_to_str(node.choices).replace('\n', '')
 		if 'branches' in node:
-			node.branches = var2str(node.branches).replace('\n', '')
+			node.branches = var_to_str(node.branches).replace('\n', '')
 
 		for field in node:
 			out += field + ': ' + str(node[field]) + '\n'
@@ -255,14 +254,12 @@ func convert_nodes_to_yarn(data):
 func load_yarn(path, default=null):
 	var result = default
 
-	var f = File.new()
-	if f.file_exists(path):
-		if f.open(path, File.READ) == OK:
-			var text = f.get_as_text()
-			f.close()
-			parse_yarn(text)
-			if nodes:
-				result = nodes
+	var f = FileAccess.open(path, FileAccess.READ)
+	if f.is_open():
+		var text = f.get_as_text()
+		parse_yarn(text)
+		if nodes:
+			result = nodes
 	return result
 
 var nodes := {}
@@ -337,11 +334,11 @@ func create_node(header, body):
 		node[field] = fields[field]
 
 	if 'connections' in node:
-		node.connections = str2var(node.connections)
+		node.connections = str_to_var(node.connections)
 	if 'choices' in node:
-		node.choices = str2var(node.choices)
+		node.choices = str_to_var(node.choices)
 	if 'branches' in node:
-		node.branches = str2var(node.branches)
+		node.branches = str_to_var(node.branches)
 
 	var _body = body[0]
 	var i = 1

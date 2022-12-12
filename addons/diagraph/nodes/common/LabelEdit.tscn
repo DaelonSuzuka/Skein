@@ -12,10 +12,10 @@
 [sub_resource type="StyleBoxEmpty" id=3]
 
 [node name="LabelEdit" type="Control"]
-margin_right = 126.0
-margin_bottom = 23.0
-rect_min_size = Vector2( 0, 23 )
-rect_scale = Vector2( 0.989204, 1.00646 )
+offset_right = 126.0
+offset_bottom = 23.0
+minimum_size = Vector2( 0, 23 )
+scale = Vector2( 0.989204, 1.00646 )
 mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3

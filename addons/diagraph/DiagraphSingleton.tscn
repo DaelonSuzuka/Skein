@@ -1,30 +1,30 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=8 format=3 uid="uid://dly4drkfxpryc"]
 
-[ext_resource path="res://addons/diagraph/DiagraphSingleton.gd" type="Script" id=1]
-[ext_resource path="res://addons/diagraph/dialog_box/DialogBox.tscn" type="PackedScene" id=2]
-[ext_resource path="res://addons/diagraph/DiagraphCanvas.gd" type="Script" id=3]
-[ext_resource path="res://addons/diagraph/utils/FileUtils.gd" type="Script" id=4]
-[ext_resource path="res://addons/diagraph/utils/Sandbox.gd" type="Script" id=5]
-[ext_resource path="res://addons/diagraph/utils/Watcher.gd" type="Script" id=6]
-[ext_resource path="res://addons/diagraph/utils/Utils.gd" type="Script" id=7]
+[ext_resource type="Script" path="res://addons/diagraph/DiagraphSingleton.gd" id="1_fo8dq"]
+[ext_resource type="Script" path="res://addons/diagraph/DiagraphCanvas.gd" id="2_qtay1"]
+[ext_resource type="Script" path="res://addons/diagraph/utils/Sandbox.gd" id="2_whe0k"]
+[ext_resource type="PackedScene" path="res://addons/diagraph/dialog_box/DialogBox.tscn" id="3_dva1l"]
+[ext_resource type="Script" path="res://addons/diagraph/utils/FileUtils.gd" id="4"]
+[ext_resource type="Script" path="res://addons/diagraph/utils/Watcher.gd" id="6"]
+[ext_resource type="Script" path="res://addons/diagraph/utils/Utils.gd" id="7"]
 
 [node name="Diagraph" type="Node"]
-script = ExtResource( 1 )
+script = ExtResource("1_fo8dq")
 
 [node name="DiagraphCanvas" type="CanvasLayer" parent="."]
-script = ExtResource( 3 )
-
-[node name="DialogBox" parent="DiagraphCanvas" instance=ExtResource( 2 )]
 visible = false
+script = ExtResource("2_qtay1")
+
+[node name="DialogBox" parent="DiagraphCanvas" instance=ExtResource("3_dva1l")]
 
 [node name="Sandbox" type="Node" parent="."]
-script = ExtResource( 5 )
+script = ExtResource("2_whe0k")
 
 [node name="Watcher" type="Node" parent="."]
-script = ExtResource( 6 )
+script = ExtResource("6")
 
 [node name="Utils" type="Node" parent="."]
-script = ExtResource( 7 )
+script = ExtResource("7")
 
 [node name="Files" type="Node" parent="."]
-script = ExtResource( 4 )
+script = ExtResource("4")

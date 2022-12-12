@@ -1,4 +1,4 @@
-tool
+@tool
 extends GraphNode
 
 # ******************************************************************************
@@ -17,41 +17,41 @@ var data := {
 }
 
 var slot_colors := [
-	Color.aqua,
-	Color.orangered,
-	Color.green,
-	Color.yellow,
-	Color.fuchsia,
-	Color.red,
-	Color.teal,
-	Color.lime,
+	Color.AQUA,
+	Color.ORANGE_RED,
+	Color.GREEN,
+	Color.YELLOW,
+	Color.FUCHSIA,
+	Color.RED,
+	Color.TEAL,
+	Color.LIME,
 ]
 
-onready var Edit = $Body/Toolbar/Edit
-onready var CloseButton = $Body/Toolbar/Close
-onready var Toolbar = $Body/Toolbar
-onready var Title = $Body/Toolbar/Title
-onready var Id = $Body/Toolbar/Id
-onready var Parent = get_parent()
+@onready var Edit = $Body/Toolbar/Edit
+@onready var CloseButton = $Body/Toolbar/Close
+@onready var Toolbar = $Body/Toolbar
+@onready var Title = $Body/Toolbar/Title
+@onready var Id = $Body/Toolbar/Id
+@onready var Parent = get_parent()
 
 signal changed
 
 # ******************************************************************************
 
 func _ready() -> void:
-	CloseButton.connect('pressed', self, 'emit_signal', ['close_request'])
-	connect('resize_request', self, 'resize_request')
-	connect('gui_input', self, '_gui_input')
+	CloseButton.connect('pressed', Callable(self,'emit_signal').bind('close_request'))
+	connect('resize_request', Callable(self,'resize_request'))
+	connect('gui_input', Callable(self,'_gui_input'))
 
-	Title.connect('text_changed', self, 'renamed')
+	Title.connect('text_changed', Callable(self,'renamed'))
 
 func resize_request(new_minsize: Vector2) -> void:
 	emit_signal('changed')
 	if get_parent().use_snap:
 		var snap = get_parent().get_snap()
-		rect_size = new_minsize.snapped(Vector2(snap, snap))
+		size = new_minsize.snapped(Vector2(snap, snap))
 	else:
-		rect_size = new_minsize
+		size = new_minsize
 
 # ******************************************************************************
 # Context Menu trigger
@@ -62,13 +62,13 @@ func _gui_input(event: InputEvent) -> void:
 	if !(event is InputEventMouseButton) or !event.pressed:
 		return
 
-	var title_rect = Rect2(Toolbar.rect_global_position, Toolbar.rect_size * Parent.zoom)
+	var title_rect = Rect2(Toolbar.global_position, Toolbar.size * Parent.zoom)
 	if title_rect.has_point(event.global_position):
 		if event.button_index == 2:
 			title_bar_ctx(event.global_position)
 			return
 
-	var body_rect = Rect2(rect_global_position, rect_size * Parent.zoom)
+	var body_rect = Rect2(global_position, size * Parent.zoom)
 	if body_rect.has_point(event.global_position):
 		if event.button_index == 2:
 			body_ctx(event.global_position)
@@ -99,7 +99,7 @@ func title_bar_ctx(pos: Vector2) -> void:
 	Parent.ctx = ContextMenu.new(self, '_title_bar_ctx_selection')
 	Parent.ctx.add_check_item('Default')
 	Parent.ctx.set_item_checked(0, bool(data.default))
-	Parent.ctx.add_item('Copy Path')
+	Parent.ctx.add_item('Copy Path3D')
 	Parent.ctx.add_item('Copy Name')
 	Parent.ctx.add_item('Copy ID')
 	for item in self.get_title_bar_ctx_items():
@@ -115,7 +115,7 @@ func _title_bar_ctx_selection(selection: String):
 				for node in Parent.nodes.values():
 					node.data.default = false
 				data.default = true
-		'Copy Path':
+		'Copy Path3D':
 			var path = '%s:%s' % [Parent.owner.current_conversation, data.name]
 			OS.clipboard = path
 		'Copy Name':
@@ -160,7 +160,7 @@ func renamed(new_name):
 
 func get_data() -> Dictionary:
 	var _data = data.duplicate(true)
-	_data.position = var2str(Rect2(offset.round(), rect_size.round()))
+	_data.position = var_to_str(Rect2(position_offset.round(), size.round()))
 	_data.name = Title.text
 	if _data.next == 'none':
 		_data.erase('next')
@@ -179,7 +179,7 @@ func set_data(new_data: Dictionary) -> GraphNode:
 	if 'default' in new_data:
 		var state = new_data['default']
 		if state is String:
-			state = {'True': true, 'False': false}[state]
+			state = {'true': true, 'false': false}[state.to_lower()]
 		data.default = state
 	if 'next' in new_data:
 		data.next = new_data.next
@@ -189,12 +189,12 @@ func set_data(new_data: Dictionary) -> GraphNode:
 		data.name = new_data.name
 		rename(new_data.name)
 	if 'position' in new_data:
-		var rect = str2var(new_data.position)
-		offset = rect.position.round()
-		rect_size = rect.size.round()
+		var rect = str_to_var(new_data.position)
+		position_offset = rect.position.round()
+		size = rect.size.round()
 	else:
-		if 'offset' in new_data:
-			offset = str2var(new_data.offset)
-		if 'rect_size' in new_data:
-			rect_size = str2var(new_data.rect_size)
+		if 'position_offset' in new_data:
+			position_offset = str_to_var(new_data.position_offset)
+		if 'size' in new_data:
+			size = str_to_var(new_data.size)
 	return self

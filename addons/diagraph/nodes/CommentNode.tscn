@@ -7,17 +7,17 @@
 
 [sub_resource type="StyleBoxFlat" id=7]
 
-[sub_resource type="DynamicFontData" id=8]
+[sub_resource type="FontFile" id=8]
 font_path = "res://addons/diagraph/resources/fonts/NotoSans-Regular.ttf"
 
-[sub_resource type="DynamicFont" id=12]
+[sub_resource type="FontFile" id=12]
 resource_local_to_scene = true
 font_data = SubResource( 8 )
 
 [sub_resource type="Theme" id=4]
 default_font = SubResource( 12 )
 GraphNode/styles/comment = SubResource( 6 )
-GraphNode/styles/commentfocus = SubResource( 7 )
+GraphNode/styles/comment_focus = SubResource( 7 )
 
 [sub_resource type="StyleBoxFlat" id=5]
 bg_color = Color( 0, 0, 0, 0.301961 )
@@ -36,36 +36,36 @@ comment = true
 script = ExtResource( 2 )
 
 [node name="Id" parent="Body/Toolbar" index="0"]
-margin_top = 4.0
-margin_bottom = 21.0
+offset_top = 4.0
+offset_bottom = 21.0
 
 [node name="Title" parent="Body/Toolbar" index="1"]
-margin_right = 125.0
-margin_bottom = 25.0
+offset_right = 125.0
+offset_bottom = 25.0
 text = "Comment"
 
 [node name="ColorPickerButton" type="ColorPickerButton" parent="Body/Toolbar" index="2"]
-margin_left = 132.0
-margin_right = 167.0
-margin_bottom = 25.0
-rect_min_size = Vector2( 35, 0 )
+offset_left = 132.0
+offset_right = 167.0
+offset_bottom = 25.0
+minimum_size = Vector2( 35, 0 )
 flat = true
 color = Color( 1, 1, 1, 1 )
 edit_alpha = false
 
 [node name="Edit" parent="Body/Toolbar" index="3"]
 visible = false
-margin_bottom = 25.0
+offset_bottom = 25.0
 
 [node name="Close" parent="Body/Toolbar" index="4"]
-margin_bottom = 25.0
+offset_bottom = 25.0
 
 [node name="Tooltip" type="Label" parent="Body" index="1"]
 visible = false
-margin_left = -11.0
-margin_top = -58.0
-margin_right = 76.0
-margin_bottom = -27.0
+offset_left = -11.0
+offset_top = -58.0
+offset_right = 76.0
+offset_bottom = -27.0
 grow_vertical = 0
 theme = SubResource( 4 )
 text = "Comment"

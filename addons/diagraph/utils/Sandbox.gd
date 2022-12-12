@@ -1,4 +1,4 @@
-tool
+@tool
 extends Node
 
 # ******************************************************************************
@@ -91,7 +91,7 @@ func evaluate(input: String, context_object=null):
 	var expression = Expression.new()
 	var result = null
 
-	var error = expression.parse(input, PoolStringArray(_locals.keys()))
+	var error = expression.parse(input, PackedStringArray(_locals.keys()))
 	if error == OK:
 		result = expression.execute(_locals.values(), context_object)
 		if expression.has_execute_failed():

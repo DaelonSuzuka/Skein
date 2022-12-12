@@ -1,4 +1,4 @@
-tool
+@tool
 extends EditorPlugin
 
 # ******************************************************************************
@@ -18,14 +18,14 @@ var editors = {
 	bottom = null,
 }
 
-var enabled := true
+var enabled := false
 
 # ******************************************************************************
 
 func enable_plugin():
 	add_autoload_singleton('Diagraph', singleton_path)
 
-func disable_plugin():
+func _disable_plugin():
 	remove_autoload_singleton('Diagraph')
 
 func _enter_tree():
@@ -54,13 +54,13 @@ func _enter_tree():
 		inspector_instance.plugin = self
 		add_inspector_plugin(inspector_instance)
 
-		editors.top = load(editor_class).instance()
+		editors.top = load(editor_class).instantiate()
 		editors.top.plugin = self
 		editors.top.position = 'top'
 		editors.top.visible = false
-		get_editor_interface().get_editor_viewport().add_child(editors.top)
+		get_editor_interface().get_editor_main_screen().add_child(editors.top)
 
-		editors.bottom = load(editor_class).instance()
+		editors.bottom = load(editor_class).instantiate()
 		editors.bottom.plugin = self
 		editors.bottom.position = 'bottom'
 		add_control_to_bottom_panel(editors.bottom, 'Diagraph')
@@ -97,31 +97,31 @@ func show_conversation(conversation):
 func set_preferred_editor(editor):
 	set_setting('preferred_editor', editor)
 
-func get_plugin_icon():
+func _get_plugin_icon():
 	return load('res://addons/diagraph/resources/diagraph_icon.png')
 
-func get_plugin_name():
+func _get_plugin_name():
 	return 'Diagraph'
 
-func has_main_screen():
+func _has_main_screen():
 	return enabled
 
-func make_visible(state):
+func _make_visible(state):
 	if enabled:
 		editors.top.visible = state
 
-func apply_changes():
+func _apply_changes():
 	if enabled:
 		editors.top.save_conversation()
 		editors.top.save_editor_data()
 		editors.bottom.save_conversation()
 		editors.bottom.save_editor_data()
 
-func save_external_data():
+func _save_external_data():
 	if is_instance_valid(editors.bottom):
-		apply_changes()
+		_apply_changes()
 	if is_instance_valid(editors.top):
-		apply_changes()
+		_apply_changes()
 
 # ******************************************************************************
 
@@ -156,15 +156,15 @@ func check_for_updates():
 	progress_bar = vbox.add(ProgressBar.new())
 
 	# progress_bar.visible = false
-	update_dialog.get_ok().disabled = true
+	update_dialog.get_ok_button().disabled = true
 	update_dialog.window_title = 'Diagraph Self-Update'
 
-	get_editor_interface().get_editor_viewport().add_child(update_dialog)
+	get_editor_interface().get_editor_main_screen().add_child(update_dialog)
 	update_dialog.popup_centered(Vector2(400, 250))
 
 	updater = preload('utils/Updater.gd').new()
-	updater.connect('download_complete', self, 'download_complete', [], CONNECT_ONESHOT)
-	updater.connect('update_complete', self, 'update_complete', [], CONNECT_ONESHOT)
+	updater.connect('download_complete', Callable(self,'download_complete').bind(),CONNECT_ONE_SHOT)
+	updater.connect('update_complete', Callable(self,'update_complete').bind(),CONNECT_ONE_SHOT)
 	add_child(updater)
 	updater.get_file_list(status_label, progress_bar)
 
@@ -173,7 +173,7 @@ func download_complete():
 
 func update_complete():
 	status_label.text = 'Update complete'
-	update_dialog.get_ok().disabled = false
+	update_dialog.get_ok_button().disabled = false
 
 # ******************************************************************************
 

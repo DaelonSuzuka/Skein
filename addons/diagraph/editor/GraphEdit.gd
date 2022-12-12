@@ -1,11 +1,11 @@
-tool
+@tool
 extends GraphEdit
 
 # ******************************************************************************
 
-onready var ContextMenu = preload('res://addons/diagraph/utils/ContextMenu.gd')
+@onready var ContextMenu = preload('res://addons/diagraph/utils/ContextMenu.gd')
 
-onready var node_types = {
+@onready var node_types = {
 	'entry': load('res://addons/diagraph/nodes/EntryNode.tscn'),
 	'exit': load('res://addons/diagraph/nodes/ExitNode.tscn'),
 	# 'base': load('res://addons/diagraph/nodes/DialogNode.tscn'),
@@ -37,17 +37,17 @@ signal node_changed
 # ******************************************************************************
 
 func _ready() -> void:
-	connect('connection_request', self, 'request_connection')
-	connect('disconnection_request', self, 'request_disconnection')
-	# connect('connection_from_empty', self, 'on_connection_from_empty')
-	# connect('connection_to_empty', self, 'on_connection_to_empty')
-	connect('duplicate_nodes_request', self, 'duplicate_nodes_request')
-	connect('copy_nodes_request', self, 'copy_nodes_request')
-	connect('delete_nodes_request', self, 'delete_nodes_request')
-	connect('paste_nodes_request', self, 'paste_nodes_request')
-	connect('popup_request', self, 'on_popup_request')
+	connection_request.connect(self.request_connection)
+	disconnection_request.connect(self.request_disconnection)
+	# connection_from_empty.connect(self.on_connection_from_empty)
+	# connection_to_empty.connect(self.on_connection_to_empty)
+	duplicate_nodes_request.connect(self._duplicate_nodes_request)
+	copy_nodes_request.connect(self._copy_nodes_request)
+	delete_nodes_request.connect(self._delete_nodes_request)
+	paste_nodes_request.connect(self._paste_nodes_request)
+	popup_request.connect(self.on_popup_request)
 
-	connect('_end_node_move', self, 'contents_changed')
+	end_node_move.connect(self.contents_changed)
 
 func contents_changed():
 	if notify_changes:
@@ -76,8 +76,8 @@ func new_node_requested(type: String) -> void:
 	var data = {type = type.to_lower(), offset = ctx_position}
 	if use_snap:
 		var snap = snap_distance
-		data.offset = data.offset.snapped(Vector2(snap, snap))
-	data.offset = var2str(data.offset)
+		data.position_offset = data.position_offset.snapped(Vector2(snap, snap))
+	data.position_offset = var_to_str(data.position_offset)
 	create_node(data)
 
 # ******************************************************************************
@@ -105,9 +105,9 @@ func get_id() -> int:
 func create_node(data=null) -> Node:
 	var node
 	if data:
-		node = node_types[data.type].instance()
+		node = node_types[data.type].instantiate()
 	else:
-		node = node_types['dialog'].instance()
+		node = node_types['dialog'].instantiate()
 		node.set_id(get_id())
 	add_child(node)
 	if data:
@@ -120,8 +120,8 @@ func create_node(data=null) -> Node:
 	emit_signal('node_created', node)
 	contents_changed()
 
-	node.connect('close_request', self, 'delete_node', [node])
-	node.connect('changed', self, 'contents_changed')
+	node.connect('close_request', Callable(self,'delete_node').bind(node))
+	node.connect('changed', Callable(self,'contents_changed'))
 
 	return node
 
@@ -157,7 +157,7 @@ func request_connection(from, from_slot, to, to_slot) -> bool:
 		if con['from'] == from:
 			if con['from_port'] == from_slot:
 				return false
-	if !has_node(from):
+	if !has_node(str(from)):
 		return false
 	if !(from in nodes):
 		return false
@@ -173,21 +173,21 @@ func request_disconnection(from, from_slot, to, to_slot) -> void:
 	nodes[from].data.connections.erase(to)
 
 func on_connection_from_empty(to, to_slot, release_position) -> void:
-	var data = {type = 'dialog', offset = get_offset_from_mouse()}
+	var data = {type = 'dialog', position_offset = get_offset_from_mouse()}
 	if use_snap:
 		var snap = snap_distance
-		data.offset = data.offset.snapped(Vector2(snap, snap))
-	data.offset = var2str(data.offset)
+		data.position_offset = data.position_offset.snapped(Vector2(snap, snap))
+	data.position_offset = var_to_str(data.position_offset)
 	var node = create_node(data)
 
 	request_connection(node.name, 0, to, to_slot)
 
 func on_connection_to_empty(from, from_slot, release_position) -> void:
-	var data = {type = 'dialog', offset = get_offset_from_mouse()}
+	var data = {type = 'dialog', position_offset = get_offset_from_mouse()}
 	if use_snap:
 		var snap = snap_distance
-		data.offset = data.offset.snapped(Vector2(snap, snap))
-	data.offset = var2str(data.offset)
+		data.position_offset = data.position_offset.snapped(Vector2(snap, snap))
+	data.position_offset = var_to_str(data.position_offset)
 	var node = create_node(data)
 
 	if !request_connection(from, from_slot, node.name, 0):
@@ -195,7 +195,7 @@ func on_connection_to_empty(from, from_slot, release_position) -> void:
 
 # ******************************************************************************
 
-func delete_nodes_request(_arg) -> void:
+func _delete_nodes_request(_arg) -> void:
 	for node in get_selected_nodes():
 		delete_node(node)
 
@@ -203,16 +203,16 @@ func delete_nodes_request(_arg) -> void:
 
 var copy_data = []
 
-func duplicate_nodes_request() -> void:
-	copy_nodes_request()
-	paste_nodes_request()
+func _duplicate_nodes_request() -> void:
+	_copy_nodes_request()
+	_paste_nodes_request()
 
-func copy_nodes_request() -> void:
+func _copy_nodes_request() -> void:
 	copy_data.clear()
 	for node in get_selected_nodes():
 		copy_data.append(node.get_data())
 
-func paste_nodes_request() -> void:
+func _paste_nodes_request() -> void:
 	for node in get_selected_nodes():
 		node.selected = false
 
@@ -223,12 +223,12 @@ func paste_nodes_request() -> void:
 			data.erase('id')
 		var node = create_node(data)
 		new_nodes.append(node)
-		center += node.offset
+		center += node.position_offset
 	center /= new_nodes.size()
 
 	var destination = get_offset_from_mouse()
 	for node in new_nodes:
-		node.offset += destination - center
+		node.position_offset += destination - center
 		node.selected = true
 
 	contents_changed()
@@ -264,10 +264,10 @@ func get_node_by_name(name):
 func focus_node(name) -> void:
 	var node = get_node(name)
 	if node:
-		var node_center = (node.offset + (node.rect_size / 2)) * zoom
-		scroll_offset = node_center - (rect_size / 2)
+		var node_center = (node.position_offset + (node.size / 2)) * zoom
+		scroll_offset = node_center - (size / 2)
 
-		while (node.rect_size.y) * zoom > (rect_size.y * 0.9):
+		while (node.size.y) * zoom > (size.y * 0.9):
 			zoom -= zoom_step
 
 		if zoom < 1.0:
@@ -280,9 +280,9 @@ func focus_node(name) -> void:
 # 	if selected_nodes:
 # 		var center = Vector2()
 # 		for node in selected_nodes:
-# 			center += (node.offset + (node.rect_size / 2)) * zoom
+# 			center += (node.position_offset + (node.size / 2)) * zoom
 
-# 		scroll_offset = center - (rect_size / 2)
+# 		scroll_offset = center - (size / 2)
 
 # ------------------------------------------------------------------------------
 
@@ -305,7 +305,7 @@ func set_nodes(data: Dictionary) -> void:
 	for node_data in data.values():
 		create_node(node_data)
 	for node in nodes.values():
-		node.update()
+		node.queue_redraw()
 		for to in node.data.connections:
 			var con = node.data.connections[to]
 			request_connection(node.name, con[0], to, con[1])
@@ -321,26 +321,26 @@ func get_nodes() -> Dictionary:
 # ******************************************************************************
 
 func set_data(data: Dictionary) -> void:
-	scroll_offset = str2var(data.get('scroll_offset', 'Vector2( 0, 0 )'))
+	scroll_offset = str_to_var(data.get('scroll_offset', 'Vector2( 0, 0 )'))
 	zoom = data.get('zoom', 1)
 	
 	minimap_enabled = data.get('minimap_enabled', true)
 	minimap_opacity = data.get('minimap_opacity', 0.65)
-	minimap_size = str2var(data.get('minimap_size', 'Vector2( 240, 160 )'))
+	minimap_size = str_to_var(data.get('minimap_size', 'Vector2( 240, 160 )'))
 
 	if 'snap' in data:
-		use_snap = data.snap.on
+		use_snap = data.snap.checked
 		snap_distance = data.snap.step
 
 func get_data() -> Dictionary:
 	var data = {
-		scroll_offset = var2str(scroll_offset),
+		scroll_offset = var_to_str(scroll_offset),
 		zoom = zoom,
 		minimap_enabled = minimap_enabled,
 		minimap_opacity = minimap_opacity,
-		minimap_size = var2str(minimap_size),
+		minimap_size = var_to_str(minimap_size),
 		snap={
-			on = use_snap,
+			checked = use_snap,
 			step = snap_distance,
 		},
 	}

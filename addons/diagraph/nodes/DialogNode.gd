@@ -1,12 +1,12 @@
-tool
+@tool
 extends 'BaseNode.gd'
 
 # ******************************************************************************
 
-onready var TextEdit = find_node('TextEdit')
+@onready var text_edit = find_child('TextEdit')
 var scrollbar = null
 
-onready var choices = [
+@onready var choices = [
 	$Choice1,
 	$Choice2,
 	$Choice3,
@@ -16,7 +16,7 @@ onready var choices = [
 # ******************************************************************************
 
 func _ready():
-	Edit.get_popup().connect('index_pressed', self, 'index_pressed')
+	Edit.get_popup().connect('index_pressed', Callable(self,'index_pressed'))
 
 	data['show_choices'] = false
 	set_choices_enabled(false)
@@ -24,16 +24,16 @@ func _ready():
 
 	data['choices'] = {}
 	for c in choices:
-		data['choices'][c.name[6]] = {}
+		data['choices'][str(c.name)[6]] = {}
 
-	TextEdit.refresh_colors()
-	Diagraph.connect('refreshed', TextEdit, 'refresh_colors')
-	TextEdit.connect('text_changed', self, 'on_change')
+	#text_edit.refresh_colors()
+	Diagraph.connect('refreshed', Callable(text_edit,'refresh_colors'))
+	#text_edit.connect('text_changed', Callable(self,'on_change'))
 	for c in choices:
-		c.Choice.connect('text_changed', self, 'on_change')
-		c.Condition.connect('text_changed', self, 'on_change')
+		c.choice.connect('text_changed', Callable(self,'on_change'))
+		c.condition.connect('text_changed', Callable(self,'on_change'))
 
-	for child in TextEdit.get_children():
+	for child in text_edit.get_children():
 		if child is VScrollBar:
 			scrollbar = child
 
@@ -48,12 +48,12 @@ func _input(event: InputEvent) -> void:
 	if !(event is InputEventMouseMotion):
 		return
 
-	if !scrollbar.visible:
-		return
+	# if !scrollbar.visible:
+	# 	return
 
 	var local_event = make_input_local(event)
 
-	if Rect2(Vector2(), rect_size).has_point(local_event.position):
+	if Rect2(Vector2(), size).has_point(local_event.position):
 		if !has_mouse:
 			has_mouse = true
 			get_parent().zoom_step = 1.0
@@ -75,19 +75,19 @@ func index_pressed(index):
 			emit_signal('changed')
 
 func highlight_line(line_number):
-	TextEdit.highlight_current_line = true
-	TextEdit.cursor_set_line(line_number)
+	text_edit.highlight_current_line = true
+	text_edit.set_caret_line(line_number)
 
 func unhighlight_lines():
-	TextEdit.highlight_current_line = false
-	TextEdit.deselect()
+	text_edit.highlight_current_line = false
+	text_edit.deselect()
 
 
 # ******************************************************************************
 
 func get_data():
-	var data = .get_data()
-	data['text'] = TextEdit.text
+	var data = super.get_data()
+	data['text'] = text_edit.text
 	if data['show_choices']:
 		data['next'] = 'choice'
 	else:
@@ -98,38 +98,38 @@ func get_data():
 		var num = str(data.connections[to][0] + 1)
 		connections[num] = to
 	
-	if !data.connections:
+	if data.connections == {}:
 		data.erase('connections')
 
 	data['choices'] = {}
 	for c in choices:
 		var c_data = c.get_data()
 		if c_data:
-			data['choices'][c.name[6]] = c_data
-			data['choices'][c.name[6]]['next'] = ''
-			if c.name[6] in connections:
-				data['choices'][c.name[6]]['next'] = connections[c.name[6]]
-	if !data['choices']:
+			data['choices'][str(c.name)[6]] = c_data
+			data['choices'][str(c.name)[6]]['next'] = ''
+			if str(c.name)[6] in connections:
+				data['choices'][str(c.name)[6]]['next'] = connections[str(c.name)[6]]
+	if data['choices'] == {}:
 		data.erase('choices')
 
 	return data
 
 func set_data(new_data):
 	if 'text' in new_data:
-		TextEdit.text = new_data.text
+		text_edit.text = new_data.text
 	if 'show_choices' in new_data:
 		var state = new_data['show_choices']
 		if state is String:
-			state = {'True': true, 'False': false}[state]
+			state = {'true': true, 'false': false}[state.to_lower()]
 		data['show_choices'] = state
 		set_choices_enabled(state)
 		Edit.get_popup().set_item_checked(0, state)
 	if 'choices' in new_data:
 		for c in choices:
-			if c.name[6] in new_data['choices']:
-				c.set_data(new_data['choices'][c.name[6]])
+			if str(c.name)[6] in new_data['choices']:
+				c.set_data(new_data['choices'][str(c.name)[6]])
 
-	.set_data(new_data)
+	super.set_data(new_data)
 
 # ******************************************************************************
 

@@ -1,4 +1,4 @@
-tool
+@tool
 extends Node
 
 # ******************************************************************************
@@ -20,7 +20,7 @@ func send_request(request, callback, args=[]):
 	if !(args is Array):
 		args = [args]
 
-	http_request.connect("request_completed", self, callback, args)
+	http_request.connect("request_completed", Callable(self,callback).bind(args))
 	http_request.request(request)
 
 var file_list = []
@@ -59,7 +59,9 @@ func get_file_list(label, progress):
 	status_label.text = 'Downloading file list...'
 
 func recieve_file_list(result, response_code, headers, body):
-	var parse = JSON.parse(body.get_string_from_ascii())
+	var test_json_conv = JSON.new()
+	test_json_conv.parse(body.get_string_from_ascii())
+	var parse = test_json_conv.get_data()
 	if parse.result is Array:
 		file_list = parse.result
 
@@ -74,32 +76,31 @@ func recieve_file(result, response_code, headers, body, path):
 # ******************************************************************************
 
 func unzip_and_apply_update():
-	var existing_files = Diagraph.files.get_all_files('res://addons/diagraph')
-	var checked_files = []
+	# var existing_files = Diagraph.files.get_all_files('res://addons/diagraph')
+	# var checked_files = []
 
-	for f in file_data:
-		checked_files.append(f)
+	# for f in file_data:
+	# 	checked_files.append(f)
 
-		var file = File.new()
-		if file.file_exists(f):
-			if file.open(f, File.READ) == OK:
-				var new = file_data[f]
-				var existing = file.get_buffer(file.get_len())
+	# 	var file = FileAccess.open(path, FileAccess.READ)
+	# 	if file.is_open():
+	# 		var new = file_data[f]
+	# 		var existing = file.get_buffer(file.get_length())
 
-				if new == existing:
-					continue
+	# 		if new == existing:
+	# 			continue
 
-				if file.open(f, File.WRITE) == OK:
-					file.store_buffer(file_data[f])
-		else:
-			if file.open(f, File.WRITE) == OK:
-				file.store_buffer(file_data[f])
+	# 		if file.open(f, File.WRITE) == OK:
+	# 			file.store_buffer(file_data[f])
+	# 	else:
+	# 		if file.open(f, File.WRITE) == OK:
+	# 			file.store_buffer(file_data[f])
 
-		file.close()
+	# 	file.close()
 
-	var dir = Directory.new()
-	for f in existing_files:
-		if not(f in checked_files):
-			dir.remove(f)
+	# var dir := DirAccess.open('res://addons/diagraph')
+	# for f in existing_files:
+	# 	if not(f in checked_files):
+	# 		dir.remove_at(f)
 
 	emit_signal('update_complete')

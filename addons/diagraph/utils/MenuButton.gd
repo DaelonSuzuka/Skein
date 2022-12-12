@@ -1,9 +1,9 @@
-tool
+@tool
 extends MenuButton
 
 # ******************************************************************************
 
-onready var popup: PopupMenu = get_popup()
+@onready var popup: PopupMenu = get_popup()
 var callbacks := {}
 
 signal item_selected(item)
@@ -14,12 +14,12 @@ func _ready() -> void:
 	popup.clear()
 	for child in popup.get_children():
 		child.queue_free()
-	popup.connect('index_pressed', self, '_on_index_pressed')
+	popup.connect('index_pressed', Callable(self,'_on_index_pressed'))
 
 func create_submenu(label: String, submenu_name: String) -> PopupMenu:
 	var submenu: PopupMenu = PopupMenu.new()
 	submenu.name = submenu_name
-	submenu.connect('index_pressed', self, '_on_index_pressed', [submenu_name])
+	submenu.connect('index_pressed', Callable(self,'_on_index_pressed').bind(submenu_name))
 	popup.add_child(submenu)
 	popup.add_submenu_item(label, submenu_name)
 	return submenu

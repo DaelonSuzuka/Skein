@@ -1,31 +1,31 @@
-tool
+@tool
 extends Control
 
 # ******************************************************************************
 
-onready var GraphEdit: GraphEdit = find_node('GraphEdit')
-onready var Tree: Tree = find_node('Tree')
-onready var ConfirmClear: ConfirmationDialog = find_node('ConfirmClear')
-onready var ConfirmDelete: ConfirmationDialog = find_node('ConfirmDelete')
-onready var Run = find_node('Run')
-# onready var Play = find_node('Play')
-onready var ConfirmationDimmer = find_node('ConfirmationDimmer')
-onready var Refresh = find_node('Refresh')
-onready var Stop = find_node('Stop')
-onready var Next = find_node('Next')
-onready var Debug = find_node('Debug')
-onready var Preview = find_node('Preview')
-onready var GraphToolbar = find_node('GraphToolbar')
-onready var DialogBox = find_node('DialogBox')
-onready var ToggleRightPanel = find_node('ToggleRightPanel')
-onready var ToggleLeftPanel = find_node('ToggleLeftPanel')
-onready var LeftPanelSplit: HSplitContainer = find_node('LeftPanelSplit')
-onready var RightPanelSplit: HSplitContainer = find_node('RightPanelSplit')
-onready var LeftSidebar: Control = find_node('LeftSidebar')
-onready var RightSidebar: Control = find_node('RightSidebar')
-onready var SettingsMenu: MenuButton = find_node('SettingsMenu')
+@onready var graphedit: GraphEdit = find_child('GraphEdit')
+@onready var tree: Tree = find_child('Tree')
+@onready var ConfirmClear: ConfirmationDialog = find_child('ConfirmClear')
+@onready var ConfirmDelete: ConfirmationDialog = find_child('ConfirmDelete')
+@onready var Run = find_child('Run')
+# onready var Play = find_child('Play')
+@onready var ConfirmationDimmer = find_child('ConfirmationDimmer')
+@onready var Refresh = find_child('Refresh')
+@onready var Stop = find_child('Stop')
+@onready var Next = find_child('Next')
+@onready var Debug = find_child('Debug')
+@onready var Preview = find_child('Preview')
+@onready var GraphToolbar = find_child('GraphToolbar')
+@onready var DialogBox = find_child('DialogBox')
+@onready var ToggleRightPanel = find_child('ToggleRightPanel')
+@onready var ToggleLeftPanel = find_child('ToggleLeftPanel')
+@onready var LeftPanelSplit: HSplitContainer = find_child('LeftPanelSplit')
+@onready var RightPanelSplit: HSplitContainer = find_child('RightPanelSplit')
+@onready var LeftSidebar: Control = find_child('LeftSidebar')
+@onready var RightSidebar: Control = find_child('RightSidebar')
+@onready var SettingsMenu: MenuButton = find_child('SettingsMenu')
 
-export var position := 'default'
+@export var location := 'default'
 
 var plugin = null
 var current_conversation := ''
@@ -35,65 +35,64 @@ var ignore_next_refresh := false
 # ******************************************************************************
 
 func _ready():
-	if Engine.editor_hint and !plugin:
+	if Engine.is_editor_hint() and !plugin:
 		return
 
-	Run.connect('pressed', self, 'run')
-	# Play.connect('pressed', self, 'run')
-	Stop.connect('pressed', self, 'stop')
-	Next.connect('pressed', self, 'next')
-	Debug.connect('toggled', $Preview/DialogBox/DebugLog, 'set_visible')
+	Run.pressed.connect(self.run)
+	Stop.pressed.connect(self.stop)
+	Next.pressed.connect(self.next)
+	Debug.toggled.connect($Preview/DialogBox/DebugLog.set_visible)
 
 	Preview.hide()
-	ConfirmDelete.connect('popup_hide', Diagraph, 'refresh')
-	ConfirmDelete.connect('popup_hide', ConfirmationDimmer, 'hide')
-	ConfirmDelete.connect('confirmed', self, 'really_delete_conversation')
+	# ConfirmDelete.popup_hide.connect(Diagraph.refresh)
+	# ConfirmDelete.popup_hide.connect(ConfirmationDimmer.hide)
+	ConfirmDelete.confirmed.connect(self.really_delete_conversation)
 
-	Refresh.connect('pressed', Diagraph, 'refresh')
+	Refresh.pressed.connect(Diagraph.refresh)
 
-	Diagraph.connect('refreshed', Tree, 'refresh')
-	Tree.connect('folder_collapsed', self, 'save_editor_data')
-	Tree.connect('create_folder', self, 'create_folder')
-	Tree.connect('delete_folder', self, 'delete_folder')
-	Tree.connect('rename_folder', self, 'rename_folder')
-	Tree.connect('change_conversation', self, 'change_conversation')
-	Tree.connect('create_conversation', self, 'create_conversation')
-	Tree.connect('delete_conversation', self, 'delete_conversation')
-	Tree.connect('rename_conversation', self, 'rename_conversation')
-	Tree.connect('select_node', GraphEdit, 'select_node')
-	Tree.connect('focus_node', self, 'focus_card')
-	Tree.connect('rename_node', GraphEdit, 'rename_node')
-	Tree.connect('delete_node', GraphEdit, 'delete_node')
-	Tree.connect('run_node', self, 'run')
+	Diagraph.refreshed.connect(tree.refresh)
+	tree.folder_collapsed.connect(self.save_editor_data)
+	tree.create_folder.connect(self.create_folder)
+	tree.delete_folder.connect(self.delete_folder)
+	tree.rename_folder.connect(self.rename_folder)
+	tree.change_conversation.connect(self.change_conversation)
+	tree.create_conversation.connect(self.create_conversation)
+	tree.delete_conversation.connect(self.delete_conversation)
+	tree.rename_conversation.connect(self.rename_conversation)
+	tree.select_node.connect(graphedit.select_node)
+	tree.focus_node.connect(self.focus_card)
+	tree.rename_node.connect(graphedit.rename_node)
+	tree.delete_node.connect(graphedit.delete_node)
+	tree.run_node.connect(self.run)
 
-	ToggleLeftPanel.connect('pressed', self, 'toggle_left_panel')
-	ToggleRightPanel.connect('pressed', self, 'toggle_right_panel')
+	ToggleLeftPanel.pressed.connect(self.toggle_left_panel)
+	ToggleRightPanel.pressed.connect(self.toggle_right_panel)
 
 	# right sidebar should be closed by default
 	RightSidebar.hide()
 
-	GraphEdit.connect('node_renamed', self, 'node_renamed')
-	GraphEdit.connect('node_created', self, 'node_created')
-	GraphEdit.connect('node_deleted', self, 'node_deleted')
-	GraphEdit.connect('node_selected', self, 'node_selected')
+	graphedit.node_renamed.connect(self.node_renamed)
+	graphedit.node_created.connect(self.node_created)
+	graphedit.node_deleted.connect(self.node_deleted)
+	graphedit.node_selected.connect(self.node_selected)
 
-	GraphEdit.connect('node_changed', self, 'node_changed')
+	graphedit.node_changed.connect(self.node_changed)
 
 	if plugin:
-		SettingsMenu.add_item('Set as Preferred Editor', [plugin, 'set_preferred_editor', position])
+		SettingsMenu.add_item('Set as Preferred Editor', [plugin, 'set_preferred_editor', location])
 	var sub = SettingsMenu.create_submenu('Set Font Size', 'FontSize')
 	sub.hide_on_item_selection = false
 	SettingsMenu.add_submenu_item('Font Size Reset', 'FontSize', [self, 'reset_font_size'])
 	SettingsMenu.add_submenu_item('Font Size +', 'FontSize', [self, 'set_font_size', 1])
 	SettingsMenu.add_submenu_item('Font Size -', 'FontSize', [self, 'set_font_size', -1])
 
-	Diagraph.connect('refreshed', self, 'refresh')
+	Diagraph.connect('refreshed', Callable(self,'refresh'))
 	
-	DialogBox.connect('done', self, 'dismiss_preview')
-	DialogBox.connect('line_started', self, 'line_started')
-	DialogBox.connect('node_started', self, 'node_started')
+	DialogBox.done.connect(self.dismiss_preview)
+	DialogBox.line_started.connect(self.line_started)
+	DialogBox.node_started.connect(self.node_started)
 
-	$AutoSave.connect('timeout', self, 'autosave')
+	$AutoSave.timeout.connect(self.autosave)
 
 func refresh():
 	if ignore_next_refresh:
@@ -101,8 +100,8 @@ func refresh():
 		return
 
 	load_editor_data()
-	var zoom_hbox = GraphEdit.get_zoom_hbox()
-	var zoom_container = GraphToolbar.find_node('ZoomContainer')
+	var zoom_hbox = graphedit.get_zoom_hbox()
+	var zoom_container = GraphToolbar.find_child('ZoomContainer')
 	zoom_hbox.get_parent().remove_child(zoom_hbox)
 	zoom_container.add_child(zoom_hbox)
 
@@ -142,9 +141,9 @@ func dialog_font_plus():
 # ******************************************************************************
 
 func save_conversation():
-	if !current_conversation:
+	if current_conversation == '':
 		return
-	var nodes = GraphEdit.get_nodes()
+	var nodes = graphedit.get_nodes()
 	if nodes:
 		Diagraph.save_conversation(current_conversation, nodes)
 
@@ -156,7 +155,7 @@ func change_conversation(path):
 	var _path = path.trim_prefix(Diagraph.conversation_prefix)
 	var parts = _path.split(':')
 	if len(parts) > 1:
-		GraphEdit.focus_node(parts[1])
+		graphedit.focus_node(parts[1])
 
 func load_conversation(path, force:=false):
 	var _path = path.trim_prefix(Diagraph.conversation_prefix)
@@ -165,50 +164,46 @@ func load_conversation(path, force:=false):
 
 	if !force and current_conversation == name:
 		return
-	GraphEdit.clear()
+	graphedit.clear()
 	current_conversation = name
 
 	var nodes = Diagraph.load_conversation(name, {})
 	if nodes:
-		GraphEdit.set_nodes(nodes)
+		graphedit.set_nodes(nodes)
 	if name in editor_data:
-		GraphEdit.call_deferred('set_data', editor_data[name])
+		graphedit.call_deferred('set_data', editor_data[name])
 	else:
 		editor_data[name] = {}
 
 # ******************************************************************************
 
 func create_folder(path):
-	var dir := Directory.new()
-	dir.make_dir_recursive(path)
+	DirAccess.make_dir_recursive_absolute(Diagraph.ensure_prefix(path))
 
 func delete_folder(path):
-	var dir := Directory.new()
-	dir.remove(Diagraph.ensure_prefix(path))
+	DirAccess.remove_absolute(Diagraph.ensure_prefix(path))
 	Diagraph.refresh()
 
 func rename_folder(old, new):
-	var dir := Directory.new()
-	dir.rename(Diagraph.ensure_prefix(old), Diagraph.ensure_prefix(new))
+	DirAccess.rename_absolute(Diagraph.ensure_prefix(old), Diagraph.ensure_prefix(new))
 	Diagraph.refresh()
 
 # ------------------------------------------------------------------------------
 
 func create_conversation(path):
-	GraphEdit.clear()
+	graphedit.clear()
+	path = Diagraph.ensure_prefix(path)
 	current_conversation = path
 
-	var dir = Directory.new()
-	dir.make_dir_recursive(path.get_base_dir())
+	DirAccess.make_dir_recursive_absolute(path.get_base_dir())
 
-	var file = File.new()
-	file.open(path, File.WRITE)
-	file.store_string('')
-	file.close()
+	var f = FileAccess.open(path, FileAccess.WRITE)
+	if f.is_open():
+		f.store_string('')
 	Diagraph.refresh()
 
 var delete_path = null
-onready var original_size = ConfirmDelete.rect_size
+@onready var original_size = ConfirmDelete.size
 
 func sort(a, b):
 	return a.text.count('\n') > b.text.count('\n')
@@ -217,7 +212,7 @@ func delete_conversation(path):
 	delete_path = path
 	ConfirmDelete.dialog_text = 'Really delete conversation "' + path.get_file() + '" ?\n'
 	var nodes = Diagraph.load_conversation(path, {}).values()
-	nodes.sort_custom(self, 'sort')
+	nodes.sort_custom(Callable(self,'sort'))
 	var line_count = 0
 	for i in range(nodes.size()):
 		var count = nodes[i].text.split('\n').size()
@@ -227,43 +222,41 @@ func delete_conversation(path):
 		if i == 5:
 			ConfirmDelete.dialog_text += 'plus ' + str(nodes.size() - i) + ' more..'
 	if nodes.size() > 10 or line_count > 25:
-		ConfirmDelete.get_ok().disabled = true
-		ConfirmDelete.get_ok().text = '3..'
-		get_tree().create_timer(1.0).connect('timeout', ConfirmDelete.get_ok(), 'set_text', ['2..'])
-		get_tree().create_timer(2.0).connect('timeout', ConfirmDelete.get_ok(), 'set_text', ['1..'])
-		get_tree().create_timer(3.0).connect('timeout', ConfirmDelete.get_ok(), 'set_text', ['Ok'])
-		get_tree().create_timer(3.0).connect(
-			'timeout', ConfirmDelete.get_ok(), 'set_disabled', [false]
-		)
+		ConfirmDelete.get_ok_button().disabled = true
+		ConfirmDelete.get_ok_button().text = '3..'
+		get_tree().create_timer(1.0).timeout.connect(Callable(ConfirmDelete.get_ok_button(),'set_text').bind('2..'))
+		get_tree().create_timer(2.0).timeout.connect(Callable(ConfirmDelete.get_ok_button(),'set_text').bind('1..'))
+		get_tree().create_timer(3.0).timeout.connect(Callable(ConfirmDelete.get_ok_button(),'set_text').bind('Ok'))
+		get_tree().create_timer(3.0).timeout.connect(Callable(ConfirmDelete.get_ok_button(),'set_disabled').bind([false]))
 	ConfirmDelete.popup_centered()
-	ConfirmDelete.rect_size.y = 0
+	ConfirmDelete.size.y = 0
 	ConfirmationDimmer.show()
 
 func really_delete_conversation():
-	if current_conversation == delete_path:
-		GraphEdit.clear()
-		current_conversation = ''
-	editor_data.erase(delete_path)
-	save_editor_data()
-	var dir = Directory.new()
-	if delete_path.begins_with(Diagraph.prefix):
-		dir.remove(delete_path)
-	if delete_path in Diagraph.conversations:
-		dir.remove(Diagraph.conversations[delete_path])
-	Diagraph.refresh()
+	pass
+	# if current_conversation == delete_path:
+	# 	graphedit.clear()
+	# 	current_conversation = ''
+	# editor_data.erase(delete_path)
+	# save_editor_data()
+	# if delete_path.begins_with(Diagraph.prefix):
+	# 	DirAccess.remove_at(delete_path)
+	# if delete_path in Diagraph.conversations:
+	# 	DirAccess.remove_at(Diagraph.conversations[delete_path])
+	# Diagraph.refresh()
 
 func rename_conversation(old, new):
 	old = Diagraph.ensure_prefix(old)
 	new = Diagraph.ensure_prefix(new)
 
 	if current_conversation == old:
-		GraphEdit.clear()
+		graphedit.clear()
 		current_conversation = ''
 	if old in editor_data:
 		editor_data[new] = editor_data[old]
 		editor_data.erase(old)
 	save_editor_data()
-	var dir := Directory.new()
+	var dir := DirAccess.open(Diagraph.conversation_prefix)
 	dir.rename(old, new)
 	load_conversation(new)
 	Diagraph.refresh()
@@ -276,31 +269,31 @@ func focus_card(path):
 		save_editor_data()
 		load_conversation(parts[0])
 	if len(parts) > 1:
-		GraphEdit.focus_node(parts[1])
+		graphedit.focus_node(parts[1])
 
 func node_selected(node):
 	var path = current_conversation + '/' + node.data.name
-	Tree.select_item(path)
+	tree.select_item(path)
 
 func node_deleted(id):
-	Tree.delete_item(id)
+	tree.delete_item(id)
 	save()
 
 func node_renamed(old, new):
-	Tree.refresh()
+	tree.refresh()
 
 func node_created(path):
-	Tree.refresh()
+	tree.refresh()
 
 func select_card(path):
 	prints('select_card', path)
-	# GraphEdit
+	# graphedit
 
 # ******************************************************************************
 
 func character_added(path):
 	var char_map = Diagraph.load_json(Diagraph.character_map_path, {})
-	var c = load(path).instance()
+	var c = load(path).instantiate()
 	char_map[c.name] = path
 	Diagraph.save_json(Diagraph.character_map_path, char_map)
 	Diagraph.refresh()
@@ -309,7 +302,7 @@ func character_added(path):
 
 func run():
 	Diagraph.load_characters()
-	var selection = GraphEdit.get_selected_nodes()
+	var selection = graphedit.get_selected_nodes()
 
 	var conversation = current_conversation
 	var entry = ''
@@ -317,7 +310,7 @@ func run():
 		var node = selection[0]
 		entry = node.name
 	else:
-		for node in GraphEdit.nodes.values():
+		for node in graphedit.nodes.values():
 			if node.data.default:
 				entry = node.name
 
@@ -335,53 +328,53 @@ func stop():
 
 func dismiss_preview():
 	$Preview.hide()
-	GraphEdit.unhighlight_all_nodes()
+	graphedit.unhighlight_all_nodes()
 
 func next():
 	DialogBox.next_line()
 
 func line_started(id, line_number):
-	var node = GraphEdit.get_node(id)
+	var node = graphedit.get_node(id)
 	if node and node.has_method('highlight_line'):
 		node.highlight_line(line_number)
 
 func node_started(id):
-	GraphEdit.focus_node(id)
-	GraphEdit.highlight_node(id)
+	graphedit.focus_node(id)
+	graphedit.highlight_node(id)
 
 # ******************************************************************************
 
 var editor_data_file_name = 'user://diagraph/editor_data.json'
 
 func save_editor_data():
-	if !current_conversation:
+	if current_conversation == '':
 		return
 	var data = Diagraph.load_json(editor_data_file_name, {})
-	if !(position in data):
-		data[position] = {
+	if !(location in data):
+		data[location] = {
 			'conversation_data' : {}
 		}
 	
-	data[position]['folder_state'] = Tree.folder_state
-	data[position]['current_conversation'] = current_conversation
-	# data[position]['font_size'] = theme.default_font.size
-	data[position]['left_panel_size'] = LeftPanelSplit.split_offset
-	data[position]['left_panel_collapsed'] = LeftSidebar.visible
-	data[position]['right_panel_size'] = RightPanelSplit.split_offset
-	data[position]['right_panel_collapsed'] = RightSidebar.visible
-	data[position]['conversation_data'][current_conversation] = GraphEdit.get_data()
+	data[location]['folder_state'] = tree.folder_state
+	data[location]['current_conversation'] = current_conversation
+	# data[location]['font_size'] = theme.default_font.size
+	data[location]['left_panel_size'] = LeftPanelSplit.split_offset
+	data[location]['left_panel_collapsed'] = LeftSidebar.visible
+	data[location]['right_panel_size'] = RightPanelSplit.split_offset
+	data[location]['right_panel_collapsed'] = RightSidebar.visible
+	data[location]['conversation_data'][current_conversation] = graphedit.get_data()
 	Diagraph.save_json(editor_data_file_name, data)
 
 func load_editor_data():
 	var data = Diagraph.load_json(editor_data_file_name, {})
-	if !data or !(position in data):
+	if data == {} or !(location in data):
 		editor_data['current_conversation'] = '0 Introduction'
 		load_conversation(editor_data['current_conversation'])
 		return
-	editor_data = data[position]
+	editor_data = data[location]
 
 	if 'folder_state' in editor_data:
-		Tree.folder_state = editor_data['folder_state']
+		tree.folder_state = editor_data['folder_state']
 	if 'current_conversation' in editor_data:
 		load_conversation(editor_data['current_conversation'])
 

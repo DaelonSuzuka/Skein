@@ -2,17 +2,17 @@
 
 [ext_resource path="res://addons/diagraph/nodes/ExitNode.gd" type="Script" id=1]
 [ext_resource path="res://addons/diagraph/nodes/BaseNode.tscn" type="PackedScene" id=2]
-[ext_resource path="res://addons/diagraph/resources/vector_icons/fonts/MaterialIcons.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://addons/diagraph/resources/vector_icons/fonts/MaterialIcons.ttf" type="FontFile" id=3]
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="FontFile" id=1]
 size = 20
 font_data = ExtResource( 3 )
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="FontFile" id=2]
 size = 20
 font_data = ExtResource( 3 )
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="FontFile" id=3]
 size = 20
 font_data = ExtResource( 3 )
 

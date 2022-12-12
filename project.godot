@@ -6,42 +6,27 @@
 ;   [section] ; section goes between []
 ;   param=value ; assign values to parameters
 
-config_version=4
-
-_global_script_classes=[ {
-"base": "Reference",
-"class": "SfxrGenerator",
-"language": "GDScript",
-"path": "res://addons/godot_sfxr/SfxrGenerator.gd"
-}, {
-"base": "Object",
-"class": "SfxrGlobals",
-"language": "GDScript",
-"path": "res://addons/godot_sfxr/SfxrGlobals.gd"
-} ]
-_global_script_class_icons={
-"SfxrGenerator": "",
-"SfxrGlobals": ""
-}
+config_version=5
 
 [application]
 
 config/name="Diagraph"
 run/main_scene="res://Demo.tscn"
+config/features=PackedStringArray("4.0")
 config/icon="res://icon.png"
 
 [autoload]
 
 Diagraph="*res://addons/diagraph/DiagraphSingleton.tscn"
-HyperLog="*res://addons/hyperlog/hyperlog.tscn"
 
 [debug]
 
-gdscript/completion/autocomplete_setters_and_getters=true
 gdscript/warnings/unused_variable=false
-gdscript/warnings/unused_argument=false
+gdscript/warnings/unused_parameter=0
 gdscript/warnings/unused_signal=false
 gdscript/warnings/return_value_discarded=false
+gdscript/completion/autocomplete_setters_and_getters=true
+gdscript/warnings/unused_argument=false
 
 [display]
 
@@ -50,7 +35,7 @@ window/size/height=900
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/diagraph/plugin.cfg", "res://addons/godot-plugin-refresher/plugin.cfg", "res://addons/godot_sfxr/plugin.cfg", "res://addons/hyperlog/plugin.cfg" )
+enabled=PackedStringArray("res://addons/diagraph/plugin.cfg", "res://addons/godot_sfxr/plugin.cfg")
 
 [physics]
 

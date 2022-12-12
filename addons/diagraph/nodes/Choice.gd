@@ -1,21 +1,21 @@
-tool
+@tool
 extends HBoxContainer
 
 # ******************************************************************************
 
-onready var Choice = $Choice
-onready var Condition = $Condition
+@onready var choice = $Choice
+@onready var condition = $Condition
 
 # ******************************************************************************
 
 func get_data():
 	var data = {}
-	if Choice.text:
-		data.choice = Choice.text
-	if Condition.text:
-		data.condition = Condition.text
+	if choice.text:
+		data.choice = choice.text
+	if condition.text:
+		data.condition = condition.text
 	return data
 
 func set_data(data):
-	Choice.text = data.get('choice', '')
-	Condition.text = data.get('condition', '')
+	choice.text = data.get('choice', '')
+	condition.text = data.get('condition', '')

@@ -1,10 +1,10 @@
-tool
+@tool
 extends TextEdit
 
 # ******************************************************************************
 
 func _ready():
-	connect('request_completion', self, 'request_completion')
+	connect('request_completion', Callable(self,'request_completion'))
 
 func request_completion():
 	print('request_completion')
@@ -14,9 +14,9 @@ func request_completion():
 
 func get_selection():
 	var selection = {
-		cur_line = cursor_get_line(),
-		cur_col = cursor_get_column(),
-		active = is_selection_active(),
+		cur_line = get_caret_line(),
+		cur_col = get_caret_column(),
+		active = has_selection(),
 		from_line = 0,
 		from_col = 0,
 		to_line = 0,
@@ -35,8 +35,8 @@ func set_selection(sel):
 	set_cursor(sel.cur_line, sel.cur_col)
 
 func set_cursor(line, col):
-	cursor_set_line(line)
-	cursor_set_column(col)
+	set_caret_line(line)
+	set_caret_column(col)
 
 func insert_text_at(_text, line, col):
 	set_cursor(line, col)
@@ -51,20 +51,20 @@ func surround_selection(start, end):
 	lines[sel.from_line] = lines[sel.from_line].insert(sel.from_col, start)
 	lines[sel.to_line] = lines[sel.to_line].insert(sel.to_col + 1, end)
 
-	text = lines.join('\n')
+	text = '\n'.join(lines)
 	sel.from_col += 1
 	sel.to_col += 1
 	sel.cur_col += 1
 	set_selection(sel)
 
 var wrappers = {
-	ord('{'): ['{', '}'],
-	ord('['): ['[', ']'],
-	ord('<'): ['<', '>'],
-	ord('('): ['(', ')'],
-	ord('|'): ['|', '|'],
-	ord('"'): ['"', '"'],
-	ord("'"): ["'", "'"],
+	'{'.unicode_at(0): ['{', '}'],
+	'['.unicode_at(0): ['[', ']'],
+	'<'.unicode_at(0): ['<', '>'],
+	'('.unicode_at(0): ['(', ')'],
+	'|'.unicode_at(0): ['|', '|'],
+	'"'.unicode_at(0): ['"', '"'],
+	"'".unicode_at(0): ["'", "'"],
 }
 
 # ------------------------------------------------------------------------------
@@ -74,7 +74,7 @@ func move_line(direction):
 	var lines = Array(text.split('\n'))
 
 	var target_lines = []
-	if is_selection_active():
+	if has_selection():
 		for i in range(sel.from_line, sel.to_line + 1):
 			target_lines.append(i)
 	else:
@@ -94,7 +94,7 @@ func move_line(direction):
 		lines.insert(line_above + 1, lines[line_below])
 		lines.pop_at(line_below + 1)
 
-	text = PoolStringArray(lines).join('\n')
+	text = '\n'.join(PackedStringArray(lines))
 
 	sel.from_line += direction
 	sel.to_line += direction
@@ -109,7 +109,7 @@ func copy_line(direction):
 	var lines = Array(text.split('\n'))
 
 	var target_lines = []
-	if is_selection_active():
+	if has_selection():
 		for i in range(sel.from_line, sel.to_line + 1):
 			target_lines.append(i)
 	else:
@@ -125,7 +125,7 @@ func copy_line(direction):
 		for i in range(target_lines.size()):
 			lines.insert(line_above + 1 + i, lines[target_lines[i] + i])
 
-	text = PoolStringArray(lines).join('\n')
+	text = '\n'.join(PackedStringArray(lines))
 
 	sel.from_line += direction * target_lines.size()
 	sel.to_line += direction * target_lines.size()
@@ -140,7 +140,7 @@ func toggle_comment():
 	var lines = Array(text.split('\n'))
 
 	var target_lines = []
-	if is_selection_active():
+	if has_selection():
 		for i in range(sel.from_line, sel.to_line + 1):
 			target_lines.append(i)
 	else:
@@ -157,7 +157,7 @@ func toggle_comment():
 			lines[line] = lines[line].trim_prefix('# ').trim_prefix('#')
 			lines[line] = lines[line].trim_prefix('// ').trim_prefix('//')
 	
-	text = PoolStringArray(lines).join('\n')
+	text = '\n'.join(PackedStringArray(lines))
 	set_selection(sel)
 
 # ******************************************************************************
@@ -190,7 +190,7 @@ func _input(event):
 		accept_event()
 		return
 
-	if is_selection_active() and event.unicode in wrappers:
+	if has_selection() and event.unicode in wrappers:
 		var wrap = wrappers[event.unicode]
 		surround_selection(wrap[0], wrap[1])
 		accept_event()
@@ -199,17 +199,17 @@ func _input(event):
 # ******************************************************************************
 
 func refresh_colors():
-	clear_colors()
+	# clear_colors()
 
-	add_color_region('#', '', Color.forestgreen, true)
-	add_color_region('//', '', Color.forestgreen, true)
+	# add_color_region('#', '', Color.FOREST_GREEN, true)
+	# add_color_region('//', '', Color.FOREST_GREEN, true)
 
-	for name in Diagraph.characters:
-		if Diagraph.characters[name].get('color'):
-			add_keyword_color(name, Diagraph.characters[name].color)
+	# for name in Diagraph.characters:
+	# 	if Diagraph.characters[name].get('color'):
+	# 		add_keyword_color(name, Diagraph.characters[name].color)
 
-	# add_color_region('{', '}', Color.green)
-	# add_color_region('<', '>', Color.dodgerblue)
-	# add_color_region('[', ']', Color.yellow)
-	# add_color_region('(', ')', Color.orange)
-	# add_color_region('"', '"', Color.red)
+	# add_color_region('{', '}', Color.GREEN)
+	# add_color_region('<', '>', Color.DODGER_BLUE)
+	# add_color_region('[', ']', Color.YELLOW)
+	# add_color_region('(', ')', Color.ORANGE)
+	# add_color_region('"', '"', Color.RED)

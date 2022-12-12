@@ -142,7 +142,7 @@ const Cheatsheet = {
 	"page-filled": "\uF189",
 	"page-multiple": "\uF18A",
 	"page-pdf": "\uF18B",
-	"page-remove": "\uF18C",
+	"page-remove_at": "\uF18C",
 	"page-search": "\uF18D",
 	"paint-bucket": "\uF18F",
 	"paperclip": "\uF190",

@@ -2,24 +2,24 @@
 
 [ext_resource path="res://addons/diagraph/nodes/BaseNode.tscn" type="PackedScene" id=1]
 [ext_resource path="res://addons/diagraph/nodes/BranchNode.gd" type="Script" id=2]
-[ext_resource path="res://addons/diagraph/resources/vector_icons/fonts/MaterialIcons.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://addons/diagraph/resources/vector_icons/fonts/MaterialIcons.ttf" type="FontFile" id=3]
 [ext_resource path="res://addons/diagraph/nodes/Branch.tscn" type="PackedScene" id=5]
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="FontFile" id=1]
 size = 20
 font_data = ExtResource( 3 )
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="FontFile" id=2]
 size = 20
 font_data = ExtResource( 3 )
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="FontFile" id=3]
 size = 20
 font_data = ExtResource( 3 )
 
 [node name="1" instance=ExtResource( 1 )]
-margin_right = 250.0
-margin_bottom = 175.0
+offset_right = 250.0
+offset_bottom = 175.0
 slot/1/left_enabled = true
 slot/1/left_type = 0
 slot/1/left_color = Color( 1, 1, 1, 1 )
@@ -53,27 +53,27 @@ slot/5/right_color = Color( 1, 1, 1, 1 )
 script = ExtResource( 2 )
 
 [node name="Body" parent="." index="0"]
-margin_right = 239.0
-margin_bottom = 34.0
-rect_min_size = Vector2( 0, 7 )
+offset_right = 239.0
+offset_bottom = 34.0
+minimum_size = Vector2( 0, 7 )
 size_flags_vertical = 1
 
 [node name="Title" parent="Body/Toolbar" index="2"]
-margin_right = 173.0
+offset_right = 173.0
 text = "Branch"
 
 [node name="Play" parent="Body/Toolbar" index="3"]
 custom_fonts/font = SubResource( 1 )
 
 [node name="Edit" parent="Body/Toolbar" index="4"]
-margin_left = 173.0
-margin_right = 205.0
+offset_left = 173.0
+offset_right = 205.0
 custom_fonts/font = SubResource( 2 )
 items = [ "Show Extra Branches", null, 1, false, false, 0, 0, null, "", false ]
 
 [node name="Close" parent="Body/Toolbar" index="5"]
-margin_left = 205.0
-margin_right = 237.0
+offset_left = 205.0
+offset_right = 237.0
 custom_fonts/font = SubResource( 3 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Body" index="1"]
@@ -84,9 +84,9 @@ size_flags_vertical = 3
 alignment = 2
 
 [node name="Label" type="Label" parent="Body/VBoxContainer" index="0"]
-margin_top = 18.0
-margin_right = 228.0
-margin_bottom = 45.0
+offset_top = 18.0
+offset_right = 228.0
+offset_bottom = 45.0
 size_flags_horizontal = 3
 size_flags_vertical = 0
 text = "Conditions:"
@@ -97,23 +97,23 @@ __meta__ = {
 [node name="Branch1" parent="." index="1" instance=ExtResource( 5 )]
 
 [node name="Branch2" parent="." index="2" instance=ExtResource( 5 )]
-margin_top = 69.0
-margin_bottom = 96.0
+offset_top = 69.0
+offset_bottom = 96.0
 number = 2
 
 [node name="Branch3" parent="." index="3" instance=ExtResource( 5 )]
-margin_top = 100.0
-margin_bottom = 127.0
+offset_top = 100.0
+offset_bottom = 127.0
 number = 3
 
 [node name="Branch4" parent="." index="4" instance=ExtResource( 5 )]
-margin_top = 131.0
-margin_bottom = 158.0
+offset_top = 131.0
+offset_bottom = 158.0
 number = 4
 
 [node name="Control" type="Control" parent="." index="5"]
-margin_left = 11.0
-margin_top = 162.0
-margin_right = 239.0
-margin_bottom = 165.0
-rect_min_size = Vector2( 0, 3 )
+offset_left = 11.0
+offset_top = 162.0
+offset_right = 239.0
+offset_bottom = 165.0
+minimum_size = Vector2( 0, 3 )

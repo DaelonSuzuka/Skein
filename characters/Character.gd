@@ -1,12 +1,12 @@
-tool
+@tool
 extends Node2D
 
 # ******************************************************************************
 
-export var color := Color()
+@export var color := Color()
 
-onready var Portrait = get_node_or_null('Portrait')
-onready var BlipPlayer = get_node_or_null('BlipPlayer')
+@onready var Portrait = get_node_or_null('Portrait')
+@onready var BlipPlayer = get_node_or_null('BlipPlayer')
 
 var talk_base = ''
 var talk_count = 0
