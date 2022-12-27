@@ -14,14 +14,13 @@ var conversation_prefix := prefix + conversation_path
 
 onready var sandbox = $Sandbox
 onready var watcher = $Watcher
-onready var canvas = get_node('DiagraphCanvas')
+onready var canvas = $'DiagraphCanvas'
+onready var utils = $Utils
+onready var files = $Files
 
 var characters := {}
 var conversations := {}
 var _conversations := {}
-
-onready var utils = $Utils
-onready var files = $Files
 
 signal refreshed
 
