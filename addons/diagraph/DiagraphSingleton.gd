@@ -27,10 +27,14 @@ signal refreshed
 # ******************************************************************************
 
 func _ready():
-	validate_paths()
+	if !OS.has_feature('HTML5'):
+		validate_paths()
 	call_deferred('refresh')
 
-	init_file_watcher()
+	if OS.has_feature('HTML5'):
+		watcher.queue_free()
+	else:
+		init_file_watcher()
 
 func init_file_watcher():
 	watcher.add_scan_directory(conversation_prefix)
