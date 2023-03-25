@@ -19,7 +19,7 @@ custom_constants/autohide = 0
 split_offset = -175
 
 [node name="VSplitContainer" type="VSplitContainer" parent="HSplitContainer"]
-margin_right = 1600.0
+margin_right = 1417.0
 margin_bottom = 900.0
 size_flags_horizontal = 3
 
@@ -28,21 +28,11 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 0.0
 margin_top = 0.0
-margin_right = 1600.0
-margin_bottom = 446.0
-position = "top"
-
-[node name="DiagraphEditor2" parent="HSplitContainer/VSplitContainer" instance=ExtResource( 2 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 0.0
-margin_top = 454.0
-margin_right = 1600.0
+margin_right = 1417.0
 margin_bottom = 900.0
-position = "bottom"
+position = "demo"
 
 [node name="Control" type="Control" parent="HSplitContainer"]
-visible = false
 margin_left = 1425.0
 margin_right = 1600.0
 margin_bottom = 900.0
@@ -71,7 +61,7 @@ margin_right = 169.0
 [node name="Label" type="Label" parent="HSplitContainer/Control/VBoxContainer"]
 margin_top = 4.0
 margin_right = 169.0
-margin_bottom = 32.0
+margin_bottom = 31.0
 hint_tooltip = "These variables can be referenced inside your dialogues or in Branch nodes or Choice Conditions."
 mouse_filter = 1
 size_flags_horizontal = 3
@@ -79,19 +69,17 @@ text = "Game Variables:"
 autowrap = true
 
 [node name="HSeparator" type="HSeparator" parent="HSplitContainer/Control/VBoxContainer"]
-margin_top = 36.0
+margin_top = 35.0
 margin_right = 169.0
-margin_bottom = 40.0
+margin_bottom = 39.0
 
 [node name="ScrollContainer" type="ScrollContainer" parent="HSplitContainer/Control/VBoxContainer"]
-margin_top = 44.0
+margin_top = 43.0
 margin_right = 169.0
 margin_bottom = 854.0
 size_flags_vertical = 3
 
 [node name="DictBox" type="VBoxContainer" parent="HSplitContainer/Control/VBoxContainer/ScrollContainer"]
-margin_right = 169.0
-margin_bottom = 810.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
@@ -136,22 +124,22 @@ __meta__ = {
 }
 
 [node name="Key" type="LineEdit" parent="HSplitContainer/Control/VBoxContainer/Control/HBoxContainer"]
-margin_right = 61.0
-margin_bottom = 28.0
+margin_right = 132.0
+margin_bottom = 27.0
 size_flags_horizontal = 3
 placeholder_text = "Key"
 
 [node name="Value" type="LineEdit" parent="HSplitContainer/Control/VBoxContainer/Control/HBoxContainer"]
-margin_left = 65.0
-margin_right = 126.0
-margin_bottom = 28.0
+margin_left = 136.0
+margin_right = 268.0
+margin_bottom = 27.0
 size_flags_horizontal = 3
 placeholder_text = "Value"
 
 [node name="Add" type="Button" parent="HSplitContainer/Control/VBoxContainer/Control/HBoxContainer"]
-margin_left = 130.0
-margin_right = 169.0
-margin_bottom = 28.0
+margin_left = 272.0
+margin_right = 314.0
+margin_bottom = 27.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.5
 disabled = true
