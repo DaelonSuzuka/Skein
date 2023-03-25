@@ -1,9 +1,8 @@
 tool
-extends Node
 
 # ******************************************************************************
 
-func reparent_node(node:Node, new_parent:Node, legible_unique_name:=false) -> void:
+static func reparent_node(node:Node, new_parent:Node, legible_unique_name:=false) -> void:
 	if !is_instance_valid(node) or !is_instance_valid(new_parent):
 		return
 
@@ -15,14 +14,14 @@ func reparent_node(node:Node, new_parent:Node, legible_unique_name:=false) -> vo
 
 # ******************************************************************************
 
-func try_connect(src, sig, dest, method, args=[], flags=0):
+static func try_connect(src, sig, dest, method, args=[], flags=0):
 	if dest.has_method(method):
 		if !src.is_connected(sig, dest, method):
 			src.connect(sig, dest, method, args, flags)
 
 # ******************************************************************************
 
-func get_all_children(node: Node, _children={}) -> Dictionary:
+static func get_all_children(node: Node, _children={}) -> Dictionary:
 	_children[node.get_path()] = node
 
 	for child in node.get_children():
