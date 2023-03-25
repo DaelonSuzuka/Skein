@@ -41,11 +41,11 @@
     },
     {
         "path": "addons/diagraph/utils/Utils.gd",
-        "hash": "f887399da2f54e5fe1bbd420679dc8142bf486d4"
+        "hash": "0e385ed0441eb8eddbcd64251d427e93cb6e1146"
     },
     {
         "path": "addons/diagraph/utils/FileUtils.gd",
-        "hash": "22d1f0f42c48c381620f50618eef7765d5297a8a"
+        "hash": "c6cbe860eed1e0534b6d8457be7c11a1df734829"
     },
     {
         "path": "addons/diagraph/utils/ContextMenu.gd",
