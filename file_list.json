@@ -29,7 +29,7 @@
     },
     {
         "path": "addons/diagraph/DiagraphSingleton.gd",
-        "hash": "7c9bf564b301820087875687cd2e3b3a9e57754a"
+        "hash": "8debc6d1916c951e71a35db3dc15d599dfea1dcf"
     },
     {
         "path": "addons/diagraph/utils/Updater.gd",
@@ -177,7 +177,7 @@
     },
     {
         "path": "addons/diagraph/dialog_box/BaseDialogBox.tscn",
-        "hash": "3786b6566fcb88586835fd47e34296502f06eb5f"
+        "hash": "19195f398defa9f5c15e9433315d12a46ce90bcd"
     },
     {
         "path": "addons/diagraph/resources/diagraph_icon.png.import",
