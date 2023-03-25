@@ -12,11 +12,11 @@ var character_map_path := characters_path + 'other_characters.json'
 var conversation_path := 'conversations/'
 var conversation_prefix := prefix + conversation_path
 
-onready var canvas = $DiagraphCanvas
-var watcher = preload('utils/Watcher.gd').new()
-var sandbox = preload('utils/Sandbox.gd').new()
-var utils = preload('utils/Utils.gd')
-var files = preload('utils/FileUtils.gd')
+onready var sandbox = $Sandbox
+onready var watcher = $Watcher
+onready var canvas = $'DiagraphCanvas'
+onready var utils = $Utils
+onready var files = $Files
 
 var characters := {}
 var conversations := {}
