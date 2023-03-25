@@ -1,8 +1,9 @@
 tool
+extends Node
 
 # ******************************************************************************
 
-static func check_extension(file, ext=null) -> bool:
+func check_extension(file, ext=null) -> bool:
 	if ext:
 		if ext is String:
 			if file.ends_with(ext):
@@ -14,7 +15,7 @@ static func check_extension(file, ext=null) -> bool:
 	return false
 
 # get all files in given directory with optional extension filter
-static func get_files(path: String, ext='') -> Array:
+func get_files(path: String, ext='') -> Array:
 	var _files = []
 	var dir = Directory.new()
 	dir.open(path)
@@ -37,7 +38,7 @@ static func get_files(path: String, ext='') -> Array:
 	return _files
 
 # get all files in given directory(and subdirectories, to a given depth) with optional extension filter
-static func get_all_files(path: String, ext='', max_depth:=10, _depth:=0, _files:=[]) -> Array:
+func get_all_files(path: String, ext='', max_depth:=10, _depth:=0, _files:=[]) -> Array:
 	if _depth >= max_depth:
 		return []
 
@@ -61,7 +62,7 @@ static func get_all_files(path: String, ext='', max_depth:=10, _depth:=0, _files
 	return _files
 
 # get all files AND folders in a given directory(and subdirectories, to a given depth)
-static func get_all_files_and_folders(path: String, max_depth:=10, _depth:=0, _files:=[]) -> Array:
+func get_all_files_and_folders(path: String, max_depth:=10, _depth:=0, _files:=[]) -> Array:
 	if _depth >= max_depth:
 		return []
 
@@ -80,7 +81,7 @@ static func get_all_files_and_folders(path: String, max_depth:=10, _depth:=0, _f
 	return _files
 
 # get all folders in a given directory(and subdirectories, to a given depth)
-static func get_all_folders(path: String, max_depth:=10, _depth:=0, _files:=[]) -> Array:
+func get_all_folders(path: String, max_depth:=10, _depth:=0, _files:=[]) -> Array:
 	if _depth >= max_depth:
 		return []
 
