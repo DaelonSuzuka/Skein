@@ -23,10 +23,10 @@ win:
 
 # **************************************************************************** #
 
-BUTLER = butler
+BUTLER := butler
 
 ifeq ($(OS),Windows_NT)
-	BUTLER = $(BUTLER).exe
+	BUTLER := $(BUTLER).exe
 endif
 
 itch:
@@ -35,7 +35,7 @@ itch:
 # **************************************************************************** #
 # download godot binary and export templates for linux
 
-GDVERSION := 3.5
+GDVERSION := 3.5.1
 GDBUILD := stable
 
 URL := https://downloads.tuxfamily.org/godotengine/$(GDVERSION)/
@@ -68,7 +68,7 @@ WSLENV ?= notwsl
 
 GD = ""
 ifndef WSLENV
-	GD := godot.exe
+	GD := Godot_v3.5.1-stable_win64.exe
 else
 	GD := ~/godot/$(GDBINARY)
 endif
