@@ -25,11 +25,11 @@
     },
     {
         "path": "addons/diagraph/DiagraphSingleton.tscn",
-        "hash": "e815ed50131d99cbc1852b0fb12882807fda542f"
+        "hash": "58cc79e5f9d928677f792a18a3a4aa7920ca721a"
     },
     {
         "path": "addons/diagraph/DiagraphSingleton.gd",
-        "hash": "c866a205bc4a7212b21e96176949afc8afdc46ab"
+        "hash": "7c9bf564b301820087875687cd2e3b3a9e57754a"
     },
     {
         "path": "addons/diagraph/utils/Updater.gd",
