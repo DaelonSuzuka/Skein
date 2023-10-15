@@ -1,55 +1,55 @@
 [
     {
-        "path": "addons/diagraph/diagraph.gd",
-        "hash": "bec1cb7e79bdd1af420a316aa98e5b8d5d7dd248"
-    },
-    {
-        "path": "addons/diagraph/DiagraphCanvas.gd",
-        "hash": "e2a2955e089ad6fc96ecb2af00039823e4c0057e"
-    },
-    {
-        "path": "addons/diagraph/README.md",
-        "hash": "9893ca5ba324cbe6192d4891924131aba5c2c036"
-    },
-    {
-        "path": "addons/diagraph/CharacterManager.gd",
-        "hash": "3180c4acd7e00f7cfb4239f9ee87e5c0c9c99523"
+        "path": "addons/diagraph/DiagraphSingleton.tscn",
+        "hash": "58cc79e5f9d928677f792a18a3a4aa7920ca721a"
     },
     {
         "path": "addons/diagraph/DiagraphInspectorPlugin.gd",
         "hash": "e743bcdbaea662c84dd58ac87d7feb2878863cf8"
     },
     {
-        "path": "addons/diagraph/plugin.cfg",
-        "hash": "7c33511a29eb33f0d7182a3ce46582fb3d372bc5"
-    },
-    {
-        "path": "addons/diagraph/DiagraphSingleton.tscn",
-        "hash": "58cc79e5f9d928677f792a18a3a4aa7920ca721a"
+        "path": "addons/diagraph/DiagraphCanvas.gd",
+        "hash": "e2a2955e089ad6fc96ecb2af00039823e4c0057e"
     },
     {
         "path": "addons/diagraph/DiagraphSingleton.gd",
         "hash": "8debc6d1916c951e71a35db3dc15d599dfea1dcf"
     },
     {
-        "path": "addons/diagraph/utils/Updater.gd",
-        "hash": "6044b47b038afe825174ddf646dc483831402564"
+        "path": "addons/diagraph/CharacterManager.gd",
+        "hash": "3180c4acd7e00f7cfb4239f9ee87e5c0c9c99523"
+    },
+    {
+        "path": "addons/diagraph/README.md",
+        "hash": "9893ca5ba324cbe6192d4891924131aba5c2c036"
+    },
+    {
+        "path": "addons/diagraph/plugin.cfg",
+        "hash": "7c33511a29eb33f0d7182a3ce46582fb3d372bc5"
+    },
+    {
+        "path": "addons/diagraph/diagraph.gd",
+        "hash": "bec1cb7e79bdd1af420a316aa98e5b8d5d7dd248"
+    },
+    {
+        "path": "addons/diagraph/editor/DiagraphEditor.tscn",
+        "hash": "62abc7f74e9d8c1824f2f4d0c0fdceebbc6ce08a"
+    },
+    {
+        "path": "addons/diagraph/editor/DiagraphEditor.gd",
+        "hash": "68f5faa05a4a7498fd4aeff1369c254f6fe3bc5c"
+    },
+    {
+        "path": "addons/diagraph/editor/Tree.gd",
+        "hash": "f50f421c2f743eeb71193a20d4d651e59582543c"
+    },
+    {
+        "path": "addons/diagraph/editor/GraphEdit.gd",
+        "hash": "4d8d2969cae394059c138e2e9009bd7b7aa21fbd"
     },
     {
         "path": "addons/diagraph/utils/Watcher.gd",
         "hash": "98d6810732a1c22527b3677871d9c9a48af9d9b5"
-    },
-    {
-        "path": "addons/diagraph/utils/Utils.gd",
-        "hash": "0e385ed0441eb8eddbcd64251d427e93cb6e1146"
-    },
-    {
-        "path": "addons/diagraph/utils/FileUtils.gd",
-        "hash": "c6cbe860eed1e0534b6d8457be7c11a1df734829"
-    },
-    {
-        "path": "addons/diagraph/utils/ContextMenu.gd",
-        "hash": "aa2be19d548e3d6e4a378f8038a54ab55f9f1666"
     },
     {
         "path": "addons/diagraph/utils/MenuButton.gd",
@@ -60,88 +60,104 @@
         "hash": "2d832983f2e76dade2b1a3cbdc932c09431bc9c9"
     },
     {
+        "path": "addons/diagraph/utils/Utils.gd",
+        "hash": "0e385ed0441eb8eddbcd64251d427e93cb6e1146"
+    },
+    {
+        "path": "addons/diagraph/utils/Updater.gd",
+        "hash": "6044b47b038afe825174ddf646dc483831402564"
+    },
+    {
+        "path": "addons/diagraph/utils/ContextMenu.gd",
+        "hash": "aa2be19d548e3d6e4a378f8038a54ab55f9f1666"
+    },
+    {
+        "path": "addons/diagraph/utils/FileUtils.gd",
+        "hash": "c6cbe860eed1e0534b6d8457be7c11a1df734829"
+    },
+    {
         "path": "addons/diagraph/utils/Sandbox.gd",
         "hash": "43c5e94140aa08afbaa9f2edd72c9ad9f7b6f82d"
-    },
-    {
-        "path": "addons/diagraph/nodes/Branch.gd",
-        "hash": "feef987a3a2d6e1e24970de1a4def987dcd8e3d1"
-    },
-    {
-        "path": "addons/diagraph/nodes/EntryNode.gd",
-        "hash": "946af6af58a66f9118cce7efe6d30c0f87f5bf46"
-    },
-    {
-        "path": "addons/diagraph/nodes/EntryNode.tscn",
-        "hash": "444d56ca38da4996debdc2536edcb6c339fc22c8"
-    },
-    {
-        "path": "addons/diagraph/nodes/BaseNode.gd",
-        "hash": "47dc4de5874369ed226dc9d82104283f64320fd4"
-    },
-    {
-        "path": "addons/diagraph/nodes/SubgraphNode.gd",
-        "hash": "c8b5adf52ebcc7d4c9cc682f4e94131c18e5cce9"
-    },
-    {
-        "path": "addons/diagraph/nodes/DialogNode.tscn",
-        "hash": "9e0a9c6648a59b031157eb6d1d0f2c5fb39fe4b1"
-    },
-    {
-        "path": "addons/diagraph/nodes/BranchNode.gd",
-        "hash": "e13c75143498def3d9725a281840b66b6af0d0da"
-    },
-    {
-        "path": "addons/diagraph/nodes/Branch.tscn",
-        "hash": "87b64f2539cf49be932c7d0fca7d3723b3a8d702"
-    },
-    {
-        "path": "addons/diagraph/nodes/TextEdit.gd",
-        "hash": "60e612bbed65ae9e8afd206c110e801b6955ea5c"
-    },
-    {
-        "path": "addons/diagraph/nodes/JumpNode.gd",
-        "hash": "517a6c125b63bb6c3189ba81f349f839ddd662f5"
-    },
-    {
-        "path": "addons/diagraph/nodes/JumpNode.tscn",
-        "hash": "828cdd9625b43911da7f9cbf93a4777214080dc0"
-    },
-    {
-        "path": "addons/diagraph/nodes/SubgraphNode.tscn",
-        "hash": "0cea28acfc4cedbbcd8b7a2fccd19d55a0d6f132"
-    },
-    {
-        "path": "addons/diagraph/nodes/BaseNode.tscn",
-        "hash": "59b9018bdb1a7b48611a7a5fed09926c772e1554"
     },
     {
         "path": "addons/diagraph/nodes/Choice.gd",
         "hash": "728c9edfafca4c5cbf37bee0a75d688823a5722a"
     },
     {
-        "path": "addons/diagraph/nodes/BranchNode.tscn",
-        "hash": "9fe79165af024edf8377100517a5065515552167"
+        "path": "addons/diagraph/nodes/DialogNode.tscn",
+        "hash": "9e0a9c6648a59b031157eb6d1d0f2c5fb39fe4b1"
+    },
+    {
+        "path": "addons/diagraph/nodes/Branch.tscn",
+        "hash": "87b64f2539cf49be932c7d0fca7d3723b3a8d702"
     },
     {
         "path": "addons/diagraph/nodes/CommentNode.gd",
         "hash": "6a9996f311d36e31a91d4d85464fac8fc8ca3d08"
     },
     {
+        "path": "addons/diagraph/nodes/ExitNode.gd",
+        "hash": "b5650320c6cb1b022373801d7a98558928abf6c4"
+    },
+    {
+        "path": "addons/diagraph/nodes/Branch.gd",
+        "hash": "feef987a3a2d6e1e24970de1a4def987dcd8e3d1"
+    },
+    {
+        "path": "addons/diagraph/nodes/BaseNode.gd",
+        "hash": "47dc4de5874369ed226dc9d82104283f64320fd4"
+    },
+    {
         "path": "addons/diagraph/nodes/CommentNode.tscn",
         "hash": "4b25e9c66420aeca239f1d1388593f6bb120003e"
     },
     {
-        "path": "addons/diagraph/nodes/ExitNode.gd",
-        "hash": "b5650320c6cb1b022373801d7a98558928abf6c4"
+        "path": "addons/diagraph/nodes/EntryNode.tscn",
+        "hash": "444d56ca38da4996debdc2536edcb6c339fc22c8"
     },
     {
         "path": "addons/diagraph/nodes/ExitNode.tscn",
         "hash": "274d10a925524c2f44c7d6677631e8928a36bfc1"
     },
     {
+        "path": "addons/diagraph/nodes/TextEdit.gd",
+        "hash": "60e612bbed65ae9e8afd206c110e801b6955ea5c"
+    },
+    {
+        "path": "addons/diagraph/nodes/EntryNode.gd",
+        "hash": "946af6af58a66f9118cce7efe6d30c0f87f5bf46"
+    },
+    {
+        "path": "addons/diagraph/nodes/JumpNode.tscn",
+        "hash": "828cdd9625b43911da7f9cbf93a4777214080dc0"
+    },
+    {
+        "path": "addons/diagraph/nodes/JumpNode.gd",
+        "hash": "517a6c125b63bb6c3189ba81f349f839ddd662f5"
+    },
+    {
         "path": "addons/diagraph/nodes/DialogNode.gd",
         "hash": "8addc39021ddeeb17449d8c32c1c575fe45c1723"
+    },
+    {
+        "path": "addons/diagraph/nodes/SubgraphNode.tscn",
+        "hash": "0cea28acfc4cedbbcd8b7a2fccd19d55a0d6f132"
+    },
+    {
+        "path": "addons/diagraph/nodes/BranchNode.tscn",
+        "hash": "9fe79165af024edf8377100517a5065515552167"
+    },
+    {
+        "path": "addons/diagraph/nodes/BranchNode.gd",
+        "hash": "e13c75143498def3d9725a281840b66b6af0d0da"
+    },
+    {
+        "path": "addons/diagraph/nodes/SubgraphNode.gd",
+        "hash": "c8b5adf52ebcc7d4c9cc682f4e94131c18e5cce9"
+    },
+    {
+        "path": "addons/diagraph/nodes/BaseNode.tscn",
+        "hash": "59b9018bdb1a7b48611a7a5fed09926c772e1554"
     },
     {
         "path": "addons/diagraph/nodes/common/LabelEdit.gd",
@@ -152,20 +168,16 @@
         "hash": "6b4d5819ac5ab7aaaa1fe761d8cedffe6e4aa226"
     },
     {
-        "path": "addons/diagraph/dialog_box/BaseOptionButton.tscn",
-        "hash": "32aebca5419a7af534c4297ef293d93e4fcd39ce"
-    },
-    {
         "path": "addons/diagraph/dialog_box/DialogBox.gd",
         "hash": "38669d02d6ac7b5dbf617338ba4c19b821085214"
     },
     {
-        "path": "addons/diagraph/dialog_box/DialogBox.tscn",
-        "hash": "459c21d6bf056dbed3288664d0b90b47fff4bf70"
-    },
-    {
         "path": "addons/diagraph/dialog_box/pixeltype.ttf",
         "hash": "7936f2b84b66fda58dece38fc164a95b0305a06b"
+    },
+    {
+        "path": "addons/diagraph/dialog_box/DialogBox.tscn",
+        "hash": "459c21d6bf056dbed3288664d0b90b47fff4bf70"
     },
     {
         "path": "addons/diagraph/dialog_box/PopupDialogBox.tscn",
@@ -178,6 +190,14 @@
     {
         "path": "addons/diagraph/dialog_box/BaseDialogBox.tscn",
         "hash": "19195f398defa9f5c15e9433315d12a46ce90bcd"
+    },
+    {
+        "path": "addons/diagraph/dialog_box/BaseOptionButton.tscn",
+        "hash": "32aebca5419a7af534c4297ef293d93e4fcd39ce"
+    },
+    {
+        "path": "addons/diagraph/resources/theme.tres",
+        "hash": "d93952b35ec380710c5c11e62869e9935b76cf27"
     },
     {
         "path": "addons/diagraph/resources/diagraph_icon.png.import",
@@ -196,112 +216,92 @@
         "hash": "77e8f287904fe6e555f994a417f10118dd6c081f"
     },
     {
-        "path": "addons/diagraph/resources/theme.tres",
-        "hash": "d93952b35ec380710c5c11e62869e9935b76cf27"
-    },
-    {
         "path": "addons/diagraph/resources/vector_icons/VectorMenuButton.gd",
         "hash": "c9b5edd6d949b1ddbfadce905cd52e7300353277"
-    },
-    {
-        "path": "addons/diagraph/resources/vector_icons/VectorIcon.gd",
-        "hash": "f7b7c122029c7579a0009e5e6e15857f63b027f1"
     },
     {
         "path": "addons/diagraph/resources/vector_icons/VectorButton.gd",
         "hash": "959eda3d6ca19ea8b1cffd6d7bc3876aaa3dc597"
     },
     {
-        "path": "addons/diagraph/resources/vector_icons/fonts/AntDesign.gd",
-        "hash": "250244ab09af036a6970b48447b04b1e28ecd19b"
+        "path": "addons/diagraph/resources/vector_icons/VectorIcon.gd",
+        "hash": "f7b7c122029c7579a0009e5e6e15857f63b027f1"
     },
     {
         "path": "addons/diagraph/resources/vector_icons/fonts/SimpleLineIcons.ttf",
         "hash": "9ffb81a5a11112e292f2cc323e98486bad597599"
     },
     {
-        "path": "addons/diagraph/resources/vector_icons/fonts/Ionicons.gd",
-        "hash": "ce8055dcb5f1d1775dd6eecb34491b937fe7972d"
-    },
-    {
-        "path": "addons/diagraph/resources/vector_icons/fonts/FontAwesome5.gd",
-        "hash": "61592c423f08bed8fbf978afced83799eee69565"
-    },
-    {
-        "path": "addons/diagraph/resources/vector_icons/fonts/Entypo.gd",
-        "hash": "969881aa62ef55c188fe67cace75f85e554da1f9"
-    },
-    {
-        "path": "addons/diagraph/resources/vector_icons/fonts/SimpleLineIcons.gd",
-        "hash": "c15be8a71ef6b1128cd11add7ffa8e405ff51094"
-    },
-    {
-        "path": "addons/diagraph/resources/vector_icons/fonts/MaterialIcons.gd",
-        "hash": "1645791b5290db9df404bc1deb49fad6dd091074"
-    },
-    {
-        "path": "addons/diagraph/resources/vector_icons/fonts/Feather.ttf",
-        "hash": "3eb22bcebf5e6ebd40883e4b92132328c5d6be42"
-    },
-    {
-        "path": "addons/diagraph/resources/vector_icons/fonts/EvilIcons.ttf",
-        "hash": "91d377ea3cf47490b256c2ed081704a7dabdae0c"
-    },
-    {
-        "path": "addons/diagraph/resources/vector_icons/fonts/FontAwesome5.ttf",
-        "hash": "3f760416638f6459ade7251b80fd7bc27d6ad1c6"
-    },
-    {
-        "path": "addons/diagraph/resources/vector_icons/fonts/MaterialCommunityIcons.ttf",
-        "hash": "f43fdf96cad017650fec26420797147ebcd4ca67"
-    },
-    {
-        "path": "addons/diagraph/resources/vector_icons/fonts/FontAwesome.gd",
-        "hash": "73fb06580f8503d2a91b54448edcf6977f598298"
-    },
-    {
-        "path": "addons/diagraph/resources/vector_icons/fonts/Octicons.ttf",
-        "hash": "28875874413503bcc0810ea2a44dc1b8312c665a"
-    },
-    {
-        "path": "addons/diagraph/resources/vector_icons/fonts/Fontisto.ttf",
-        "hash": "c090a3ec96a3f1bb9b615c2f3f204ce0dcdcdbc3"
-    },
-    {
-        "path": "addons/diagraph/resources/vector_icons/fonts/MaterialCommunityIcons.gd",
-        "hash": "40e443ffed5e7c572d5d455c544c9aef01c8ac1e"
-    },
-    {
-        "path": "addons/diagraph/resources/vector_icons/fonts/Foundation.ttf",
-        "hash": "4b2bce6c792493a4a5716b6fec2dbefe89492c3f"
-    },
-    {
-        "path": "addons/diagraph/resources/vector_icons/fonts/EvilIcons.gd",
-        "hash": "0089b6558e6801bc4e097f9cd48b3a6a1500dd27"
+        "path": "addons/diagraph/resources/vector_icons/fonts/MaterialIcons.ttf",
+        "hash": "fc05de31234e0090f7ddc28ce1b23af4026cb1da"
     },
     {
         "path": "addons/diagraph/resources/vector_icons/fonts/FontAwesome.ttf",
         "hash": "13b1eab65a983c7a73bc7997c479d66943f7c6cb"
     },
     {
-        "path": "addons/diagraph/resources/vector_icons/fonts/Zocial.ttf",
-        "hash": "0bda59c7bcd3d3927de047e091875a4428bfd1ab"
+        "path": "addons/diagraph/resources/vector_icons/fonts/Zocial.gd",
+        "hash": "9e9e8e42edf54c9771811bc7fcd0f1a8077f2137"
     },
     {
-        "path": "addons/diagraph/resources/vector_icons/fonts/Foundation.gd",
-        "hash": "ef5312b0a7379eaa0232f7080e0ea278f0d4b0b0"
+        "path": "addons/diagraph/resources/vector_icons/fonts/FontAwesome5.gd",
+        "hash": "61592c423f08bed8fbf978afced83799eee69565"
     },
     {
-        "path": "addons/diagraph/resources/vector_icons/fonts/Entypo.ttf",
-        "hash": "47870a67dd50871765f799caa97da87219ee47c5"
+        "path": "addons/diagraph/resources/vector_icons/fonts/EvilIcons.ttf",
+        "hash": "91d377ea3cf47490b256c2ed081704a7dabdae0c"
+    },
+    {
+        "path": "addons/diagraph/resources/vector_icons/fonts/EvilIcons.gd",
+        "hash": "0089b6558e6801bc4e097f9cd48b3a6a1500dd27"
+    },
+    {
+        "path": "addons/diagraph/resources/vector_icons/fonts/AntDesign.ttf",
+        "hash": "4e77868439280fb434d4697c7b911271406c81f3"
+    },
+    {
+        "path": "addons/diagraph/resources/vector_icons/fonts/MaterialCommunityIcons.gd",
+        "hash": "40e443ffed5e7c572d5d455c544c9aef01c8ac1e"
+    },
+    {
+        "path": "addons/diagraph/resources/vector_icons/fonts/Feather.ttf",
+        "hash": "3eb22bcebf5e6ebd40883e4b92132328c5d6be42"
     },
     {
         "path": "addons/diagraph/resources/vector_icons/fonts/Feather.gd",
         "hash": "e0f18dab98e79bf4420638a0c6d32b9e4b3f6d38"
     },
     {
+        "path": "addons/diagraph/resources/vector_icons/fonts/Fontisto.ttf",
+        "hash": "c090a3ec96a3f1bb9b615c2f3f204ce0dcdcdbc3"
+    },
+    {
+        "path": "addons/diagraph/resources/vector_icons/fonts/AntDesign.gd",
+        "hash": "250244ab09af036a6970b48447b04b1e28ecd19b"
+    },
+    {
+        "path": "addons/diagraph/resources/vector_icons/fonts/Foundation.ttf",
+        "hash": "4b2bce6c792493a4a5716b6fec2dbefe89492c3f"
+    },
+    {
+        "path": "addons/diagraph/resources/vector_icons/fonts/MaterialIcons.gd",
+        "hash": "1645791b5290db9df404bc1deb49fad6dd091074"
+    },
+    {
         "path": "addons/diagraph/resources/vector_icons/fonts/Ionicons.ttf",
         "hash": "991bb7fac9709cd58da37901770efd4703c542ed"
+    },
+    {
+        "path": "addons/diagraph/resources/vector_icons/fonts/FontAwesome.gd",
+        "hash": "73fb06580f8503d2a91b54448edcf6977f598298"
+    },
+    {
+        "path": "addons/diagraph/resources/vector_icons/fonts/Entypo.gd",
+        "hash": "969881aa62ef55c188fe67cace75f85e554da1f9"
+    },
+    {
+        "path": "addons/diagraph/resources/vector_icons/fonts/Entypo.ttf",
+        "hash": "47870a67dd50871765f799caa97da87219ee47c5"
     },
     {
         "path": "addons/diagraph/resources/vector_icons/fonts/Octicons.gd",
@@ -312,71 +312,71 @@
         "hash": "16bc91fff68e35f6eefabd671b4f7f59105c5423"
     },
     {
-        "path": "addons/diagraph/resources/vector_icons/fonts/MaterialIcons.ttf",
-        "hash": "fc05de31234e0090f7ddc28ce1b23af4026cb1da"
+        "path": "addons/diagraph/resources/vector_icons/fonts/Foundation.gd",
+        "hash": "ef5312b0a7379eaa0232f7080e0ea278f0d4b0b0"
     },
     {
-        "path": "addons/diagraph/resources/vector_icons/fonts/Zocial.gd",
-        "hash": "9e9e8e42edf54c9771811bc7fcd0f1a8077f2137"
+        "path": "addons/diagraph/resources/vector_icons/fonts/MaterialCommunityIcons.ttf",
+        "hash": "f43fdf96cad017650fec26420797147ebcd4ca67"
     },
     {
-        "path": "addons/diagraph/resources/vector_icons/fonts/AntDesign.ttf",
-        "hash": "4e77868439280fb434d4697c7b911271406c81f3"
+        "path": "addons/diagraph/resources/vector_icons/fonts/Ionicons.gd",
+        "hash": "ce8055dcb5f1d1775dd6eecb34491b937fe7972d"
     },
     {
-        "path": "addons/diagraph/resources/fonts/NotoSans-BoldItalic.ttf",
-        "hash": "831a593460ebf18aab1ecfa6f048930eef5ac94f"
+        "path": "addons/diagraph/resources/vector_icons/fonts/FontAwesome5.ttf",
+        "hash": "3f760416638f6459ade7251b80fd7bc27d6ad1c6"
     },
     {
-        "path": "addons/diagraph/resources/fonts/Hack-Regular.ttf",
-        "hash": "b1cd50ba36380d6d6ada37facfc954a8f20c15ba"
+        "path": "addons/diagraph/resources/vector_icons/fonts/Zocial.ttf",
+        "hash": "0bda59c7bcd3d3927de047e091875a4428bfd1ab"
+    },
+    {
+        "path": "addons/diagraph/resources/vector_icons/fonts/Octicons.ttf",
+        "hash": "28875874413503bcc0810ea2a44dc1b8312c665a"
+    },
+    {
+        "path": "addons/diagraph/resources/vector_icons/fonts/SimpleLineIcons.gd",
+        "hash": "c15be8a71ef6b1128cd11add7ffa8e405ff51094"
     },
     {
         "path": "addons/diagraph/resources/fonts/NotoSans.tres",
         "hash": "a506108c526667b9b4780fc0c9e2b5f67ce526a2"
     },
     {
-        "path": "addons/diagraph/resources/fonts/Hack-Bold.ttf",
-        "hash": "28b45407cfdb0e9c5ea5797b5963e01c18a2c269"
+        "path": "addons/diagraph/resources/fonts/Hack.tres",
+        "hash": "7b261052e3521709fefbaf367769de48bed8bcb0"
     },
     {
-        "path": "addons/diagraph/resources/fonts/NotoSans-Regular.ttf",
-        "hash": "2b2500b3269369d0d1a29768aaa869405d4f1575"
-    },
-    {
-        "path": "addons/diagraph/resources/fonts/Hack-BoldItalic.ttf",
-        "hash": "12edfb7fc8c0a7e5b2bdb50007dd2024b02d530d"
+        "path": "addons/diagraph/resources/fonts/Hack-Regular.ttf",
+        "hash": "b1cd50ba36380d6d6ada37facfc954a8f20c15ba"
     },
     {
         "path": "addons/diagraph/resources/fonts/Hack-Italic.ttf",
         "hash": "a49b01c9fe79f45aa6e951db193c8f39c6c5e2df"
     },
     {
+        "path": "addons/diagraph/resources/fonts/Hack-BoldItalic.ttf",
+        "hash": "12edfb7fc8c0a7e5b2bdb50007dd2024b02d530d"
+    },
+    {
+        "path": "addons/diagraph/resources/fonts/NotoSans-BoldItalic.ttf",
+        "hash": "831a593460ebf18aab1ecfa6f048930eef5ac94f"
+    },
+    {
+        "path": "addons/diagraph/resources/fonts/NotoSans-Regular.ttf",
+        "hash": "2b2500b3269369d0d1a29768aaa869405d4f1575"
+    },
+    {
+        "path": "addons/diagraph/resources/fonts/Hack-Bold.ttf",
+        "hash": "28b45407cfdb0e9c5ea5797b5963e01c18a2c269"
+    },
+    {
         "path": "addons/diagraph/resources/fonts/NotoSans-Italic.ttf",
         "hash": "d6bd88af3739f63a63aebee5dbf5197726760c42"
     },
     {
-        "path": "addons/diagraph/resources/fonts/Hack.tres",
-        "hash": "7b261052e3521709fefbaf367769de48bed8bcb0"
-    },
-    {
         "path": "addons/diagraph/resources/fonts/NotoSans-Bold.ttf",
         "hash": "00a4dc42180951b52eb9797cb4d6f64527432220"
-    },
-    {
-        "path": "addons/diagraph/editor/DiagraphEditor.tscn",
-        "hash": "62abc7f74e9d8c1824f2f4d0c0fdceebbc6ce08a"
-    },
-    {
-        "path": "addons/diagraph/editor/GraphEdit.gd",
-        "hash": "4d8d2969cae394059c138e2e9009bd7b7aa21fbd"
-    },
-    {
-        "path": "addons/diagraph/editor/DiagraphEditor.gd",
-        "hash": "68f5faa05a4a7498fd4aeff1369c254f6fe3bc5c"
-    },
-    {
-        "path": "addons/diagraph/editor/Tree.gd",
-        "hash": "f50f421c2f743eeb71193a20d4d651e59582543c"
     }
 ]
