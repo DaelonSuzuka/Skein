@@ -20,3 +20,5 @@ build
 
 # godot log folder
 logs
+
+.history
