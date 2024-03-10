@@ -25,11 +25,11 @@ func _ready():
 	Value.connect('text_changed', self, 'value_text_changed')
 	Add.connect('pressed', self, 'add_pressed')
 	update_add_button()
-	demo_vars = Diagraph.load_json(demo_var_path, demo_vars)
+	demo_vars = Skein.load_json(demo_var_path, demo_vars)
 	DictBox.remove_child(DictEntry)
 
-	Diagraph.sandbox.add_locals(demo_vars)
-	Diagraph.sandbox.add_local('Diagraph', Diagraph)
+	Skein.sandbox.add_locals(demo_vars)
+	Skein.sandbox.add_local('Skein', Skein)
 	for key in demo_vars:
 		create_entry(key, demo_vars[key])
 
@@ -75,5 +75,5 @@ func entry_changed(new_text, key):
 
 func save_demo_vars():
 	print(demo_vars)
-	Diagraph.save_json(demo_var_path, demo_vars)
-	Diagraph.sandbox.add_locals(demo_vars)
+	Skein.save_json(demo_var_path, demo_vars)
+	Skein.sandbox.add_locals(demo_vars)

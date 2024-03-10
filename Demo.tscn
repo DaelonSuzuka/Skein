@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Demo.gd" type="Script" id=1]
-[ext_resource path="res://addons/diagraph/editor/DiagraphEditor.tscn" type="PackedScene" id=2]
-[ext_resource path="res://addons/diagraph/resources/theme.tres" type="Theme" id=3]
+[ext_resource path="res://addons/skein/editor/SkeinEditor.tscn" type="PackedScene" id=2]
+[ext_resource path="res://addons/skein/resources/theme.tres" type="Theme" id=3]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.14902, 0.172549, 0.231373, 1 )
@@ -23,7 +23,7 @@ margin_right = 1417.0
 margin_bottom = 900.0
 size_flags_horizontal = 3
 
-[node name="DiagraphEditor" parent="HSplitContainer/VSplitContainer" instance=ExtResource( 2 )]
+[node name="SkeinEditor" parent="HSplitContainer/VSplitContainer" instance=ExtResource( 2 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 0.0
@@ -80,6 +80,8 @@ margin_bottom = 854.0
 size_flags_vertical = 3
 
 [node name="DictBox" type="VBoxContainer" parent="HSplitContainer/Control/VBoxContainer/ScrollContainer"]
+margin_right = 169.0
+margin_bottom = 811.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 

@@ -3,7 +3,7 @@ import hashlib
 import json
 
 
-files = Path('addons/diagraph').rglob('*.*')
+files = Path('addons/skein').rglob('*.*')
 
 data = []
 

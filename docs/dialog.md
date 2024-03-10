@@ -1,4 +1,4 @@
-# Diagraph
+# Skein
 
 ```
 Character: text text text
@@ -31,7 +31,7 @@ Text surrounded by `|pipes|` is printed all at once, instead of one character at
 
 In-line choices are lines that start with `-` or `->`. Selecting a choice causes dialog to continue down the indented block that follows. 
 
-A choice ending with `=> $Targte` will jump to that node when the choice is selected.
+A choice ending with `=> $Target` will jump to that node when the choice is selected.
 ```
 Alka: how much doge do you have?
 
@@ -92,7 +92,7 @@ Available directives:
 
 
 ## Code execution
-Diagraph supports arbitrary code execution using { } and {{ }}. It will attempt to parse and execute anything inside curly braces.
+Skein supports arbitrary code execution using { } and {{ }}. It will attempt to parse and execute anything inside curly braces.
 
 Anything inside double curly braces is parsed, executed, and the return value is printed to the dialog box.
 
@@ -107,7 +107,7 @@ Symbols available to executed code:
 Adding locals:
 
 ```gdscript
-Diagraph.sandbox.add_locals({
+Skein.sandbox.add_locals({
 	'Game': Game,
 	'Player': Player,
 })

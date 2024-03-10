@@ -16,7 +16,7 @@ web:
 	$(GODOT) --export "HTML5"
 
 webdeploy: web
-	cp build/web/* /var/www/html/magnusdei.io/diagraph
+	cp build/web/* /var/www/html/magnusdei.io/skein
 
 win:
 	$(GODOT) --export "Windows Desktop"
@@ -30,7 +30,7 @@ ifeq ($(OS),Windows_NT)
 endif
 
 itch:
-	$(BUTLER) push build/web daelon/diagraph:html5
+	$(BUTLER) push build/web daelon/skein:html5
 
 # **************************************************************************** #
 # download godot binary and export templates for linux

@@ -117,7 +117,7 @@ Jumping... <<jump RandomChoice>>
 ===
 id: 45950128
 type: dialog
-position: Rect2( 1360, -600, 440, 390 )
+position: Rect2( 1230, -610, 420, 360 )
 title: Yield
 ---
 <<exec 1>>
@@ -126,6 +126,27 @@ before yield
 
 <<hide>>
 {yield(timer(3.0), 'timeout')}
+<<show>>
+
+after yield
+
+
+
+===
+id: 2909568563
+type: dialog
+position: Rect2( 1970, -630, 600, 430 )
+title: Dialog
+---
+<<exec 1>>
+
+
+before yield
+
+<<hide>>
+
+{yield(get_tree().create_timer(3.0), 'timeout')}
+
 <<show>>
 
 after yield

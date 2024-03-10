@@ -26,13 +26,13 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Diagraph"
+config/name="Skein"
 run/main_scene="res://Demo.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
-Diagraph="*res://addons/diagraph/DiagraphSingleton.tscn"
+Skein="*res://addons/skein/SkeinSingleton.tscn"
 
 [debug]
 
@@ -49,7 +49,7 @@ window/size/height=900
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/diagraph/plugin.cfg", "res://addons/godot-plugin-refresher/plugin.cfg", "res://addons/godot_sfxr/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/skein/plugin.cfg", "res://addons/godot-plugin-refresher/plugin.cfg", "res://addons/godot_sfxr/plugin.cfg" )
 
 [physics]
 

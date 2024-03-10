@@ -1,0 +1,30 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://addons/skein/SkeinSingleton.gd" type="Script" id=1]
+[ext_resource path="res://addons/skein/dialog_box/DialogBox.tscn" type="PackedScene" id=2]
+[ext_resource path="res://addons/skein/SkeinCanvas.gd" type="Script" id=3]
+[ext_resource path="res://addons/skein/utils/FileUtils.gd" type="Script" id=4]
+[ext_resource path="res://addons/skein/utils/Sandbox.gd" type="Script" id=5]
+[ext_resource path="res://addons/skein/utils/Watcher.gd" type="Script" id=6]
+[ext_resource path="res://addons/skein/utils/Utils.gd" type="Script" id=7]
+
+[node name="Skein" type="Node"]
+script = ExtResource( 1 )
+
+[node name="SkeinCanvas" type="CanvasLayer" parent="."]
+script = ExtResource( 3 )
+
+[node name="DialogBox" parent="SkeinCanvas" instance=ExtResource( 2 )]
+visible = false
+
+[node name="Sandbox" type="Node" parent="."]
+script = ExtResource( 5 )
+
+[node name="Watcher" type="Node" parent="."]
+script = ExtResource( 6 )
+
+[node name="Utils" type="Node" parent="."]
+script = ExtResource( 7 )
+
+[node name="Files" type="Node" parent="."]
+script = ExtResource( 4 )
