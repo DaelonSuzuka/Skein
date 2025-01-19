@@ -107,7 +107,7 @@ func get_id() -> int:
 	used_ids.append(id)
 	return id
 
-func create_node(data = null) -> Node:
+func create_node(data=null) -> Node:
 	var node
 	if data:
 		node = node_types[data.type].instantiate()
@@ -252,24 +252,19 @@ func get_selected_nodes() -> Array:
 			selected_nodes.append(child)
 	return selected_nodes
 
-func get_node(id):
-	var node = null
+func get_graphnode(id: String):
 	if id in nodes:
-		node = nodes[id]
+		return nodes[id]
 	else:
-		node = get_node_by_name(id)
-	return node
-
-func get_node_by_name(name):
-	for node in nodes.values():
-		if is_instance_valid(node) and node.data.name == name:
-			return node
+		for node in nodes.values():
+			if node and node.data.name == name:
+				return node
 	return null
 
-func focus_node(name) -> void:
-	var node = get_node(name)
+func focus_node(name: String) -> void:
+	var node = get_graphnode(name)
 	if node:
-		var node_center = (node.position_offset + (node.size / 2)) * zoom
+		var node_center: Vector2 = (node.position_offset + (node.size / 2)) * zoom
 		scroll_offset = node_center - (size / 2)
 
 		while (node.size.y) * zoom > (size.y * 0.9):
@@ -297,9 +292,9 @@ func unhighlight_all_nodes():
 		if node.has_method('unhighlight_lines'):
 			node.unhighlight_lines()
 
-func highlight_node(name) -> void:
+func highlight_node(name: String) -> void:
 	unhighlight_all_nodes()
-	var node = get_node(name)
+	var node = get_graphnode(name)
 	if node:
 		# node.overlay = GraphNode.OVERLAY_BREAKPOINT
 		pass
