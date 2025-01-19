@@ -20,7 +20,7 @@ func _ready():
 
 	data['show_choices'] = false
 	set_choices_enabled(false)
-	Edit.get_popup().set_item_checked(0, false)
+	# Edit.get_popup().set_item_checked(0, false)
 
 	data['choices'] = {}
 	for c in choices:
@@ -56,11 +56,11 @@ func _input(event: InputEvent) -> void:
 	if Rect2(Vector2(), size).has_point(local_event.position):
 		if !has_mouse:
 			has_mouse = true
-			get_parent().zoom_step = 1.0
+			# get_parent().zoom_step = 1.0
 	else:
 		if has_mouse:
 			has_mouse = false
-			get_parent().zoom_step = 1.1
+			# get_parent().zoom_step = 1.1
 
 func on_change(arg=null):
 	emit_signal('changed')

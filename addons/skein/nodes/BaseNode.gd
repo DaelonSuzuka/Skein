@@ -3,8 +3,6 @@ extends GraphNode
 
 # ******************************************************************************
 
-var ContextMenu = preload('../utils/ContextMenu.gd')
-
 var data := {
 	id = 0,
 	type = 'base',
@@ -96,7 +94,7 @@ func body_ctx_selection(selection: String):
 
 func title_bar_ctx(pos: Vector2) -> void:
 	Parent.dismiss_ctx()
-	Parent.ctx = ContextMenu.new(self, '_title_bar_ctx_selection')
+	Parent.ctx = SkeinContextMenu.new(self, self._title_bar_ctx_selection)
 	Parent.ctx.add_check_item('Default')
 	Parent.ctx.set_item_checked(0, bool(data.default))
 	Parent.ctx.add_item('Copy Path3D')
@@ -104,7 +102,7 @@ func title_bar_ctx(pos: Vector2) -> void:
 	Parent.ctx.add_item('Copy ID')
 	for item in self.get_title_bar_ctx_items():
 		Parent.ctx.add_item(item)
-	Parent.ctx.open(pos)
+	Parent.ctx.open(get_global_mouse_position())
 	accept_event()
 
 func _title_bar_ctx_selection(selection: String):
@@ -127,12 +125,12 @@ func _title_bar_ctx_selection(selection: String):
 
 func body_ctx(pos: Vector2) -> void:
 	Parent.dismiss_ctx()
-	Parent.ctx = ContextMenu.new(self, '_body_ctx_selection')
+	Parent.ctx = SkeinContextMenu.new(self, self._body_ctx_selection)
 	var items = self.get_body_ctx_items()
 	for item in items:
 		Parent.ctx.add_item(item)
 	if items:
-		Parent.ctx.open(pos)
+		Parent.ctx.open(get_global_mouse_position())
 	accept_event()
 
 func _body_ctx_selection(selection: String):

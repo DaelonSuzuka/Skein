@@ -3,8 +3,6 @@ extends Tree
 
 # ******************************************************************************
 
-@onready var ContextMenu = preload('res://addons/skein/utils/ContextMenu.gd')
-
 var root: TreeItem = null
 var convos: TreeItem = null
 var chars: TreeItem = null
@@ -329,7 +327,7 @@ func open_context_menu(position) -> void:
 
 	var item = get_item_at_position(position)
 
-	ctx = ContextMenu.new(self, 'context_menu_item_selected')
+	ctx = SkeinContextMenu.new(self, self.context_menu_item_selected)
 	if item:
 		var type = item.get_meta('type')
 		match type:

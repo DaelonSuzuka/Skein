@@ -3,8 +3,6 @@ extends GraphEdit
 
 # ******************************************************************************
 
-@onready var ContextMenu = preload('res://addons/skein/utils/ContextMenu.gd')
-
 @onready var node_types = {
 	'entry': load('res://addons/skein/nodes/EntryNode.tscn'),
 	'exit': load('res://addons/skein/nodes/ExitNode.tscn'),
@@ -65,15 +63,15 @@ func dismiss_ctx() -> void:
 
 func on_popup_request(position) -> void:
 	dismiss_ctx()
-	ctx = ContextMenu.new(self, 'new_node_requested')
+	ctx = SkeinContextMenu.new(self, self.new_node_requested)
 	ctx.add_separator('New Node:')
 	for type in display_types:
 		ctx.add_item(type.capitalize())
 	ctx_position = get_offset_from_mouse()
-	ctx.open(position)
+	ctx.open(get_global_mouse_position())
 
 func new_node_requested(type: String) -> void:
-	var data = {type = type.to_lower(), offset = ctx_position}
+	var data = {type = type.to_lower(), offset = ctx_position, position_offset = Vector2()}
 	
 	if snapping_enabled:
 		var snap = snapping_distance
