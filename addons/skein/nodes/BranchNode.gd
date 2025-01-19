@@ -11,7 +11,7 @@ var extra_branches = []
 # ******************************************************************************
 
 func _ready():
-	Edit.get_popup().index_pressed.connect(self.index_pressed)
+	edit_menu.get_popup().index_pressed.connect(self.index_pressed)
 
 	for i in range(8):
 		set_slot_enabled_right(i + 1, true)
@@ -20,7 +20,7 @@ func _ready():
 	
 	if !Engine.is_editor_hint():
 		set_extra_choices_enabled(false)
-	Edit.get_popup().set_item_checked(0, false)
+	edit_menu.get_popup().set_item_checked(0, false)
 
 	for child in get_children():
 		if 'Branch' in child.name:
@@ -35,10 +35,10 @@ func on_change(arg=null):
 	emit_signal('changed')
 
 func index_pressed(index):
-	match Edit.get_popup().get_item_text(index):
+	match edit_menu.get_popup().get_item_text(index):
 		'Show Extra Branches':
-			Edit.get_popup().toggle_item_checked(0)
-			var state = Edit.get_popup().is_item_checked(0)
+			edit_menu.get_popup().toggle_item_checked(0)
+			var state = edit_menu.get_popup().is_item_checked(0)
 			data['extra_choices'] = state
 			set_extra_choices_enabled(state)
 			emit_signal('changed')
@@ -100,7 +100,7 @@ func set_data(new_data):
 			state = {'true': true, 'false': false}[state.to_lower()]
 		data['extra_choices'] = state
 		set_extra_choices_enabled(state)
-		Edit.get_popup().set_item_checked(0, state)
+		edit_menu.get_popup().set_item_checked(0, state)
 	if 'branches' in new_data:
 		for b in branches:
 			if str(b.name)[6] in new_data['branches']:

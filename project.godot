@@ -34,6 +34,11 @@ gdscript/warnings/unused_argument=false
 window/size/width=1600
 window/size/height=900
 
+[editor]
+
+naming/scene_name_casing=1
+naming/script_name_casing=1
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/consulate/plugin.cfg", "res://addons/skein/plugin.cfg")

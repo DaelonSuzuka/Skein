@@ -25,23 +25,23 @@ var slot_colors := [
 	Color.LIME,
 ]
 
-@onready var Edit = $Body/Toolbar/Edit
-@onready var CloseButton = $Body/Toolbar/Close
-@onready var Toolbar = $Body/Toolbar
-@onready var Title = $Body/Toolbar/Title
-@onready var Id = $Body/Toolbar/Id
-@onready var Parent = get_parent()
+@onready var edit_menu: MenuButton = $Body/Toolbar/Edit
+@onready var close_button: Button = $Body/Toolbar/Close
+@onready var toolbar: HBoxContainer = $Body/Toolbar
+@onready var title_label = $Body/Toolbar/Title
+@onready var id_label: Label = $Body/Toolbar/Id
+@onready var parent = get_parent()
 
 signal changed
 
 # ******************************************************************************
 
 func _ready() -> void:
-	CloseButton.pressed.connect(self.emit_signal.bind('delete_request'))
+	close_button.pressed.connect(self.emit_signal.bind('delete_request'))
 	resize_request.connect(self._resize_request)
 	gui_input.connect(self._gui_input)
 
-	Title.text_changed.connect(self.renamed)
+	title_label.text_changed.connect(self.renamed)
 
 func _resize_request(new_minsize: Vector2) -> void:
 	self.changed.emit()
@@ -60,13 +60,13 @@ func _gui_input(event: InputEvent) -> void:
 	if !(event is InputEventMouseButton) or !event.pressed:
 		return
 
-	var title_rect = Rect2(Toolbar.global_position, Toolbar.size * Parent.zoom)
+	var title_rect = Rect2(toolbar.global_position, toolbar.size * parent.zoom)
 	if title_rect.has_point(event.global_position):
 		if event.button_index == 2:
 			title_bar_ctx(event.global_position)
 			return
 
-	var body_rect = Rect2(global_position, size * Parent.zoom)
+	var body_rect = Rect2(global_position, size * parent.zoom)
 	if body_rect.has_point(event.global_position):
 		if event.button_index == 2:
 			body_ctx(event.global_position)
@@ -93,16 +93,16 @@ func body_ctx_selection(selection: String):
 # Context Menu spawner
 
 func title_bar_ctx(pos: Vector2) -> void:
-	Parent.dismiss_ctx()
-	Parent.ctx = SkeinContextMenu.new(self, self._title_bar_ctx_selection)
-	Parent.ctx.add_check_item('Default')
-	Parent.ctx.set_item_checked(0, bool(data.default))
-	Parent.ctx.add_item('Copy Path3D')
-	Parent.ctx.add_item('Copy Name')
-	Parent.ctx.add_item('Copy ID')
+	parent.dismiss_ctx()
+	parent.ctx = SkeinContextMenu.new(self, self._title_bar_ctx_selection)
+	parent.ctx.add_check_item('Default')
+	parent.ctx.set_item_checked(0, bool(data.default))
+	parent.ctx.add_item('Copy Path3D')
+	parent.ctx.add_item('Copy Name')
+	parent.ctx.add_item('Copy ID')
 	for item in self.get_title_bar_ctx_items():
-		Parent.ctx.add_item(item)
-	Parent.ctx.open(get_global_mouse_position())
+		parent.ctx.add_item(item)
+	parent.ctx.open(get_global_mouse_position())
 	accept_event()
 
 func _title_bar_ctx_selection(selection: String):
@@ -110,11 +110,11 @@ func _title_bar_ctx_selection(selection: String):
 		'Default':
 			data.default = !data.default
 			if data.default:
-				for node in Parent.nodes.values():
+				for node in parent.nodes.values():
 					node.data.default = false
 				data.default = true
 		'Copy Path3D':
-			var path = '%s:%s' % [Parent.owner.current_conversation, data.name]
+			var path = '%s:%s' % [parent.owner.current_conversation, data.name]
 			DisplayServer.clipboard_set(path)
 		'Copy Name':
 			DisplayServer.clipboard_set(data.name)
@@ -124,13 +124,13 @@ func _title_bar_ctx_selection(selection: String):
 	self.title_bar_ctx_selection(selection)
 
 func body_ctx(pos: Vector2) -> void:
-	Parent.dismiss_ctx()
-	Parent.ctx = SkeinContextMenu.new(self, self._body_ctx_selection)
+	parent.dismiss_ctx()
+	parent.ctx = SkeinContextMenu.new(self, self._body_ctx_selection)
 	var items = self.get_body_ctx_items()
 	for item in items:
-		Parent.ctx.add_item(item)
+		parent.ctx.add_item(item)
 	if items:
-		Parent.ctx.open(get_global_mouse_position())
+		parent.ctx.open(get_global_mouse_position())
 	accept_event()
 
 func _body_ctx_selection(selection: String):
@@ -143,15 +143,15 @@ func _body_ctx_selection(selection: String):
 func set_id(id) -> void:
 	data.id = id
 	name = str(id)
-	Id.text = str(data.id)
+	id_label.text = str(data.id)
 
 func rename(new_name):
-	Title.text = new_name
+	title_label.text = new_name
 	renamed(new_name)
 
 func renamed(new_name):
 	emit_signal('changed')
-	Parent.emit_signal('node_renamed', data.name, new_name)
+	parent.emit_signal('node_renamed', data.name, new_name)
 	data.name = new_name
 
 # ******************************************************************************
@@ -159,7 +159,7 @@ func renamed(new_name):
 func get_data() -> Dictionary:
 	var _data = data.duplicate(true)
 	_data.position = var_to_str(Rect2(position_offset.round(), size.round()))
-	_data.name = Title.text
+	_data.name = title_label.text
 	if _data.next == 'none':
 		_data.erase('next')
 	if _data.default == false:

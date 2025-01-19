@@ -1,15 +1,27 @@
-[gd_scene load_steps=3 format=3 uid="uid://dqog4ebqwf6ud"]
+[gd_scene load_steps=8 format=3 uid="uid://dqog4ebqwf6ud"]
 
 [ext_resource type="Script" uid="uid://ogse0akxkt4a" path="res://addons/skein/nodes/BaseNode.gd" id="1"]
+[ext_resource type="Theme" uid="uid://cofxhbjxv1xcq" path="res://addons/skein/resources/theme.tres" id="1_4170h"]
+[ext_resource type="StyleBox" uid="uid://c62yl56shebjh" path="res://addons/skein/resources/graphnode.tres" id="2_jkxjg"]
 [ext_resource type="PackedScene" path="res://addons/skein/nodes/common/LabelEdit.tscn" id="3"]
+[ext_resource type="StyleBox" uid="uid://bpab8dy2hpmsi" path="res://addons/skein/resources/graphnode_selected.tres" id="3_8u7vx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jkxjg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_21gcy"]
 
 [node name="1" type="GraphNode"]
-anchors_preset = -1
 offset_right = 200.0
 offset_bottom = 200.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_4170h")
+theme_override_styles/panel = ExtResource("2_jkxjg")
+theme_override_styles/panel_selected = ExtResource("3_8u7vx")
+theme_override_styles/titlebar = SubResource("StyleBoxEmpty_jkxjg")
+theme_override_styles/titlebar_selected = SubResource("StyleBoxEmpty_21gcy")
 resizable = true
+selected = true
 slot/0/left_enabled = false
 slot/0/left_type = 0
 slot/0/left_color = Color(1, 1, 1, 1)
@@ -30,8 +42,8 @@ mouse_filter = 1
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
-offset_top = -44.0
-offset_bottom = -11.0
+offset_top = -59.0
+offset_bottom = -27.0
 grow_horizontal = 2
 mouse_filter = 2
 alignment = 2
@@ -72,3 +84,12 @@ text = "E"
 layout_mode = 2
 text = "X"
 flat = true
+
+[node name="ColorRect" type="ColorRect" parent="Body"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

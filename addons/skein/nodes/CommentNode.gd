@@ -4,8 +4,8 @@ extends 'BaseNode.gd'
 # ******************************************************************************
 
 @onready var color_picker = find_child('ColorPickerButton')
-@onready var Tooltip = find_child('Tooltip')
-@onready var TooltipBG = find_child('TooltipBG')
+@onready var tooltip = find_child('Tooltip')
+@onready var tooltip_bg = find_child('TooltipBG')
 
 # ******************************************************************************
 
@@ -13,8 +13,8 @@ func _ready():
 	color_picker.get_picker()
 	color_picker.get_popup()
 	color_picker.color_changed.connect(self.set_color)
-	Tooltip.hide()
-	Title.text_changed.connect(Tooltip.set_text)
+	tooltip.hide()
+	title_label.text_changed.connect(tooltip.set_text)
 
 	var parent = get_parent()
 	if parent is GraphEdit:
@@ -26,7 +26,7 @@ func _ready():
 
 func set_color(color):
 	self_modulate = color
-	TooltipBG.modulate = color
+	tooltip_bg.modulate = color
 
 # ******************************************************************************
 
@@ -69,17 +69,17 @@ func set_stylebox_borders(stylebox: StyleBox, width):
 	stylebox.border_width_right = width
 
 func zoom_changed(zoom):
-	Tooltip.hide()
+	tooltip.hide()
 
 	var width = max(round(1 / zoom), 1) as int
 
 	# set_stylebox_borders(theme.get_stylebox('comment', 'GraphNode'), width)
 	# set_stylebox_borders(theme.get_stylebox('comment_focus', 'GraphNode'), width)
-	# set_stylebox_borders(TooltipBG.get_stylebox('panel'), width)
+	# set_stylebox_borders(tooltip_bg.get_stylebox('panel'), width)
 
 	if zoom < .8:
-		Tooltip.show()
-		# Tooltip.theme.default_font.size = round(16 / zoom)
+		tooltip.show()
+		# tooltip.theme.default_font.size = round(16 / zoom)
 
 # ******************************************************************************
 
@@ -90,9 +90,9 @@ func get_data():
 
 func set_data(new_data):
 	if 'name' in new_data:
-		Tooltip.text = new_data.name
+		tooltip.text = new_data.name
 	if 'color' in new_data:
 		self_modulate = Color(new_data.color)
-		TooltipBG.modulate = Color(new_data.color)
+		tooltip_bg.modulate = Color(new_data.color)
 		color_picker.color = Color(new_data.color)
 	super.set_data(new_data)
