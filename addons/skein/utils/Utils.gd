@@ -3,7 +3,7 @@ extends Node
 
 # ******************************************************************************
 
-func reparent_node(node:Node, new_parent:Node, legible_unique_name:=false) -> void:
+func reparent_node(node: Node, new_parent: Node, legible_unique_name:=false) -> void:
 	if !is_instance_valid(node) or !is_instance_valid(new_parent):
 		return
 
@@ -17,8 +17,13 @@ func reparent_node(node:Node, new_parent:Node, legible_unique_name:=false) -> vo
 
 func try_connect(src, sig, dest, method, args=[], flags=0):
 	if dest.has_method(method):
-		if !src.is_connected(sig, Callable(dest,method)):
-			src.connect(sig, Callable(dest, method).bind(args),flags)
+		if !src.is_connected(sig, Callable(dest, method)):
+			src.connect(sig, Callable(dest, method).bind(args), flags)
+
+func connect_all(src: Node, dest: Node, prefix:=''):
+	for sig in src.get_signal_list():
+		if dest.has_method(prefix + sig.name):
+			src.connect(sig.name, dest.get(prefix + sig.name))
 
 # ******************************************************************************
 

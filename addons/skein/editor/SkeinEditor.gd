@@ -52,18 +52,10 @@ func _ready():
 
 	Skein.refreshed.connect(tree.refresh)
 	tree.folder_collapsed.connect(self.save_editor_data)
-	tree.create_folder.connect(self.create_folder)
-	tree.delete_folder.connect(self.delete_folder)
-	tree.rename_folder.connect(self.rename_folder)
-	tree.change_conversation.connect(self.change_conversation)
-	tree.create_conversation.connect(self.create_conversation)
-	tree.delete_conversation.connect(self.delete_conversation)
-	tree.rename_conversation.connect(self.rename_conversation)
-	tree.select_node.connect(graphedit.select_node)
-	tree.focus_node.connect(self.focus_card)
-	tree.rename_node.connect(graphedit.rename_node)
-	tree.delete_node.connect(graphedit.delete_node)
 	tree.run_node.connect(self.run)
+
+	Skein.Utils.connect_all(tree, self)
+	Skein.Utils.connect_all(tree, graphedit)
 
 	ToggleLeftPanel.pressed.connect(self.toggle_left_panel)
 	ToggleRightPanel.pressed.connect(self.toggle_right_panel)
@@ -71,12 +63,7 @@ func _ready():
 	# right sidebar should be closed by default
 	RightSidebar.hide()
 
-	graphedit.node_renamed.connect(self.node_renamed)
-	graphedit.node_created.connect(self.node_created)
-	graphedit.node_deleted.connect(self.node_deleted)
-	graphedit.node_selected.connect(self.node_selected)
-
-	graphedit.node_changed.connect(self.node_changed)
+	Skein.Utils.connect_all(graphedit, self)
 
 	if plugin:
 		SettingsMenu.add_item('Set as Preferred Editor', [plugin, 'set_preferred_editor', location])
@@ -261,7 +248,7 @@ func rename_conversation(old, new):
 	load_conversation(new)
 	Skein.refresh()
 
-func focus_card(path):
+func focus_node(path):
 	var _path = path.trim_prefix(Skein.Files.conversation_prefix)
 	var parts = _path.split(':')
 	if parts[0] != current_conversation:
