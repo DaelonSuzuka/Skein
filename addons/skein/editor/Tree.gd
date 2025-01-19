@@ -73,15 +73,15 @@ func _refresh():
 
 	var items := {}
 
-	var dir := DirAccess.open(Skein.conversation_prefix)
-	var files = Skein.files.get_all_files_and_folders(Skein.conversation_prefix)
-	files.erase(Skein.conversation_prefix.trim_suffix('/'))
-	files.erase(Skein.conversation_prefix)
+	var dir := DirAccess.open(Skein.Files.conversation_prefix)
+	var files = Skein.Files.get_all_files_and_folders(Skein.Files.conversation_prefix)
+	files.erase(Skein.Files.conversation_prefix.trim_suffix('/'))
+	files.erase(Skein.Files.conversation_prefix)
 
 	var file_data = []
 
 	for file in files:
-		var path = file.trim_prefix(Skein.conversation_prefix)
+		var path = file.trim_prefix(Skein.Files.conversation_prefix)
 		if file == 'res://conversations':
 			continue
 
@@ -170,7 +170,7 @@ func create_node_item(parent, path, node):
 func create_folder_item(parent, path):
 	var item = create_item(parent)
 
-	var p = path.trim_prefix(Skein.conversation_prefix)
+	var p = path.trim_prefix(Skein.Files.conversation_prefix)
 	if p in folder_state:
 		item.collapsed = folder_state[p].collapsed
 	else:
@@ -178,10 +178,10 @@ func create_folder_item(parent, path):
 
 	item.set_custom_color(0, Color.DARK_GRAY)
 	item.set_meta('type', 'folder')
-	item.set_meta('path', path.trim_prefix(Skein.conversation_prefix))
+	item.set_meta('path', path.trim_prefix(Skein.Files.conversation_prefix))
 	item.set_text(0, path.get_file())
 	item.set_meta('name', path.get_file())
-	item.set_tooltip_text(0, path.trim_prefix(Skein.conversation_prefix))
+	item.set_tooltip_text(0, path.trim_prefix(Skein.Files.conversation_prefix))
 	return item
 
 # ******************************************************************************
@@ -264,7 +264,7 @@ func _on_item_edited():
 	match type:
 		'file':
 			if new:
-				emit_signal('create_conversation', Skein.conversation_prefix + path)
+				emit_signal('create_conversation', Skein.Files.conversation_prefix + path)
 			else:
 				var new_path = path.trim_suffix(item.get_meta('name')) + name
 				item.set_meta('path', new_path)
@@ -272,8 +272,8 @@ func _on_item_edited():
 				emit_signal('rename_conversation', path, new_path)
 		'folder':
 			if new:
-				folder_state[Skein.conversation_prefix + path] = {'collapsed': false}
-				emit_signal('create_folder', Skein.conversation_prefix + path)
+				folder_state[Skein.Files.conversation_prefix + path] = {'collapsed': false}
+				emit_signal('create_folder', Skein.Files.conversation_prefix + path)
 			else:
 				var new_path = path.trim_suffix(path.get_file()) + name + '/'
 				item.set_meta('path', new_path)
@@ -366,7 +366,7 @@ func context_menu_item_selected(selection: String) -> void:
 			ge.set_nodes(nodes)
 			nodes = ge.get_nodes()
 			if nodes:
-				Skein.save_yarn(Skein.conversation_prefix + path.replace('.json', '.yarn'), nodes)
+				Skein.save_yarn(Skein.Files.conversation_prefix + path.replace('.json', '.yarn'), nodes)
 			Skein.refresh()
 		'New File':
 			var item = create_item(get_selected())
@@ -392,7 +392,7 @@ func context_menu_item_selected(selection: String) -> void:
 			var path = item.get_meta('path')
 			path = path.replace('.yarn', '')
 			path = path.replace('.json', '')
-			DisplayServer.clipboard_set(path.trim_prefix(Skein.conversation_prefix))
+			DisplayServer.clipboard_set(path.trim_prefix(Skein.Files.conversation_prefix))
 		'Rename':
 			_start_rename()
 		'Run':

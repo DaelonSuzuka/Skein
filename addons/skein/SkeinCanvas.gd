@@ -32,8 +32,8 @@ func popup_dialog(object, conversation, options={}):
 
 	popup.connect("done", Callable(self,'_popup_over'))
 
-	# Skein.utils.try_connect(popup, Callable('line_finished',object).bind('line_finished'))
-	# Skein.utils.try_connect(popup, Callable('done',object).bind('popup_over'))
+	# Skein.Utils.try_connect(popup, Callable('line_finished',object).bind('line_finished'))
+	# Skein.Utils.try_connect(popup, Callable('done',object).bind('popup_over'))
 
 	return popup
 
@@ -50,10 +50,10 @@ func start_dialog(object, conversation, options={}):
 	options['caller'] = object
 	dialog.start(conversation, options)
 
-	dialog.done.connect(Skein.sandbox.clear_temp_locals ,CONNECT_ONE_SHOT)
+	dialog.done.connect(Skein.Sandbox.clear_temp_locals ,CONNECT_ONE_SHOT)
 	
 	# TODO disconnect this when done?
-	# Skein.utils.try_connect(dialog, Callable('line_finished',object).bind('line_finished'))
-	# Skein.utils.try_connect(dialog, Callable('done',object).bind('done'),[],CONNECT_ONE_SHOT)
+	# Skein.Utils.try_connect(dialog, Callable('line_finished',object).bind('line_finished'))
+	# Skein.Utils.try_connect(dialog, Callable('done',object).bind('done'),[],CONNECT_ONE_SHOT)
 
 	return dialog

@@ -47,7 +47,7 @@ Symbols available to executed code:
 Adding locals:
 
 ```
-Skein.sandbox.add_locals({
+Skein.Sandbox.add_locals({
 	'Game': Game,
 	'Player': Player,
 })

@@ -3,7 +3,37 @@ extends Node
 
 # ******************************************************************************
 
-func check_extension(file, ext=null) -> bool:
+var prefix := 'user://' if OS.has_feature('HTML5') else 'res://'
+
+func ensure_prefix(path: String):
+	if path.begins_with(prefix):
+		return path
+
+	if path.begins_with(conversation_path):
+		path = prefix + path
+	else:
+		path = conversation_prefix + path
+
+	return path
+
+# ------------------------------------------------------------------------------
+
+var characters_path := 'characters/'
+var characters_prefix := prefix + characters_path
+var character_map_path := characters_path + 'other_characters.json'
+
+var conversation_path := 'conversations/'
+var conversation_prefix := prefix + conversation_path
+
+func validate_paths():
+	if !DirAccess.dir_exists_absolute(characters_prefix):
+		DirAccess.make_dir_recursive_absolute(characters_prefix)
+	if !DirAccess.dir_exists_absolute(conversation_prefix):
+		DirAccess.make_dir_recursive_absolute(conversation_prefix)
+
+# ******************************************************************************
+
+func check_extension(file: String, ext=null) -> bool:
 	if ext:
 		if ext is String:
 			if file.ends_with(ext):
@@ -15,7 +45,7 @@ func check_extension(file, ext=null) -> bool:
 	return false
 
 # get all files in given directory with optional extension filter
-func get_files(path: String, ext='') -> Array:
+func get_files(path: String, ext=null) -> Array:
 	var _files = []
 	var dir := DirAccess.open(path)
 	dir.list_dir_begin()
@@ -37,7 +67,7 @@ func get_files(path: String, ext='') -> Array:
 	return _files
 
 # get all files in given directory(and subdirectories, to a given depth) with optional extension filter
-func get_all_files(path: String, ext='', max_depth:=10, _depth:=0, _files:=[]) -> Array:
+func get_all_files(path: String, ext=null, max_depth:=10, _depth:=0, _files:=[]) -> Array:
 	if _depth >= max_depth:
 		return []
 
@@ -94,3 +124,34 @@ func get_all_folders(path: String, max_depth:=10, _depth:=0, _files:=[]) -> Arra
 		file = dir.get_next()
 	dir.list_dir_end()
 	return _files
+
+# ******************************************************************************
+
+func save_json(path: String, data) -> void:
+	if data == null or data == {}:
+		return
+	if !path.begins_with('res://') and !path.begins_with('user://'):
+		path = prefix + path
+
+	DirAccess.make_dir_recursive_absolute(path.get_base_dir())
+
+	var f = FileAccess.open(path, FileAccess.WRITE)
+	if f and f.is_open():
+		f.store_string(JSON.stringify(data, '\t'))
+
+func load_json(path: String, default=null):
+	if !path.begins_with('res://') and !path.begins_with('user://'):
+		path = prefix + path
+	var result = default
+
+	var f := FileAccess.open(path, FileAccess.READ)
+	if f and f.is_open():
+		var text = f.get_as_text()
+
+		var parse = JSON.parse_string(text)
+		# var test_json_conv = JSON.new()
+		# test_json_conv.parse(text)
+		# var parse = test_json_conv.get_data()
+		if parse is Dictionary:
+			result = parse
+	return result

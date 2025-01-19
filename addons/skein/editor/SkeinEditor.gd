@@ -152,13 +152,13 @@ func change_conversation(path):
 	save_editor_data()
 	load_conversation(path)
 
-	var _path = path.trim_prefix(Skein.conversation_prefix)
+	var _path = path.trim_prefix(Skein.Files.conversation_prefix)
 	var parts = _path.split(':')
 	if len(parts) > 1:
 		graphedit.focus_node(parts[1])
 
 func load_conversation(path, force := false):
-	var _path = path.trim_prefix(Skein.conversation_prefix)
+	var _path = path.trim_prefix(Skein.Files.conversation_prefix)
 	var parts = _path.split(':')
 	var name = parts[0]
 
@@ -239,7 +239,7 @@ func really_delete_conversation():
 	# 	current_conversation = ''
 	# editor_data.erase(delete_path)
 	# save_editor_data()
-	# if delete_path.begins_with(Skein.prefix):
+	# if delete_path.begins_with(Skein.Files.prefix):
 	# 	DirAccess.remove_at(delete_path)
 	# if delete_path in Skein.conversations:
 	# 	DirAccess.remove_at(Skein.conversations[delete_path])
@@ -256,13 +256,13 @@ func rename_conversation(old, new):
 		editor_data[new] = editor_data[old]
 		editor_data.erase(old)
 	save_editor_data()
-	var dir := DirAccess.open(Skein.conversation_prefix)
+	var dir := DirAccess.open(Skein.Files.conversation_prefix)
 	dir.rename(old, new)
 	load_conversation(new)
 	Skein.refresh()
 
 func focus_card(path):
-	var _path = path.trim_prefix(Skein.conversation_prefix)
+	var _path = path.trim_prefix(Skein.Files.conversation_prefix)
 	var parts = _path.split(':')
 	if parts[0] != current_conversation:
 		save_conversation()
@@ -292,10 +292,10 @@ func select_card(path):
 # ******************************************************************************
 
 func character_added(path):
-	var char_map = Skein.load_json(Skein.character_map_path, {})
+	var char_map = Skein.Files.load_json(Skein.character_map_path, {})
 	var c = load(path).instantiate()
 	char_map[c.name] = path
-	Skein.save_json(Skein.character_map_path, char_map)
+	Skein.Files.save_json(Skein.character_map_path, char_map)
 	Skein.refresh()
 
 # ******************************************************************************
@@ -349,7 +349,7 @@ var editor_data_file_name = 'user://skein/editor_data.json'
 func save_editor_data():
 	if current_conversation == '':
 		return
-	var data = Skein.load_json(editor_data_file_name, {})
+	var data = Skein.Files.load_json(editor_data_file_name, {})
 	if !(location in data):
 		data[location] = {
 			'conversation_data': {}
@@ -363,10 +363,10 @@ func save_editor_data():
 	data[location]['right_panel_size'] = RightPanelSplit.split_offset
 	data[location]['right_panel_collapsed'] = RightSidebar.visible
 	data[location]['conversation_data'][current_conversation] = graphedit.get_data()
-	Skein.save_json(editor_data_file_name, data)
+	Skein.Files.save_json(editor_data_file_name, data)
 
 func load_editor_data():
-	var data = Skein.load_json(editor_data_file_name, {})
+	var data = Skein.Files.load_json(editor_data_file_name, {})
 	if data == {} or !(location in data):
 		editor_data['current_conversation'] = '0 Introduction'
 		load_conversation(editor_data['current_conversation'])

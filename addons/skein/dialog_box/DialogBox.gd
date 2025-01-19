@@ -182,7 +182,7 @@ func start(conversation, options={}):
 	remove_options()
 
 	# parse conversation string
-	conversation = conversation.trim_prefix(Skein.prefix)
+	conversation = conversation.trim_prefix(Skein.Files.prefix)
 
 	var parts = conversation.split(':')
 	if parts.size() >= 2:
@@ -417,7 +417,7 @@ func next_line():
 
 			var speaker = Skein.characters[name]
 			if !portrait_container.is_ancestor_of(speaker):
-				Skein.utils.reparent_node(speaker, portrait_container)
+				Skein.Utils.reparent_node(speaker, portrait_container)
 				emit_signal('actor_joined', speaker)
 
 			next_speaker = speaker
@@ -770,7 +770,7 @@ func apply_directive(dir):
 # ******************************************************************************
 
 func evaluate(input: String=''):
-	var ctx = Skein.sandbox.get_eval_context()
+	var ctx = Skein.Sandbox.get_eval_context()
 
 	ctx.variable('onready var caller = get_parent().caller')
 	ctx.variable('onready var dialog = get_parent()')
@@ -820,6 +820,6 @@ func evaluate(input: String=''):
 	add_child(context)
 
 	if assignment and is_assignment:
-		return Skein.sandbox.evaluate('_do_assignment()', context)
+		return Skein.Sandbox.evaluate('_do_assignment()', context)
 
-	return Skein.sandbox.evaluate(input, context)
+	return Skein.Sandbox.evaluate(input, context)

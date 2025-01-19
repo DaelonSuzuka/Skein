@@ -69,7 +69,7 @@ func accepted():
 	var item = tree.get_selected()
 	var type = item.get_meta('type')
 	var path = item.get_meta('path')
-	path = path.trim_prefix(Skein.conversation_prefix)
+	path = path.trim_prefix(Skein.Files.conversation_prefix)
 	match type:
 			'file':
 				selected_object.conversation = path
