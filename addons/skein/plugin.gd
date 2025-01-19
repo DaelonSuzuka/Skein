@@ -8,10 +8,10 @@ var settings
 
 const singleton_path = 'res://addons/skein/SkeinSingleton.tscn'
 
-const inspector_class = 'res://addons/skein/SkeinInspectorPlugin.gd'
+const SkeinInspector = preload('res://addons/skein/SkeinInspectorPlugin.gd')
 var inspector_instance
 
-const editor_class = 'res://addons/skein/editor/SkeinEditor.tscn'
+const SkeinEditor = preload('res://addons/skein/editor/SkeinEditor.tscn')
 
 var editors = {
 	top = null,
@@ -32,7 +32,6 @@ func _disable_plugin():
 
 func _enter_tree():
 	name = self._plugin_name
-	# Skein.plugin = self
 
 	settings = get_editor_interface().get_editor_settings()
 
@@ -46,17 +45,17 @@ func _enter_tree():
 	add_setting(property_info)
 
 	if self.enabled:
-		# inspector_instance = load(inspector_class).instantiate()
-		# inspector_instance.plugin = self
-		# add_inspector_plugin(inspector_instance)
+		inspector_instance = SkeinInspector.new()
+		inspector_instance.plugin = self
+		add_inspector_plugin(inspector_instance)
 
-		editors.top = load(editor_class).instantiate()
+		editors.top = SkeinEditor.instantiate()
 		editors.top.plugin = self
 		editors.top.location = 'top'
 		editors.top.visible = false
 		get_editor_interface().get_editor_main_screen().add_child(editors.top)
 
-		editors.bottom = load(editor_class).instantiate()
+		editors.bottom = SkeinEditor.instantiate()
 		editors.bottom.plugin = self
 		editors.bottom.location = 'bottom'
 		add_control_to_bottom_panel(editors.bottom, 'Skein')
