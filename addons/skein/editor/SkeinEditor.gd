@@ -100,7 +100,7 @@ func refresh():
 		return
 
 	load_editor_data()
-	var zoom_hbox = graphedit.get_zoom_hbox()
+	var zoom_hbox = graphedit.get_menu_hbox()
 	var zoom_container = GraphToolbar.find_child('ZoomContainer')
 	zoom_hbox.get_parent().remove_child(zoom_hbox)
 	zoom_container.add_child(zoom_hbox)
@@ -127,16 +127,20 @@ func toggle_right_panel():
 	RightSidebar.visible = !RightSidebar.visible
 
 func reset_font_size():
-	theme.default_font.size = 12
+	pass
+	# theme.default_font.size = 12
 
 func set_font_size(amount):
-	theme.default_font.size += amount
+	pass
+	# theme.default_font.size += amount
 
 func dialog_font_minus():
-	DialogBox.theme.default_font.size -= 1
+	pass
+	# DialogBox.theme.default_font.size -= 1
 
 func dialog_font_plus():
-	DialogBox.theme.default_font.size += 1
+	pass
+	# DialogBox.theme.default_font.size += 1
 
 # ******************************************************************************
 

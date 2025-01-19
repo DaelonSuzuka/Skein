@@ -188,8 +188,8 @@ func load_json(path, default=null):
 		path = Skein.prefix + path
 	var result = default
 
-	var f = FileAccess.open(path, FileAccess.READ)
-	if f.is_open():
+	var f := FileAccess.open(path, FileAccess.READ)
+	if f and f.is_open():
 		var text = f.get_as_text()
 
 		var parse = JSON.parse_string(text)

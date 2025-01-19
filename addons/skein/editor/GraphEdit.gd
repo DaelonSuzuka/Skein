@@ -121,7 +121,7 @@ func create_node(data=null) -> Node:
 	emit_signal('node_created', node)
 	contents_changed()
 
-	node.close_request.connect(self.delete_node.bind(node))
+	# node.close_request.connect(self.delete_node.bind(node))
 	node.changed.connect(self.contents_changed)
 
 	return node
@@ -131,9 +131,9 @@ func delete_node(node) -> void:
 	if str(node) in nodes:
 		node = nodes[str(node)]
 
-	for con in get_connection_list():
-		if con['from'] == node.name or con['to'] == node.name:
-			request_disconnection(con['from'], con['from_port'], con['to'], con['to_port'])
+	for con in self.connections:
+		if con['from_node'] == node.name or con['to_node'] == node.name:
+			request_disconnection(con['from_node'], con['from_port'], con['to_node'], con['to_port'])
 	var id = node.data.id
 	nodes.erase(id)
 	node.queue_free()
@@ -154,8 +154,8 @@ func select_node(node):
 # ******************************************************************************
 
 func request_connection(from, from_slot, to, to_slot) -> bool:
-	for con in get_connection_list():
-		if con['from'] == from:
+	for con in self.connections:
+		if con['from_node'] == from:
 			if con['from_port'] == from_slot:
 				return false
 	if !has_node(str(from)):
