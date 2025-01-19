@@ -772,35 +772,35 @@ func apply_directive(dir):
 func evaluate(input: String=''):
 	var ctx = Skein.Sandbox.get_eval_context()
 
-	ctx.variable('onready var caller = get_parent().caller')
-	ctx.variable('onready var dialog = get_parent()')
-	# ctx.variable('onready var scene = get_parent().caller.owner')
+	ctx.variable('@onready var caller = get_parent().caller')
+	ctx.variable('@onready var dialog = get_parent()')
+	ctx.variable('@onready var scene = get_parent().caller.owner')
 
-	ctx.variable('var _text_cooldown = ' + str(text_cooldown))
-	ctx.method(
-		'func speed(value=_text_cooldown):',
-		[
-			'get_parent().next_char_cooldown = value',
-		]
-	)
-	ctx.method(
-		'func jump(node):',
-		[
-			'get_parent().jump_to(node)',
-		]
-	)
-	ctx.method(
-		'func await object=null.sig=nothing:',
-		[
-			'get_parent()._await object.sig',
-		]
-	)
-	ctx.method(
-		'func timer(duration):',
-		[
-			'return get_tree().create_timer(duration)',
-		]
-	)
+	# ctx.variable('var _text_cooldown = ' + str(text_cooldown))
+	# ctx.method(
+	# 	'func speed(value=_text_cooldown):',
+	# 	[
+	# 		'get_parent().next_char_cooldown = value',
+	# 	]
+	# )
+	# ctx.method(
+	# 	'func jump(node):',
+	# 	[
+	# 		'get_parent().jump_to(node)',
+	# 	]
+	# )
+	# ctx.method(
+	# 	'func await object=null.sig=nothing:',
+	# 	[
+	# 		'get_parent()._await object.sig',
+	# 	]
+	# )
+	# ctx.method(
+	# 	'func timer(duration):',
+	# 	[
+	# 		'return get_tree().create_timer(duration)',
+	# 	]
+	# )
 
 
 	var is_assignment = false
