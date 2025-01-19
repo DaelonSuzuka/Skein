@@ -53,7 +53,7 @@ func contents_changed():
 
 # ******************************************************************************
 
-var ctx = null
+var ctx: SkeinContextMenu = null
 var ctx_position := Vector2()
 
 func dismiss_ctx() -> void:
@@ -101,7 +101,7 @@ func get_id() -> int:
 	used_ids.append(id)
 	return id
 
-func create_node(data=null) -> Node:
+func create_node(data = null) -> Node:
 	var node
 	if data:
 		node = node_types[data.type].instantiate()
@@ -339,7 +339,7 @@ func get_data() -> Dictionary:
 		minimap_enabled = minimap_enabled,
 		minimap_opacity = minimap_opacity,
 		minimap_size = var_to_str(minimap_size),
-		snap={
+		snap = {
 			checked = snapping_enabled,
 			step = snapping_distance,
 		},

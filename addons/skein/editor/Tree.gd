@@ -318,7 +318,7 @@ func delete_item(id):
 
 # ******************************************************************************
 
-var ctx = null
+var ctx: SkeinContextMenu = null
 
 func open_context_menu(position) -> void:
 	if ctx:
