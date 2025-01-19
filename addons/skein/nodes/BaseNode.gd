@@ -37,14 +37,14 @@ signal changed
 # ******************************************************************************
 
 func _ready() -> void:
-	CloseButton.pressed.connect(self.emit_signal.bind('close_request'))
+	CloseButton.pressed.connect(self.emit_signal.bind('delete_request'))
 	resize_request.connect(self._resize_request)
 	gui_input.connect(self._gui_input)
 
 	Title.text_changed.connect(self.renamed)
 
 func _resize_request(new_minsize: Vector2) -> void:
-	emit_signal('changed')
+	self.changed.emit()
 	if get_parent().snapping_enabled:
 		var snap = get_parent().get_snap()
 		size = new_minsize.snapped(Vector2(snap, snap))
