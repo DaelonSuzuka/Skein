@@ -27,7 +27,7 @@ extends Control
 
 @export var location := 'default'
 
-var plugin = null
+var plugin: EditorPlugin = null
 var current_conversation := ''
 var editor_data := {}
 var ignore_next_refresh := false
