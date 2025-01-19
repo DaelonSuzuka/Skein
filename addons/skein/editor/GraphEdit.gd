@@ -47,6 +47,12 @@ func _ready() -> void:
 
 	end_node_move.connect(self.contents_changed)
 
+func _gui_input(event: InputEvent) -> void:
+	if event is InputEventKey:
+		if event.as_text() == 'Ctrl+A' and event.pressed:
+			for node in self.nodes.values():
+				node.selected = true
+
 func contents_changed():
 	if notify_changes:
 		emit_signal('node_changed')

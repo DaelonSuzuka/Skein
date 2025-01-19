@@ -127,20 +127,16 @@ func toggle_right_panel():
 	RightSidebar.visible = !RightSidebar.visible
 
 func reset_font_size():
-	pass
-	# theme.default_font.size = 12
+	theme.default_font.size = 12
 
 func set_font_size(amount):
-	pass
-	# theme.default_font.size += amount
+	theme.default_font.size += amount
 
 func dialog_font_minus():
-	pass
-	# DialogBox.theme.default_font.size -= 1
+	DialogBox.theme.default_font.size -= 1
 
 func dialog_font_plus():
-	pass
-	# DialogBox.theme.default_font.size += 1
+	DialogBox.theme.default_font.size += 1
 
 # ******************************************************************************
 
@@ -161,7 +157,7 @@ func change_conversation(path):
 	if len(parts) > 1:
 		graphedit.focus_node(parts[1])
 
-func load_conversation(path, force:=false):
+func load_conversation(path, force := false):
 	var _path = path.trim_prefix(Skein.conversation_prefix)
 	var parts = _path.split(':')
 	var name = parts[0]
@@ -216,7 +212,7 @@ func delete_conversation(path):
 	delete_path = path
 	ConfirmDelete.dialog_text = 'Really delete conversation "' + path.get_file() + '" ?\n'
 	var nodes = Skein.load_conversation(path, {}).values()
-	nodes.sort_custom(Callable(self,'sort'))
+	nodes.sort_custom(Callable(self, 'sort'))
 	var line_count = 0
 	for i in range(nodes.size()):
 		var count = nodes[i].text.split('\n').size()
@@ -228,10 +224,10 @@ func delete_conversation(path):
 	if nodes.size() > 10 or line_count > 25:
 		ConfirmDelete.get_ok_button().disabled = true
 		ConfirmDelete.get_ok_button().text = '3..'
-		get_tree().create_timer(1.0).timeout.connect(Callable(ConfirmDelete.get_ok_button(),'set_text').bind('2..'))
-		get_tree().create_timer(2.0).timeout.connect(Callable(ConfirmDelete.get_ok_button(),'set_text').bind('1..'))
-		get_tree().create_timer(3.0).timeout.connect(Callable(ConfirmDelete.get_ok_button(),'set_text').bind('Ok'))
-		get_tree().create_timer(3.0).timeout.connect(Callable(ConfirmDelete.get_ok_button(),'set_disabled').bind([false]))
+		get_tree().create_timer(1.0).timeout.connect(Callable(ConfirmDelete.get_ok_button(), 'set_text').bind('2..'))
+		get_tree().create_timer(2.0).timeout.connect(Callable(ConfirmDelete.get_ok_button(), 'set_text').bind('1..'))
+		get_tree().create_timer(3.0).timeout.connect(Callable(ConfirmDelete.get_ok_button(), 'set_text').bind('Ok'))
+		get_tree().create_timer(3.0).timeout.connect(Callable(ConfirmDelete.get_ok_button(), 'set_disabled').bind([false]))
 	ConfirmDelete.popup_centered()
 	ConfirmDelete.size.y = 0
 	ConfirmationDimmer.show()
@@ -356,7 +352,7 @@ func save_editor_data():
 	var data = Skein.load_json(editor_data_file_name, {})
 	if !(location in data):
 		data[location] = {
-			'conversation_data' : {}
+			'conversation_data': {}
 		}
 	
 	data[location]['folder_state'] = tree.folder_state

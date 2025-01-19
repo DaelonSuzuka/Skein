@@ -73,13 +73,13 @@ func zoom_changed(zoom):
 
 	var width = max(round(1 / zoom), 1) as int
 
-	# set_stylebox_borders(theme.get_stylebox('comment', 'GraphNode'), width)
-	# set_stylebox_borders(theme.get_stylebox('comment_focus', 'GraphNode'), width)
+	set_stylebox_borders(theme.get_stylebox('comment', 'GraphNode'), width)
+	set_stylebox_borders(theme.get_stylebox('comment_focus', 'GraphNode'), width)
 	# set_stylebox_borders(tooltip_bg.get_stylebox('panel'), width)
 
 	if zoom < .8:
 		tooltip.show()
-		# tooltip.theme.default_font.size = round(16 / zoom)
+		tooltip.theme.default_font.size = round(16 / zoom)
 
 # ******************************************************************************
 
