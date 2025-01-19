@@ -772,9 +772,9 @@ func apply_directive(dir):
 func evaluate(input: String=''):
 	var ctx = Skein.Sandbox.get_eval_context()
 
-	ctx.variable('@onready var caller = get_parent().caller')
-	ctx.variable('@onready var dialog = get_parent()')
-	ctx.variable('@onready var scene = get_parent().caller.owner')
+	# ctx.variable('@onready var caller = get_parent().caller')
+	# ctx.variable('@onready var dialog = get_parent()')
+	# ctx.variable('@onready var scene = get_parent().caller.owner')
 
 	# ctx.variable('var _text_cooldown = ' + str(text_cooldown))
 	# ctx.method(
