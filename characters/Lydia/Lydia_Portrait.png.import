@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/Lydia_Portrait.png-5b2023076f2c54a7dce63d5fbe
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

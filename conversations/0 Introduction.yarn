@@ -116,8 +116,8 @@ type: dialog
 position: Rect2(-430, -690, 480, 400)
 title: Dialog
 ---
-# Welcome to Diagraph
-# This file has an example dialogue that will demonstrate some of Diagraph's features.
+# Welcome to Skein
+# This file has an example dialogue that will demonstrate some of Skein's features.
 
 
 # Select the card below titled 'looking_for_lunch'

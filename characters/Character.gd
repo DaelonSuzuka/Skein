@@ -5,7 +5,7 @@ extends Node2D
 
 @export var color := Color()
 
-@onready var Portrait = get_node_or_null('Portrait')
+@onready var Portrait: AnimatedSprite2D = get_node_or_null('Portrait')
 @onready var BlipPlayer = get_node_or_null('BlipPlayer')
 
 var talk_base = ''
@@ -16,13 +16,13 @@ var _mood = ''
 
 func _ready():
 	if Portrait:
-		if Portrait.frames.has_animation('talk'):
+		if Portrait.sprite_frames.has_animation('talk'):
 			talk_base = 'talk'
-		elif Portrait.frames.has_animation('idle'):
+		elif Portrait.sprite_frames.has_animation('idle'):
 			talk_base = 'idle'
 
 		if talk_base:
-			talk_count = Portrait.frames.get_frame_count(talk_base)
+			talk_count = Portrait.sprite_frames.get_frame_count(talk_base)
 
 func talk(c):
 	if c in [' ', ',', '.']:
@@ -40,7 +40,7 @@ func talk(c):
 
 func idle():
 	var idle_anim = 'idle' + _mood
-	if Portrait and Portrait.frames.has_animation(idle_anim):
+	if Portrait and Portrait.sprite_frames.has_animation(idle_anim):
 		Portrait.play(idle_anim)
 
 # ******************************************************************************
@@ -51,6 +51,6 @@ func mood(mood_name=''):
 		_mood = '_' + mood_name
 
 	var talk_anim = talk_base + _mood
-	if Portrait and Portrait.frames.has_animation(talk_anim):
-		talk_count = Portrait.frames.get_frame_count(talk_anim)
+	if Portrait and Portrait.sprite_frames.has_animation(talk_anim):
+		talk_count = Portrait.sprite_frames.get_frame_count(talk_anim)
 	return self

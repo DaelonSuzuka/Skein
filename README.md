@@ -1,6 +1,6 @@
-# Diagraph
+# Skein
 
-Diagraph is a dialog management system that combines the expressiveness of a domain-specific-language like [yarn]() or [ink]() with the visual workflow of a node graph, and enables a rapid and powerful workflow by bringing these tools directly into the Godot editor.
+Skein is a dialog management system that combines the expressiveness of a domain-specific-language like [yarn]() or [ink]() with the visual workflow of a node graph, and enables a rapid and powerful workflow by bringing these tools directly into the Godot editor.
 
 # Features
 

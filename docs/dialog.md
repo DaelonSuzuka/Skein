@@ -1,4 +1,4 @@
-# Diagraph
+# Skein
 
 
 basic usage
@@ -32,7 +32,7 @@ A _ pauses printing for 1/4 second.
 
 Text surrounded by |pipes| is printed all at once, instead of one character at a time.
 
-Diagraph supports arbitrary code execution using { } and {{ }}. It will attempt to parse and execute anything inside curly braces.
+Skein supports arbitrary code execution using { } and {{ }}. It will attempt to parse and execute anything inside curly braces.
 
 Anything inside double curly braces is parsed, executed, and the return value is printed to the dialog box.
 
@@ -47,7 +47,7 @@ Symbols available to executed code:
 Adding locals:
 
 ```
-Diagraph.sandbox.add_locals({
+Skein.sandbox.add_locals({
 	'Game': Game,
 	'Player': Player,
 })

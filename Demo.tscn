@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://esfw33gp4vdy"]
+[gd_scene load_steps=3 format=3 uid="uid://esfw33gp4vdy"]
 
-[ext_resource type="Script" path="res://Demo.gd" id="1"]
-[ext_resource type="PackedScene" uid="uid://dh6om46glx45v" path="res://addons/diagraph/editor/DiagraphEditor.tscn" id="2"]
-[ext_resource type="Theme" uid="uid://bdqjde13chq0t" path="res://addons/diagraph/resources/theme.tres" id="3"]
+[ext_resource type="Script" uid="uid://drt0gs6nhw10x" path="res://Demo.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://dh6om46glx45v" path="res://addons/skein/editor/SkeinEditor.tscn" id="2"]
 
 [node name="Demo" type="CanvasLayer"]
 script = ExtResource("1")
@@ -14,42 +13,28 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("3")
 split_offset = -175
 
 [node name="VSplitContainer" type="VSplitContainer" parent="HSplitContainer"]
-offset_right = 969.0
-offset_bottom = 648.0
+layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="DiagraphEditor" parent="HSplitContainer/VSplitContainer" instance=ExtResource("2")]
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 969.0
-offset_bottom = 648.0
-grow_horizontal = 1
-grow_vertical = 1
+[node name="SkeinEditor" parent="HSplitContainer/VSplitContainer" instance=ExtResource("2")]
+layout_mode = 2
 
 [node name="Control" type="Control" parent="HSplitContainer"]
-layout_mode = 3
-anchors_preset = 0
-offset_left = 977.0
-offset_right = 1152.0
-offset_bottom = 648.0
+layout_mode = 2
 
 [node name="Panel" type="Panel" parent="HSplitContainer/Control"]
 modulate = Color(0.537255, 0.537255, 0.537255, 1)
-anchors_preset = 15
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/Control"]
-anchors_preset = 15
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 3.0
@@ -58,71 +43,52 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Control3" type="Control" parent="HSplitContainer/Control/VBoxContainer"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 169.0
+layout_mode = 2
 
 [node name="Label" type="Label" parent="HSplitContainer/Control/VBoxContainer"]
-offset_top = 4.0
-offset_right = 169.0
-offset_bottom = 34.0
+layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "These variables can be referenced inside your dialogues or in Branch nodes or Choice Conditions."
 mouse_filter = 1
 text = "Game Variables:"
 
 [node name="HSeparator" type="HSeparator" parent="HSplitContainer/Control/VBoxContainer"]
-offset_top = 38.0
-offset_right = 169.0
-offset_bottom = 42.0
+layout_mode = 2
 
 [node name="ScrollContainer" type="ScrollContainer" parent="HSplitContainer/Control/VBoxContainer"]
-offset_top = 46.0
-offset_right = 169.0
-offset_bottom = 632.0
+layout_mode = 2
 size_flags_vertical = 3
 
 [node name="DictBox" type="VBoxContainer" parent="HSplitContainer/Control/VBoxContainer/ScrollContainer"]
-offset_right = 169.0
-offset_bottom = 586.0
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="DictEntry" type="HBoxContainer" parent="HSplitContainer/Control/VBoxContainer/ScrollContainer/DictBox"]
 visible = false
-offset_right = 150.0
-offset_bottom = 25.0
+layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="DictKey" type="LineEdit" parent="HSplitContainer/Control/VBoxContainer/ScrollContainer/DictBox/DictEntry"]
-offset_right = 73.0
-offset_bottom = 25.0
+layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Key"
 editable = false
 
 [node name="DictValue" type="LineEdit" parent="HSplitContainer/Control/VBoxContainer/ScrollContainer/DictBox/DictEntry"]
-offset_left = 77.0
-offset_right = 150.0
-offset_bottom = 25.0
+layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Value"
 
 [node name="HSeparator2" type="HSeparator" parent="HSplitContainer/Control/VBoxContainer"]
-offset_top = 636.0
-offset_right = 169.0
-offset_bottom = 640.0
+layout_mode = 2
 
 [node name="Control" type="Control" parent="HSplitContainer/Control/VBoxContainer"]
-layout_mode = 3
-anchors_preset = 0
-offset_top = 644.0
-offset_right = 169.0
-offset_bottom = 644.0
+layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HSplitContainer/Control/VBoxContainer/Control"]
-anchors_preset = 15
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_bottom = -3.0
@@ -130,30 +96,21 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Key" type="LineEdit" parent="HSplitContainer/Control/VBoxContainer/Control/HBoxContainer"]
-offset_right = 60.0
-offset_bottom = 27.0
+layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Key"
 
 [node name="Value" type="LineEdit" parent="HSplitContainer/Control/VBoxContainer/Control/HBoxContainer"]
-offset_left = 64.0
-offset_right = 124.0
-offset_bottom = 27.0
+layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Value"
 
 [node name="Add" type="Button" parent="HSplitContainer/Control/VBoxContainer/Control/HBoxContainer"]
-offset_left = 128.0
-offset_right = 169.0
-offset_bottom = 27.0
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.5
 disabled = true
 text = "Add"
 
 [node name="Control2" type="Control" parent="HSplitContainer/Control/VBoxContainer"]
-layout_mode = 3
-anchors_preset = 0
-offset_top = 648.0
-offset_right = 169.0
-offset_bottom = 648.0
+layout_mode = 2
