@@ -12,20 +12,20 @@ var ep = null
 var select_button = null
 var edit_button = null
 
-func can_handle(object):
+func _can_handle(object):
 	selected_object = null
 	return object is Node and object.get('conversation') != null
 
-func parse_property(object, type, path, hint, hint_text, usage) -> bool:
-	if path == 'conversation':
+func _parse_property(object: Object, type: Variant.Type, name: String, hint_type: PropertyHint, hint_string: String, usage_flags: int, wide: bool) -> bool:
+	if name == 'conversation':
 		selected_object = object
 		add_control()
 
-	return false
+	return true
 
 func add_control():
 	ep = EditorProperty.new()
-	var hbox = HBox.new()
+	var hbox = HBox.new(ep)
 
 	select_button = hbox.add(Button.new())
 	select_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -36,7 +36,6 @@ func add_control():
 	edit_button.text = 'Show'
 	edit_button.pressed.connect(self.open_conversation)
 
-	ep.add_child(hbox)
 	ep.label = 'Conversation'
 
 	add_custom_control(ep)
@@ -96,6 +95,21 @@ func open_conversation():
 
 class HBox:
 	extends HBoxContainer
+
+	func _init(parent=null):
+		if parent:
+			parent.add_child(self)
+
+	func add(object):
+		add_child(object)
+		return object
+
+class VBox:
+	extends VBoxContainer
+
+	func _init(parent=null):
+		if parent:
+			parent.add_child(self)
 
 	func add(object):
 		add_child(object)

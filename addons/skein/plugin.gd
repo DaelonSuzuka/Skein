@@ -133,16 +133,3 @@ func set_setting(name: String, value) -> void:
 
 func get_setting(name: String):
 	return settings.get(settings_prefix + name)
-
-# ******************************************************************************
-
-class VBox:
-	extends VBoxContainer
-
-	func _init(parent=null):
-		if parent:
-			parent.add_child(self)
-
-	func add(object):
-		add_child(object)
-		return object
