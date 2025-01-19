@@ -3,17 +3,17 @@ extends EditorPlugin
 
 # ******************************************************************************
 
-const settings_prefix = "interface/skein/"
+const settings_prefix := "interface/skein/"
 var settings
 
-const singleton_path = 'res://addons/skein/SkeinSingleton.tscn'
+const singleton_path := 'res://addons/skein/SkeinSingleton.tscn'
 
-const SkeinInspector = preload('res://addons/skein/SkeinInspectorPlugin.gd')
+const SkeinInspector := preload('./SkeinInspectorPlugin.gd')
 var inspector_instance
 
-const SkeinEditor = preload('res://addons/skein/editor/SkeinEditor.tscn')
+const SkeinEditor := preload('./editor/SkeinEditor.tscn')
 
-var editors = {
+var editors := {
 	top = null,
 	bottom = null,
 }
