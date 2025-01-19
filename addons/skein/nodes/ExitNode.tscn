@@ -4,7 +4,6 @@
 [ext_resource type="PackedScene" uid="uid://dqog4ebqwf6ud" path="res://addons/skein/nodes/BaseNode.tscn" id="2"]
 
 [node name="1" instance=ExtResource("2")]
-anchors_preset = 0
 slot/0/left_enabled = true
 script = ExtResource("1")
 
