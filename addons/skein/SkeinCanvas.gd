@@ -9,9 +9,9 @@ func _ready():
 # ******************************************************************************
 # popup handler
 
-var _popups = {}
+var _popups := {}
 
-func _process(delta):
+func _process(delta: float):
 	for popup in _popups:
 		var object = _popups[popup]
 		if is_instance_valid(object):
@@ -24,16 +24,16 @@ func _register_popup(popup, object):
 	add_child(popup)
 	_popups[popup] = object
 
-func popup_dialog(object, conversation, options={}):
+func popup_dialog(object, conversation: String, options={}):
 	var popup = load('res://addons/skein/dialog_box/PopupDialogBox.tscn').instantiate()
 	_register_popup(popup, object)
 	options['caller'] = object
 	popup.start(conversation, options)
 
-	popup.connect("done", Callable(self,'_popup_over'))
+	popup.done.connect(self._popup_over, CONNECT_ONE_SHOT)
 
-	# Skein.Utils.try_connect(popup, Callable('line_finished',object).bind('line_finished'))
-	# Skein.Utils.try_connect(popup, Callable('done',object).bind('popup_over'))
+	# Skein.Utils.try_connect(popup.line_finished, object.line_finished)
+	# Skein.Utils.try_connect(popup.done, object.line_finished)
 
 	return popup
 
@@ -45,15 +45,15 @@ func _popup_over(popup=null):
 
 # ******************************************************************************
 
-func start_dialog(object, conversation, options={}):
+func start_dialog(object, conversation: String, options={}):
 	var dialog = get_node('DialogBox')
 	options['caller'] = object
 	dialog.start(conversation, options)
 
-	dialog.done.connect(Skein.Sandbox.clear_temp_locals ,CONNECT_ONE_SHOT)
+	dialog.done.connect(Skein.Sandbox.clear_temp_locals, CONNECT_ONE_SHOT)
 	
 	# TODO disconnect this when done?
-	# Skein.Utils.try_connect(dialog, Callable('line_finished',object).bind('line_finished'))
-	# Skein.Utils.try_connect(dialog, Callable('done',object).bind('done'),[],CONNECT_ONE_SHOT)
+	# Skein.Utils.try_connect(dialog.line_finished, object.line_finished)
+	# Skein.Utils.try_connect(dialog.done, object.line_finished, [], CONNECT_ONE_SHOT)
 
 	return dialog
