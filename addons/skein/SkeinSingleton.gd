@@ -8,7 +8,7 @@ var Files := preload('./utils/Files.gd').new()
 var Yarn := preload('./utils/Yarn.gd').new()
 
 var Sandbox := preload('./utils/Sandbox.gd').new()
-var Watch := preload('./utils/Watcher.gd').new()
+var Watcher := preload('./utils/Watcher.gd').new()
 
 @onready var canvas = $SkeinCanvas
 
