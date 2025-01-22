@@ -47,7 +47,7 @@ class DialogTimer extends Timer:
 
 # configurable settings
 @export var primary_action := 'ui_accept'
-@export var secondary_action  := 'ui_cancel'
+@export var secondary_action := 'ui_cancel'
 @export var direct_input := true
 @export var text_cooldown := 0.05
 
@@ -163,14 +163,13 @@ var length := -1
 var popup := false
 var popup_timeout := 1.0
 var exec := true
-var assignment := true
 var show_name := true
 var name_override = null
 var color_override = null
 var show_portrait := true
 var speed := 1.0
 
-func start(conversation, options={}):
+func start(conversation:String, options:={}):
 	# reset stuff
 	var entry = ''
 	var line_number = 0
@@ -244,7 +243,7 @@ func _yield(object=null, sig="nothing"):
 	text_timer.paused = true
 	emit_signal('yielded')
 
-	object.connect(sig, Callable(self,'_resume').bind(),CONNECT_ONE_SHOT)
+	object.connect(sig, Callable(self, '_resume').bind(), CONNECT_ONE_SHOT)
 
 	await self.resumed
 
@@ -612,7 +611,7 @@ func next_char(use_timer=true):
 		# 		cursor += 2
 		# 		next_char()
 		# 		return
-		'{':  # detect commands
+		'{': # detect commands
 			if next_chars[1] == '{':
 				var block = get_block('{{', '}}', ['erase'])
 				if block:
@@ -658,17 +657,17 @@ func next_char(use_timer=true):
 				if block:
 					text_box.text += block
 					next_char()
-		'|':  # pipe denotes chunks of text that should pop all at once
+		'|': # pipe denotes chunks of text that should pop all at once
 			var end = line.findn('|', cursor + 1)
 			if end != -1:
 				var chunk = line.substr(cursor + 1, end - cursor - 1)
 				text_box.text += chunk
 				cursor = end + 1
-		'_':  # pause
+		'_': # pause
 			cooldown = 0.25
 			character_idle()
 			cursor += 1
-		'\\':  # escape the next character
+		'\\': # escape the next character
 			cursor += 1
 			if cursor < line.length():
 				print_char(line[cursor])
@@ -677,7 +676,7 @@ func next_char(use_timer=true):
 				continue_previous_line = true
 				print_char('\n')
 
-		_:  # not a special character, just print it
+		_: # not a special character, just print it
 			print_char(this_char)
 			cursor += 1
 
@@ -724,7 +723,7 @@ func parse_directive(block):
 		'exec':
 			result['exec'] = parse_bool(parts[1], exec)
 		'assignment':
-			result['assignment'] = parse_bool(parts[1], assignment)
+			result['assignment'] = parse_bool(parts[1], Skein.Sandbox.assignment)
 		'show_name':
 			result['show_name'] = parse_bool(parts[1], show_name)
 		'set_name':
@@ -751,7 +750,7 @@ func apply_directive(dir):
 		hide()
 		result = true
 	if 'assignment' in dir:
-		assignment = dir.assignment
+		Skein.Sandbox.assignment = dir.assignment
 		result = true
 	if 'show_name' in dir:
 		show_name = dir.name
@@ -769,57 +768,37 @@ func apply_directive(dir):
 
 # ******************************************************************************
 
-func evaluate(input: String=''):
-	var ctx = Skein.Sandbox.get_eval_context()
+func evaluate(input: String = ''):
+	var ctx = Skein.Sandbox.get_context()
 
-	# ctx.variable('@onready var caller = get_parent().caller')
-	# ctx.variable('@onready var dialog = get_parent()')
-	# ctx.variable('@onready var scene = get_parent().caller.owner')
+	ctx.variable('@onready var caller = get_parent().caller')
+	ctx.variable('@onready var dialog = get_parent()')
+	ctx.variable('@onready var scene = get_parent().caller.owner')
 
-	# ctx.variable('var _text_cooldown = ' + str(text_cooldown))
-	# ctx.method(
-	# 	'func speed(value=_text_cooldown):',
-	# 	[
-	# 		'get_parent().next_char_cooldown = value',
-	# 	]
-	# )
-	# ctx.method(
-	# 	'func jump(node):',
-	# 	[
-	# 		'get_parent().jump_to(node)',
-	# 	]
-	# )
-	# ctx.method(
-	# 	'func await object=null.sig=nothing:',
-	# 	[
-	# 		'get_parent()._await object.sig',
-	# 	]
-	# )
-	# ctx.method(
-	# 	'func timer(duration):',
-	# 	[
-	# 		'return get_tree().create_timer(duration)',
-	# 	]
-	# )
+	ctx.variable('var _text_cooldown = ' + str(text_cooldown))
+	ctx.method(
+		'func speed(value=_text_cooldown):',
+		[
+			'get_parent().next_char_cooldown = value',
+		]
+	)
+	ctx.method(
+		'func jump(node):',
+		[
+			'get_parent().jump_to(node)',
+		]
+	)
+	ctx.method(
+		'func await object=null.sig=nothing:',
+		[
+			'get_parent()._await object.sig',
+		]
+	)
+	ctx.method(
+		'func timer(duration):',
+		[
+			'return get_tree().create_timer(duration)',
+		]
+	)
 
-
-	var is_assignment = false
-	if assignment and '=' in input:
-		var re = RegEx.new()
-		re.compile('[^=][=][^=]')
-		if re.search(input):
-			is_assignment = true
-			ctx.method(
-				'func _do_assignment():',
-				[
-					input,
-				]
-			)
-
-	var context = ctx.build(self)
-	add_child(context)
-
-	if assignment and is_assignment:
-		return Skein.Sandbox.evaluate('_do_assignment()', context)
-
-	return Skein.Sandbox.evaluate(input, context)
+	return ctx.eval(input, self)
