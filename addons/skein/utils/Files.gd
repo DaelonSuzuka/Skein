@@ -44,34 +44,38 @@ func check_extension(file: String, ext=null) -> bool:
 					return true
 	return false
 
-# get all files in given directory with optional extension filter
-func get_files(path: String, ext=null) -> Array:
-	var _files = []
+## get all files in given directory with optional extension filter
+func get_files(path: String, ext=null) -> Array[String]:
+	var _files: Array[String] = []
+
 	var dir := DirAccess.open(path)
+	if !dir:
+		return []
 	dir.list_dir_begin()
 
 	var file = dir.get_next()
-	while true:
+	while file != '':
 		var file_path = dir.get_current_dir().path_join(file)
-		if file == '':
-			break
-		if ext:
-			if check_extension(file, ext):
+		if !dir.current_is_dir():
+			if ext:
+				if check_extension(file_path, ext):
+					_files.append(file_path)
+			else:
 				_files.append(file_path)
-		else:
-			_files.append(file_path)
 		file = dir.get_next()
 
 	dir.list_dir_end()
 
 	return _files
 
-# get all files in given directory(and subdirectories, to a given depth) with optional extension filter
-func get_all_files(path: String, ext=null, max_depth:=10, _depth:=0, _files:=[]) -> Array:
+## get all files in given directory(and subdirectories, to a given depth) with optional extension filter
+func get_all_files(path: String, ext=null, max_depth:=10, _depth:=0, _files: Array[String]=[]) -> Array[String]:
 	if _depth >= max_depth:
 		return []
 
 	var dir := DirAccess.open(path)
+	if !dir:
+		return []
 	dir.list_dir_begin()
 
 	var file = dir.get_next()
@@ -81,7 +85,7 @@ func get_all_files(path: String, ext=null, max_depth:=10, _depth:=0, _files:=[])
 			get_all_files(file_path, ext, max_depth, _depth + 1, _files)
 		else:
 			if ext:
-				if check_extension(file, ext):
+				if check_extension(file_path, ext):
 					_files.append(file_path)
 			else:
 				_files.append(file_path)
@@ -89,12 +93,14 @@ func get_all_files(path: String, ext=null, max_depth:=10, _depth:=0, _files:=[])
 	dir.list_dir_end()
 	return _files
 
-# get all files AND folders in a given directory(and subdirectories, to a given depth)
-func get_all_files_and_folders(path: String, max_depth:=10, _depth:=0, _files:=[]) -> Array:
+## get all files AND folders in a given directory(and subdirectories, to a given depth)
+func get_all_files_and_folders(path: String, max_depth:=10, _depth:=0, _files: Array[String]=[]) -> Array[String]:
 	if _depth >= max_depth:
 		return []
 
 	var dir := DirAccess.open(path)
+	if !dir:
+		return []
 	dir.list_dir_begin()
 
 	var file = dir.get_next()
@@ -107,13 +113,15 @@ func get_all_files_and_folders(path: String, max_depth:=10, _depth:=0, _files:=[
 	dir.list_dir_end()
 	return _files
 
-# get all folders in a given directory(and subdirectories, to a given depth)
-func get_all_folders(path: String, max_depth:=10, _depth:=0, _files:=[]) -> Array:
+## get all folders in a given directory(and subdirectories, to a given depth)
+func get_all_folders(path: String, max_depth:=10, _depth:=0, _files: Array[String]=[]) -> Array[String]:
 	if _depth >= max_depth:
 		return []
 
 	var dir := DirAccess.open(path)
-	dir.list_dir_begin() # TODOGODOT4 fill missing arguments https://github.com/godotengine/godot/pull/40547
+	if !dir:
+		return []
+	dir.list_dir_begin()
 
 	var file = dir.get_next()
 	while file != '':
@@ -127,21 +135,31 @@ func get_all_folders(path: String, max_depth:=10, _depth:=0, _files:=[]) -> Arra
 
 # ******************************************************************************
 
+func _ensure_suffix(path: String, suffix:='.json'):
+	if path.ends_with(suffix):
+		return path
+
+	return path + suffix
+
+## save a godot object to a json file
 func save_json(path: String, data) -> void:
 	if data == null or data == {}:
 		return
 	if !path.begins_with('res://') and !path.begins_with('user://'):
 		path = prefix + path
+	path = _ensure_suffix(path)
 
 	DirAccess.make_dir_recursive_absolute(path.get_base_dir())
 
 	var f = FileAccess.open(path, FileAccess.WRITE)
 	if f and f.is_open():
-		f.store_string(JSON.stringify(data, '\t'))
+		f.store_string(JSON.stringify(data, '\t', true))
 
+## loads a json file from disk
 func load_json(path: String, default=null):
 	if !path.begins_with('res://') and !path.begins_with('user://'):
 		path = prefix + path
+	path = _ensure_suffix(path)
 	var result = default
 
 	var f := FileAccess.open(path, FileAccess.READ)
@@ -149,9 +167,6 @@ func load_json(path: String, default=null):
 		var text = f.get_as_text()
 
 		var parse = JSON.parse_string(text)
-		# var test_json_conv = JSON.new()
-		# test_json_conv.parse(text)
-		# var parse = test_json_conv.get_data()
 		if parse is Dictionary:
 			result = parse
 	return result
