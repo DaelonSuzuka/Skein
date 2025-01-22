@@ -15,10 +15,9 @@ func reparent_node(node: Node, new_parent: Node, legible_unique_name:=false) -> 
 
 # ******************************************************************************
 
-func try_connect(src, sig, dest, method, args=[], flags=0):
-	if dest.has_method(method):
-		if !src.is_connected(sig, Callable(dest, method)):
-			src.connect(sig, Callable(dest, method).bind(args), flags)
+func try_connect(sig: Signal, target: Callable, args=[], flags=0):
+	if !sig.is_connected(target):
+		sig.connect(target.bind(args), flags)
 
 func connect_all(src: Node, dest: Node, prefix:=''):
 	for sig in src.get_signal_list():
