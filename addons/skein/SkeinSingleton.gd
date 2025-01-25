@@ -21,6 +21,12 @@ signal refreshed
 # ******************************************************************************
 
 func _ready():
+	add_child(Utils)
+	add_child(Files)
+	add_child(Yarn)
+	add_child(Sandbox)
+	add_child(Watcher)
+
 	Files.validate_paths()
 	call_deferred('refresh')
 
