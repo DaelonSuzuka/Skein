@@ -10,7 +10,7 @@ var Yarn := preload('./utils/Yarn.gd').new()
 var Sandbox := preload('./utils/Sandbox.gd').new()
 var Watcher := preload('./utils/Watcher.gd').new()
 
-@onready var canvas = $SkeinCanvas
+@onready var canvas: SkeinCanvas = $SkeinCanvas
 
 var characters := {}
 var conversations := {}
