@@ -27,7 +27,7 @@ class DialogTimer extends Timer:
 	func _init(obj, method):
 		timeout.connect(method)
 		one_shot = true
-		obj.call_deferred('add_child', self)
+		obj.add_child.call_deferred(self)
 
 @onready var text_timer := DialogTimer.new(self, self.next_char)
 @onready var dismiss_timer := DialogTimer.new(self, self.next_line)
@@ -234,16 +234,16 @@ func start(conversation:String, options:={}):
 	show()
 
 func _resume():
-	emit_signal('resumed')
+	resumed.emit()
 
 func _yield(object=null, sig="nothing"):
 	# TODO: make this not explode without args
 	active = false
 	yielding = true
 	text_timer.paused = true
-	emit_signal('yielded')
+	yielded.emit()
 
-	object.connect(sig, Callable(self, '_resume').bind(), CONNECT_ONE_SHOT)
+	object.connect(sig, self._resume, CONNECT_ONE_SHOT)
 
 	await self.resumed
 
@@ -255,7 +255,7 @@ func stop():
 	active = false
 	hide()
 	remove_options()
-	emit_signal('done')
+	done.emit()
 
 # ******************************************************************************
 
@@ -275,7 +275,7 @@ func set_node(next_node):
 	current_line = 0
 	current_data = nodes[current_node].duplicate(true)
 	current_data.lines = split_text(current_data.text)
-	emit_signal('node_started', current_data.id)
+	node_started.emit(current_data.id)
 
 func check_next_line(line_number):
 	if length > 0 and line_count >= length:
@@ -417,7 +417,7 @@ func next_line():
 			var speaker = Skein.characters[name]
 			if !portrait_container.is_ancestor_of(speaker):
 				Skein.Utils.reparent_node(speaker, portrait_container)
-				emit_signal('actor_joined', speaker)
+				actor_joined.emit(speaker)
 
 			next_speaker = speaker
 		else:
@@ -431,7 +431,7 @@ func next_line():
 		return
 
 	if current_speaker != next_speaker:
-		emit_signal('speaker_changed', next_speaker, previous_speaker)
+		speaker_changed.emit(next_speaker, previous_speaker)
 		for child in portrait_container.get_children():
 			child.hide()
 		if next_speaker:
@@ -545,9 +545,9 @@ func set_line(_line):
 	text_timer.start(next_char_cooldown)
 	
 	if 'original_node' in current_data:
-		emit_signal('line_started', current_data.original_node, current_data.line_offset + current_line)
+		line_started.emit(current_data.original_node, current_data.line_offset + current_line)
 	else:
-		emit_signal('line_started', current_node, current_line)
+		line_started.emit(current_node, current_line)
 
 func skip_space():
 	if cursor < line.length():
@@ -574,7 +574,7 @@ func next_char(use_timer=true):
 			line_active = false
 			dismiss_timer.start(popup_timeout)
 			return
-		emit_signal('line_finished')
+		line_finished.emit()
 		character_idle()
 		text_timer.stop()
 		line_active = false
@@ -687,7 +687,7 @@ func print_char(c):
 	character_talk(c)
 
 	text_box.text += c
-	emit_signal('character_added', c)
+	character_added.emit(c)
 
 # ******************************************************************************
 # directive stuff

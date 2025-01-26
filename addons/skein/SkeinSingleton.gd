@@ -28,7 +28,7 @@ func _ready():
 	add_child(Watcher)
 
 	Files.validate_paths()
-	call_deferred('refresh')
+	# refresh.call_deferred()
 
 	init_file_watcher()
 
