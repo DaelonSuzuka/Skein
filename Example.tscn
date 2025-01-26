@@ -1,6 +1,25 @@
-[gd_scene load_steps=2 format=3 uid="uid://dcrgs56ph7pna"]
+[gd_scene load_steps=5 format=3 uid="uid://dcrgs56ph7pna"]
 
 [ext_resource type="Script" uid="uid://c7e3hsqgqt5l6" path="res://Example.gd" id="1_cmdug"]
+[ext_resource type="Script" uid="uid://dkr4ndvpovc61" path="res://addons/skein/utils/SkeinConversation.gd" id="2_lmghl"]
+
+[sub_resource type="Resource" id="Resource_lmghl"]
+script = ExtResource("2_lmghl")
+conversation = ""
+entry = ""
+line = ""
+path = "Demo"
+
+[sub_resource type="Resource" id="Resource_mh8fn"]
+script = ExtResource("2_lmghl")
+conversation = ""
+entry = ""
+line = ""
+path = "0 Introduction:1097442878"
 
 [node name="Example" type="Node2D"]
 script = ExtResource("1_cmdug")
+conversation = SubResource("Resource_lmghl")
+another_conversation = SubResource("Resource_mh8fn")
+
+[node name="Node2D" type="Node2D" parent="."]
