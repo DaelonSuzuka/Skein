@@ -28,8 +28,8 @@ var notify_changes := true
 signal zoom_changed(zoom)
 
 signal node_created(node)
-signal node_deleted(id)
-signal node_renamed(old, new)
+signal node_deleted(id: String)
+signal node_renamed(old: String, new: String)
 signal node_changed
 
 # ******************************************************************************
@@ -55,7 +55,7 @@ func _gui_input(event: InputEvent) -> void:
 
 func contents_changed():
 	if notify_changes:
-		emit_signal('node_changed')
+		node_changed.emit()
 
 # ******************************************************************************
 
@@ -122,7 +122,7 @@ func create_node(data=null) -> Node:
 			data.id = get_id()
 		node.set_data(data)
 	nodes[str(node.data.id)] = node
-	emit_signal('node_created', node)
+	node_created.emit(node)
 	contents_changed()
 
 	# node.close_request.connect(self.delete_node.bind(node))
@@ -141,7 +141,7 @@ func delete_node(node) -> void:
 	var id = node.data.id
 	nodes.erase(id)
 	node.queue_free()
-	emit_signal('node_deleted', id)
+	node_deleted.emit(id)
 
 func rename_node(id, new_name):
 	if str(id) in nodes:
@@ -322,7 +322,7 @@ func get_nodes() -> Dictionary:
 # ******************************************************************************
 
 func set_data(data: Dictionary) -> void:
-	scroll_offset = str_to_var(data.get('scroll_offset', 'Vector2( 0, 0 )'))
+	# scroll_offset = str_to_var(data.get('scroll_offset', 'Vector2( 0, 0 )'))
 	zoom = data.get('zoom', 1)
 	
 	minimap_enabled = data.get('minimap_enabled', true)

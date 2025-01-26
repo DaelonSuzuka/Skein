@@ -3,15 +3,14 @@ extends Control
 
 # ******************************************************************************
 
-@export var text := '' : set = set_text
+@export var text := '':
+	set(new_text):
+		text = new_text
+		if is_inside_tree():
+			label.text = text
+			line_edit.text = text
 
-func set_text(new_text):
-	text = new_text
-	if is_inside_tree():
-		label.text = text
-		line_edit.text = text
-
-signal text_changed(new_text)
+signal text_changed(new_text: String)
 
 @onready var line_edit = $LineEdit
 @onready var label = $Label
@@ -19,7 +18,6 @@ signal text_changed(new_text)
 # ******************************************************************************
 
 func _ready():
-	set_text(text)
 	line_edit.hide()
 	line_edit.focus_exited.connect(self.reject)
 	line_edit.gui_input.connect(self.line_edit_input)
@@ -56,7 +54,7 @@ func accept():
 	label.text = text
 	label.show()
 	line_edit.hide()
-	emit_signal('text_changed', text)
+	text_changed.emit(text)
 
 func reject():
 	label.show()

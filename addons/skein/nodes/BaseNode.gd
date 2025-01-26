@@ -37,7 +37,7 @@ signal changed
 # ******************************************************************************
 
 func _ready() -> void:
-	close_button.pressed.connect(self.emit_signal.bind('delete_request'))
+	close_button.pressed.connect(self.delete_request.emit)
 	resize_request.connect(self._resize_request)
 	gui_input.connect(self._gui_input)
 
@@ -150,8 +150,8 @@ func rename(new_name):
 	renamed(new_name)
 
 func renamed(new_name):
-	emit_signal('changed')
-	parent.emit_signal('node_renamed', data.name, new_name)
+	changed.emit()
+	parent.node_renamed.emit(data.name, new_name)
 	data.name = new_name
 
 # ******************************************************************************

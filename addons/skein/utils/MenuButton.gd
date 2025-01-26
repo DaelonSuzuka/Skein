@@ -6,7 +6,7 @@ extends MenuButton
 @onready var popup: PopupMenu = get_popup()
 var callbacks := {}
 
-signal item_selected(item)
+signal item_selected(item: String)
 
 # ******************************************************************************
 
@@ -36,7 +36,7 @@ func add_check_item(label: String, cb:=[]):
 	if cb:
 		callbacks[label] = cb
 
-func set_item_checked(item_text, state):
+func set_item_checked(item_text: String, state: bool):
 	for i in popup.get_item_count():
 		if popup.get_item_text(i) == item_text:
 			if popup.is_item_checked(i) != state:
@@ -76,4 +76,4 @@ func _on_index_pressed(idx: int, submenu_name:='') -> void:
 				if len(cb) == 3:
 					obj.call(method, cb[2])
 
-	emit_signal('item_selected', item)
+	item_selected.emit(item)

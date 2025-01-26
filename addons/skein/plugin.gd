@@ -8,12 +8,12 @@ var settings
 
 const singleton_path := 'res://addons/skein/SkeinSingleton.tscn'
 
-const SkeinInspector := preload('./SkeinInspectorPlugin.gd')
-var inspector_instance
 
-const SkeinEditor := preload('./editor/SkeinEditor.tscn')
+var inspector_instance: SkeinInspector = null
 
-var editors := {
+const SkeinEditorScene := preload('./editor/SkeinEditor.tscn')
+
+var editors: Dictionary[String, SkeinEditor] = {
 	top = null,
 	bottom = null,
 }
@@ -49,13 +49,13 @@ func _enter_tree():
 		inspector_instance.plugin = self
 		add_inspector_plugin(inspector_instance)
 
-		editors.top = SkeinEditor.instantiate()
+		editors.top = SkeinEditorScene.instantiate()
 		editors.top.plugin = self
 		editors.top.location = 'top'
 		editors.top.visible = false
 		get_editor_interface().get_editor_main_screen().add_child(editors.top)
 
-		editors.bottom = SkeinEditor.instantiate()
+		editors.bottom = SkeinEditorScene.instantiate()
 		editors.bottom.plugin = self
 		editors.bottom.location = 'bottom'
 		add_control_to_bottom_panel(editors.bottom, 'Skein')
@@ -79,7 +79,8 @@ func _exit_tree():
 
 # ******************************************************************************
 
-func show_conversation(conversation):
+func show_conversation(conversation: String):
+	prints('show_conversation', conversation)
 	var preferred_editor = get_setting('preferred_editor')
 	var editor = editors[preferred_editor]
 	if preferred_editor == 'top':

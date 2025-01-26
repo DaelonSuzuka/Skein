@@ -32,7 +32,7 @@ func _ready():
 		b.condition.text_changed.connect(self.on_change)
 
 func on_change(arg=null):
-	emit_signal('changed')
+	changed.emit()
 
 func index_pressed(index):
 	match edit_menu.get_popup().get_item_text(index):
@@ -41,7 +41,7 @@ func index_pressed(index):
 			var state = edit_menu.get_popup().is_item_checked(0)
 			data['extra_choices'] = state
 			set_extra_choices_enabled(state)
-			emit_signal('changed')
+			changed.emit()
 
 # ******************************************************************************
 

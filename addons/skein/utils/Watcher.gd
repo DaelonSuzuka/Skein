@@ -72,13 +72,13 @@ func _process(delta: float) -> void:
 				directory.modified.clear()
 			else:
 				if not directory.new.is_empty():
-					emit_signal("files_created", directory.new)
-					emit_signal("files_changed")
+					files_created.emit(directory.new)
+					files_changed.emit()
 					directory.new.clear()
 				
 				if not directory.modified.is_empty():
-					emit_signal("files_modified", directory.modified)
-					emit_signal("files_changed")
+					files_modified.emit(directory.modified)
+					files_changed.emit()
 					directory.modified.clear()
 				
 				var deleted: Array
@@ -87,8 +87,8 @@ func _process(delta: float) -> void:
 						deleted.append(_dir.get_current_dir().path_join(path))
 				
 				if not deleted.is_empty():
-					emit_signal("files_deleted", deleted)
-					emit_signal("files_changed")
+					files_deleted.emit(deleted)
+					files_changed.emit()
 			
 			directory.previous = directory.current
 			directory.current = {}

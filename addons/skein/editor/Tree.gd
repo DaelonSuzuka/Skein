@@ -12,19 +12,19 @@ var chars: TreeItem = null
 @export var card_icon: ImageTexture
 
 signal folder_collapsed
-signal create_folder(path)
-signal rename_folder(old_path, new_path)
-signal delete_folder(path)
+signal create_folder(path: String)
+signal rename_folder(old_path: String, new_path: String)
+signal delete_folder(path: String)
 
-signal change_conversation(path)
-signal create_conversation(path)
-signal delete_conversation(path)
-signal rename_conversation(old_path, new_path)
+signal change_conversation(path: String)
+signal create_conversation(path: String)
+signal delete_conversation(path: String)
+signal rename_conversation(old_path: String, new_path: String)
 
-signal select_node(path)
-signal focus_node(path)
-signal rename_node(id, new_path)
-signal delete_node(id)
+signal select_node(path: String)
+signal focus_node(path: String)
+signal rename_node(id: String, new_path: String)
+signal delete_node(id: String)
 signal run_node
 
 var folder_state = {}
@@ -211,7 +211,7 @@ func _on_item_selected() -> void:
 			'folder':
 				pass
 			'node':
-				emit_signal('select_node', item.get_meta('id'))
+				select_node.emit(item.get_meta('id'))
 
 func _on_item_activated():
 	var item = get_selected()
@@ -264,25 +264,25 @@ func _on_item_edited():
 	match type:
 		'file':
 			if new:
-				emit_signal('create_conversation', Skein.Files.conversation_prefix + path)
+				create_conversation.emit(Skein.Files.conversation_prefix + path)
 			else:
 				var new_path = path.trim_suffix(item.get_meta('name')) + name
 				item.set_meta('path', new_path)
 				item.set_tooltip_text(0, new_path)
-				emit_signal('rename_conversation', path, new_path)
+				rename_conversation.emit(path, new_path)
 		'folder':
 			if new:
 				folder_state[Skein.Files.conversation_prefix + path] = {'collapsed': false}
-				emit_signal('create_folder', Skein.Files.conversation_prefix + path)
+				create_folder.emit(Skein.Files.conversation_prefix + path)
 			else:
 				var new_path = path.trim_suffix(path.get_file()) + name + '/'
 				item.set_meta('path', new_path)
 				item.set_tooltip_text(0, new_path)
-				emit_signal('rename_folder', path, new_path)
+				rename_folder.emit(path, new_path)
 		'node':
 			var id = item.get_meta('id')
 			item.set_tooltip_text(0, name)
-			emit_signal('rename_node', id, name)
+			rename_node.emit(id, name)
 
 # ******************************************************************************
 
@@ -378,7 +378,7 @@ func context_menu_item_selected(selection: String) -> void:
 			item.set_editable(0, true)
 			item.set_icon(0, file_icon)
 			item.select(0)
-			call_deferred('edit_selected')
+			edit_selected.call_deferred()
 		'New Folder':
 			var item = create_item(get_selected())
 			item.set_text(0, 'new')
@@ -386,7 +386,7 @@ func context_menu_item_selected(selection: String) -> void:
 			item.set_meta('type', 'folder')
 			item.set_editable(0, true)
 			item.select(0)
-			call_deferred('edit_selected')
+			edit_selected.call_deferred()
 		'Copy Path':
 			var item = get_selected()
 			var path = item.get_meta('path')
@@ -396,7 +396,7 @@ func context_menu_item_selected(selection: String) -> void:
 		'Rename':
 			_start_rename()
 		'Run':
-			emit_signal('run_node')
+			run_node.emit()
 		'Delete':
 			var item = get_selected()
 			var path = item.get_meta('path')
@@ -404,11 +404,11 @@ func context_menu_item_selected(selection: String) -> void:
 
 			match type:
 				'file':
-					emit_signal('delete_conversation', path)
+					delete_conversation.emit(path)
 				'folder':
-					emit_signal('delete_folder', path)
+					delete_folder.emit(path)
 				'node':
-					emit_signal('delete_node', item.get_meta('id'))
+					delete_node.emit(item.get_meta('id'))
 
 			if is_instance_valid(item):
 				item.get_parent().remove_child(item)
@@ -455,4 +455,4 @@ func drop_data(position, item):
 		var path = item.get_meta('path')
 		var new_path = to_path.plus_file(path.get_file())
 
-		emit_signal('rename_conversation', path, new_path)
+		rename_conversation.emit(path, new_path)

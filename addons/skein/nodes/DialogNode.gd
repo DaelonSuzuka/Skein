@@ -63,7 +63,7 @@ func _input(event: InputEvent) -> void:
 			# get_parent().zoom_step = 1.1
 
 func on_change(arg=null):
-	emit_signal('changed')
+	changed.emit()
 
 func index_pressed(index):
 	match edit_menu.get_popup().get_item_text(index):
@@ -72,16 +72,15 @@ func index_pressed(index):
 			var state = edit_menu.get_popup().is_item_checked(0)
 			data['show_choices'] = state
 			set_choices_enabled(state)
-			emit_signal('changed')
+			changed.emit()
 
-func highlight_line(line_number):
+func highlight_line(line_number: int):
 	text_edit.highlight_current_line = true
 	text_edit.set_caret_line(line_number)
 
 func unhighlight_lines():
 	text_edit.highlight_current_line = false
 	text_edit.deselect()
-
 
 # ******************************************************************************
 

@@ -1,5 +1,6 @@
 @tool
 extends Control
+class_name SkeinEditor
 
 # ******************************************************************************
 
@@ -134,7 +135,7 @@ func save_conversation():
 	if nodes:
 		Skein.save_conversation(current_conversation, nodes)
 
-func change_conversation(path):
+func change_conversation(path: String):
 	save_conversation()
 	save_editor_data()
 	load_conversation(path)
@@ -144,7 +145,7 @@ func change_conversation(path):
 	if len(parts) > 1:
 		graphedit.focus_node(parts[1])
 
-func load_conversation(path, force := false):
+func load_conversation(path: String, force:=false):
 	var _path = path.trim_prefix(Skein.Files.conversation_prefix)
 	var parts = _path.split(':')
 	var name = parts[0]
@@ -158,26 +159,26 @@ func load_conversation(path, force := false):
 	if nodes:
 		graphedit.set_nodes(nodes)
 	if name in editor_data:
-		graphedit.call_deferred('set_data', editor_data[name])
+		graphedit.set_data.call_deferred(editor_data[name])
 	else:
 		editor_data[name] = {}
 
 # ******************************************************************************
 
-func create_folder(path):
+func create_folder(path: String):
 	DirAccess.make_dir_recursive_absolute(Skein.ensure_prefix(path))
 
-func delete_folder(path):
+func delete_folder(path: String):
 	DirAccess.remove_absolute(Skein.ensure_prefix(path))
 	Skein.refresh()
 
-func rename_folder(old, new):
+func rename_folder(old: String, new: String):
 	DirAccess.rename_absolute(Skein.ensure_prefix(old), Skein.ensure_prefix(new))
 	Skein.refresh()
 
 # ------------------------------------------------------------------------------
 
-func create_conversation(path):
+func create_conversation(path: String):
 	graphedit.clear()
 	path = Skein.ensure_prefix(path)
 	current_conversation = path
@@ -195,11 +196,11 @@ var delete_path = null
 func sort(a, b):
 	return a.text.count('\n') > b.text.count('\n')
 
-func delete_conversation(path):
+func delete_conversation(path: String):
 	delete_path = path
 	ConfirmDelete.dialog_text = 'Really delete conversation "' + path.get_file() + '" ?\n'
 	var nodes = Skein.load_conversation(path, {}).values()
-	nodes.sort_custom(Callable(self, 'sort'))
+	nodes.sort_custom(sort)
 	var line_count = 0
 	for i in range(nodes.size()):
 		var count = nodes[i].text.split('\n').size()
@@ -209,12 +210,13 @@ func delete_conversation(path):
 		if i == 5:
 			ConfirmDelete.dialog_text += 'plus ' + str(nodes.size() - i) + ' more..'
 	if nodes.size() > 10 or line_count > 25:
-		ConfirmDelete.get_ok_button().disabled = true
-		ConfirmDelete.get_ok_button().text = '3..'
-		get_tree().create_timer(1.0).timeout.connect(Callable(ConfirmDelete.get_ok_button(), 'set_text').bind('2..'))
-		get_tree().create_timer(2.0).timeout.connect(Callable(ConfirmDelete.get_ok_button(), 'set_text').bind('1..'))
-		get_tree().create_timer(3.0).timeout.connect(Callable(ConfirmDelete.get_ok_button(), 'set_text').bind('Ok'))
-		get_tree().create_timer(3.0).timeout.connect(Callable(ConfirmDelete.get_ok_button(), 'set_disabled').bind([false]))
+		var ok_btn = ConfirmDelete.get_ok_button()
+		ok_btn.disabled = true
+		ok_btn.text = '3..'
+		get_tree().create_timer(1.0).timeout.connect(ok_btn.set_text.bind('2..'))
+		get_tree().create_timer(2.0).timeout.connect(ok_btn.set_text.bind('1..'))
+		get_tree().create_timer(3.0).timeout.connect(ok_btn.set_text.bind('Ok'))
+		get_tree().create_timer(3.0).timeout.connect(ok_btn.set_disabled.bind([false]))
 	ConfirmDelete.popup_centered()
 	ConfirmDelete.size.y = 0
 	ConfirmationDimmer.show()
@@ -232,7 +234,7 @@ func really_delete_conversation():
 	# 	DirAccess.remove_at(Skein.conversations[delete_path])
 	# Skein.refresh()
 
-func rename_conversation(old, new):
+func rename_conversation(old: String, new: String):
 	old = Skein.ensure_prefix(old)
 	new = Skein.ensure_prefix(new)
 
@@ -248,7 +250,7 @@ func rename_conversation(old, new):
 	load_conversation(new)
 	Skein.refresh()
 
-func focus_node(path):
+func focus_node(path: String):
 	var _path = path.trim_prefix(Skein.Files.conversation_prefix)
 	var parts = _path.split(':')
 	if parts[0] != current_conversation:
@@ -262,23 +264,23 @@ func node_selected(node):
 	var path = current_conversation + '/' + node.data.name
 	tree.select_item(path)
 
-func node_deleted(id):
+func node_deleted(id: String):
 	tree.delete_item(id)
 	save()
 
-func node_renamed(old, new):
+func node_renamed(old: String, new: String):
 	tree.refresh()
 
-func node_created(path):
+func node_created(node):
 	tree.refresh()
 
-func select_card(path):
+func select_card(path: String):
 	prints('select_card', path)
 	# graphedit
 
 # ******************************************************************************
 
-func character_added(path):
+func character_added(path: String):
 	var char_map = Skein.Files.load_json(Skein.character_map_path, {})
 	var c = load(path).instantiate()
 	char_map[c.name] = path
@@ -307,7 +309,7 @@ func run():
 	save_editor_data()
 	$Preview.show()
 
-	DialogBox.start(conversation, {exec = false})
+	DialogBox.start(conversation, {exec=false})
 
 func stop():
 	DialogBox.stop()
@@ -320,12 +322,12 @@ func dismiss_preview():
 func next():
 	DialogBox.next_line()
 
-func line_started(id, line_number):
-	var node = graphedit.get_node(id)
+func line_started(id: String, line_number: int):
+	var node = graphedit.get_graphnode(id)
 	if node and node.has_method('highlight_line'):
 		node.highlight_line(line_number)
 
-func node_started(id):
+func node_started(id: String):
 	graphedit.focus_node(id)
 	graphedit.highlight_node(id)
 
