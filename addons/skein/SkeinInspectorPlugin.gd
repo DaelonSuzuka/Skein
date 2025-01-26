@@ -1,5 +1,6 @@
 @tool
 extends EditorInspectorPlugin
+class_name SkeinInspector
 
 # ******************************************************************************
 
@@ -12,11 +13,10 @@ func _can_handle(object):
 
 func _parse_property(object: Object, type: Variant.Type, name: String, hint_type: PropertyHint, hint_string: String, usage_flags: int, wide: bool) -> bool:
 	if hint_string == 'SkeinConversation':
-		
 		var prop = CustomProperty.new(object, name)
 
 		prop.select.pressed.connect(self.select_conversation.bind(prop))
-		prop.edit.pressed.connect(self.open_conversation.bind(prop))
+		prop.show.pressed.connect(self.open_conversation.bind(prop))
 
 		add_property_editor(name, prop)
 		return true
@@ -29,7 +29,7 @@ class CustomProperty:
 	var hbox := HBox.new(self)
 	var selection: Label = hbox.add(Label.new())
 	var select: Button = hbox.add(Button.new())
-	var edit: Button = hbox.add(Button.new())
+	var show: Button = hbox.add(Button.new())
 
 	func _init(object: Object, name: String) -> void:
 		label = name
@@ -38,21 +38,26 @@ class CustomProperty:
 	func _ready():
 		selection.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		select.tooltip_text = 'Select Conversation'
-		edit.tooltip_text = 'Show Selected Conversation'
+		select.flat = true
 		select.icon = preload('./resources/folder_tree.svg')
-		edit.icon = preload('./resources/magnifying_glass.svg')
+		show.tooltip_text = 'Show Selected Conversation'
+		show.flat = true
+		show.icon = preload('./resources/magnifying_glass.svg')
+		show.disabled = true
 
 	func update_selection(value: SkeinConversation):
 		if value == null:
+			show.disabled = true
 			selection.text = ''
 		if value is SkeinConversation:
-			selection.text = value.path
+			show.disabled = false
+			selection.text = value.make_path()
 
 	func set_value(value: SkeinConversation):
 		update_selection(value)
 		get_edited_object().set(get_edited_property(), value)
 		
-	func get_value():
+	func get_value() -> SkeinConversation:
 		return get_edited_object().get(get_edited_property())
 
 	func _update_property() -> void:
@@ -80,7 +85,7 @@ func select_conversation(prop: CustomProperty):
 	selector.add_child(tree)
 	tree.refresh()
 
-	tree.item_activated.connect(self.accepted.bind(prop))
+	# tree.item_activated.connect(self.accepted.bind(prop))
 
 	plugin.get_editor_interface().get_editor_main_screen().add_child(selector)
 	selector.get_ok_button().pressed.connect(self.accepted.bind(prop))
@@ -89,36 +94,37 @@ func select_conversation(prop: CustomProperty):
 func accepted(prop: CustomProperty):
 	var item = tree.get_selected()
 	var path = item.get_meta('path')
-	path = path.trim_prefix(Skein.Files.conversation_prefix)
 
 	match item.get_meta('type'):
 		'file':
 			var convo = SkeinConversation.new()
-			convo.path = path.replace('.yarn', '')
+			convo.file = path
 			prop.set_value(convo)
 		'folder':
 			return
 		'node':
+			var convo = SkeinConversation.new()
 			var parts = path.split(':')
-			var value = parts[0].replace('.yarn', '')
+			convo.file = parts[0]
 
 			var node = item.get_meta('node')
 			if node.name.to_lower() != node.type.to_lower():
-				value += ':' + node.name
+				convo.node = node.name
 			else:
-				value += ':' + node.id
+				convo.node = node.id
 			
-			var convo = SkeinConversation.new()
-			convo.path = value
 			prop.set_value(convo)
 
 	selector.hide()
 
 func open_conversation(prop: CustomProperty):
-	prints('open_conversation', prop.get_value())
-	pass
+	var conv := prop.get_value()
+	if conv == null:
+		return
 
-	# plugin.show_conversation(prop.get_value())
+	prints('open_conversation', conv, conv.make_path())
+
+	plugin.show_conversation(conv.make_path())
 
 # ******************************************************************************
 # Custom container classes

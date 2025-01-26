@@ -1,17 +1,16 @@
+@tool
 extends Resource
 class_name SkeinConversation
 
-@export var conversation := ''
-@export var entry := ''
+@export var file := ''
+@export var node := ''
 @export var line := ''
 
-@export var path := ''
+func make_path() -> String:
+	var str = file.trim_suffix('.yarn')
 
-func _to_string() -> String:
-	var str = conversation
-
-	if entry:
-		str += ':' + entry
+	if node:
+		str += ':' + node
 	if line:
 		str += ':' + line
 
