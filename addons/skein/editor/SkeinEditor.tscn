@@ -86,6 +86,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="LeftPanelSplit" type="HSplitContainer" parent="."]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -95,6 +96,7 @@ grow_vertical = 2
 split_offset = 238
 
 [node name="LeftSidebar" type="Control" parent="LeftPanelSplit"]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="Panel" type="Panel" parent="LeftPanelSplit/LeftSidebar"]
@@ -118,11 +120,13 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="Refresh" type="Button" parent="LeftPanelSplit/LeftSidebar/Toolbar"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "R"
 flat = true
 
 [node name="Tree" type="Tree" parent="LeftPanelSplit/LeftSidebar"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -139,6 +143,7 @@ file_icon = SubResource("34")
 card_icon = SubResource("18")
 
 [node name="RightPanelSplit" type="HSplitContainer" parent="LeftPanelSplit"]
+unique_name_in_owner = true
 layout_mode = 2
 split_offset = 1183
 
@@ -146,6 +151,7 @@ split_offset = 1183
 layout_mode = 2
 
 [node name="GraphEdit" type="GraphEdit" parent="LeftPanelSplit/RightPanelSplit/GraphContainer"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -164,6 +170,7 @@ show_zoom_label = true
 script = ExtResource("1")
 
 [node name="GraphToolbar" type="Control" parent="LeftPanelSplit/RightPanelSplit/GraphContainer"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -188,6 +195,7 @@ grow_vertical = 2
 size_flags_horizontal = 3
 
 [node name="ToggleLeftPanel" type="Button" parent="LeftPanelSplit/RightPanelSplit/GraphContainer/GraphToolbar/HBox"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "<"
 flat = true
@@ -212,11 +220,13 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="SettingsMenu" type="MenuButton" parent="LeftPanelSplit/RightPanelSplit/GraphContainer/GraphToolbar/HBox"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Settings"
 script = ExtResource("7")
 
 [node name="ToolsMenu" type="MenuButton" parent="LeftPanelSplit/RightPanelSplit/GraphContainer/GraphToolbar/HBox"]
+unique_name_in_owner = true
 visible = false
 layout_mode = 2
 focus_mode = 2
@@ -224,11 +234,13 @@ text = "Tools"
 script = ExtResource("7")
 
 [node name="Run" type="Button" parent="LeftPanelSplit/RightPanelSplit/GraphContainer/GraphToolbar/HBox"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Run"
 flat = true
 
 [node name="PlayButton" type="Button" parent="LeftPanelSplit/RightPanelSplit/GraphContainer/GraphToolbar/HBox"]
+unique_name_in_owner = true
 layout_mode = 2
 text = ""
 flat = true
@@ -244,16 +256,19 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="Search" type="LineEdit" parent="LeftPanelSplit/RightPanelSplit/GraphContainer/GraphToolbar/HBox"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Search"
 
 [node name="ToggleRightPanel" type="Button" parent="LeftPanelSplit/RightPanelSplit/GraphContainer/GraphToolbar/HBox"]
+unique_name_in_owner = true
 layout_mode = 2
 text = ">"
 flat = true
 
 [node name="RightSidebar" type="Control" parent="LeftPanelSplit/RightPanelSplit"]
+unique_name_in_owner = true
 visible = false
 layout_mode = 2
 
@@ -295,13 +310,16 @@ grow_vertical = 2
 size_flags_vertical = 3
 
 [node name="ConfirmClear" type="ConfirmationDialog" parent="."]
+unique_name_in_owner = true
 dialog_text = "Really clear all nodes?"
 
 [node name="ConfirmDelete" type="ConfirmationDialog" parent="."]
+unique_name_in_owner = true
 size = Vector2i(285, 100)
 dialog_text = "Really delete conversation?"
 
 [node name="ConfirmationDimmer" type="Panel" parent="."]
+unique_name_in_owner = true
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -311,6 +329,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Preview" type="Control" parent="."]
+unique_name_in_owner = true
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -336,15 +355,18 @@ offset_right = 320.0
 offset_bottom = 149.0
 
 [node name="Stop" parent="Preview/HBoxContainer" instance=ExtResource("3")]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Stop"
 
 [node name="Next" parent="Preview/HBoxContainer" instance=ExtResource("3")]
+unique_name_in_owner = true
 layout_mode = 2
 toggle_mode = true
 text = "Next"
 
 [node name="Debug" parent="Preview/HBoxContainer" instance=ExtResource("3")]
+unique_name_in_owner = true
 layout_mode = 2
 toggle_mode = true
 text = "Debug"

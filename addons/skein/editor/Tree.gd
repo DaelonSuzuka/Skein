@@ -27,9 +27,9 @@ signal rename_node(id: String, new_path: String)
 signal delete_node(id: String)
 signal run_node
 
-var folder_state = {}
+var folder_state := {}
 
-var icon_colors = {
+var icon_colors := {
 	'speech': Color.OLIVE_DRAB,
 	'dialog': Color.OLIVE_DRAB,
 	'branch': Color.TOMATO,
@@ -55,7 +55,7 @@ var refresh_countdown = 0
 func refresh():
 	refresh_countdown = 10
 
-func _physics_process(delta):
+func _physics_process(delta: float):
 	if refresh_countdown:
 		refresh_countdown -= 1
 		if refresh_countdown == 0:
@@ -108,7 +108,7 @@ func _refresh():
 		if !dir.file_exists(file):
 			continue
 
-		file_data.append({file = file, prev = prev, path = path})
+		file_data.append({file=file, prev=prev, path=path})
 
 	var current_conversation = ''
 	if owner:
@@ -140,7 +140,7 @@ func _refresh():
 	if !item_collapsed.is_connected(self._on_item_collapsed):
 		item_collapsed.connect(self._on_item_collapsed)
 
-func create_file_item(parent, path):
+func create_file_item(parent: TreeItem, path: String):
 	var item = create_item(parent)
 	item.set_meta('type', 'file')
 	item.set_meta('path', path)
@@ -154,7 +154,7 @@ func create_file_item(parent, path):
 	item.collapsed = true
 	return item
 
-func create_node_item(parent, path, node):
+func create_node_item(parent: TreeItem, path: String, node: Node):
 	var item = create_item(parent)
 	item.set_meta('type', 'node')
 	item.set_meta('path', path + ':' + str(node.id))
@@ -167,7 +167,7 @@ func create_node_item(parent, path, node):
 	item.set_tooltip_text(0, node.type)
 	return item
 
-func create_folder_item(parent, path):
+func create_folder_item(parent: TreeItem, path: String):
 	var item = create_item(parent)
 
 	var p = path.trim_prefix(Skein.Files.conversation_prefix)
@@ -191,7 +191,7 @@ func _on_gui_input(event):
 		if event.button_index == 2:
 			open_context_menu(event.position)
 
-func _on_item_collapsed(item):
+func _on_item_collapsed(item: TreeItem):
 	var type = item.get_meta('type')
 	if type == 'folder':
 		var path = item.get_meta('path')
@@ -293,7 +293,7 @@ func get_item_path(item: TreeItem) -> String:
 	else:
 		return parent.get_text(0) + ':' + item.get_text(0)
 
-func select_item(path):
+func select_item(path: String):
 	pass
 
 func delete_item(id):
@@ -320,7 +320,7 @@ func delete_item(id):
 
 var ctx: SkeinContextMenu = null
 
-func open_context_menu(position) -> void:
+func open_context_menu(position: Vector2) -> void:
 	if ctx:
 		ctx.queue_free()
 		ctx = null
@@ -415,7 +415,7 @@ func context_menu_item_selected(selection: String) -> void:
 
 # ******************************************************************************
 
-func _get_drag_data(position):
+func _get_drag_data(position: Vector2):
 	set_drop_mode_flags(DROP_MODE_INBETWEEN | DROP_MODE_ON_ITEM)
 
 	var preview = Label.new()
@@ -424,7 +424,7 @@ func _get_drag_data(position):
 
 	return get_selected()
 
-func can_drop_data(position, data) -> bool:
+func can_drop_data(position: Vector2, data) -> bool:
 	if !(data is TreeItem):
 		return false
 	var to_item = get_item_at_position(position)
@@ -439,7 +439,7 @@ func can_drop_data(position, data) -> bool:
 			return false
 	return true
 
-func drop_data(position, item):
+func drop_data(position: Vector2, item):
 	var to_item = get_item_at_position(position)
 
 	var shift = get_drop_section_at_position(position)

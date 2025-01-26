@@ -3,7 +3,7 @@ extends GraphEdit
 
 # ******************************************************************************
 
-@onready var node_types = {
+@onready var node_types: Dictionary[String, PackedScene] = {
 	'entry': load('res://addons/skein/nodes/EntryNode.tscn'),
 	'exit': load('res://addons/skein/nodes/ExitNode.tscn'),
 	# 'base': load('res://addons/skein/nodes/DialogNode.tscn'),
@@ -15,7 +15,7 @@ extends GraphEdit
 	'subgraph': load('res://addons/skein/nodes/SubgraphNode.tscn'),
 }
 
-var display_types = [
+var display_types: Array[String] = [
 	'dialog',
 	'comment',
 	'branch',
@@ -25,7 +25,7 @@ var display_types = [
 var nodes := {}
 var notify_changes := true
 
-signal zoom_changed(zoom)
+signal zoom_changed(zoom: float)
 
 signal node_created(node)
 signal node_deleted(id: String)
@@ -67,7 +67,7 @@ func dismiss_ctx() -> void:
 		ctx.queue_free()
 		ctx = null
 
-func on_popup_request(position) -> void:
+func on_popup_request(position: Vector2) -> void:
 	dismiss_ctx()
 	ctx = SkeinContextMenu.new(self, self.new_node_requested)
 	ctx.add_separator('New Node:')
@@ -98,7 +98,7 @@ func clear() -> void:
 
 # ******************************************************************************
 
-var used_ids = []
+var used_ids: Array[String] = []
 
 func get_id() -> int:
 	var id = randi()
@@ -143,7 +143,7 @@ func delete_node(node) -> void:
 	node.queue_free()
 	node_deleted.emit(id)
 
-func rename_node(id, new_name):
+func rename_node(id, new_name: String):
 	if str(id) in nodes:
 		nodes[str(id)].rename(new_name)
 		contents_changed()
