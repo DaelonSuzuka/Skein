@@ -4,11 +4,11 @@ class_name SkeinContextMenu
 
 # ******************************************************************************
 
-signal item_selected(item)
+signal item_selected(item: String)
 
 # ******************************************************************************
 
-func _init(obj = null, cb = null, arg1 = null, arg2 = null):
+func _init(obj=null, cb=null, arg1=null, arg2=null):
 	# set_hide_on_window_lose_focus(true)
 
 	if obj:
@@ -25,12 +25,12 @@ func _init(obj = null, cb = null, arg1 = null, arg2 = null):
 
 	index_pressed.connect(self._on_index_pressed.bind(args))
 
-func open(pos = null):
+func open(pos=null):
 	if pos:
 		position = pos
 	popup()
 
-func _on_index_pressed(idx, args = []):
+func _on_index_pressed(idx: int, args=[]):
 	var item = get_item_text(idx)
 	if args:
 		item_selected.emit(item, args)
