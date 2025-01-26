@@ -3,7 +3,7 @@ extends Node
 
 # ******************************************************************************
 
-func save_yarn(path, data):
+func save_yarn(path: String, data:Dictionary):
 	if data == null or data == {}:
 		return
 	if !path.begins_with('res://') and !path.begins_with('user://'):
@@ -63,11 +63,11 @@ func load_yarn(path: String, default=null):
 	return result
 
 func parse_yarn(text: String):
-	var nodes := {}
+	var nodes: Dictionary[String, Dictionary] = {}
 	var mode := 'header'
 
-	var header := []
-	var body := []
+	var header: Array[String] = []
+	var body: Array[String] = []
 	var i := 0
 	var lines = text.split('\n')
 	while i < lines.size():
@@ -98,7 +98,7 @@ func get_id() -> int:
 	used_ids.append(id)
 	return id
 
-func create_node(header, body):
+func create_node(header: Array[String], body: Array[String]):
 	var node := {
 		id = 0,
 		type = '',
