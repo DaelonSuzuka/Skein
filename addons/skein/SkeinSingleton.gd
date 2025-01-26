@@ -33,16 +33,10 @@ func _ready():
 	init_file_watcher()
 
 func init_file_watcher():
-	pass
-	# Watcher.add_scan_directory(conversation_prefix)
-	# for folder in Files.get_all_folders(conversation_prefix):
-	# 	Watcher.add_scan_directory(folder)
+	Watcher.add_scan_directory(Files.conversation_prefix)
+	Watcher.add_scan_directory(Files.characters_prefix)
 
-	# Watcher.add_scan_directory(characters_prefix)
-	# for folder in Files.get_all_folders(characters_prefix):
-	# 	Watcher.add_scan_directory(folder)
-
-	# Watcher.pressed.connect(refresh)
+	Watcher.files_changed.connect(refresh)
 
 func refresh():
 	load_conversations()
