@@ -71,7 +71,7 @@ func parse_yarn(text: String):
 	var i := 0
 	var lines = text.split('\n')
 	while i < lines.size():
-		var line = lines[i]
+		var line = lines[i].strip_edges(false) # rstrip whitespace
 		if line == '===': # end of node
 			var node = create_node(header, body)
 			nodes[str(node.id)] = node
