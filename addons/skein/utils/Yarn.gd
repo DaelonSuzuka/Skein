@@ -51,21 +51,19 @@ func convert_nodes_to_yarn(data):
 
 # ------------------------------------------------------------------------------
 
-func load_yarn(path, default=null):
+func load_yarn(path: String, default=null):
 	var result = default
 
 	var f = FileAccess.open(path, FileAccess.READ)
 	if f and f.is_open():
 		var text = f.get_as_text()
-		parse_yarn(text)
+		var nodes = parse_yarn(text)
 		if nodes:
 			result = nodes
 	return result
 
-var nodes := {}
-
-func parse_yarn(text):
-	nodes.clear()
+func parse_yarn(text: String):
+	var nodes := {}
 	var mode := 'header'
 
 	var header := []
@@ -89,6 +87,7 @@ func parse_yarn(text):
 			if mode == 'body':
 				body.append(line)
 		i += 1
+	return nodes
 
 var used_ids = []
 
