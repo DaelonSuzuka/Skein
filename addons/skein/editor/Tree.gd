@@ -334,7 +334,7 @@ func open_context_menu(position) -> void:
 			'file':
 				if item.get_meta('path').ends_with('json'):
 					ctx.add_item('Convert to Yarn')
-				ctx.add_item('Copy Path3D')
+				ctx.add_item('Copy Path')
 				ctx.add_item('Rename')
 				ctx.add_item('Delete')
 			'folder':
@@ -344,7 +344,7 @@ func open_context_menu(position) -> void:
 				ctx.add_item('Delete')
 			'node':
 				ctx.add_item('Run')
-				ctx.add_item('Copy Path3D')
+				ctx.add_item('Copy Path')
 				ctx.add_item('Rename')
 				ctx.add_item('Delete')
 	else:
@@ -387,7 +387,7 @@ func context_menu_item_selected(selection: String) -> void:
 			item.set_editable(0, true)
 			item.select(0)
 			call_deferred('edit_selected')
-		'Copy Path3D':
+		'Copy Path':
 			var item = get_selected()
 			var path = item.get_meta('path')
 			path = path.replace('.yarn', '')
