@@ -17,8 +17,8 @@ config/icon="res://icon.png"
 
 [autoload]
 
-Skein="*res://addons/skein/SkeinSingleton.tscn"
 Console="*res://addons/consulate/Console.gd"
+Skein="*res://addons/skein/SkeinSingleton.tscn"
 
 [debug]
 
