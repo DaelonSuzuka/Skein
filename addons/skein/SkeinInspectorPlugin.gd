@@ -37,11 +37,10 @@ class CustomProperty:
 
 	func _ready():
 		selection.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		select.text = 'Select'
-		edit.text = 'Show'
-
-	func get_value():
-		return get_edited_object().get(get_edited_property())
+		select.tooltip_text = 'Select Conversation'
+		edit.tooltip_text = 'Show Selected Conversation'
+		select.icon = preload('./resources/folder_tree.svg')
+		edit.icon = preload('./resources/magnifying_glass.svg')
 
 	func update_selection(value: SkeinConversation):
 		if value == null:
@@ -52,6 +51,9 @@ class CustomProperty:
 	func set_value(value: SkeinConversation):
 		update_selection(value)
 		get_edited_object().set(get_edited_property(), value)
+		
+	func get_value():
+		return get_edited_object().get(get_edited_property())
 
 	func _update_property() -> void:
 		var value = get_value()
