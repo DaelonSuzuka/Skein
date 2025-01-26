@@ -97,7 +97,7 @@ func title_bar_ctx(pos: Vector2) -> void:
 	parent.ctx = SkeinContextMenu.new(self, self._title_bar_ctx_selection)
 	parent.ctx.add_check_item('Default')
 	parent.ctx.set_item_checked(0, bool(data.default))
-	parent.ctx.add_item('Copy Path3D')
+	parent.ctx.add_item('Copy Path')
 	parent.ctx.add_item('Copy Name')
 	parent.ctx.add_item('Copy ID')
 	for item in self.get_title_bar_ctx_items():
@@ -113,7 +113,7 @@ func _title_bar_ctx_selection(selection: String):
 				for node in parent.nodes.values():
 					node.data.default = false
 				data.default = true
-		'Copy Path3D':
+		'Copy Path':
 			var path = '%s:%s' % [parent.owner.current_conversation, data.name]
 			DisplayServer.clipboard_set(path)
 		'Copy Name':
