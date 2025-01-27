@@ -4,14 +4,6 @@ class_name SkeinEditor
 
 # ******************************************************************************
 
-@onready var Run = find_child('Run')
-# onready var Play = find_child('Play')
-@onready var Refresh = find_child('Refresh')
-@onready var Stop = find_child('Stop')
-@onready var Next = find_child('Next')
-@onready var Debug = find_child('Debug')
-@onready var DialogBox = find_child('DialogBox')
-
 @export var location := 'default'
 
 var plugin: EditorPlugin = null
@@ -25,17 +17,17 @@ func _ready():
 	if Engine.is_editor_hint() and !plugin:
 		return
 
-	Run.pressed.connect(self.run)
-	Stop.pressed.connect(self.stop)
-	Next.pressed.connect(self.next)
-	Debug.toggled.connect($Preview/DialogBox/DebugLog.set_visible)
+	%Run.pressed.connect(self.run)
+	%Stop.pressed.connect(self.stop)
+	%Next.pressed.connect(self.next)
+	%Debug.toggled.connect($Preview/DialogBox/DebugLog.set_visible)
 
 	%Preview.hide()
 	# ConfirmDelete.popup_hide.connect(Skein.refresh)
 	# ConfirmDelete.popup_hide.connect(ConfirmationDimmer.hide)
 	%ConfirmDelete.confirmed.connect(self.really_delete_conversation)
 
-	Refresh.pressed.connect(Skein.refresh)
+	%Refresh.pressed.connect(Skein.refresh)
 
 	Skein.refreshed.connect(%Tree.refresh)
 	%Tree.folder_collapsed.connect(self.save_editor_data)
@@ -62,9 +54,9 @@ func _ready():
 
 	Skein.refreshed.connect(self.refresh)
 	
-	DialogBox.done.connect(self.dismiss_preview)
-	DialogBox.line_started.connect(self.line_started)
-	DialogBox.node_started.connect(self.node_started)
+	%DialogBox.done.connect(self.dismiss_preview)
+	%DialogBox.line_started.connect(self.line_started)
+	%DialogBox.node_started.connect(self.node_started)
 
 	$AutoSave.timeout.connect(self.autosave)
 
@@ -107,10 +99,10 @@ func set_font_size(amount):
 	theme.default_font.size += amount
 
 func dialog_font_minus():
-	DialogBox.theme.default_font.size -= 1
+	%DialogBox.theme.default_font.size -= 1
 
 func dialog_font_plus():
-	DialogBox.theme.default_font.size += 1
+	%DialogBox.theme.default_font.size += 1
 
 # ******************************************************************************
 
@@ -295,10 +287,10 @@ func run():
 	save_editor_data()
 	$Preview.show()
 
-	DialogBox.start(conversation, {exec=false})
+	%DialogBox.start(conversation, {exec=false})
 
 func stop():
-	DialogBox.stop()
+	%DialogBox.stop()
 	dismiss_preview()
 
 func dismiss_preview():
@@ -306,7 +298,7 @@ func dismiss_preview():
 	%GraphEdit.unhighlight_all_nodes()
 
 func next():
-	DialogBox.next_line()
+	%DialogBox.next_line()
 
 func line_started(id: String, line_number: int):
 	var node = %GraphEdit.get_graphnode(id)

@@ -372,6 +372,7 @@ toggle_mode = true
 text = "Debug"
 
 [node name="DialogBox" parent="Preview" instance=ExtResource("5")]
+unique_name_in_owner = true
 layout_mode = 1
 grow_horizontal = 2
 grow_vertical = 2
