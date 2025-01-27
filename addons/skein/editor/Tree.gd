@@ -154,7 +154,7 @@ func create_file_item(parent: TreeItem, path: String):
 	item.collapsed = true
 	return item
 
-func create_node_item(parent: TreeItem, path: String, node: Node):
+func create_node_item(parent: TreeItem, path: String, node: Dictionary):
 	var item = create_item(parent)
 	item.set_meta('type', 'node')
 	item.set_meta('path', path + ':' + str(node.id))

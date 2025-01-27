@@ -93,29 +93,30 @@ func select_conversation(prop: CustomProperty):
 
 func accepted(prop: CustomProperty):
 	var item = tree.get_selected()
-	var path = item.get_meta('path')
+	if item:
+		var path = item.get_meta('path')
 
-	match item.get_meta('type'):
-		'file':
-			var convo = SkeinConversation.new()
-			convo.file = path
-			prop.set_value(convo)
-		'folder':
-			return
-		'node':
-			var convo = SkeinConversation.new()
-			var parts = path.split(':')
-			convo.file = parts[0]
+		match item.get_meta('type'):
+			'file':
+				var convo = SkeinConversation.new()
+				convo.file = path
+				prop.set_value(convo)
+			'folder':
+				return
+			'node':
+				var convo = SkeinConversation.new()
+				var parts = path.split(':')
+				convo.file = parts[0]
 
-			var node = item.get_meta('node')
-			if node.name.to_lower() != node.type.to_lower():
-				convo.node = node.name
-			else:
-				convo.node = node.id
-			
-			prop.set_value(convo)
+				var node = item.get_meta('node')
+				if node.name.to_lower() != node.type.to_lower():
+					convo.node = node.name
+				else:
+					convo.node = node.id
+				
+				prop.set_value(convo)
 
-	selector.hide()
+		selector.hide()
 
 func open_conversation(prop: CustomProperty):
 	var conv := prop.get_value()
