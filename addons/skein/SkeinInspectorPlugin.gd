@@ -39,10 +39,10 @@ class CustomProperty:
 		selection.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		select.tooltip_text = 'Select Conversation'
 		select.flat = true
-		select.icon = preload('./resources/folder_tree.svg')
+		# select.icon = preload('./resources/icons/folder_tree.svg')
 		show.tooltip_text = 'Show Selected Conversation'
 		show.flat = true
-		show.icon = preload('./resources/magnifying_glass.svg')
+		# show.icon = preload('./resources/icons/magnifying_glass.svg')
 		show.disabled = true
 
 	func update_selection(value: SkeinConversation):
