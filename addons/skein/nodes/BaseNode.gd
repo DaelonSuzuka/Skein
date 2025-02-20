@@ -25,11 +25,6 @@ var slot_colors := [
 	Color.LIME,
 ]
 
-@onready var edit_menu: MenuButton = $Body/Toolbar/Edit
-@onready var close_button: Button = $Body/Toolbar/Close
-@onready var toolbar: HBoxContainer = $Body/Toolbar
-@onready var title_label = $Body/Toolbar/Title
-@onready var id_label: Label = $Body/Toolbar/Id
 @onready var parent = get_parent()
 
 signal changed
@@ -37,11 +32,11 @@ signal changed
 # ******************************************************************************
 
 func _ready() -> void:
-	close_button.pressed.connect(self.delete_request.emit)
+	%Close.pressed.connect(self.delete_request.emit)
 	resize_request.connect(self._resize_request)
 	gui_input.connect(self._gui_input)
 
-	title_label.text_changed.connect(self.renamed)
+	%Title.text_changed.connect(self.renamed)
 
 func _resize_request(new_minsize: Vector2) -> void:
 	self.changed.emit()
@@ -60,7 +55,7 @@ func _gui_input(event: InputEvent) -> void:
 	if !(event is InputEventMouseButton) or !event.pressed:
 		return
 
-	var title_rect = Rect2(toolbar.global_position, toolbar.size * parent.zoom)
+	var title_rect = Rect2(%Toolbar.global_position, %Toolbar.size * parent.zoom)
 	if title_rect.has_point(event.global_position):
 		if event.button_index == 2:
 			title_bar_ctx(event.global_position)
@@ -143,10 +138,10 @@ func _body_ctx_selection(selection: String):
 func set_id(id) -> void:
 	data.id = id
 	name = str(id)
-	id_label.text = str(data.id)
+	%Id.text = str(data.id)
 
 func rename(new_name):
-	title_label.text = new_name
+	%Title.text = new_name
 	renamed(new_name)
 
 func renamed(new_name):
@@ -159,7 +154,7 @@ func renamed(new_name):
 func get_data() -> Dictionary:
 	var _data = data.duplicate(true)
 	_data.position = var_to_str(Rect2(position_offset.round(), size.round()))
-	_data.name = title_label.text
+	_data.name = %Title.text
 	if _data.next == 'none':
 		_data.erase('next')
 	if _data.default == false:

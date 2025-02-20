@@ -1,22 +1,32 @@
 @tool
-extends 'BaseNode.gd'
+extends GraphFrame
 
 # ******************************************************************************
 
-@onready var color_picker = find_child('ColorPickerButton')
-@onready var tooltip = find_child('Tooltip')
-@onready var tooltip_bg = find_child('TooltipBG')
+var data := {
+	id = 0,
+	type = 'base',
+	name = '',
+	text = '',
+	next = 'none',
+	default = false,
+	position = '',
+	connections = {}
+}
+
+@onready var parent = get_parent()
+
+signal changed
 
 # ******************************************************************************
 
 func _ready():
-	color_picker.get_picker()
-	color_picker.get_popup()
-	color_picker.color_changed.connect(self.set_color)
-	tooltip.hide()
-	title_label.text_changed.connect(tooltip.set_text)
+	%ColorPickerButton.get_picker()
+	%ColorPickerButton.get_popup()
+	%ColorPickerButton.color_changed.connect(self.set_color)
+	%Tooltip.hide()
+	%Title.text_changed.connect(%Tooltip.set_text)
 
-	var parent = get_parent()
 	if parent is GraphEdit:
 		position_offset_changed.connect(self._position_offset_changed)
 		parent.begin_node_move.connect(self.begin_move)
@@ -24,9 +34,23 @@ func _ready():
 		parent.zoom_changed.connect(self.zoom_changed)
 		zoom_changed(parent.zoom)
 
+	%Close.pressed.connect(self.delete_request.emit)
+	resize_request.connect(self._resize_request)
+	# gui_input.connect(self._gui_input)
+
+	%Title.text_changed.connect(self.renamed)
+
+func _resize_request(new_minsize: Vector2) -> void:
+	self.changed.emit()
+	if get_parent().snapping_enabled:
+		var snap = get_parent().get_snap()
+		size = new_minsize.snapped(Vector2(snap, snap))
+	else:
+		size = new_minsize
+
 func set_color(color):
 	self_modulate = color
-	tooltip_bg.modulate = color
+	%TooltipBG.modulate = color
 
 # ******************************************************************************
 
@@ -69,7 +93,7 @@ func set_stylebox_borders(stylebox: StyleBox, width):
 	stylebox.border_width_right = width
 
 func zoom_changed(zoom):
-	tooltip.hide()
+	%Tooltip.hide()
 
 	var width = max(round(1 / zoom), 1) as int
 
@@ -78,21 +102,60 @@ func zoom_changed(zoom):
 	# set_stylebox_borders(tooltip_bg.get_stylebox('panel'), width)
 
 	if zoom < .8:
-		tooltip.show()
-		tooltip.theme.default_font.size = round(16 / zoom)
+		%Tooltip.show()
+		%Tooltip.theme.default_font.size = round(16 / zoom)
+
+# ******************************************************************************
+
+func set_id(id) -> void:
+	data.id = id
+	name = str(id)
+	%Id.text = str(data.id)
+
+func rename(new_name):
+	%Title.text = new_name
+	renamed(new_name)
+
+func renamed(new_name):
+	changed.emit()
+	parent.node_renamed.emit(data.name, new_name)
+	data.name = new_name
 
 # ******************************************************************************
 
 func get_data():
-	var data = super.get_data()
-	data['color'] = color_picker.color.to_html()
-	return data
+	var _data = data.duplicate(true)
+	_data.position = var_to_str(Rect2(position_offset.round(), size.round()))
+	_data.name = %Title.text
+	_data['color'] = %ColorPickerButton.color.to_html()
+	return _data
 
-func set_data(new_data):
+func set_data(new_data: Dictionary):
+	if 'type' in new_data:
+		data.type = new_data.type
+	if 'default' in new_data:
+		var state = new_data['default']
+		if state is String:
+			state = {'true': true, 'false': false}[state.to_lower()]
+		data.default = state
+	if 'id' in new_data:
+		set_id(new_data.id)
 	if 'name' in new_data:
-		tooltip.text = new_data.name
+		data.name = new_data.name
+		rename(new_data.name)
+		%Tooltip.text = new_data.name
+	if 'position' in new_data:
+		var rect = str_to_var(new_data.position)
+		position_offset = rect.position.round()
+		size = rect.size.round()
+	else:
+		if 'position_offset' in new_data:
+			position_offset = str_to_var(new_data.position_offset)
+		if 'size' in new_data:
+			size = str_to_var(new_data.size)
 	if 'color' in new_data:
 		self_modulate = Color(new_data.color)
-		tooltip_bg.modulate = Color(new_data.color)
-		color_picker.color = Color(new_data.color)
-	super.set_data(new_data)
+		%TooltipBG.modulate = Color(new_data.color)
+		%ColorPickerButton.color = Color(new_data.color)
+
+	return self

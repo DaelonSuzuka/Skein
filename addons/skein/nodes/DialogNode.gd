@@ -16,11 +16,11 @@ var scrollbar = null
 # ******************************************************************************
 
 func _ready():
-	edit_menu.get_popup().index_pressed.connect(self.index_pressed)
+	%Edit.get_popup().index_pressed.connect(self.index_pressed)
 
 	data['show_choices'] = false
 	set_choices_enabled(false)
-	edit_menu.get_popup().set_item_checked(0, false)
+	%Edit.get_popup().set_item_checked(0, false)
 
 	data['choices'] = {}
 	for c in choices:
@@ -66,10 +66,10 @@ func on_change(arg=null):
 	changed.emit()
 
 func index_pressed(index):
-	match edit_menu.get_popup().get_item_text(index):
+	match %Edit.get_popup().get_item_text(index):
 		'Choices':
-			edit_menu.get_popup().toggle_item_checked(0)
-			var state = edit_menu.get_popup().is_item_checked(0)
+			%Edit.get_popup().toggle_item_checked(0)
+			var state = %Edit.get_popup().is_item_checked(0)
 			data['show_choices'] = state
 			set_choices_enabled(state)
 			changed.emit()
@@ -122,7 +122,7 @@ func set_data(new_data):
 			state = {'true': true, 'false': false}[state.to_lower()]
 		data['show_choices'] = state
 		set_choices_enabled(state)
-		edit_menu.get_popup().set_item_checked(0, state)
+		%Edit.get_popup().set_item_checked(0, state)
 	if 'choices' in new_data:
 		for c in choices:
 			if str(c.name)[6] in new_data['choices']:

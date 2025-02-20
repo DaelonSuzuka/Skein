@@ -1,7 +1,14 @@
-[gd_scene load_steps=10 format=4 uid="uid://b24wtf8qhorkl"]
+[gd_scene load_steps=15 format=4 uid="uid://b24wtf8qhorkl"]
 
-[ext_resource type="PackedScene" uid="uid://dqog4ebqwf6ud" path="res://addons/skein/nodes/BaseNode.tscn" id="1"]
-[ext_resource type="Script" uid="uid://curjrru3t2vyn" path="res://addons/skein/nodes/CommentNode.gd" id="2"]
+[ext_resource type="Theme" uid="uid://cofxhbjxv1xcq" path="res://addons/skein/resources/theme.tres" id="1_dannt"]
+[ext_resource type="StyleBox" uid="uid://c62yl56shebjh" path="res://addons/skein/resources/graphnode.tres" id="2_g2n8b"]
+[ext_resource type="StyleBox" uid="uid://bpab8dy2hpmsi" path="res://addons/skein/resources/graphnode_selected.tres" id="3_87b7r"]
+[ext_resource type="Script" uid="uid://curjrru3t2vyn" path="res://addons/skein/nodes/CommentNode.gd" id="4_g2n8b"]
+[ext_resource type="PackedScene" path="res://addons/skein/nodes/common/LabelEdit.tscn" id="4_ydqm5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jkxjg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_21gcy"]
 
 [sub_resource type="StyleBoxFlat" id="6"]
 
@@ -169,23 +176,96 @@ default_font = SubResource("12")
 GraphNode/styles/comment = SubResource("6")
 GraphNode/styles/comment_focus = SubResource("7")
 
-[node name="1" instance=ExtResource("1")]
-script = ExtResource("2")
+[node name="1" type="GraphFrame"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -100.0
+offset_right = 100.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_dannt")
+theme_override_styles/panel = ExtResource("2_g2n8b")
+theme_override_styles/panel_selected = ExtResource("3_87b7r")
+theme_override_styles/titlebar = SubResource("StyleBoxEmpty_jkxjg")
+theme_override_styles/titlebar_selected = SubResource("StyleBoxEmpty_21gcy")
+resizable = true
+script = ExtResource("4_g2n8b")
 
-[node name="ColorPickerButton" type="ColorPickerButton" parent="Body/Toolbar" index="2"]
+[node name="Body" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 1
+
+[node name="Toolbar" type="HBoxContainer" parent="Body"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+offset_top = -59.0
+offset_bottom = -27.0
+grow_horizontal = 2
+mouse_filter = 2
+alignment = 2
+
+[node name="Id" type="Label" parent="Body/Toolbar"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0"
+
+[node name="Seperator" type="Control" parent="Body/Toolbar"]
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="Body/Toolbar/Seperator"]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 1.0
+offset_right = -9.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorPickerButton" type="ColorPickerButton" parent="Body/Toolbar"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 flat = true
 color = Color(1, 1, 1, 1)
 edit_alpha = false
 
-[node name="Title" parent="Body/Toolbar" index="3"]
+[node name="Title" parent="Body/Toolbar" instance=ExtResource("4_ydqm5")]
+unique_name_in_owner = true
+layout_mode = 2
 text = "Comment"
 
-[node name="Edit" parent="Body/Toolbar" index="5"]
+[node name="Play" type="Button" parent="Body/Toolbar"]
+unique_name_in_owner = true
 visible = false
+layout_mode = 2
+text = ""
+flat = true
 
-[node name="Tooltip" type="Label" parent="Body" index="1"]
+[node name="Edit" type="MenuButton" parent="Body/Toolbar"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+text = "E"
+
+[node name="Close" type="Button" parent="Body/Toolbar"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "X"
+flat = true
+
+[node name="Tooltip" type="Label" parent="Body"]
+unique_name_in_owner = true
 visible = false
 layout_mode = 0
 offset_left = -11.0
@@ -196,13 +276,14 @@ grow_vertical = 0
 theme = SubResource("4")
 text = "Comment"
 
-[node name="TooltipBG" type="Panel" parent="Body/Tooltip" index="0"]
+[node name="TooltipBG" type="Panel" parent="Body/Tooltip"]
+unique_name_in_owner = true
 show_behind_parent = true
 layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="TextEdit" type="TextEdit" parent="Body" index="2"]
+[node name="TextEdit" type="TextEdit" parent="Body"]
 visible = false
 layout_mode = 0
 anchor_right = 1.0
