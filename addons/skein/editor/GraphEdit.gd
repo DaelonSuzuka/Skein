@@ -60,24 +60,24 @@ func contents_changed():
 # ******************************************************************************
 
 var ctx: SkeinContextMenu = null
-var ctx_position := Vector2()
 
-func dismiss_ctx() -> void:
+func new_ctx(cb)-> SkeinContextMenu:
 	if is_instance_valid(ctx):
 		ctx.queue_free()
 		ctx = null
 
+	ctx = SkeinContextMenu.new(self, cb)
+	return ctx
+
 func on_popup_request(position: Vector2) -> void:
-	dismiss_ctx()
-	ctx = SkeinContextMenu.new(self, self.new_node_requested)
+	ctx = self.new_ctx(self.new_node_requested)
 	ctx.add_separator('New Node:')
 	for type in display_types:
 		ctx.add_item(type.capitalize())
-	ctx_position = get_offset_from_mouse()
 	ctx.open(get_global_mouse_position())
 
 func new_node_requested(type: String) -> void:
-	var data = {type = type.to_lower(), offset = ctx_position, position_offset = Vector2()}
+	var data = {type = type.to_lower(), offset = ctx.position, position_offset = Vector2()}
 	
 	if snapping_enabled:
 		var snap = snapping_distance

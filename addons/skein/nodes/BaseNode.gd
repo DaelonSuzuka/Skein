@@ -88,14 +88,14 @@ func body_ctx_selection(selection: String):
 # Context Menu spawner
 
 func title_bar_ctx(pos: Vector2) -> void:
-	parent.dismiss_ctx()
-	var ctx := SkeinContextMenu.new(self, self._title_bar_ctx_selection)
-	parent.ctx = ctx
+	var ctx = parent.new_ctx(self._title_bar_ctx_selection)
 
 	ctx.check_item('Default', bool(data.default), _default_checked)
+
 	ctx.item('Copy Path', DisplayServer.clipboard_set.bind('%s:%s' % [parent.owner.current_conversation, data.name]))
 	ctx.item('Copy Name', DisplayServer.clipboard_set.bind(data.name))
 	ctx.item('Copy ID', DisplayServer.clipboard_set.bind(str(data.id)))
+	
 	for item in self.get_title_bar_ctx_items():
 		ctx.item(item)
 
@@ -113,13 +113,13 @@ func _title_bar_ctx_selection(selection: String):
 	self.title_bar_ctx_selection(selection)
 
 func body_ctx(pos: Vector2) -> void:
-	parent.dismiss_ctx()
-	parent.ctx = SkeinContextMenu.new(self, self._body_ctx_selection)
+	var ctx = parent.new_ctx(self._body_ctx_selection)
+
 	var items := self.get_body_ctx_items()
 	for item in items:
-		parent.ctx.add_item(item)
+		ctx.add_item(item)
 	if items:
-		parent.ctx.open(get_global_mouse_position())
+		ctx.open(get_global_mouse_position())
 	accept_event()
 
 func _body_ctx_selection(selection: String):
