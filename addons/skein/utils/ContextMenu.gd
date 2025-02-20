@@ -4,35 +4,42 @@ class_name SkeinContextMenu
 
 # ******************************************************************************
 
+var callbacks = {}
+
 signal item_selected(item: String)
 
 # ******************************************************************************
 
-func _init(obj=null, cb=null, arg1=null, arg2=null):
-	# set_hide_on_window_lose_focus(true)
-
+func _init(obj=null, cb=null):
 	if obj:
 		obj.add_child(self)
 
 	if cb != null:
 		item_selected.connect(cb)
 
-	var args = []
-	if arg1:
-		args.append(arg1)
-	if arg2:
-		args.append(arg2)
-
-	index_pressed.connect(self._on_index_pressed.bind(args))
+	index_pressed.connect(self._on_index_pressed)
 
 func open(pos=null):
 	if pos:
 		position = pos
 	popup()
 
-func _on_index_pressed(idx: int, args=[]):
-	var item = get_item_text(idx)
-	if args:
-		item_selected.emit(item, args)
-	else:
-		item_selected.emit(item)
+func _on_index_pressed(idx: int):
+	var label = get_item_text(idx)
+
+	if label in callbacks:
+		callbacks[label].call()
+
+	item_selected.emit(label)
+
+func item(label: String, cb=null):
+	add_item(label)
+	if cb:
+		callbacks[label] = cb
+
+func check_item(label: String, checked:=false, cb=null):
+	add_check_item(label)
+	set_item_checked(0, checked)
+
+	if cb:
+		callbacks[label] = cb

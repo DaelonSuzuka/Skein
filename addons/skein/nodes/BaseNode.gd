@@ -89,33 +89,27 @@ func body_ctx_selection(selection: String):
 
 func title_bar_ctx(pos: Vector2) -> void:
 	parent.dismiss_ctx()
-	parent.ctx = SkeinContextMenu.new(self, self._title_bar_ctx_selection)
-	parent.ctx.add_check_item('Default')
-	parent.ctx.set_item_checked(0, bool(data.default))
-	parent.ctx.add_item('Copy Path')
-	parent.ctx.add_item('Copy Name')
-	parent.ctx.add_item('Copy ID')
+	var ctx := SkeinContextMenu.new(self, self._title_bar_ctx_selection)
+	parent.ctx = ctx
+
+	ctx.check_item('Default', bool(data.default), _default_checked)
+	ctx.item('Copy Path', DisplayServer.clipboard_set.bind('%s:%s' % [parent.owner.current_conversation, data.name]))
+	ctx.item('Copy Name', DisplayServer.clipboard_set.bind(data.name))
+	ctx.item('Copy ID', DisplayServer.clipboard_set.bind(str(data.id)))
 	for item in self.get_title_bar_ctx_items():
-		parent.ctx.add_item(item)
-	parent.ctx.open(get_global_mouse_position())
+		ctx.item(item)
+
+	ctx.open(get_global_mouse_position())
 	accept_event()
 
-func _title_bar_ctx_selection(selection: String):
-	match selection:
-		'Default':
-			data.default = !data.default
-			if data.default:
-				for node in parent.nodes.values():
-					node.data.default = false
-				data.default = true
-		'Copy Path':
-			var path := '%s:%s' % [parent.owner.current_conversation, data.name]
-			DisplayServer.clipboard_set(path)
-		'Copy Name':
-			DisplayServer.clipboard_set(data.name)
-		'Copy ID':
-			DisplayServer.clipboard_set(str(data.id))
+func _default_checked():
+	data.default = !data.default
+	if data.default:
+		for node in parent.nodes.values():
+			node.data.default = false
+		data.default = true
 
+func _title_bar_ctx_selection(selection: String):
 	self.title_bar_ctx_selection(selection)
 
 func body_ctx(pos: Vector2) -> void:
