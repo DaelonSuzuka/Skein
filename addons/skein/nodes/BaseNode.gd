@@ -25,7 +25,7 @@ var slot_colors := [
 	Color.LIME,
 ]
 
-@onready var parent = get_parent()
+@onready var parent: GraphEdit = get_parent()
 
 signal changed
 
@@ -40,8 +40,8 @@ func _ready() -> void:
 
 func _resize_request(new_minsize: Vector2) -> void:
 	self.changed.emit()
-	if get_parent().snapping_enabled:
-		var snap = get_parent().get_snap()
+	if parent.snapping_enabled:
+		var snap := parent.snapping_distance
 		size = new_minsize.snapped(Vector2(snap, snap))
 	else:
 		size = new_minsize
@@ -109,7 +109,7 @@ func _title_bar_ctx_selection(selection: String):
 					node.data.default = false
 				data.default = true
 		'Copy Path':
-			var path = '%s:%s' % [parent.owner.current_conversation, data.name]
+			var path := '%s:%s' % [parent.owner.current_conversation, data.name]
 			DisplayServer.clipboard_set(path)
 		'Copy Name':
 			DisplayServer.clipboard_set(data.name)
@@ -121,7 +121,7 @@ func _title_bar_ctx_selection(selection: String):
 func body_ctx(pos: Vector2) -> void:
 	parent.dismiss_ctx()
 	parent.ctx = SkeinContextMenu.new(self, self._body_ctx_selection)
-	var items = self.get_body_ctx_items()
+	var items := self.get_body_ctx_items()
 	for item in items:
 		parent.ctx.add_item(item)
 	if items:
@@ -152,7 +152,7 @@ func renamed(new_name):
 # ******************************************************************************
 
 func get_data() -> Dictionary:
-	var _data = data.duplicate(true)
+	var _data := data.duplicate(true)
 	_data.position = var_to_str(Rect2(position_offset.round(), size.round()))
 	_data.name = %Title.text
 	if _data.next == 'none':

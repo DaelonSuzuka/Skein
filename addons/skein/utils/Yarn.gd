@@ -3,7 +3,7 @@ extends Node
 
 # ******************************************************************************
 
-func save_yarn(path: String, data:Dictionary):
+func save_yarn(path: String, data: Dictionary):
 	if data == null or data == {}:
 		return
 	if !path.begins_with('res://') and !path.begins_with('user://'):
@@ -13,20 +13,20 @@ func save_yarn(path: String, data:Dictionary):
 
 	var out = convert_nodes_to_yarn(data)
 
-	var f = FileAccess.open(path, FileAccess.WRITE)
+	var f := FileAccess.open(path, FileAccess.WRITE)
 	if f and f.is_open():
 		f.store_string(out)
 
-func convert_nodes_to_yarn(data):
-	var out = ''
+func convert_nodes_to_yarn(data: Dictionary[String, Dictionary]):
+	var out := ''
 
 	for id in data:
-		var node = data[id]
+		var node := data[id]
 
 		node['title'] = node['name']
 		node.erase('name')
 
-		var text = node['text']
+		var text: String = node['text']
 		node.erase('text')
 
 		node.erase('size')
@@ -54,15 +54,16 @@ func convert_nodes_to_yarn(data):
 func load_yarn(path: String, default=null):
 	var result = default
 
-	var f = FileAccess.open(path, FileAccess.READ)
+	var f := FileAccess.open(path, FileAccess.READ)
 	if f and f.is_open():
-		var text = f.get_as_text()
-		var nodes = parse_yarn(text)
+		var text := f.get_as_text()
+		var nodes := parse_yarn(text)
 		if nodes:
 			result = nodes
+
 	return result
 
-func parse_yarn(text: String):
+func parse_yarn(text: String) -> Dictionary[String, Dictionary]:
 	var nodes: Dictionary[String, Dictionary] = {}
 	var mode := 'header'
 
@@ -92,7 +93,7 @@ func parse_yarn(text: String):
 var used_ids = []
 
 func get_id() -> int:
-	var id = randi()
+	var id := randi()
 	if id in used_ids:
 		id = get_id()
 	used_ids.append(id)
@@ -139,8 +140,8 @@ func create_node(header: Array[String], body: Array[String]):
 	if 'branches' in node:
 		node.branches = str_to_var(node.branches)
 
-	var _body = body[0]
-	var i = 1
+	var _body := body[0]
+	var i := 1
 	while i < body.size():
 		_body += '\n' + body[i]
 		i += 1

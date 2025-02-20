@@ -35,7 +35,7 @@ func on_change(arg=null):
 	changed.emit()
 
 func index_pressed(index):
-	match %Edit.get_popup().get_item_text(index):
+	match%Edit.get_popup().get_item_text(index):
 		'Show Extra Branches':
 			%Edit.get_popup().toggle_item_checked(0)
 			var state = %Edit.get_popup().is_item_checked(0)
@@ -48,7 +48,7 @@ func index_pressed(index):
 func set_extra_choices_enabled(state):
 	if state:
 		for i in range(5, 9):
-			var branch = Branch.instantiate()
+			var branch := Branch.instantiate()
 			branch.number = i
 			add_child(branch)
 			extra_branches.append(branch)
@@ -67,7 +67,7 @@ func set_extra_choices_enabled(state):
 # ******************************************************************************
 
 func get_data():
-	var data = super.get_data()
+	var data := super.get_data()
 	data['next'] = 'branch'
 
 	if !data['extra_choices']:
@@ -75,7 +75,7 @@ func get_data():
 
 	var connections = {}
 	for to in data.connections:
-		var num = str(data.connections[to][0] + 1)
+		var num := str(data.connections[to][0] + 1)
 		connections[num] = to
 	
 	if data.connections == {}:

@@ -14,7 +14,7 @@ var data := {
 	connections = {}
 }
 
-@onready var parent = get_parent()
+@onready var parent: GraphEdit = get_parent()
 
 signal changed
 
@@ -42,8 +42,8 @@ func _ready():
 
 func _resize_request(new_minsize: Vector2) -> void:
 	self.changed.emit()
-	if get_parent().snapping_enabled:
-		var snap = get_parent().get_snap()
+	if parent.snapping_enabled:
+		var snap := parent.snapping_distance
 		size = new_minsize.snapped(Vector2(snap, snap))
 	else:
 		size = new_minsize
@@ -56,7 +56,7 @@ func set_color(color):
 
 var dragging := false
 var start_pos := Vector2()
-var drag_children := {}
+var drag_children: Dictionary[Node, Vector2] = {}
 
 func begin_move():
 	if !selected:
@@ -65,18 +65,18 @@ func begin_move():
 	drag_children.clear()
 	start_pos = position_offset
 
-	var own_region = Rect2(position_offset, size)
+	var own_region := Rect2(position_offset, size)
 	for node in get_parent().nodes.values():
 		if node == self or !is_instance_valid(node):
 			continue
-		var node_region = Rect2(node.position_offset, node.size)
+		var node_region := Rect2(node.position_offset, node.size)
 		if own_region.encloses(node_region):
 			drag_children[node] = node.position_offset
 
 func _position_offset_changed():
-	var difference = start_pos - position_offset
+	var difference := start_pos - position_offset
 	for child in drag_children:
-		var start = drag_children[child]
+		var start := drag_children[child]
 		child.position_offset = start - difference
 
 func end_move():
@@ -95,7 +95,7 @@ func set_stylebox_borders(stylebox: StyleBox, width):
 func zoom_changed(zoom):
 	%Tooltip.hide()
 
-	var width = max(round(1 / zoom), 1) as int
+	var width := max(round(1 / zoom), 1) as int
 
 	set_stylebox_borders(theme.get_stylebox('comment', 'GraphNode'), width)
 	set_stylebox_borders(theme.get_stylebox('comment_focus', 'GraphNode'), width)
@@ -112,11 +112,11 @@ func set_id(id) -> void:
 	name = str(id)
 	%Id.text = str(data.id)
 
-func rename(new_name):
+func rename(new_name: String):
 	%Title.text = new_name
 	renamed(new_name)
 
-func renamed(new_name):
+func renamed(new_name: String):
 	changed.emit()
 	parent.node_renamed.emit(data.name, new_name)
 	data.name = new_name
@@ -124,13 +124,13 @@ func renamed(new_name):
 # ******************************************************************************
 
 func get_data():
-	var _data = data.duplicate(true)
+	var _data := data.duplicate(true)
 	_data.position = var_to_str(Rect2(position_offset.round(), size.round()))
 	_data.name = %Title.text
 	_data['color'] = %ColorPickerButton.color.to_html()
 	return _data
 
-func set_data(new_data: Dictionary):
+func set_data(new_data: Dictionary) -> GraphElement:
 	if 'type' in new_data:
 		data.type = new_data.type
 	if 'default' in new_data:

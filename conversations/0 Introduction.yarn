@@ -1,14 +1,18 @@
 id: 546127059
 type: comment
-position: Rect2(190, 220, 900, 470)
+next: none
+default: false
+position: Rect2(230, 210, 900, 470)
 connections: {}
-color: fff1ffff
+color: ff00ffff
 title: Steak Branch
 ---
 
 ===
 id: 2465219394
 type: comment
+next: none
+default: false
 position: Rect2(120, -690, 1240, 610)
 connections: {}
 color: ff00fff9
@@ -22,7 +26,7 @@ next: choice
 position: Rect2(-410, -210, 400, 400)
 connections: {"1099556929": [3, 0],"2668139190": [0, 0],"4134715227": [1, 0],"4204663500": [2, 0]}
 show_choices: true
-choices: {"1": {"choice": "Pizza","next": "2668139190"},"2": {"choice": "Burgers","next": "4134715227"},"3": {"choice": "A salad?","next": "4204663500"},"4": {"choice": "Steak!","next": "1099556929"}}
+choices: {"1": {&"choice": "Pizza","next": "2668139190"},"2": {&"choice": "Burgers","next": "4134715227"},"3": {&"choice": "A salad?","next": "4204663500"},"4": {&"choice": "Steak!","next": "1099556929"}}
 title: looking_for_lunch
 ---
 Alka: Are you hungry?
@@ -34,7 +38,7 @@ type: branch
 next: branch
 position: Rect2(180, -460, 250, 287)
 connections: {"3154986942": [0, 0],"517644291": [1, 0]}
-branches: {"1": {"condition": "last_meal != 'pizza'","next": "3154986942"}}
+branches: {"1": {&"condition": "last_meal != 'pizza'","next": "3154986942"}}
 title: Branch
 ---
 
@@ -58,9 +62,9 @@ Byron: Let's call Lydia and see what she wants.
 id: 1099556929
 type: branch
 next: branch
-position: Rect2(260, 360, 250, 287)
+position: Rect2(300, 350, 250, 287)
 connections: {"1798784612": [1, 0],"3960688578": [0, 0]}
-branches: {"1": {"condition": "wallet > 80","next": "3960688578"}}
+branches: {"1": {&"condition": "wallet > 80","next": "3960688578"}}
 title: Branch
 ---
 
@@ -71,7 +75,7 @@ next: choice
 position: Rect2(530, -650, 390, 310)
 connections: {"1353875733": [0, 0],"1519752278": [1, 0]}
 show_choices: true
-choices: {"1": {"choice": "Pepperoni?","next": "1353875733"},"2": {"choice": "Hawaiian.","next": "1519752278"}}
+choices: {"1": {&"choice": "Pepperoni?","next": "1353875733"},"2": {&"choice": "Hawaiian.","next": "1519752278"}}
 title: Dialog
 ---
 Alka: Pizza sounds good, what toppings do you want?
@@ -92,14 +96,14 @@ Alka: Great, I'll place the order.
 ===
 id: 3960688578
 type: dialog
-position: Rect2(690, 300, 312, 171)
+position: Rect2(730, 290, 312, 171)
 title: Dialog
 ---
 Alka: Only if it's your treat, Byron!
 ===
 id: 1798784612
 type: dialog
-position: Rect2(690, 490, 330, 171)
+position: Rect2(730, 480, 330, 171)
 title: Dialog
 ---
 Alka: But you told me you only have {{wallet}} dollars!
