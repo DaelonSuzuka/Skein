@@ -1,6 +1,6 @@
 extends GutTest
 
-var Files := Skein.Files
+var Files = Skein.Files
 
 const dir = 'res://tests/test_files'
 
