@@ -17,11 +17,11 @@ func save_yarn(path: String, data: Dictionary):
 	if f and f.is_open():
 		f.store_string(out)
 
-func convert_nodes_to_yarn(data: Dictionary[String, Dictionary]):
+func convert_nodes_to_yarn(data: Dictionary):
 	var out := ''
 
 	for id in data:
-		var node := data[id]
+		var node = data[id]
 
 		node['title'] = node['name']
 		node.erase('name')
