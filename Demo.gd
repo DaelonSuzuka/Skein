@@ -18,6 +18,8 @@ var demo_var_path = 'demo_vars.json'
 # ******************************************************************************
 
 func _ready():
+	_restore_window.call_deferred()
+
 	randomize()
 	
 	Add.disabled = false
@@ -32,6 +34,28 @@ func _ready():
 	Skein.Sandbox.add_local('Skein', Skein)
 	for key in demo_vars:
 		create_entry(key, demo_vars[key])
+
+func _restore_window():
+	var window: Window = get_tree().get_root().get_window()
+	window.close_requested.connect(_on_close)
+
+	var data = Skein.Files.load_json('user://window.json', {})
+
+	if 'position' in data:
+		window.position = str_to_var(data.position)
+	if 'size' in data:
+		window.size = str_to_var(data.size)
+	if 'mode' in data:
+		window.mode = str_to_var(data.mode)
+
+func _on_close():
+	var window: Window = get_tree().get_root().get_window()
+	var data = {
+		position = var_to_str(window.position),
+		size = var_to_str(window.size),
+		mode = var_to_str(window.mode),
+	}
+	Skein.Files.save_json('user://window.json', data)
 
 func key_text_changed(new_text):
 	update_add_button()
