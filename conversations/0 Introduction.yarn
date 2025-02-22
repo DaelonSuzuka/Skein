@@ -4,7 +4,7 @@ next: none
 default: false
 position: Rect2(230, 210, 900, 470)
 connections: {}
-color: ff00ffff
+color: ff9b00ff
 title: Steak Branch
 ---
 
