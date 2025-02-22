@@ -1,10 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://dqog4ebqwf6ud"]
+[gd_scene load_steps=10 format=3 uid="uid://dqog4ebqwf6ud"]
 
 [ext_resource type="Script" uid="uid://ogse0akxkt4a" path="res://addons/skein/nodes/BaseNode.gd" id="1"]
 [ext_resource type="Theme" uid="uid://cofxhbjxv1xcq" path="res://addons/skein/resources/theme.tres" id="1_4170h"]
 [ext_resource type="StyleBox" uid="uid://c62yl56shebjh" path="res://addons/skein/resources/graphnode.tres" id="2_jkxjg"]
 [ext_resource type="PackedScene" path="res://addons/skein/nodes/common/LabelEdit.tscn" id="3"]
 [ext_resource type="StyleBox" uid="uid://bpab8dy2hpmsi" path="res://addons/skein/resources/graphnode_selected.tres" id="3_8u7vx"]
+[ext_resource type="Texture2D" uid="uid://cmcyhs6mcchx3" path="res://addons/skein/resources/icons/Bars.svg" id="6_8u7vx"]
+[ext_resource type="Texture2D" uid="uid://clqw4mu8cffbc" path="res://addons/skein/resources/icons/X.svg" id="7_kqp1o"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jkxjg"]
 
@@ -50,7 +52,9 @@ unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
+offset_left = -10.0
 offset_top = -59.0
+offset_right = 10.0
 offset_bottom = -27.0
 grow_horizontal = 2
 mouse_filter = 2
@@ -90,10 +94,10 @@ flat = true
 [node name="Edit" type="MenuButton" parent="Body/Toolbar"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "E"
+icon = ExtResource("6_8u7vx")
 
 [node name="Close" type="Button" parent="Body/Toolbar"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "X"
+icon = ExtResource("7_kqp1o")
 flat = true

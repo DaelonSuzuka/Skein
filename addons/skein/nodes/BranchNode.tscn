@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://dqog4ebqwf6ud" path="res://addons/skein/nodes/BaseNode.tscn" id="1"]
 [ext_resource type="Script" uid="uid://vkalsmq0nl4d" path="res://addons/skein/nodes/BranchNode.gd" id="2"]
-[ext_resource type="PackedScene" path="res://addons/skein/nodes/Branch.tscn" id="5"]
+[ext_resource type="PackedScene" uid="uid://djwdfk0ppcym8" path="res://addons/skein/nodes/Branch.tscn" id="5"]
 
 [node name="1" instance=ExtResource("1")]
 offset_right = 250.0

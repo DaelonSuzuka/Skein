@@ -25,7 +25,7 @@ var slot_colors := [
 	Color.LIME,
 ]
 
-@onready var parent: GraphEdit = get_parent()
+@onready var parent = get_parent()
 
 signal changed
 
@@ -41,7 +41,7 @@ func _ready() -> void:
 func _resize_request(new_minsize: Vector2) -> void:
 	self.changed.emit()
 	if parent.snapping_enabled:
-		var snap := parent.snapping_distance
+		var snap = parent.snapping_distance
 		size = new_minsize.snapped(Vector2(snap, snap))
 	else:
 		size = new_minsize
