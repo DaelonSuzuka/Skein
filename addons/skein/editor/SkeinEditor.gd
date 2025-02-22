@@ -44,13 +44,19 @@ func _ready():
 
 	Skein.Utils.connect_all(%GraphEdit, self)
 
+	var menu = %SettingsMenu
+
+	menu.item('test', print.bind('test'))
+	menu.check_item('check1')
+	menu.check_item('check2', true)
+
 	if plugin:
-		%SettingsMenu.add_item('Set as Preferred Editor', [plugin, 'set_preferred_editor', location])
-	var sub = %SettingsMenu.create_submenu('Set Font Size', 'FontSize')
+		menu.item('Set as Preferred Editor', plugin.set_preferred_editor.bind(location))
+	var sub = menu.submenu('Set Font Size')
 	sub.hide_on_item_selection = false
-	%SettingsMenu.add_submenu_item('Font Size Reset', 'FontSize', [self, 'reset_font_size'])
-	%SettingsMenu.add_submenu_item('Font Size +', 'FontSize', [self, 'set_font_size', 1])
-	%SettingsMenu.add_submenu_item('Font Size -', 'FontSize', [self, 'set_font_size', -1])
+	sub.item('Font Size +', set_font_size.bind(1))
+	sub.item('Font Size -', set_font_size.bind(-1))
+	sub.item('Font Size Reset', reset_font_size)
 
 	Skein.refreshed.connect(self.refresh)
 	

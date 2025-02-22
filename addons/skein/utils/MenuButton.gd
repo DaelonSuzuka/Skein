@@ -4,6 +4,7 @@ extends MenuButton
 # ******************************************************************************
 
 @onready var popup: PopupMenu = get_popup()
+
 var callbacks := {}
 
 signal item_selected(item: String)
@@ -16,64 +17,60 @@ func _ready() -> void:
 		child.queue_free()
 	popup.index_pressed.connect(self._on_index_pressed)
 
-func create_submenu(label: String, submenu_name: String) -> PopupMenu:
-	var submenu: PopupMenu = PopupMenu.new()
-	submenu.name = submenu_name
-	submenu.index_pressed.connect(self._on_index_pressed.bind(submenu_name))
+class Submenu:
+	extends PopupMenu
+	var parent = null
+	var menu = null
+
+	func _init(_parent, _menu):
+		parent = _parent
+		menu = _menu
+		
+	func item(label: String, cb=null):
+		add_item(label)
+		if cb:
+			parent.callbacks[self.name + '/' + label] = cb
+
+	func check_item(label: String, checked:=false, cb=null):
+		add_check_item(label)
+		set_item_checked(item_count, checked)
+		if cb:
+			parent.callbacks[self.name + '/' + label] = cb
+
+func submenu(label: String) -> Submenu:
+	var submenu := Submenu.new(self, popup)
 	popup.add_child(submenu)
-	popup.add_submenu_item(label, submenu_name)
+	popup.add_submenu_item(label, submenu.name)
+	submenu.index_pressed.connect(self._on_index_pressed.bind(submenu.name))
 	return submenu
 
-func add_item(label: String, cb:=[]) -> void:
+func item(label: String, cb=null) -> void:
 	popup.add_item(label)
-
 	if cb:
 		callbacks[label] = cb
 
-func add_check_item(label: String, cb:=[]):
+func check_item(label: String, checked:=false, cb=null) -> void:
 	popup.add_check_item(label)
-
+	popup.set_item_checked(item_count, checked)
 	if cb:
 		callbacks[label] = cb
 
-func set_item_checked(item_text: String, state: bool):
-	for i in popup.get_item_count():
-		if popup.get_item_text(i) == item_text:
-			if popup.is_item_checked(i) != state:
-				popup.toggle_item_checked(i)
-				return
-
-func add_submenu_item(label: String, submenu_name: String, cb:=[]) -> void:
-	var submenu: PopupMenu = popup.get_node(submenu_name)
-	submenu.add_item(label)
-
-	if cb:
-		callbacks[submenu_name + '/' + label] = cb
-
-func _on_index_pressed(idx: int, submenu_name:='') -> void:
+func _on_index_pressed(idx: int, submenu: Submenu = null) -> void:
 	var menu = popup
 	var item = ''
-	if submenu_name:
-		menu = popup.get_node(submenu_name)
-		item += menu.name + '/'
+	if submenu:
+		menu = submenu
+		item += submenu.name + '/'
 	item += menu.get_item_text(idx)
 
-	if item in callbacks:
-		var cb = callbacks[item]
-		var obj = cb[0]
-		var method = cb[1]
-		if obj.has_method(method):
-			if menu.is_item_checkable(idx):
-				menu.toggle_item_checked(idx)
-				var checked = menu.is_item_checked(idx)
-				if len(cb) == 2:
-					obj.call(method, checked)
-				if len(cb) == 3:
-					obj.call(method, checked, cb[2])
-			else:
-				if len(cb) == 2:
-					obj.call(method)
-				if len(cb) == 3:
-					obj.call(method, cb[2])
-
 	item_selected.emit(item)
+	
+	if menu.is_item_checkable(idx):
+		menu.toggle_item_checked(idx)
+
+	if item in callbacks:
+		if menu.is_item_checkable(idx):
+			var checked = menu.is_item_checked(idx)
+			callbacks[item].call(checked)
+		else:
+			callbacks[item].call()
