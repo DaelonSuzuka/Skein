@@ -51,7 +51,7 @@ func item(label: String, cb=null) -> void:
 
 func check_item(label: String, checked:=false, cb=null) -> void:
 	popup.add_check_item(label)
-	popup.set_item_checked(item_count, checked)
+	popup.set_item_checked(item_count - 1, checked)
 	if cb:
 		callbacks[label] = cb
 
