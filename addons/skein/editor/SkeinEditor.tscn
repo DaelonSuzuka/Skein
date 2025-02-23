@@ -1,12 +1,18 @@
-[gd_scene load_steps=16 format=3 uid="uid://dh6om46glx45v"]
+[gd_scene load_steps=22 format=3 uid="uid://dh6om46glx45v"]
 
 [ext_resource type="Script" uid="uid://d3pdjda1wmd1s" path="res://addons/skein/editor/GraphEdit.gd" id="1"]
 [ext_resource type="Theme" uid="uid://cofxhbjxv1xcq" path="res://addons/skein/resources/theme.tres" id="2_elfys"]
 [ext_resource type="PackedScene" path="res://addons/skein/dialog_box/BaseOptionButton.tscn" id="3"]
+[ext_resource type="Texture2D" uid="uid://huu4iw3500kv" path="res://addons/skein/resources/icons/Rotate Right.svg" id="3_iqs2p"]
 [ext_resource type="Script" uid="uid://dudoos3drtw2o" path="res://addons/skein/editor/SkeinEditor.gd" id="4"]
 [ext_resource type="PackedScene" uid="uid://dyh4pj2rpgd6c" path="res://addons/skein/dialog_box/BaseDialogBox.tscn" id="5"]
 [ext_resource type="Script" uid="uid://boy3ajv1kpbxr" path="res://addons/skein/editor/Tree.gd" id="6"]
+[ext_resource type="Texture2D" uid="uid://joqca4x17jxh" path="res://addons/skein/resources/icons/Angles Left.svg" id="6_basx3"]
 [ext_resource type="Script" uid="uid://nexsxbauemeu" path="res://addons/skein/utils/MenuButton.gd" id="7"]
+[ext_resource type="Texture2D" uid="uid://bu5b6iqyka2tb" path="res://addons/skein/resources/icons/Play.svg" id="8_dhd83"]
+[ext_resource type="Texture2D" uid="uid://dvcbc163nn2d3" path="res://addons/skein/resources/icons/Angles Right.svg" id="8_y6mhl"]
+[ext_resource type="Texture2D" uid="uid://bu1qvsu3d8rbc" path="res://addons/skein/resources/icons/Stop.svg" id="9_dhd83"]
+[ext_resource type="Texture2D" uid="uid://bk5xlvmw4otd1" path="res://addons/skein/resources/icons/Pause.svg" id="10_34mqu"]
 
 [sub_resource type="Image" id="Image_elfys"]
 data = {
@@ -122,7 +128,7 @@ size_flags_horizontal = 3
 [node name="Refresh" type="Button" parent="LeftPanelSplit/LeftSidebar/Toolbar"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "R"
+icon = ExtResource("3_iqs2p")
 flat = true
 
 [node name="Tree" type="Tree" parent="LeftPanelSplit/LeftSidebar"]
@@ -197,7 +203,7 @@ size_flags_horizontal = 3
 [node name="ToggleLeftPanel" type="Button" parent="LeftPanelSplit/RightPanelSplit/GraphContainer/GraphToolbar/HBox"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "<"
+icon = ExtResource("6_basx3")
 flat = true
 
 [node name="ZoomContainer" type="MarginContainer" parent="LeftPanelSplit/RightPanelSplit/GraphContainer/GraphToolbar/HBox"]
@@ -242,13 +248,17 @@ flat = true
 [node name="PlayButton" type="Button" parent="LeftPanelSplit/RightPanelSplit/GraphContainer/GraphToolbar/HBox"]
 unique_name_in_owner = true
 layout_mode = 2
-text = ""
+icon = ExtResource("8_dhd83")
+flat = true
+
+[node name="PauseButton" type="Button" parent="LeftPanelSplit/RightPanelSplit/GraphContainer/GraphToolbar/HBox"]
+layout_mode = 2
+icon = ExtResource("10_34mqu")
 flat = true
 
 [node name="StopButton" type="Button" parent="LeftPanelSplit/RightPanelSplit/GraphContainer/GraphToolbar/HBox"]
-visible = false
 layout_mode = 2
-text = ""
+icon = ExtResource("9_dhd83")
 flat = true
 
 [node name="Spacer" type="Control" parent="LeftPanelSplit/RightPanelSplit/GraphContainer/GraphToolbar/HBox"]
@@ -264,7 +274,7 @@ placeholder_text = "Search"
 [node name="ToggleRightPanel" type="Button" parent="LeftPanelSplit/RightPanelSplit/GraphContainer/GraphToolbar/HBox"]
 unique_name_in_owner = true
 layout_mode = 2
-text = ">"
+icon = ExtResource("8_y6mhl")
 flat = true
 
 [node name="RightSidebar" type="Control" parent="LeftPanelSplit/RightPanelSplit"]
