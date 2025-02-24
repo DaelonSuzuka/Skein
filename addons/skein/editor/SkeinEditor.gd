@@ -72,7 +72,7 @@ func refresh():
 		return
 
 	load_editor_data()
-	var zoom_hbox = %GraphEdit.get_menu_hbox()
+	var zoom_hbox: HBoxContainer = %GraphEdit.get_menu_hbox()
 	var zoom_container = %GraphToolbar.find_child('ZoomContainer')
 	zoom_hbox.get_parent().remove_child(zoom_hbox)
 	zoom_container.add_child(zoom_hbox)
@@ -124,15 +124,15 @@ func change_conversation(path: String):
 	save_editor_data()
 	load_conversation(path)
 
-	var _path = path.trim_prefix(Skein.Files.conversation_prefix)
-	var parts = _path.split(':')
+	var _path := path.trim_prefix(Skein.Files.conversation_prefix)
+	var parts := _path.split(':')
 	if len(parts) > 1:
 		%GraphEdit.focus_node(parts[1])
 
 func load_conversation(path: String, force:=false):
-	var _path = path.trim_prefix(Skein.Files.conversation_prefix)
-	var parts = _path.split(':')
-	var name = parts[0]
+	var _path := path.trim_prefix(Skein.Files.conversation_prefix)
+	var parts := _path.split(':')
+	var name := parts[0]
 
 	if !force and current_conversation == name:
 		return
