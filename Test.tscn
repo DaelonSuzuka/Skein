@@ -1,7 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://dg62adoidtbj1"]
+[gd_scene load_steps=6 format=3 uid="uid://dg62adoidtbj1"]
 
 [ext_resource type="Script" uid="uid://dw2eiybxucwe3" path="res://addons/skein/resources/vector_icons/VectorButton.gd" id="1_myinc"]
 [ext_resource type="FontFile" uid="uid://dyiwi37c3e23l" path="res://addons/skein/resources/vector_icons/fonts/FontAwesome.ttf" id="1_njov2"]
+
+[sub_resource type="FontVariation" id="FontVariation_njov2"]
+base_font = ExtResource("1_njov2")
+
+[sub_resource type="FontVariation" id="FontVariation_2au82"]
+base_font = ExtResource("1_njov2")
+
+[sub_resource type="FontVariation" id="FontVariation_8tn2x"]
+base_font = ExtResource("1_njov2")
 
 [node name="Test" type="Control"]
 layout_mode = 3
@@ -13,32 +22,61 @@ grow_vertical = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = 10
+anchors_preset = 14
+anchor_top = 0.5
 anchor_right = 1.0
-offset_bottom = 8.0
+anchor_bottom = 0.5
+offset_top = -52.5
+offset_bottom = 52.5
 grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 78
+alignment = 1
 
 [node name="Button" type="Button" parent="HBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_njov2")
-theme_override_font_sizes/font_size = 16
-text = ""
+theme_override_colors/font_outline_color = Color(0.786777, 0, 1, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = SubResource("FontVariation_njov2")
+theme_override_font_sizes/font_size = 96
+toggle_mode = true
+text = ""
 flat = true
 script = ExtResource("1_myinc")
-icon_name = "stop"
+icon_set = 4
+filter = true
+toggle_mode = true
+icon_size = 96
+icon_color = Color(1, 1, 1, 1)
+outline_size = 5
+outline_color = Color(0.786777, 0, 1, 1)
+icon_name = "android"
+pressed_icon_name = "apple"
 
 [node name="Button2" type="Button" parent="HBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_njov2")
-theme_override_font_sizes/font_size = 16
+theme_override_fonts/font = SubResource("FontVariation_2au82")
+theme_override_font_sizes/font_size = 96
+text = ""
 flat = true
 script = ExtResource("1_myinc")
-icon_name = "ios-analytics"
+icon_set = 4
+filter = null
+icon_size = 96
+icon_color = Color(1, 1, 1, 1)
+outline_size = 0
+icon_name = "stop"
 
 [node name="Button3" type="Button" parent="HBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_njov2")
-theme_override_font_sizes/font_size = 16
+theme_override_fonts/font = SubResource("FontVariation_8tn2x")
+theme_override_font_sizes/font_size = 96
+text = ""
 flat = true
 script = ExtResource("1_myinc")
-icon_name = "ios-analytics"
+icon_set = 4
+filter = null
+icon_size = 96
+icon_color = Color(1, 1, 1, 1)
+outline_size = 0
+icon_name = "pause"
