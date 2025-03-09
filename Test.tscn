@@ -36,6 +36,7 @@ alignment = 1
 [node name="Button" type="Button" parent="HBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_outline_color = Color(0.786777, 0, 1, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_constants/outline_size = 5
 theme_override_fonts/font = SubResource("FontVariation_njov2")
 theme_override_font_sizes/font_size = 96
@@ -45,38 +46,40 @@ flat = true
 script = ExtResource("1_myinc")
 icon_set = 4
 filter = true
-toggle_mode = true
 icon_size = 96
 icon_color = Color(1, 1, 1, 1)
 outline_size = 5
 outline_color = Color(0.786777, 0, 1, 1)
-icon_name = "android"
-pressed_icon_name = "apple"
+icon_name = "apple"
 
 [node name="Button2" type="Button" parent="HBoxContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 0
 theme_override_fonts/font = SubResource("FontVariation_2au82")
 theme_override_font_sizes/font_size = 96
 text = ""
 flat = true
 script = ExtResource("1_myinc")
 icon_set = 4
-filter = null
+filter = true
 icon_size = 96
 icon_color = Color(1, 1, 1, 1)
 outline_size = 0
-icon_name = "stop"
+icon_name = "anchor"
 
 [node name="Button3" type="Button" parent="HBoxContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 0
 theme_override_fonts/font = SubResource("FontVariation_8tn2x")
 theme_override_font_sizes/font_size = 96
 text = ""
 flat = true
 script = ExtResource("1_myinc")
 icon_set = 4
-filter = null
+filter = true
 icon_size = 96
 icon_color = Color(1, 1, 1, 1)
 outline_size = 0
-icon_name = "pause"
+icon_name = "archive"

@@ -1,16 +1,23 @@
-[gd_scene load_steps=10 format=3 uid="uid://dqog4ebqwf6ud"]
+[gd_scene load_steps=13 format=3 uid="uid://dqog4ebqwf6ud"]
 
 [ext_resource type="Script" uid="uid://ogse0akxkt4a" path="res://addons/skein/nodes/BaseNode.gd" id="1"]
 [ext_resource type="Theme" uid="uid://cofxhbjxv1xcq" path="res://addons/skein/resources/theme.tres" id="1_4170h"]
 [ext_resource type="StyleBox" uid="uid://c62yl56shebjh" path="res://addons/skein/resources/graphnode.tres" id="2_jkxjg"]
 [ext_resource type="PackedScene" path="res://addons/skein/nodes/common/LabelEdit.tscn" id="3"]
 [ext_resource type="StyleBox" uid="uid://bpab8dy2hpmsi" path="res://addons/skein/resources/graphnode_selected.tres" id="3_8u7vx"]
-[ext_resource type="Texture2D" uid="uid://cmcyhs6mcchx3" path="res://addons/skein/resources/icons/Bars.svg" id="6_8u7vx"]
-[ext_resource type="Texture2D" uid="uid://clqw4mu8cffbc" path="res://addons/skein/resources/icons/X.svg" id="7_kqp1o"]
+[ext_resource type="FontFile" uid="uid://dyiwi37c3e23l" path="res://addons/skein/resources/vector_icons/fonts/FontAwesome.ttf" id="7_21gcy"]
+[ext_resource type="Script" uid="uid://bqaubpaq75lw1" path="res://addons/skein/resources/vector_icons/VectorMenuButton.gd" id="7_nlk1e"]
+[ext_resource type="Script" uid="uid://dw2eiybxucwe3" path="res://addons/skein/resources/vector_icons/VectorButton.gd" id="8_nlk1e"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jkxjg"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_21gcy"]
+
+[sub_resource type="FontVariation" id="FontVariation_xcjct"]
+base_font = ExtResource("7_21gcy")
+
+[sub_resource type="FontVariation" id="FontVariation_21gcy"]
+base_font = ExtResource("7_21gcy")
 
 [node name="1" type="GraphNode"]
 anchors_preset = 8
@@ -94,10 +101,30 @@ flat = true
 [node name="Edit" type="MenuButton" parent="Body/Toolbar"]
 unique_name_in_owner = true
 layout_mode = 2
-icon = ExtResource("6_8u7vx")
+theme_override_fonts/font = SubResource("FontVariation_xcjct")
+theme_override_font_sizes/font_size = 16
+text = ""
+script = ExtResource("7_nlk1e")
+icon_set = 4
+filter = true
+icon_size = 16
+icon_color = Color(1, 1, 1, 1)
+outline_size = 0
+icon_name = "bars"
 
 [node name="Close" type="Button" parent="Body/Toolbar"]
 unique_name_in_owner = true
 layout_mode = 2
-icon = ExtResource("7_kqp1o")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 0
+theme_override_fonts/font = SubResource("FontVariation_21gcy")
+theme_override_font_sizes/font_size = 16
+text = ""
 flat = true
+script = ExtResource("8_nlk1e")
+icon_set = 4
+filter = true
+icon_size = 16
+icon_color = Color(1, 1, 1, 1)
+outline_size = 0
+icon_name = "close"

@@ -65,21 +65,11 @@ var outline_color := Color.WHITE:
 		outline_color = value
 		set('theme_override_colors/font_outline_color',value)
 
-var iconcode := ''
 var icon_name := '':
 	set(value):
 		icon_name = value
-		iconcode = font_map.get(value, '')
-		if !pressed:
-			set_text(iconcode)
-
-var pressed_iconcode := ''
-var pressed_icon_name := '':
-	set(value):
-		pressed_icon_name = value
-		pressed_iconcode = font_map.get(value, '')
-		if pressed:
-			set_text(pressed_iconcode)
+		var iconcode = font_map.get(value, '')
+		set_text(iconcode)
 
 func _get_property_list():
 	var properties = [
@@ -91,10 +81,6 @@ func _get_property_list():
 		},
 		{
 			"name": "filter",
-			"type": TYPE_BOOL,
-		},
-		{
-			"name": "toggle_mode",
 			"type": TYPE_BOOL,
 		},
 		{
@@ -122,21 +108,8 @@ func _get_property_list():
 		"hint": PROPERTY_HINT_ENUM,
 		"hint_string": ','.join(font_map.keys()),
 	})
-	if toggle_mode:
-		properties.append({
-			"name": "pressed_icon_name",
-			"type": TYPE_STRING,
-			"hint": PROPERTY_HINT_ENUM,
-			"hint_string": ','.join(font_map.keys()),
-		})
 
 	return properties
-
-func _set(property: StringName, value: Variant) -> bool:
-	if property == "toggle_mode":
-		notify_property_list_changed()
-
-	return false
 
 var font_map = {}
 var _font := FontVariation.new()
@@ -146,14 +119,6 @@ var _font := FontVariation.new()
 func _ready():
 	self.icon_set = icon_set
 	update_content()
-	toggled.connect(_on_toggled)
-
-func _on_toggled(on: bool):
-	print('toggled')
-	if on:
-		set_text(pressed_iconcode)
-	else:
-		set_text(iconcode)
 
 func update_content():
 	self.icon_size = icon_size
