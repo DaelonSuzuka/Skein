@@ -61,7 +61,7 @@ func contents_changed():
 
 var ctx: SkeinContextMenu = null
 
-func new_ctx(cb)-> SkeinContextMenu:
+func new_ctx(cb) -> SkeinContextMenu:
 	if is_instance_valid(ctx):
 		ctx.queue_free()
 		ctx = null
@@ -98,7 +98,7 @@ func clear() -> void:
 
 # ******************************************************************************
 
-var used_ids: Array[String] = []
+var used_ids := []
 
 func get_id() -> int:
 	var id = randi()
