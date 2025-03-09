@@ -10,6 +10,7 @@ signal line_started(id, line_number)
 signal node_started(id)
 signal yielded
 signal resumed
+signal directive_data(data) # bad name lmao
 
 signal actor_joined(actor)
 signal actor_left(actor) # unimplemented
@@ -355,9 +356,9 @@ func next_line():
 				if line[cursor + 1] == '{':
 					var block = get_block('{{', '}}', ['erase'])
 					if block:
-						# if exec:
-						# 	var result = evaluate(block)
-						# 	line = line.insert(cursor, str(result))
+						if exec:
+							var result = evaluate(block)
+							line = line.insert(cursor, str(result))
 						skip2 = false
 						break
 				else:
@@ -373,6 +374,10 @@ func next_line():
 						if 'jump' in cmd:
 							jump_to(cmd.jump)
 							return
+						# if 'return' in cmd:
+						#   #TODO: implement returning 
+						# 	abort_and_catch_fire(cmd['return'])
+						# 	return
 						apply_directive(cmd)
 			elif !(line[cursor] in [' ', '\t']):
 				skip2 = false
@@ -706,12 +711,18 @@ func parse_bool(value, default):
 		return bool_directive[value]
 	return default
 
-func parse_directive(block):
+func parse_directive(block) -> Dictionary:
 	var parts = block.split(' ', true, 1)
 	var result = {}
 
 	# TODO: this entire section is brittle
 	match parts[0]:
+		'push':
+			result['push'] = parts[1]
+		'return':
+			result['return'] = parts[1]
+		'emit':
+			result['emit'] = parts[1]
 		'jump':
 			result['jump'] = parts[1]
 		'show':
@@ -789,9 +800,9 @@ func evaluate(input: String = ''):
 		]
 	)
 	ctx.method(
-		'func await object=null.sig=nothing:',
+		'func await(object=null, sig=nothing):',
 		[
-			'get_parent()._await object.sig',
+			'get_parent()._await(object.sig)',
 		]
 	)
 	ctx.method(
