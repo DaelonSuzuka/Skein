@@ -1,13 +1,39 @@
 [gd_scene load_steps=20 format=4 uid="uid://b24wtf8qhorkl"]
 
 [ext_resource type="Theme" uid="uid://cofxhbjxv1xcq" path="res://addons/skein/resources/theme.tres" id="1_dannt"]
-[ext_resource type="StyleBox" uid="uid://c62yl56shebjh" path="res://addons/skein/resources/graphnode.tres" id="2_g2n8b"]
-[ext_resource type="StyleBox" uid="uid://bpab8dy2hpmsi" path="res://addons/skein/resources/graphnode_selected.tres" id="3_87b7r"]
 [ext_resource type="Script" uid="uid://curjrru3t2vyn" path="res://addons/skein/nodes/CommentNode.gd" id="4_g2n8b"]
 [ext_resource type="PackedScene" path="res://addons/skein/nodes/common/LabelEdit.tscn" id="4_ydqm5"]
 [ext_resource type="FontFile" uid="uid://dyiwi37c3e23l" path="res://addons/skein/resources/vector_icons/fonts/FontAwesome.ttf" id="6_pdku6"]
 [ext_resource type="Script" uid="uid://bqaubpaq75lw1" path="res://addons/skein/resources/vector_icons/VectorMenuButton.gd" id="7_s8omm"]
 [ext_resource type="Script" uid="uid://dw2eiybxucwe3" path="res://addons/skein/resources/vector_icons/VectorButton.gd" id="8_pvxxy"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_87b7r"]
+content_margin_left = 11.0
+content_margin_right = 11.0
+bg_color = Color(0.121569, 0.145098, 0.192157, 1)
+border_width_top = 32
+border_color = Color(0.211765, 0.47451, 0.776471, 0.45098)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+expand_margin_top = 34.0
+shadow_color = Color(0, 0, 0, 0.303882)
+shadow_size = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ydqm5"]
+content_margin_left = 11.0
+content_margin_right = 11.0
+bg_color = Color(0.121569, 0.145098, 0.192157, 1)
+border_width_top = 32
+border_color = Color(0.211765, 0.47451, 0.776471, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+expand_margin_top = 34.0
+shadow_color = Color(0, 0, 0, 0.303882)
+shadow_size = 2
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jkxjg"]
 
@@ -213,8 +239,8 @@ offset_bottom = 100.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_dannt")
-theme_override_styles/panel = ExtResource("2_g2n8b")
-theme_override_styles/panel_selected = ExtResource("3_87b7r")
+theme_override_styles/panel = SubResource("StyleBoxFlat_87b7r")
+theme_override_styles/panel_selected = SubResource("StyleBoxFlat_ydqm5")
 theme_override_styles/titlebar = SubResource("StyleBoxEmpty_jkxjg")
 theme_override_styles/titlebar_selected = SubResource("StyleBoxEmpty_21gcy")
 resizable = true
@@ -234,9 +260,9 @@ layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 offset_left = -10.0
-offset_top = -59.0
+offset_top = -64.0
 offset_right = 10.0
-offset_bottom = -27.0
+offset_bottom = -37.0
 grow_horizontal = 2
 mouse_filter = 2
 alignment = 2

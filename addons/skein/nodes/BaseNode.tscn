@@ -13,10 +13,10 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_21gcy"]
 
-[sub_resource type="FontVariation" id="FontVariation_xcjct"]
+[sub_resource type="FontVariation" id="FontVariation_21gcy"]
 base_font = ExtResource("7_21gcy")
 
-[sub_resource type="FontVariation" id="FontVariation_21gcy"]
+[sub_resource type="FontVariation" id="FontVariation_nlk1e"]
 base_font = ExtResource("7_21gcy")
 
 [node name="1" type="GraphNode"]
@@ -101,7 +101,9 @@ flat = true
 [node name="Edit" type="MenuButton" parent="Body/Toolbar"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_fonts/font = SubResource("FontVariation_xcjct")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 0
+theme_override_fonts/font = SubResource("FontVariation_21gcy")
 theme_override_font_sizes/font_size = 16
 text = ""
 script = ExtResource("7_nlk1e")
@@ -117,7 +119,7 @@ unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_constants/outline_size = 0
-theme_override_fonts/font = SubResource("FontVariation_21gcy")
+theme_override_fonts/font = SubResource("FontVariation_nlk1e")
 theme_override_font_sizes/font_size = 16
 text = ""
 flat = true
