@@ -33,7 +33,7 @@ func _disable_plugin():
 func _enter_tree():
 	name = self._plugin_name
 
-	settings = get_editor_interface().get_editor_settings()
+	settings = EditorInterface.get_editor_settings()
 
 	var property_info = {
 		"name": "preferred_editor",
@@ -53,12 +53,12 @@ func _enter_tree():
 		editors.top.plugin = self
 		editors.top.location = 'top'
 		editors.top.visible = false
-		get_editor_interface().get_editor_main_screen().add_child(editors.top)
+		EditorInterface.get_editor_main_screen().add_child(editors.top)
 
-		editors.bottom = SkeinEditorScene.instantiate()
-		editors.bottom.plugin = self
-		editors.bottom.location = 'bottom'
-		add_control_to_bottom_panel(editors.bottom, 'Skein')
+		# editors.bottom = SkeinEditorScene.instantiate()
+		# editors.bottom.plugin = self
+		# editors.bottom.location = 'bottom'
+		# add_control_to_bottom_panel(editors.bottom, 'Skein')
 
 func _exit_tree():
 	remove_tool_menu_item('Skein')
@@ -84,7 +84,7 @@ func show_conversation(conversation: String):
 	var preferred_editor = get_setting('preferred_editor')
 	var editor = editors[preferred_editor]
 	if preferred_editor == 'top':
-		get_editor_interface().set_main_screen_editor('Skein')
+		EditorInterface.set_main_screen_editor('Skein')
 		editor.change_conversation(conversation)
 	elif preferred_editor == 'bottom':
 		make_bottom_panel_item_visible(editor)
@@ -109,10 +109,12 @@ func _make_visible(state):
 
 func _apply_changes():
 	if self.enabled:
-		editors.top.save_conversation()
-		editors.top.save_editor_data()
-		editors.bottom.save_conversation()
-		editors.bottom.save_editor_data()
+		if editors.top:
+			editors.top.save_conversation()
+			editors.top.save_editor_data()
+		if editors.bottom:
+			editors.bottom.save_conversation()
+			editors.bottom.save_editor_data()
 
 func _save_external_data():
 	if is_instance_valid(editors.bottom):
@@ -129,8 +131,8 @@ func add_setting(property_info):
 		return
 	settings.set(property_info.name, property_info.value)
 
-func set_setting(name: String, value) -> void:
-	settings.set(settings_prefix + name, value)
+func set_setting(setting_name: String, value) -> void:
+	settings.set(settings_prefix + setting_name, value)
 
-func get_setting(name: String):
-	return settings.get(settings_prefix + name)
+func get_setting(setting_name: String):
+	return settings.get(settings_prefix + setting_name)

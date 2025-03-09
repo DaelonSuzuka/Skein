@@ -13,10 +13,10 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_21gcy"]
 
-[sub_resource type="FontVariation" id="FontVariation_6noyl"]
+[sub_resource type="FontVariation" id="FontVariation_pdku6"]
 base_font = ExtResource("6_pdku6")
 
-[sub_resource type="FontVariation" id="FontVariation_pdku6"]
+[sub_resource type="FontVariation" id="FontVariation_s8omm"]
 base_font = ExtResource("6_pdku6")
 
 [sub_resource type="StyleBoxFlat" id="6"]
@@ -283,7 +283,9 @@ flat = true
 [node name="Edit" type="MenuButton" parent="Body/Toolbar"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_fonts/font = SubResource("FontVariation_6noyl")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 0
+theme_override_fonts/font = SubResource("FontVariation_pdku6")
 theme_override_font_sizes/font_size = 16
 text = ""
 script = ExtResource("7_s8omm")
@@ -297,7 +299,9 @@ icon_name = "bars"
 [node name="Close" type="Button" parent="Body/Toolbar"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_fonts/font = SubResource("FontVariation_pdku6")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 0
+theme_override_fonts/font = SubResource("FontVariation_s8omm")
 theme_override_font_sizes/font_size = 16
 text = ""
 flat = true
