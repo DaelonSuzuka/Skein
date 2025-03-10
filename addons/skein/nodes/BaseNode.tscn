@@ -1,22 +1,15 @@
-[gd_scene load_steps=13 format=3 uid="uid://dqog4ebqwf6ud"]
+[gd_scene load_steps=8 format=3 uid="uid://dqog4ebqwf6ud"]
 
 [ext_resource type="Script" uid="uid://ogse0akxkt4a" path="res://addons/skein/nodes/BaseNode.gd" id="1"]
-[ext_resource type="Theme" uid="uid://cofxhbjxv1xcq" path="res://addons/skein/resources/theme.tres" id="1_4170h"]
-[ext_resource type="StyleBox" uid="uid://c62yl56shebjh" path="res://addons/skein/resources/graphnode.tres" id="2_jkxjg"]
 [ext_resource type="PackedScene" path="res://addons/skein/nodes/common/LabelEdit.tscn" id="3"]
-[ext_resource type="StyleBox" uid="uid://bpab8dy2hpmsi" path="res://addons/skein/resources/graphnode_selected.tres" id="3_8u7vx"]
 [ext_resource type="FontFile" uid="uid://dyiwi37c3e23l" path="res://addons/skein/resources/vector_icons/fonts/FontAwesome.ttf" id="7_21gcy"]
 [ext_resource type="Script" uid="uid://bqaubpaq75lw1" path="res://addons/skein/resources/vector_icons/VectorMenuButton.gd" id="7_nlk1e"]
 [ext_resource type="Script" uid="uid://dw2eiybxucwe3" path="res://addons/skein/resources/vector_icons/VectorButton.gd" id="8_nlk1e"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jkxjg"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_21gcy"]
-
-[sub_resource type="FontVariation" id="FontVariation_21gcy"]
+[sub_resource type="FontVariation" id="FontVariation_jkxjg"]
 base_font = ExtResource("7_21gcy")
 
-[sub_resource type="FontVariation" id="FontVariation_nlk1e"]
+[sub_resource type="FontVariation" id="FontVariation_8u7vx"]
 base_font = ExtResource("7_21gcy")
 
 [node name="1" type="GraphNode"]
@@ -31,11 +24,6 @@ offset_right = 100.0
 offset_bottom = 100.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_4170h")
-theme_override_styles/panel = ExtResource("2_jkxjg")
-theme_override_styles/panel_selected = ExtResource("3_8u7vx")
-theme_override_styles/titlebar = SubResource("StyleBoxEmpty_jkxjg")
-theme_override_styles/titlebar_selected = SubResource("StyleBoxEmpty_21gcy")
 resizable = true
 slot/0/left_enabled = false
 slot/0/left_type = 0
@@ -60,9 +48,9 @@ layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 offset_left = -10.0
-offset_top = -59.0
+offset_top = -43.0
 offset_right = 10.0
-offset_bottom = -27.0
+offset_bottom = -11.0
 grow_horizontal = 2
 mouse_filter = 2
 alignment = 2
@@ -95,7 +83,6 @@ text = "Title"
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
-text = ""
 flat = true
 
 [node name="Edit" type="MenuButton" parent="Body/Toolbar"]
@@ -103,7 +90,7 @@ unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_constants/outline_size = 0
-theme_override_fonts/font = SubResource("FontVariation_21gcy")
+theme_override_fonts/font = SubResource("FontVariation_jkxjg")
 theme_override_font_sizes/font_size = 16
 text = ""
 script = ExtResource("7_nlk1e")
@@ -119,7 +106,7 @@ unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_constants/outline_size = 0
-theme_override_fonts/font = SubResource("FontVariation_nlk1e")
+theme_override_fonts/font = SubResource("FontVariation_8u7vx")
 theme_override_font_sizes/font_size = 16
 text = ""
 flat = true

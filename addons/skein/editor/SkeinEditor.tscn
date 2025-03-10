@@ -1,7 +1,6 @@
-[gd_scene load_steps=27 format=3 uid="uid://dh6om46glx45v"]
+[gd_scene load_steps=26 format=3 uid="uid://dh6om46glx45v"]
 
 [ext_resource type="Script" uid="uid://d3pdjda1wmd1s" path="res://addons/skein/editor/GraphEdit.gd" id="1"]
-[ext_resource type="Theme" uid="uid://cofxhbjxv1xcq" path="res://addons/skein/resources/theme.tres" id="2_elfys"]
 [ext_resource type="PackedScene" path="res://addons/skein/dialog_box/BaseOptionButton.tscn" id="3"]
 [ext_resource type="Script" uid="uid://dudoos3drtw2o" path="res://addons/skein/editor/SkeinEditor.gd" id="4"]
 [ext_resource type="PackedScene" uid="uid://dyh4pj2rpgd6c" path="res://addons/skein/dialog_box/BaseDialogBox.tscn" id="5"]
@@ -95,7 +94,6 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 1
-theme = ExtResource("2_elfys")
 script = ExtResource("4")
 
 [node name="AutoSave" type="Timer" parent="."]
@@ -131,7 +129,6 @@ anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 32.0
 grow_horizontal = 2
-theme = ExtResource("2_elfys")
 
 [node name="Toolbar" type="HBoxContainer" parent="LeftPanelSplit/LeftSidebar"]
 layout_mode = 1
@@ -147,6 +144,8 @@ size_flags_horizontal = 3
 [node name="Refresh" type="Button" parent="LeftPanelSplit/LeftSidebar/Toolbar"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 0
 theme_override_fonts/font = SubResource("FontVariation_y6mhl")
 theme_override_font_sizes/font_size = 16
 text = ""
@@ -231,6 +230,8 @@ size_flags_horizontal = 3
 [node name="ToggleLeftPanel" type="Button" parent="LeftPanelSplit/RightPanelSplit/GraphContainer/GraphToolbar/HBox"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 0
 theme_override_fonts/font = SubResource("FontVariation_fk68q")
 theme_override_font_sizes/font_size = 16
 text = ""
@@ -279,6 +280,8 @@ script = ExtResource("7")
 [node name="Run" type="Button" parent="LeftPanelSplit/RightPanelSplit/GraphContainer/GraphToolbar/HBox"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 0
 theme_override_fonts/font = SubResource("FontVariation_3nc60")
 theme_override_font_sizes/font_size = 16
 text = ""
@@ -294,6 +297,8 @@ icon_name = "ios-add"
 [node name="PlayButton" type="Button" parent="LeftPanelSplit/RightPanelSplit/GraphContainer/GraphToolbar/HBox"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 0
 theme_override_fonts/font = SubResource("FontVariation_vjp52")
 theme_override_font_sizes/font_size = 16
 text = ""
@@ -309,6 +314,8 @@ icon_name = "play"
 [node name="PauseButton" type="Button" parent="LeftPanelSplit/RightPanelSplit/GraphContainer/GraphToolbar/HBox"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 0
 theme_override_fonts/font = SubResource("FontVariation_qh24f")
 theme_override_font_sizes/font_size = 16
 text = ""
@@ -324,6 +331,8 @@ icon_name = "pause"
 [node name="StopButton" type="Button" parent="LeftPanelSplit/RightPanelSplit/GraphContainer/GraphToolbar/HBox"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 0
 theme_override_fonts/font = SubResource("FontVariation_h578g")
 theme_override_font_sizes/font_size = 16
 text = ""
@@ -349,6 +358,8 @@ placeholder_text = "Search"
 [node name="ToggleRightPanel" type="Button" parent="LeftPanelSplit/RightPanelSplit/GraphContainer/GraphToolbar/HBox"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 0
 theme_override_fonts/font = SubResource("FontVariation_8ds71")
 theme_override_font_sizes/font_size = 16
 text = ""
