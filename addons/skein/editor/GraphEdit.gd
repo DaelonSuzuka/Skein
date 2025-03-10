@@ -13,16 +13,6 @@ extends GraphEdit
 	'subgraph': load('res://addons/skein/nodes/SubgraphNode.tscn'),
 }
 
-var display_types: Array[String] = [
-	'dialog',
-	'comment',
-	'branch',
-	'jump',
-	'entry',
-	'exit',
-	'subgraph',
-]
-
 var nodes := {}
 var notify_changes := true
 
@@ -50,11 +40,17 @@ func contents_changed():
 	if notify_changes:
 		node_changed.emit()
 
+func snap_position(pos: Vector2) -> Vector2:
+	if snapping_enabled:
+		var snap = snapping_distance
+		pos = pos.snapped(Vector2(snap, snap))
+	return pos
+
 # ******************************************************************************
 
 var ctx: SkeinContextMenu = null
 
-func new_ctx(cb) -> SkeinContextMenu:
+func new_ctx(cb=null) -> SkeinContextMenu:
 	if is_instance_valid(ctx):
 		ctx.queue_free()
 		ctx = null
@@ -63,19 +59,24 @@ func new_ctx(cb) -> SkeinContextMenu:
 	return ctx
 
 func _on_popup_request(position: Vector2) -> void:
-	ctx = self.new_ctx(self.new_node_requested)
+	ctx = self.new_ctx(self.new_node_requested.bind(get_offset_from_mouse()))
 	ctx.add_separator('New Node:')
-	for type in display_types:
-		ctx.add_item(type.capitalize())
+
+	ctx.item('Dialog')
+	ctx.item('Comment')
+	ctx.add_separator()
+	ctx.item('Branch')
+	ctx.item('Jump')
+	ctx.add_separator()
+	ctx.item('Entry')
+	ctx.item('Exit')
+
 	ctx.open(get_global_mouse_position())
 
-func new_node_requested(type: String) -> void:
-	var data = {type = type.to_lower(), position_offset = get_offset_from_mouse()}
+func new_node_requested(type: String, pos: Vector2) -> void:
+	var data = {type = type.to_lower(), position_offset = pos}
 	
-	if snapping_enabled:
-		var snap = snapping_distance
-		data.position_offset = data.position_offset.snapped(Vector2(snap, snap))
-	data.position_offset = var_to_str(data.position_offset)
+	data.position_offset = snap_position(data.position_offset)
 	create_node(data)
 
 # ******************************************************************************
@@ -171,24 +172,63 @@ func _on_disconnection_request(from, from_slot, to, to_slot) -> void:
 	nodes[from].data.connections.erase(to)
 
 func _on_connection_from_empty(to, to_slot, release_position) -> void:
-	var data = {type = 'dialog', position_offset = get_offset_from_mouse()}
-	if snapping_enabled:
-		var snap = snapping_distance
-		data.position_offset = data.position_offset.snapped(Vector2(snap, snap))
-	data.position_offset = var_to_str(data.position_offset)
+	var args = {
+		to = to,
+		to_slot = to_slot,
+		release_position = release_position,
+		offset = get_offset_from_mouse(),
+	}
+	ctx = self.new_ctx(create_node_from_empty.bind(args))
+
+	ctx.item('Dialog')
+	ctx.item('Dialog + choices')
+	ctx.add_separator()
+	ctx.item('Entry')
+
+	ctx.open(get_global_mouse_position())
+
+func create_node_from_empty(type: String, args):
+	var data = {type = type.to_lower(), position_offset = args.offset}
+	if '+ choices' in type:
+		data.type = 'dialog'
+		data.show_choices = true
+		data.size = Vector2(400, 320)
+
+	data.position_offset = snap_position(data.position_offset)
 	var node = create_node(data)
 
-	_on_connection_request(node.name, 0, to, to_slot)
+	_on_connection_request(node.name, 0, args.to, args.to_slot)
 
 func _on_connection_to_empty(from, from_slot, release_position) -> void:
-	var data = {type = 'dialog', position_offset = get_offset_from_mouse()}
-	if snapping_enabled:
-		var snap = snapping_distance
-		data.position_offset = data.position_offset.snapped(Vector2(snap, snap))
-	data.position_offset = var_to_str(data.position_offset)
+	var args = {
+		from = from,
+		from_slot = from_slot,
+		release_position = release_position,
+		offset = get_offset_from_mouse(),
+	}
+	ctx = self.new_ctx(create_node_to_empty.bind(args))
+
+	ctx.item('Dialog')
+	ctx.item('Dialog + choices')
+	ctx.add_separator()
+	ctx.item('Branch')
+	ctx.item('Jump')
+	ctx.add_separator()
+	ctx.item('Exit')
+
+	ctx.open(get_global_mouse_position())
+
+func create_node_to_empty(type: String, args):
+	var data = {type = type.to_lower(), position_offset = args.offset}
+	if '+ choices' in type:
+		data.type = 'dialog'
+		data.show_choices = true
+		data.size = Vector2(400, 320)
+
+	data.position_offset = snap_position(data.position_offset)
 	var node = create_node(data)
 
-	if !_on_connection_request(from, from_slot, node.name, 0):
+	if !_on_connection_request(args.from, args.from_slot, node.name, 0):
 		delete_node(node)
 
 # ******************************************************************************
