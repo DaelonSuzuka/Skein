@@ -184,7 +184,7 @@ func set_data(new_data: Dictionary) -> GraphNode:
 		set_id(new_data.id)
 	if 'name' in new_data:
 		data.name = new_data.name
-		rename(new_data.name)
+		%Title.text = data.name
 	if 'position' in new_data:
 		var rect = decode_data(new_data.position)
 		position_offset = rect.position.round()
