@@ -63,6 +63,7 @@ func _on_popup_request(position: Vector2) -> void:
 	ctx.add_separator('New Node:')
 
 	ctx.item('Dialog')
+	ctx.item('Dialog + choices')
 	ctx.item('Comment')
 	ctx.add_separator()
 	ctx.item('Branch')
@@ -75,6 +76,10 @@ func _on_popup_request(position: Vector2) -> void:
 
 func new_node_requested(type: String, pos: Vector2) -> void:
 	var data = {type = type.to_lower(), position_offset = pos}
+	if '+ choices' in type:
+		data.type = 'dialog'
+		data.show_choices = true
+		data.size = Vector2(400, 320)
 	
 	data.position_offset = snap_position(data.position_offset)
 	create_node(data)
