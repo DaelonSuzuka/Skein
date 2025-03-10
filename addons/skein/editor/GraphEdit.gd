@@ -78,7 +78,7 @@ func on_popup_request(position: Vector2) -> void:
 	ctx.open(get_global_mouse_position())
 
 func new_node_requested(type: String) -> void:
-	var data = {type = type.to_lower(), offset = ctx.position, position_offset = Vector2()}
+	var data = {type = type.to_lower(), position_offset = get_offset_from_mouse()}
 	
 	if snapping_enabled:
 		var snap = snapping_distance
