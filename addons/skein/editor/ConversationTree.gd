@@ -29,12 +29,14 @@ signal run_node
 
 var folder_state := {}
 
+#TODO: pick different colors
 var icon_colors := {
 	'dialog': Color.OLIVE_DRAB,
 	'branch': Color.TOMATO,
 	'comment': Color.STEEL_BLUE,
 	'entry': Color.STEEL_BLUE,
 	'exit': Color.STEEL_BLUE,
+	'jump': Color.STEEL_BLUE,
 	'subgraph': Color.STEEL_BLUE,
 }
 
