@@ -116,9 +116,8 @@ func load_conversation(path: String, default=null):
 
 	return _load_conversation(path, default)
 
-func save_conversation(path: String, data):
-	if data == null or data == {}:
-		# print("can't save empty data")
+func save_conversation(path: String, data: Dictionary):
+	if data == null:
 		return
 	if path.begins_with(Files.prefix):
 		if path.ends_with('.json'):

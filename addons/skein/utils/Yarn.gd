@@ -4,7 +4,7 @@ extends Node
 # ******************************************************************************
 
 func save_yarn(path: String, data: Dictionary):
-	if data == null or data == {}:
+	if data == null:
 		return
 	if !path.begins_with('res://') and !path.begins_with('user://'):
 		path = Skein.Files.prefix + path

@@ -23,8 +23,8 @@ func _ready():
 	%Debug.toggled.connect($Preview/DialogBox/DebugLog.set_visible)
 
 	%Preview.hide()
-	# ConfirmDelete.popup_hide.connect(Skein.refresh)
-	# ConfirmDelete.popup_hide.connect(ConfirmationDimmer.hide)
+	%ConfirmDelete.confirmed.connect(Skein.refresh)
+	%ConfirmDelete.canceled.connect(%ConfirmationDimmer.hide)
 	%ConfirmDelete.confirmed.connect(self.really_delete_conversation)
 
 	%Refresh.pressed.connect(Skein.refresh)
@@ -116,8 +116,7 @@ func save_conversation():
 	if current_conversation == '':
 		return
 	var nodes = %GraphEdit.get_nodes()
-	if nodes:
-		Skein.save_conversation(current_conversation, nodes)
+	Skein.save_conversation(current_conversation, nodes)
 
 func change_conversation(path: String):
 	save_conversation()
@@ -151,21 +150,23 @@ func load_conversation(path: String, force:=false):
 # ******************************************************************************
 
 func create_folder(path: String):
-	DirAccess.make_dir_recursive_absolute(Skein.ensure_prefix(path))
+	DirAccess.make_dir_recursive_absolute(Skein.Files.ensure_prefix(path))
 
 func delete_folder(path: String):
-	DirAccess.remove_absolute(Skein.ensure_prefix(path))
+	DirAccess.remove_absolute(Skein.Files.ensure_prefix(path))
 	Skein.refresh()
 
 func rename_folder(old: String, new: String):
-	DirAccess.rename_absolute(Skein.ensure_prefix(old), Skein.ensure_prefix(new))
+	DirAccess.rename_absolute(Skein.Files.ensure_prefix(old), Skein.Files.ensure_prefix(new))
 	Skein.refresh()
 
 # ------------------------------------------------------------------------------
 
 func create_conversation(path: String):
 	%GraphEdit.clear()
-	path = Skein.ensure_prefix(path)
+	path = Skein.Files.ensure_prefix(path)
+	path = Skein.Files._ensure_suffix(path, '.yarn')
+
 	current_conversation = path
 
 	DirAccess.make_dir_recursive_absolute(path.get_base_dir())
@@ -207,21 +208,21 @@ func delete_conversation(path: String):
 	%ConfirmationDimmer.show()
 
 func really_delete_conversation():
-	pass
-	# if current_conversation == delete_path:
-	# 	%GraphEdit.clear()
-	# 	current_conversation = ''
-	# editor_data.erase(delete_path)
-	# save_editor_data()
-	# if delete_path.begins_with(Skein.Files.prefix):
-	# 	DirAccess.remove_at(delete_path)
-	# if delete_path in Skein.conversations:
-	# 	DirAccess.remove_at(Skein.conversations[delete_path])
-	# Skein.refresh()
+	%ConfirmationDimmer.hide()
+	if current_conversation == delete_path:
+		%GraphEdit.clear()
+		current_conversation = ''
+	editor_data.erase(delete_path)
+	save_editor_data()
+	if delete_path.begins_with(Skein.Files.prefix):
+		DirAccess.remove_absolute(delete_path)
+	if delete_path in Skein.conversations:
+		DirAccess.remove_absolute(Skein.conversations[delete_path])
+	Skein.refresh()
 
 func rename_conversation(old: String, new: String):
-	old = Skein.ensure_prefix(old)
-	new = Skein.ensure_prefix(new)
+	old = Skein.Files.ensure_prefix(old)
+	new = Skein.Files.ensure_prefix(new)
 
 	if current_conversation == old:
 		%GraphEdit.clear()
