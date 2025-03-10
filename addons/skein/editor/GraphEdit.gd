@@ -38,8 +38,8 @@ signal node_changed
 func _ready() -> void:
 	connection_request.connect(self.request_connection)
 	disconnection_request.connect(self.request_disconnection)
-	# connection_from_empty.connect(self.on_connection_from_empty)
-	# connection_to_empty.connect(self.on_connection_to_empty)
+	connection_from_empty.connect(self.on_connection_from_empty)
+	connection_to_empty.connect(self.on_connection_to_empty)
 	duplicate_nodes_request.connect(self._duplicate_nodes_request)
 	copy_nodes_request.connect(self._copy_nodes_request)
 	delete_nodes_request.connect(self._delete_nodes_request)
