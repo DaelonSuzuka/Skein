@@ -16,6 +16,8 @@ var scrollbar = null
 # ******************************************************************************
 
 func _ready():
+	super()
+	
 	%Edit.get_popup().index_pressed.connect(self.index_pressed)
 
 	data['show_choices'] = false
@@ -66,7 +68,7 @@ func on_change(arg=null):
 	changed.emit()
 
 func index_pressed(index):
-	match %Edit.get_popup().get_item_text(index):
+	match%Edit.get_popup().get_item_text(index):
 		'Choices':
 			%Edit.get_popup().toggle_item_checked(0)
 			var state = %Edit.get_popup().is_item_checked(0)

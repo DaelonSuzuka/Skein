@@ -11,6 +11,8 @@ var extra_branches = []
 # ******************************************************************************
 
 func _ready():
+	super()
+
 	%Edit.get_popup().index_pressed.connect(self.index_pressed)
 
 	for i in range(8):

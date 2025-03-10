@@ -109,7 +109,7 @@ func get_id() -> int:
 	return id
 
 func create_node(data=null) -> Node:
-	var node
+	var node: GraphElement
 	if data:
 		node = node_types[data.type].instantiate()
 	else:
@@ -126,7 +126,7 @@ func create_node(data=null) -> Node:
 	node_created.emit(node)
 	contents_changed()
 
-	# node.close_request.connect(self.delete_node.bind(node))
+	node.delete_request.connect(self.delete_node.bind(node))
 	node.changed.connect(self.contents_changed)
 
 	return node
@@ -142,7 +142,7 @@ func delete_node(node) -> void:
 	var id = node.data.id
 	nodes.erase(id)
 	node.queue_free()
-	node_deleted.emit(id)
+	node_deleted.emit(str(id))
 
 func rename_node(id, new_name: String):
 	if str(id) in nodes:

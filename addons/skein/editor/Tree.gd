@@ -299,24 +299,14 @@ func select_item(path: String):
 	pass
 
 func delete_item(id):
-	var item = root.get_children()
-	if item == null:
-		return
-	while true:
-		if item == null:
-			break
+	for item in root.get_children():
 		if item.get_text(0) == owner.current_conversation:
-			var card = item.get_children()
-			while true:
-				if card == null:
-					break
+			for card in item.get_children():
 				if str(card.get_metadata(0)) == str(id):
 					item.remove_child(card)
 					card.free()
 					break
-				card = card.get_next()
 			break
-		item = item.get_next()
 
 # ******************************************************************************
 
