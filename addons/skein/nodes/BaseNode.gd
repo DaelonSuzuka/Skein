@@ -157,6 +157,11 @@ func get_data() -> Dictionary:
 		_data.erase('default')
 	return _data
 
+func decode_data(input):
+	if input is String:
+		return str_to_var(input)
+	return input
+
 func set_data(new_data: Dictionary) -> GraphNode:
 	if 'type' in new_data:
 		data.type = new_data.type
@@ -178,12 +183,12 @@ func set_data(new_data: Dictionary) -> GraphNode:
 		data.name = new_data.name
 		rename(new_data.name)
 	if 'position' in new_data:
-		var rect = str_to_var(new_data.position)
+		var rect = decode_data(new_data.position)
 		position_offset = rect.position.round()
 		size = rect.size.round()
 	else:
 		if 'position_offset' in new_data:
-			position_offset = str_to_var(new_data.position_offset)
+			position_offset = decode_data(new_data.position_offset)
 		if 'size' in new_data:
-			size = str_to_var(new_data.size)
+			size = decode_data(new_data.size)
 	return self
