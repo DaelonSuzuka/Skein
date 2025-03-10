@@ -323,7 +323,7 @@ func get_nodes() -> Dictionary:
 # ******************************************************************************
 
 func set_data(data: Dictionary) -> void:
-	# scroll_offset = str_to_var(data.get('scroll_offset', 'Vector2( 0, 0 )'))
+	scroll_offset = str_to_var(data.get('scroll_offset', 'Vector2( 0, 0 )'))
 	zoom = data.get('zoom', 1)
 	
 	minimap_enabled = data.get('minimap_enabled', true)

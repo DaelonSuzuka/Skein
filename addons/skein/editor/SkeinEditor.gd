@@ -132,20 +132,21 @@ func change_conversation(path: String):
 func load_conversation(path: String, force:=false):
 	var _path := path.trim_prefix(Skein.Files.conversation_prefix)
 	var parts := _path.split(':')
-	var name := parts[0]
+	var convo_name := parts[0]
 
-	if !force and current_conversation == name:
+	if !force and current_conversation == convo_name:
 		return
-	%GraphEdit.clear()
-	current_conversation = name
 
-	var nodes = Skein.load_conversation(name, {})
+	%GraphEdit.clear()
+	current_conversation = convo_name
+
+	var nodes = Skein.load_conversation(convo_name, {})
 	if nodes:
 		%GraphEdit.set_nodes(nodes)
-	if name in editor_data:
-		%GraphEdit.set_data.call_deferred(editor_data[name])
-	else:
-		editor_data[name] = {}
+
+	var convo_data = editor_data['conversation_data']
+	if convo_name in convo_data:
+		%GraphEdit.set_data(convo_data[convo_name])
 
 # ******************************************************************************
 
@@ -336,6 +337,7 @@ func save_editor_data():
 	data[location]['right_panel_size'] = %RightPanelSplit.split_offset
 	data[location]['right_panel_collapsed'] = %RightSidebar.visible
 	data[location]['conversation_data'][current_conversation] = %GraphEdit.get_data()
+
 	Skein.Files.save_json(editor_data_file_name, data)
 
 func load_editor_data():
@@ -345,6 +347,7 @@ func load_editor_data():
 		editor_data['current_conversation'] = '0 Introduction'
 		load_conversation(editor_data['current_conversation'])
 		return
+
 	editor_data = data[location]
 
 	if 'folder_state' in editor_data:
