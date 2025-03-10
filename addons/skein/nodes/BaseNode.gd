@@ -28,6 +28,7 @@ var slot_colors := [
 @onready var parent = get_parent()
 
 signal changed
+signal play_request
 
 # ******************************************************************************
 
@@ -92,12 +93,14 @@ func title_bar_ctx(pos: Vector2) -> void:
 
 	ctx.check_item('Default', bool(data.default), _default_checked)
 	ctx.add_separator()
-	ctx.item('Play Node')
+	ctx.item('Play', self.play_request.emit)
 	ctx.add_separator()
 	ctx.item('Copy Path', DisplayServer.clipboard_set.bind('%s:%s' % [parent.owner.current_conversation, data.name]))
 	ctx.item('Copy Name', DisplayServer.clipboard_set.bind(data.name))
 	ctx.item('Copy ID', DisplayServer.clipboard_set.bind(str(data.id)))
-	
+	ctx.add_separator()
+	ctx.item('Delete', self.delete_request.emit)
+
 	for item in self.get_title_bar_ctx_items():
 		ctx.item(item)
 
@@ -109,7 +112,8 @@ func _default_checked():
 	if data.default:
 		for node in parent.nodes.values():
 			node.data.default = false
-		data.default = true
+
+	self.changed.emit()
 
 func _title_bar_ctx_selection(selection: String):
 	self.title_bar_ctx_selection(selection)
@@ -126,7 +130,6 @@ func body_ctx(pos: Vector2) -> void:
 
 func _body_ctx_selection(selection: String):
 	# default body options go here
-
 	self.body_ctx_selection(selection)
 
 # ******************************************************************************
