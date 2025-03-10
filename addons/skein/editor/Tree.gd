@@ -321,27 +321,26 @@ func open_context_menu(position: Vector2) -> void:
 
 	ctx = SkeinContextMenu.new(self, self.context_menu_item_selected)
 	if item:
-		var type = item.get_meta('type')
-		match type:
+		match item.get_meta('type'):
 			'file':
 				if item.get_meta('path').ends_with('json'):
-					ctx.add_item('Convert to Yarn')
-				ctx.add_item('Copy Path')
-				ctx.add_item('Rename')
-				ctx.add_item('Delete')
+					ctx.item('Convert to Yarn')
+				ctx.item('Copy Path')
+				ctx.item('Rename')
+				ctx.item('Delete')
 			'folder':
-				ctx.add_item('New File')
-				ctx.add_item('New Folder')
-				ctx.add_item('Rename')
-				ctx.add_item('Delete')
+				ctx.item('New File')
+				ctx.item('New Folder')
+				ctx.item('Rename', _start_rename)
+				ctx.item('Delete')
 			'node':
-				ctx.add_item('Run')
-				ctx.add_item('Copy Path')
-				ctx.add_item('Rename')
-				ctx.add_item('Delete')
+				ctx.item('Run', run_node.emit)
+				ctx.item('Copy Path')
+				ctx.item('Rename')
+				ctx.item('Delete')
 	else:
-		ctx.add_item('New File')
-		ctx.add_item('New Folder')
+		ctx.item('New File')
+		ctx.item('New Folder')
 	ctx.open(get_global_mouse_position())
 
 var ge = null
@@ -385,10 +384,6 @@ func context_menu_item_selected(selection: String) -> void:
 			path = path.replace('.yarn', '')
 			path = path.replace('.json', '')
 			DisplayServer.clipboard_set(path.trim_prefix(Skein.Files.conversation_prefix))
-		'Rename':
-			_start_rename()
-		'Run':
-			run_node.emit()
 		'Delete':
 			var item = get_selected()
 			var path = item.get_meta('path')
