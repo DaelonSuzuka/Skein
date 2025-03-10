@@ -341,6 +341,7 @@ func save_editor_data():
 func load_editor_data():
 	var data = Skein.Files.load_json(editor_data_file_name, {})
 	if data == {} or !(location in data):
+		# TODO: remove this
 		editor_data['current_conversation'] = '0 Introduction'
 		load_conversation(editor_data['current_conversation'])
 		return
@@ -349,7 +350,7 @@ func load_editor_data():
 	if 'folder_state' in editor_data:
 		%Tree.folder_state = editor_data['folder_state']
 	if 'current_conversation' in editor_data:
-		load_conversation(editor_data['current_conversation'])
+		current_conversation = editor_data['current_conversation']
 
 	# if 'font_size' in editor_data:
 	# 	theme.default_font.size = editor_data['font_size']
