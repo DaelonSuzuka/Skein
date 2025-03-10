@@ -6,8 +6,6 @@ extends GraphEdit
 @onready var node_types: Dictionary[String, PackedScene] = {
 	'entry': load('res://addons/skein/nodes/EntryNode.tscn'),
 	'exit': load('res://addons/skein/nodes/ExitNode.tscn'),
-	# 'base': load('res://addons/skein/nodes/DialogNode.tscn'),
-	'speech': load('res://addons/skein/nodes/DialogNode.tscn'),
 	'dialog': load('res://addons/skein/nodes/DialogNode.tscn'),
 	'comment': load('res://addons/skein/nodes/CommentNode.tscn'),
 	'branch': load('res://addons/skein/nodes/BranchNode.tscn'),
@@ -20,6 +18,9 @@ var display_types: Array[String] = [
 	'comment',
 	'branch',
 	'jump',
+	'entry',
+	'exit',
+	'subgraph',
 ]
 
 var nodes := {}

@@ -30,10 +30,12 @@ signal run_node
 var folder_state := {}
 
 var icon_colors := {
-	'speech': Color.OLIVE_DRAB,
 	'dialog': Color.OLIVE_DRAB,
 	'branch': Color.TOMATO,
 	'comment': Color.STEEL_BLUE,
+	'entry': Color.STEEL_BLUE,
+	'exit': Color.STEEL_BLUE,
+	'subgraph': Color.STEEL_BLUE,
 }
 
 # ******************************************************************************
