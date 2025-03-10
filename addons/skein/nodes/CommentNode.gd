@@ -5,7 +5,7 @@ extends GraphFrame
 
 var data := {
 	id = 0,
-	type = 'base',
+	type = 'comment',
 	name = '',
 	text = '',
 	next = 'none',
