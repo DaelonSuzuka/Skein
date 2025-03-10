@@ -6,14 +6,13 @@ extends Control
 @export var text := '':
 	set(new_text):
 		text = new_text
-		if is_inside_tree():
-			label.text = text
-			line_edit.text = text
+		%Label.text = text
+		%LineEdit.text = text
 
 signal text_changed(new_text: String)
 
-@onready var line_edit = $LineEdit
-@onready var label = $Label
+@onready var line_edit = %LineEdit
+@onready var label = %Label
 
 # ******************************************************************************
 
