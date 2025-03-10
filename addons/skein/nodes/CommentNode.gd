@@ -21,24 +21,20 @@ signal changed
 # ******************************************************************************
 
 func _ready():
-	%ColorPickerButton.get_picker()
-	%ColorPickerButton.get_popup()
-	%ColorPickerButton.color_changed.connect(self.set_color)
+	%BGColor.color_changed.connect(self.set_color)
 	%Tooltip.hide()
-	%Title.text_changed.connect(%Tooltip.set_text)
+	%Title.text_changed.connect(%TooltipLabel.set_text)
+	%Title.text_changed.connect(self.renamed)
 
 	if parent is GraphEdit:
 		position_offset_changed.connect(self._position_offset_changed)
 		parent.begin_node_move.connect(self.begin_move)
 		parent.end_node_move.connect(self.end_move)
-		parent.zoom_changed.connect(self.zoom_changed)
+		# parent.zoom_changed.connect(self.zoom_changed)
 		zoom_changed(parent.zoom)
 
 	%Close.pressed.connect(self.delete_request.emit)
 	resize_request.connect(self._resize_request)
-	# gui_input.connect(self._gui_input)
-
-	%Title.text_changed.connect(self.renamed)
 
 func _resize_request(new_minsize: Vector2) -> void:
 	self.changed.emit()
@@ -48,9 +44,9 @@ func _resize_request(new_minsize: Vector2) -> void:
 	else:
 		size = new_minsize
 
-func set_color(color):
-	self_modulate = color
-	%TooltipBG.modulate = color
+func set_color(color: Color):
+	tint_color = color
+	# %Tooltip.self_modulate = color
 
 # ******************************************************************************
 
@@ -101,7 +97,7 @@ func zoom_changed(zoom):
 	# set_stylebox_borders(theme.get_stylebox('comment_focus', 'GraphNode'), width)
 	# set_stylebox_borders(tooltip_bg.get_stylebox('panel'), width)
 
-	if zoom < .8:
+	if zoom < .5:
 		%Tooltip.show()
 		# %Tooltip.theme.default_font.size = round(16 / zoom)
 
@@ -114,6 +110,7 @@ func set_id(id) -> void:
 
 func rename(new_name: String):
 	%Title.text = new_name
+	%TooltipLabel.text = new_name
 	renamed(new_name)
 
 func renamed(new_name: String):
@@ -127,7 +124,7 @@ func get_data():
 	var _data := data.duplicate(true)
 	_data.position = var_to_str(Rect2(position_offset.round(), size.round()))
 	_data.name = %Title.text
-	_data['color'] = %ColorPickerButton.color.to_html()
+	_data.color = %BGColor.color.to_html()
 	return _data
 
 func decode_data(input):
@@ -147,8 +144,8 @@ func set_data(new_data: Dictionary) -> GraphElement:
 		set_id(new_data.id)
 	if 'name' in new_data:
 		data.name = new_data.name
-		rename(new_data.name)
-		%Tooltip.text = new_data.name
+		%Title.text = new_data.name
+		%TooltipLabel.text = new_data.name
 	if 'position' in new_data:
 		var rect = decode_data(new_data.position)
 		position_offset = rect.position.round()
@@ -159,8 +156,7 @@ func set_data(new_data: Dictionary) -> GraphElement:
 		if 'size' in new_data:
 			size = decode_data(new_data.size)
 	if 'color' in new_data:
-		self_modulate = Color(new_data.color)
-		%TooltipBG.modulate = Color(new_data.color)
-		%ColorPickerButton.color = Color(new_data.color)
+		set_color(Color(new_data.color))
+		%BGColor.color = Color(new_data.color)
 
 	return self

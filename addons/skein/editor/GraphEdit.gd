@@ -36,6 +36,13 @@ func _gui_input(event: InputEvent) -> void:
 			for node in self.nodes.values():
 				node.selected = true
 
+	# reimplement zoom changed event
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			zoom_changed.emit.call_deferred(zoom)
+		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+			zoom_changed.emit.call_deferred(zoom)
+
 func contents_changed():
 	if notify_changes:
 		node_changed.emit()
