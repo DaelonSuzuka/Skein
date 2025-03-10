@@ -3,10 +3,15 @@ extends HBoxContainer
 
 # ******************************************************************************
 
-@onready var choice = $Choice
-@onready var condition = $Condition
+@onready var choice = %Choice
+@onready var condition = %Condition
 
 # ******************************************************************************
+
+func _ready() -> void:
+	%Label.text = str(self.name)[-1]
+
+# ------------------------------------------------------------------------------
 
 func get_data():
 	var data = {}
