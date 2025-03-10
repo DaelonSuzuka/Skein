@@ -91,7 +91,9 @@ func title_bar_ctx(pos: Vector2) -> void:
 	var ctx = parent.new_ctx(self._title_bar_ctx_selection)
 
 	ctx.check_item('Default', bool(data.default), _default_checked)
-
+	ctx.add_separator()
+	ctx.item('Play Node')
+	ctx.add_separator()
 	ctx.item('Copy Path', DisplayServer.clipboard_set.bind('%s:%s' % [parent.owner.current_conversation, data.name]))
 	ctx.item('Copy Name', DisplayServer.clipboard_set.bind(data.name))
 	ctx.item('Copy ID', DisplayServer.clipboard_set.bind(str(data.id)))
