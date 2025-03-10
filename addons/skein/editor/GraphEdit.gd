@@ -36,15 +36,7 @@ signal node_changed
 # ******************************************************************************
 
 func _ready() -> void:
-	connection_request.connect(self.request_connection)
-	disconnection_request.connect(self.request_disconnection)
-	connection_from_empty.connect(self.on_connection_from_empty)
-	connection_to_empty.connect(self.on_connection_to_empty)
-	duplicate_nodes_request.connect(self._duplicate_nodes_request)
-	copy_nodes_request.connect(self._copy_nodes_request)
-	delete_nodes_request.connect(self._delete_nodes_request)
-	paste_nodes_request.connect(self._paste_nodes_request)
-	popup_request.connect(self.on_popup_request)
+	Skein.Utils.connect_all(self, self, '_on_')
 
 	end_node_move.connect(self.contents_changed)
 
@@ -70,7 +62,7 @@ func new_ctx(cb) -> SkeinContextMenu:
 	ctx = SkeinContextMenu.new(self, cb)
 	return ctx
 
-func on_popup_request(position: Vector2) -> void:
+func _on_popup_request(position: Vector2) -> void:
 	ctx = self.new_ctx(self.new_node_requested)
 	ctx.add_separator('New Node:')
 	for type in display_types:
@@ -138,7 +130,7 @@ func delete_node(node) -> void:
 
 	for con in self.connections:
 		if con['from_node'] == node.name or con['to_node'] == node.name:
-			request_disconnection(con['from_node'], con['from_port'], con['to_node'], con['to_port'])
+			_on_disconnection_request(con['from_node'], con['from_port'], con['to_node'], con['to_port'])
 	var id = node.data.id
 	nodes.erase(id)
 	node.queue_free()
@@ -158,7 +150,7 @@ func select_node(node):
 
 # ******************************************************************************
 
-func request_connection(from, from_slot, to, to_slot) -> bool:
+func _on_connection_request(from, from_slot, to, to_slot) -> bool:
 	for con in self.connections:
 		if con['from_node'] == from:
 			if con['from_port'] == from_slot:
@@ -174,11 +166,11 @@ func request_connection(from, from_slot, to, to_slot) -> bool:
 	connect_node(from, from_slot, to, to_slot)
 	return true
 
-func request_disconnection(from, from_slot, to, to_slot) -> void:
+func _on_disconnection_request(from, from_slot, to, to_slot) -> void:
 	disconnect_node(from, from_slot, to, to_slot)
 	nodes[from].data.connections.erase(to)
 
-func on_connection_from_empty(to, to_slot, release_position) -> void:
+func _on_connection_from_empty(to, to_slot, release_position) -> void:
 	var data = {type = 'dialog', position_offset = get_offset_from_mouse()}
 	if snapping_enabled:
 		var snap = snapping_distance
@@ -186,9 +178,9 @@ func on_connection_from_empty(to, to_slot, release_position) -> void:
 	data.position_offset = var_to_str(data.position_offset)
 	var node = create_node(data)
 
-	request_connection(node.name, 0, to, to_slot)
+	_on_connection_request(node.name, 0, to, to_slot)
 
-func on_connection_to_empty(from, from_slot, release_position) -> void:
+func _on_connection_to_empty(from, from_slot, release_position) -> void:
 	var data = {type = 'dialog', position_offset = get_offset_from_mouse()}
 	if snapping_enabled:
 		var snap = snapping_distance
@@ -196,12 +188,12 @@ func on_connection_to_empty(from, from_slot, release_position) -> void:
 	data.position_offset = var_to_str(data.position_offset)
 	var node = create_node(data)
 
-	if !request_connection(from, from_slot, node.name, 0):
+	if !_on_connection_request(from, from_slot, node.name, 0):
 		delete_node(node)
 
 # ******************************************************************************
 
-func _delete_nodes_request(_arg) -> void:
+func _on_delete_nodes_request(_arg) -> void:
 	for node in get_selected_nodes():
 		delete_node(node)
 
@@ -209,16 +201,16 @@ func _delete_nodes_request(_arg) -> void:
 
 var copy_data = []
 
-func _duplicate_nodes_request() -> void:
-	_copy_nodes_request()
-	_paste_nodes_request()
+func _on_duplicate_nodes_request() -> void:
+	_on_copy_nodes_request()
+	_on_paste_nodes_request()
 
-func _copy_nodes_request() -> void:
+func _on_copy_nodes_request() -> void:
 	copy_data.clear()
 	for node in get_selected_nodes():
 		copy_data.append(node.get_data())
 
-func _paste_nodes_request() -> void:
+func _on_paste_nodes_request() -> void:
 	for node in get_selected_nodes():
 		node.selected = false
 
@@ -310,7 +302,7 @@ func set_nodes(data: Dictionary) -> void:
 		node.queue_redraw()
 		for to in node.data.connections:
 			var con = node.data.connections[to]
-			request_connection(node.name, con[0], to, con[1])
+			_on_connection_request(node.name, con[0], to, con[1])
 	notify_changes = true
 
 func get_nodes() -> Dictionary:
