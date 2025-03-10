@@ -99,14 +99,14 @@ func clear() -> void:
 
 # ******************************************************************************
 
-var used_ids := []
+var used_ids: Array[int] = []
 
-func get_id() -> int:
+func get_id() -> String:
 	var id = randi()
-	if id in used_ids:
+	while id in used_ids:
 		id = get_id()
 	used_ids.append(id)
-	return id
+	return str(id)
 
 func create_node(data=null) -> Node:
 	var node: GraphElement
@@ -118,7 +118,7 @@ func create_node(data=null) -> Node:
 	add_child(node)
 	if data:
 		if 'id' in data:
-			used_ids.append(data.id)
+			used_ids.append(int(data.id))
 		else:
 			data.id = get_id()
 		node.set_data(data)

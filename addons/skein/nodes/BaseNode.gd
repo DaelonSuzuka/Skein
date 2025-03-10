@@ -131,7 +131,7 @@ func _body_ctx_selection(selection: String):
 
 # ******************************************************************************
 
-func set_id(id) -> void:
+func set_id(id: String) -> void:
 	data.id = id
 	name = str(id)
 	%Id.text = str(data.id)
