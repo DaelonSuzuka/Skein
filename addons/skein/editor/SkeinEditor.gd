@@ -144,9 +144,9 @@ func load_conversation(path: String, force:=false):
 	if nodes:
 		%GraphEdit.set_nodes(nodes)
 
-	var convo_data = editor_data['conversation_data']
+	var convo_data = editor_data.get('conversation_data', {})
 	if convo_name in convo_data:
-		%GraphEdit.set_data(convo_data[convo_name])
+		%GraphEdit.set_data.call_deferred(convo_data[convo_name])
 
 # ******************************************************************************
 
