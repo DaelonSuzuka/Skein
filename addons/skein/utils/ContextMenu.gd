@@ -39,6 +39,6 @@ func item(label: String, cb=null):
 
 func check_item(label: String, checked:=false, cb=null):
 	add_check_item(label)
-	set_item_checked(item_count, checked)
+	set_item_checked(item_count - 1, checked)
 	if cb:
 		callbacks[label] = cb
