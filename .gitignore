@@ -21,3 +21,6 @@ build
 
 # godot log folder
 logs
+
+# lode session scraps
+lode/tmp/
