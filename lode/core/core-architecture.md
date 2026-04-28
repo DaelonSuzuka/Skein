@@ -9,7 +9,7 @@ The Skein plugin is a Godot 4 `@tool` addon that registers an autoload singleton
 | Child | Purpose |
 |-------|---------|
 | `Utils` | Node reparenting, signal connection helpers, child traversal |
-| `Files` | JSON/Yarn I/O, directory scanning, path normalization |
+| `Files` | JSON/Yarn I/O, directory scanning, path normalization; `ensure_prefix()` utility |
 | `Yarn` | Convert dictionary ↔ Yarn text format |
 | `Sandbox` | Expression evaluation with injected locals |
 | `Watcher` | File-system polling for hot-reload |
@@ -38,10 +38,14 @@ var conversations := {}     # name → absolute path
 var _conversations := {}    # lookup by file, basename, basefile, etc.
 ```
 
-## Path handling
+## Path Handling
 
-`Files.prefix` is `user://` on HTML5, `res://` otherwise.  
-`ensure_prefix(path)` adds the prefix when missing so editor and runtime paths stay consistent.
+`Files.prefix` is `user://` on HTML5, `res://` otherwise.
+`Files.ensure_prefix(path)` adds the prefix when missing so editor and runtime paths stay consistent.
+
+## File I/O
+
+`save_conversation(path: String, data: Dictionary)` persists conversation nodes to disk. As of recent changes, it only guards against `null` (not `{}`), trusting the caller to decide what is save-worthy. If the path ends with `.yarn`, the data is handed to `Yarn.save_yarn()`.
 
 ## Watcher
 
