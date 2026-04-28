@@ -624,13 +624,14 @@ func next_char(use_timer=true):
 						var result = evaluate(block)
 						line = line.insert(cursor, str(result))
 					next_char()
+					return
 			else:
 				var block = get_block('{', '}')
 				if block:
 					if exec:
 						var result = evaluate(block)
-					cursor += 1
 					next_char()
+					return
 		'<':
 			if next_chars[1] == '<':
 				var block = get_block('<<', '>>')
@@ -764,13 +765,13 @@ func apply_directive(dir):
 		Skein.Sandbox.assignment = dir.assignment
 		result = true
 	if 'show_name' in dir:
-		show_name = dir.name
+		show_name = dir.show_name
 		result = true
 	if 'set_name' in dir:
 		name_override = dir.set_name if dir.set_name != 'null' else null
 		result = true
 	if 'show_portrait' in dir:
-		show_portrait = dir.portrait
+		show_portrait = dir.show_portrait
 		result = true
 	if 'speed' in dir:
 		speed = dir.speed
