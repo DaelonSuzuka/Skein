@@ -1,0 +1,6 @@
+id: 70
+type: dialog
+title: SpeedCallTest
+---
+Before {{speed(3.0)}}After
+===

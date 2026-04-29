@@ -14,7 +14,8 @@ Hierarchical index of all lode files.
 - [core-architecture.md](core/core-architecture.md) — Singleton, autoload, file watcher, and refresh lifecycle
 
 ## Domain: Dialog Runtime
-- [dialog-runtime.md](dialog/dialog-runtime.md) — DialogBox interpreting, typing, choices, directives, evaluation
+- [dialog-runtime.md](dialog/dialog-runtime.md) — Old DialogBox monolith assessment (bugs, design flaws)
+- [runtime-engine.md](dialog/runtime-engine.md) — New DialogEngine pull-based effect stream architecture
 
 ## Domain: Visual Editor
 - [visual-editor.md](editor/visual-editor.md) — SkeinEditor, GraphEdit, ConversationTree, node types, and serialization

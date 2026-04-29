@@ -1,0 +1,8 @@
+id: 40
+type: dialog
+title: ContextTest
+---
+Caller name: {{caller.npc_name}}
+Scene label: {{scene.scene_label}}
+Dialog speed: {{dialog.speed}}
+===

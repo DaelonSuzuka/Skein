@@ -1,0 +1,7 @@
+id: 1
+type: dialog
+title: Start
+default: true
+---
+Plain text line
+===

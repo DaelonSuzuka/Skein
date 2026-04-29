@@ -1,0 +1,7 @@
+id: 50
+type: dialog
+title: ContextSilentTest
+---
+Silent caller: {caller.npc_name}
+Silent scene: {scene.scene_label}
+===

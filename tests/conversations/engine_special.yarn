@@ -1,0 +1,9 @@
+id: 40
+type: dialog
+title: SpecialChars
+---
+Pause_here
+Pipe |instant| text
+Escape\_underscore
+BBCode [b]bold[/b] text
+===

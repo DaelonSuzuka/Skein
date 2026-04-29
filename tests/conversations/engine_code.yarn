@@ -1,0 +1,8 @@
+id: 20
+type: dialog
+title: InlineCode
+---
+Silent block: {1 + 1}
+Print block: {{2 + 2}}
+Before{{3 * 3}}After
+===

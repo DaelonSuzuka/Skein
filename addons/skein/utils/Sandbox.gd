@@ -12,7 +12,7 @@ var locals := {}
 func clear_locals():
 	locals.clear()
 
-func add_local(name: String, value, temp:=false):
+func add_local(name: String, value):
 	locals[name] = value
 
 func add_locals(dict: Dictionary):
@@ -35,20 +35,63 @@ func add_temp_locals(dict: Dictionary):
 
 # ------------------------------------------------------------------------------
 
-func get_locals():
-	var _locals = locals.duplicate(true)
-	var _temp_locals = temp_locals.duplicate(true)
-
+func get_locals() -> Dictionary:
+	# Merge persistent locals, temp locals, and characters into one dict.
+	# Temp locals override persistent locals with the same name.
+	# Characters override both (last write wins).
+	var _locals = {}
+	for name in locals:
+		_locals[name] = locals[name]
 	for name in temp_locals:
-		_locals[name] = _temp_locals[name]
-
+		_locals[name] = temp_locals[name]
 	for c in Skein.characters:
 		_locals[c] = Skein.characters[c]
-
 	return _locals
 
 # ******************************************************************************
 # eval context object
+# ******************************************************************************/
+
+## A lightweight config object for adding game-specific variables and methods
+## to every EvalContext build. Set up once in your game's _ready(), then
+## assign to Skein.Sandbox.user_context. The variables and methods here are
+## merged into the script before per-eval (engine) additions.
+##
+## Example:
+##   var ctx = Skein.Sandbox.UserContext.new()
+##   ctx.variable("var inventory  # set via props")
+##   ctx.method("func has_item(name):", ["return inventory.has(name)"])
+##   Skein.Sandbox.user_context = ctx
+##   Skein.Sandbox.user_props = {"inventory": player_inventory}
+##
+class UserContext:
+	var variables: Array[String] = []
+	var methods: Array[String] = []
+
+	func variable(code: String):
+		variables.append(code)
+
+	func method(signature: String, body: Array[String] = []):
+		var code = signature
+		for line in body:
+			code += "\n\t" + line
+		methods.append(code)
+
+	func reset():
+		variables.clear()
+		methods.clear()
+
+## The global user context. Assign a UserContext to inject game-specific
+## helpers into every expression eval without modifying Skein source.
+var user_context: UserContext = null
+
+## Runtime object references that need to be accessible inside UserContext
+## method bodies. Set once in game setup — applied to every built context
+## after add_child. Same mechanism as per-eval props: declare as uninitialized
+## var in UserContext, provide the value here.
+##
+## Example: user_props = {"inventory": player_inventory}
+var user_props: Dictionary = {}
 
 class EvalContext:
 	extends Node
@@ -91,6 +134,13 @@ extends Node
 				)
 
 		var source = script_template
+		# Merge user_context declarations first (game code), then per-eval
+		# declarations (engine). Per-eval takes precedence for same-name entries.
+		if Skein.Sandbox.user_context:
+			for v in Skein.Sandbox.user_context.variables:
+				source += '\n' + v
+			for m in Skein.Sandbox.user_context.methods:
+				source += '\n' + m
 				
 		for v in variables:
 			source += '\n' + v
@@ -114,9 +164,17 @@ extends Node
 
 		return node
 
-	func eval(input: String, parent: Node = null):
+	func eval(input: String, parent: Node = null, props: Dictionary = {}):
 		var context = build({input=input, parent=parent})
-		return Skein.Sandbox.evaluate(input, context)
+		# Apply user_props first (game code), then per-eval props (engine)
+		for key in Skein.Sandbox.user_props:
+			context.set(key, Skein.Sandbox.user_props[key])
+		for key in props:
+			context.set(key, props[key])
+		var result = Skein.Sandbox.evaluate(input, context)
+		if context and is_instance_valid(context):
+			context.queue_free()
+		return result
 
 	func evaluate(input: String, context=null):
 		return Skein.Sandbox.evaluate(input, context)

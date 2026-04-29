@@ -1,0 +1,8 @@
+id: 50
+type: dialog
+title: MultiLine
+---
+First line
+Second line
+Third line
+===

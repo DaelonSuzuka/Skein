@@ -1,0 +1,10 @@
+id: 30
+type: dialog
+title: Directives
+---
+<<speed 2.0>>Speed changed
+<<show_name false>>Name hidden
+<<show_name true>>Name shown again
+<<exec false>>Silent line{1 + 1}
+<<exec true>>Back to normal
+===
