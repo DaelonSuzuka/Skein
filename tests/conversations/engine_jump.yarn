@@ -1,0 +1,14 @@
+id: 100
+type: dialog
+title: JumpStart
+---
+Before jump
+<<jump JumpTarget>>
+This should not appear
+===
+id: 101
+type: dialog
+title: JumpTarget
+---
+After jump
+===

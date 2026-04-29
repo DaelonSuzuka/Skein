@@ -1,0 +1,23 @@
+id: 190
+type: dialog
+title: ChoiceBodyTest
+---
+Pick one:
+-> Sword => SwordResult
+    You took the sword!
+    It gleams brightly.
+-> Shield => ShieldResult
+    You took the shield!
+===
+id: 191
+type: dialog
+title: SwordResult
+---
+You swing the sword
+===
+id: 192
+type: dialog
+title: ShieldResult
+---
+You raise the shield
+===

@@ -1,0 +1,7 @@
+id: 140
+type: dialog
+title: AssignmentTest
+---
+<<assignment true>>Assignment on
+<<assignment false>>Assignment off
+===

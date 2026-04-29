@@ -1,0 +1,12 @@
+id: 230
+type: dialog
+title: JumpExprStart
+---
+Before {{jump("JumpExprTarget")}}after
+===
+id: 231
+type: dialog
+title: JumpExprTarget
+---
+Jumped via expression
+===

@@ -1,0 +1,9 @@
+id: 180
+type: dialog
+title: CommentTest
+---
+# This is a comment
+Before comment
+// Another comment
+After comment
+===

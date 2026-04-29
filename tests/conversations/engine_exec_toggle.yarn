@@ -1,0 +1,8 @@
+id: 150
+type: dialog
+title: ExecToggleTest
+---
+Active: {{2 + 2}}
+<<exec false>>Inactive: {{2 + 2}}
+<<exec true>>Active again: {{2 + 2}}
+===

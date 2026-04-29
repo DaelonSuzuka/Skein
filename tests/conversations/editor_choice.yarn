@@ -1,0 +1,27 @@
+id: 220
+type: dialog
+title: EditorChoiceStart
+next: choice
+choices:
+  "1":
+    choice: "Say hello"
+    condition: ""
+    next: "221"
+  "2":
+    choice: "Say goodbye"
+    condition: ""
+    next: "222"
+---
+===
+id: 221
+type: dialog
+title: HelloNode
+---
+Hello to you!
+===
+id: 222
+type: dialog
+title: GoodbyeNode
+---
+Goodbye then!
+===

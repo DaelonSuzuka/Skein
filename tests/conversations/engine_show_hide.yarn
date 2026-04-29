@@ -1,0 +1,7 @@
+id: 110
+type: dialog
+title: ShowHideTest
+---
+<<show>>Visible now
+<<hide>>Hidden now
+===

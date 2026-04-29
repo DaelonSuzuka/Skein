@@ -1,0 +1,7 @@
+id: 120
+type: dialog
+title: SetNameTest
+---
+<<set_name Narrator>>A tale begins
+A second line
+===

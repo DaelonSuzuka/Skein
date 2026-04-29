@@ -1,0 +1,6 @@
+id: 160
+type: dialog
+title: InlineRandomTest
+---
+Pick [[one|two|three]] please
+===

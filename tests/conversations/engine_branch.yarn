@@ -1,0 +1,30 @@
+id: 210
+type: dialog
+title: BranchStart
+---
+Before branch
+===
+id: 211
+type: branch
+title: BranchNode
+branches:
+  "1":
+    condition: "1 == 1"
+    next: "212"
+  "2":
+    condition: ""
+    next: "213"
+---
+===
+id: 212
+type: dialog
+title: BranchTrue
+---
+Condition was true
+===
+id: 213
+type: dialog
+title: BranchFalse
+---
+Condition was false
+===

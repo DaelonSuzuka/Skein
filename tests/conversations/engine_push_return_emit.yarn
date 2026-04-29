@@ -1,0 +1,8 @@
+id: 250
+type: dialog
+title: PushReturnEmitTest
+---
+<<push some_convo>>After push
+<<return here>>After return
+<<emit custom_event>>After emit
+===

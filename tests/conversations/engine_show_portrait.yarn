@@ -1,0 +1,8 @@
+id: 130
+type: dialog
+title: PortraitTest
+---
+First line
+<<show_portrait false>>Second line
+<<show_portrait true>>Third line
+===

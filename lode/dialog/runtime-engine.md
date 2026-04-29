@@ -125,14 +125,30 @@ func _process_effects():
 
 Block delimiters erase the original text from `_line` and replace it inline:
 
-- `{{expr}}` → replace block with result string
-- `{expr}` → erase block, continue scanning
+- `{{expr}}` → replace block with result string (empty string when `exec=false`)
+- `{expr}` → erase block, continue scanning (skipped when `exec=false`)
 - `<<directive>>` → parse and apply; visual directives produce DIRECTIVE effect
 - `[[opt1|opt2]]` → pick random, replace block
 - `[bbcode]` → INSTANT effect with the full tag
 - `|chunk|` → INSTANT effect
 - `_` → PAUSE(0.25)
 - `\x` → CHAR with escaped character
+- `\` at end of line → sets `continue_line=true`, emits empty INSTANT effect
+
+### Scanner Cursor Contract
+
+Replacement scanners (`_scan_double_brace`, `_scan_single_brace`, `_scan_directive`, `_scan_inline_random`) either return a non-null effect (which the caller returns immediately) or return null. When returning null, `_cursor` is already positioned where scanning should resume — the caller must NOT increment `_cursor`. The `while` loop in `next_effect()` uses `continue` to restart scanning.
+
+If `_scan_single_brace` evaluates an expression that triggers `jump_to()` (e.g. `{jump("Node")}`), the `_line` and `_cursor` are replaced by the new node's text. The scanner detects this by comparing `_line` before and after evaluation, and resets `_cursor = 0` so scanning begins at the start of the new node's text.
+
+### `exec=false` Behavior
+
+When `<<exec false>>` is processed, subsequent `{ }` and `{{ }}` blocks are not evaluated — they're left as literal text visible to the reader. This is essential for the graph editor preview, which can't access game-state references like `caller` and `scene`.
+
+- `{{expr}}` → emitted as INSTANT effect containing the raw `{{expr}}` text
+- `{expr}` → emitted as INSTANT effect containing the raw `{expr}` text
+
+The braces are emitted as INSTANT (not typed out character by character) so they don't trigger the `{{ }` / `{ }` scanner and cause infinite re-scan loops.
 
 ## Public API
 
@@ -157,6 +173,8 @@ engine.set_speed(value)     # Called from Sandbox
 | `scene` | `caller.owner` or null | The level/scene owning the caller |
 
 It also defines convenience methods in the EvalContext: `speed(val)` (calls `dialog.set_speed`), `jump(node)` (calls `dialog.jump_to_from_eval`), and `timer(duration)` (creates a SceneTreeTimer).
+
+`jump()` should be used in `{ }` (silent) blocks, not `{{ }}` — it returns null, which would insert `"<null>"` into display text.
 
 `caller.owner` must be explicitly set — Godot does not auto-assign `owner` when adding children via code. Test fixtures use custom classes (`TestCaller`, `TestScene`) with custom properties (`npc_name`, `scene_label`) instead of `name`, since `name` conflicts with Node's built-in.
 
@@ -187,6 +205,7 @@ All renderers follow the same pattern:
 - `addons/skein/renderers/SkeinSignRenderer.gd` — world-space sign example renderer
 - `addons/skein/renderers/SkeinPhoneRenderer.gd` — non-modal phone example renderer
 - `tests/engine.test.gd` — 41 engine tests (GUT, all passing)
+- `tests/engine_extended.test.gd` — 37 extended engine tests (GUT, all passing)
 - `tests/sandbox.test.gd` — 14 sandbox tests (GUT, all passing)
 - `tests/renderers.test.gd` — 13 renderer tests (GUT, all passing)
 - `tests/conversations/engine_*.yarn` — test conversation fixtures

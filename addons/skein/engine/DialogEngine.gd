@@ -119,7 +119,9 @@ func start(conversation_string: String, options := {}) -> void:
 
 	# Enter starting node
 	_enter_node(start_node)
-	if line_number == -1 or line_number > current_data.lines.size():
+	if line_number > 0 and line_number <= current_data.lines.size():
+		current_line = line_number
+	elif line_number == -1 or line_number > current_data.lines.size():
 		current_line = current_data.lines.size() - 1
 
 	_advance_to_next_effect_line()
@@ -229,8 +231,7 @@ func next_effect() -> DialogEffect:
 		if ch == "{":
 			var result = _scan_single_brace()
 			if result != null:
-				continue
-			_cursor += 1
+				return result
 			continue
 
 		# << >> — directive
@@ -238,7 +239,6 @@ func next_effect() -> DialogEffect:
 			var result = _scan_directive()
 			if result != null:
 				return result
-			_cursor += 1
 			continue
 
 		# [[ ]] — inline random
@@ -246,7 +246,6 @@ func next_effect() -> DialogEffect:
 			var result = _scan_inline_random()
 			if result != null:
 				return result
-			_cursor += 1
 			continue
 
 		# [ ] — BBCode passthrough
@@ -306,9 +305,12 @@ func _char_at(pos: int) -> String:
 
 
 ## Scan {{ }} block: evaluate expression, replace the block in _line
+## Scan {{ }} block: evaluate expression, replace the block in _line
 ## with the result text. The result text will be scanned character-by-character
 ## by subsequent next_effect() calls.
-## Returns null to continue scanning from the insertion point.
+## When exec=false, the block is left as literal text — emitted as an INSTANT
+## effect so the braces aren't re-scanned as code delimiters.
+## Returns null to continue scanning from after the block.
 func _scan_double_brace() -> Variant:
 	# Find the block boundaries BEFORE advancing cursor
 	var start = _cursor
@@ -316,12 +318,15 @@ func _scan_double_brace() -> Variant:
 	if end_pos == -1:
 		return null
 
-	var block = _line.substr(start + 2, end_pos - start - 2).strip_edges()
-	var result_str = ""
+	if not exec:
+		# Emit the {{ }} block as literal text via INSTANT effect
+		var block = _line.substr(start, end_pos - start + 2)
+		_cursor = end_pos + 2
+		return DialogEffect.new(DialogEffect.Type.INSTANT, block)
 
-	if exec:
-		var result = _evaluate(block)
-		result_str = str(result)
+	var block = _line.substr(start + 2, end_pos - start - 2).strip_edges()
+	var result = _evaluate(block)
+	var result_str = str(result)
 
 	# Replace the entire {{...}} span with the result text
 	var end_of_block = end_pos + 2
@@ -332,16 +337,32 @@ func _scan_double_brace() -> Variant:
 
 ## Scan { } block: evaluate silently, erase the block from _line,
 ## then continue scanning from the same position.
+## When exec=false, the block is left as literal text — emitted as an INSTANT
+## effect so the braces aren't re-scanned as code delimiters.
+## If evaluation triggers a jump (changing _line), skip the erase
+## since _line now belongs to the new node.
 func _scan_single_brace() -> Variant:
 	var start = _cursor
 	var end_pos = _line.findn("}", start + 1)
 	if end_pos == -1:
 		return null
 
-	var block = _line.substr(start + 1, end_pos - start - 1).strip_edges()
+	if not exec:
+		# Emit the { } block as literal text via INSTANT effect
+		var block = _line.substr(start, end_pos - start + 1)
+		_cursor = end_pos + 1
+		return DialogEffect.new(DialogEffect.Type.INSTANT, block)
 
-	if exec:
-		_evaluate(block)
+	var block = _line.substr(start + 1, end_pos - start - 1).strip_edges()
+	var line_before = _line
+
+	_evaluate(block)
+
+	# If the evaluation triggered a jump, _line has been replaced by the
+	# new node's text. Don't erase from the new line.
+	if _line != line_before:
+		_cursor = 0
+		return null
 
 	# Erase the entire {block} from _line
 	_line = _line.substr(0, start) + _line.substr(end_pos + 1)

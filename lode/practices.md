@@ -36,10 +36,13 @@
 - Assignment inside expressions is gated by `Sandbox._assignment_enabled` and detected via regex.
 
 ## Dialog Runtime
-- `DialogBox` is the default runtime interpreter; games are expected to subclass or replace it for custom UI.
+- `DialogEngine` is the stateful conversation interpreter; renderers consume the effect stream.
 - Inline choices are denoted by `-` or `->` markers. Conditional choices hide the option but still create the button (disabled).
-- `<<jump NodeName>>` is a directive parsed during text scan.
-- Signals (`line_started`, `node_started`, `done`, etc.) drive editor highlighting and game logic.
+- Choice bodies (indented lines after `->`) create dynamic nodes at runtime.
+- Branch nodes (`type: branch`) evaluate conditions and route to the first matching branch.
+- `<<jump NodeName>>` is a directive parsed during text scan; emits DIRECTIVE effect.
+- `jump()` can be called from expressions but should use `{ }` (silent), not `{{ }}` — returns null which would print in display text.
+- `exec=false` suppresses expression evaluation: `{ }` and `{{ }}` blocks are left as literal text (emitted as INSTANT effects), not erased — critical for graph editor preview where `caller`/`scene` aren't available.
 
 ## Node Graph
 - Each graph node stores `data` dict with `id`, `name`, `type`, `text`, `choices`, `branches`, `connections`, etc.
