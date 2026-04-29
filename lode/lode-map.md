@@ -16,6 +16,8 @@ Hierarchical index of all lode files.
 ## Domain: Dialog Runtime
 - [dialog-runtime.md](dialog/dialog-runtime.md) — Old DialogBox monolith assessment (bugs, design flaws)
 - [runtime-engine.md](dialog/runtime-engine.md) — New DialogEngine pull-based effect stream architecture
+- [sandbox.md](dialog/sandbox.md) — Expression evaluator, EvalContext, UserContext extension point
+- [characters.md](dialog/characters.md) — Character loading, scene structure, speaker detection, mood syntax
 
 ## Domain: Visual Editor
 - [visual-editor.md](editor/visual-editor.md) — SkeinEditor, GraphEdit, ConversationTree, node types, and serialization

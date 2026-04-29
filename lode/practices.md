@@ -12,6 +12,18 @@
 - **The text file is the source of truth.** The visual graph editor is a convenience layer, not a prison.
 - Writers can edit `.yarn` files in any text editor and reload inside Godot.
 - The Yarn format used by Skein is an **expanded variant**; it is not Yarn Spinner.
+- Every line of dialog should be writable with zero mouse clicks in the graph editor. The visual programming block approach (e.g., Dialogic) is explicitly rejected — it makes rapid authoring agonizing.
+
+## Bring-Your-Own-X and Sane On-Disk Formats
+- DialogBox is a template, not a prison. Game devs own the UI.
+- Characters are `.tscn` files in a directory — no proprietary registry format, no walled-garden editor UI.
+- Skein provides the runtime engine and effect stream; the renderer is the game's responsibility.
+- All on-disk data must be human-readable, diffable, and editable in a plain text editor. No binary blobs, no proprietary JSON schemas that only the editor can parse.
+- If a user wants to create or modify data outside the Godot editor (VSCode, Vim, scripts, CI), that must work perfectly. The editor is optional.
+- **Never reinvent what Godot already does well.** The game developer already has a purpose-built best-in-class editor for laying out Control nodes — it's the Godot editor. Don't build a dialog box style editor. Don't build a node layout inspector. If it's a `.tscn` scene, the user edits it in Godot's scene editor. Period.
+
+## Namespace Hygiene
+- All `class_name` declarations in Skein must be prefixed with `Skein` (e.g., `SkeinCharacter`, `SkeinEngine`). Godot has one global class namespace — squatting common names like `Config`, `Character`, or `Engine` is hostile to users and other plugins.
 
 ## File I/O
 - Use `Files.prefix` (`user://` on HTML5, otherwise `res://`) for all read/write paths.

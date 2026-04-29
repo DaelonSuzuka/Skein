@@ -1,4 +1,4 @@
-class_name DialogEngine
+class_name SkeinDialogEngine
 extends Node
 
 const DialogEffect = preload("res://addons/skein/engine/DialogEffect.gd")

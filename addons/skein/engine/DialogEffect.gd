@@ -1,4 +1,4 @@
-class_name DialogEffect
+class_name SkeinDialogEffect
 extends RefCounted
 
 enum Type {

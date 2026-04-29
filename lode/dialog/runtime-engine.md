@@ -1,6 +1,6 @@
 # Dialog Engine
 
-`DialogEngine` (`addons/skein/engine/DialogEngine.gd`) is the stateful conversation interpreter. It produces a pull-based stream of `DialogEffect` objects via `next_effect()`. Anything that consumes this stream is a renderer — no base class required, just convention.
+`SkeinDialogEngine` (`addons/skein/engine/DialogEngine.gd`) is the stateful conversation interpreter. It produces a pull-based stream of `SkeinDialogEffect` objects via `next_effect()`. Anything that consumes this stream is a renderer — no base class required, just convention.
 
 ## Architecture
 
@@ -142,7 +142,7 @@ engine.advance()           # Next line after LINE_END
 engine.choose(key)          # Select choice
 engine.jump_to(node_id)     # Jump to node
 engine.stop()               # End conversation
-engine.next_effect()        # Pull next DialogEffect
+engine.next_effect()        # Pull next SkeinDialogEffect
 engine.set_speed(value)     # Called from Sandbox
 ```
 
@@ -160,12 +160,35 @@ It also defines convenience methods in the EvalContext: `speed(val)` (calls `dia
 
 `caller.owner` must be explicitly set — Godot does not auto-assign `owner` when adding children via code. Test fixtures use custom classes (`TestCaller`, `TestScene`) with custom properties (`npc_name`, `scene_label`) instead of `name`, since `name` conflicts with Node's built-in.
 
+## Example Renderers
+
+Four example renderers in `addons/skein/renderers/`. All consume the effect stream via `_process()` — no base class, no inheritance required, just convention.
+
+| Renderer | Class | Behavior |
+|----------|-------|----------|
+| **DialogBox** | `SkeinDialogBox` | Full-screen modal. Typewriter text, choices, speaker name, portrait reparenting, fast-forward on accept. |
+| **PopupRenderer** | `SkeinPopupRenderer` | Floating label. No portrait, no choices, no name. Text types in then auto-advances after timeout (3s). Enforces `length` limit if not set. |
+| **SignRenderer** | `SkeinSignRenderer` | World-space auto-scroll (Node2D). No typewriter — drains effects instantly, appends lines with `\n`. No choices, no portrait. Stays visible after DONE (game code hides it). |
+| **PhoneRenderer** | `SkeinPhoneRenderer` | Side-screen non-modal. Portrait + text + choices, but game continues running. Only responds to input when focused. `dismiss()` method to close early. |
+
+All renderers follow the same pattern:
+1. Hold an `engine` reference
+2. Call `engine.next_effect()` in `_process()`
+3. Match effect type and update UI
+4. Continue on metadata effects, block on CHAR/PAUSE/LINE_END/CHOICES/DONE
+5. Call `engine.advance()` / `engine.choose()` on user input
+
 ## Files
 
-- `addons/skein/engine/DialogEngine.gd` — the engine class
-- `addons/skein/engine/DialogEffect.gd` — effect type enum and value
-- `tests/engine.test.gd` — 40 unit tests (GUT, all passing)
-- `tests/sandbox.test.gd` — 12 sandbox tests (GUT, all passing)
+- `addons/skein/engine/DialogEngine.gd` — the engine class (`class_name SkeinDialogEngine`)
+- `addons/skein/engine/DialogEffect.gd` — effect type enum and value (`class_name SkeinDialogEffect`)
+- `addons/skein/renderers/SkeinDialogBox.gd` — full-screen modal example renderer
+- `addons/skein/renderers/SkeinPopupRenderer.gd` — floating label example renderer
+- `addons/skein/renderers/SkeinSignRenderer.gd` — world-space sign example renderer
+- `addons/skein/renderers/SkeinPhoneRenderer.gd` — non-modal phone example renderer
+- `tests/engine.test.gd` — 41 engine tests (GUT, all passing)
+- `tests/sandbox.test.gd` — 14 sandbox tests (GUT, all passing)
+- `tests/renderers.test.gd` — 13 renderer tests (GUT, all passing)
 - `tests/conversations/engine_*.yarn` — test conversation fixtures
 
 ## Test Execution

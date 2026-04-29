@@ -16,4 +16,7 @@ Raw ideas captured as single-line entries. No multi-line descriptions, no detail
 - DialogBox is intended as a customizable template but subclassing path is not documented
 - Quest system design that coevolves with dialog runtime
 - MethodPicker inspector component needs completion
-- Write unit tests for DialogEngine (29 tests, all passing)
+- Unit test coverage: 41 engine, 14 sandbox, 13 renderer (74 total, all passing)
+- Character.gd is a prototype that never became a standard — needs graduation to proper plugin-level abstraction
+- Investigate Godot 4 Custom Resources for Character data — Gd3 had terrible ergonomics but Gd4 improved them. A CharacterResource could hold data (name, color, portrait path, blip path) separate from the presentation scene.
+- Write .tscn scenes for the four example renderers — DONE

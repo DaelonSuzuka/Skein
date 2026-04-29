@@ -8,8 +8,8 @@
 - **Yarn format** — Skein-expanded header/body text format (`---`/`===`) for persisting conversation nodes. Not Yarn Spinner.
 - **Sandbox** — Runtime `Expression` evaluator that executes code inside `{ }` / `{{ }}` blocks with injected locals.
 - **SkeinCanvas** — `CanvasLayer` that hosts the in-game dialog box and popup dialogs.
-- **DialogBox** — Default in-game UI control that types out text, handles choices, and emits signals for line/node progression. Intended to be subclassed per-game.
-- **Character** — A `.tscn` scene loaded from `res://characters/`; auto-registered by `name` in the singleton. Character management system is incomplete.
+- **DialogBox** — Default in-game UI control that types out text, handles choices, and emits signals for line/node progression. Intended to be subclassed per-game. Bring-your-own-scene: the default is a template, not a prison.
+- **Character** — A `.tscn` scene loaded from `res://characters/`; auto-registered by `name` in the singleton. Just a scene in a directory — no registry UI, no proprietary format. Character management system is incomplete.
 - **SkeinEditor** — The `@tool` editor panel integrated into Godot’s main screen for visual conversation editing.
 - **GraphEdit** — Custom Godot `GraphEdit` derived component that renders and edits conversation nodes.
 - **ConversationTree** — Tree UI showing file/folder hierarchy and node listings.
