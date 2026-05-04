@@ -213,8 +213,8 @@ All renderers follow the same pattern:
 ## Test Execution
 
 ```bash
-/home/daelon/godot/godot4 --headless -s addons/gut/gut_cmdln.gd \
-  -gconfig=.gut_editor_config.json -gexit
+godot --headless -s addons/gut/gut_cmdln.gd \
+  -gconfig=.gut_editor_config.json -gno_error_tracking -gexit
 ```
 
 ## Related Lodes
