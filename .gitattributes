@@ -1,0 +1,28 @@
+# Enforce LF line endings for text formats that are parsed with \n-splitting
+# Godot .tscn/.tres/.gd/.yarn files all assume LF — the Yarn parser splits on \n
+# and will break with \r\n checkout on Windows
+* text=auto
+
+*.gd text eol=lf
+*.tscn text eol=lf
+*.tres text eol=lf
+*.cfg text eol=lf
+*.godot text eol=lf
+*.yarn text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.yaml text eol=lf
+*.py text eol=lf
+Makefile text eol=lf
+*.mk text eol=lf
+*.sh text eol=lf
+*.toml text eol=lf
+*.xml text eol=lf
+
+# Binary
+*.png binary
+*.jpg binary
+*.wav binary
+*.ogg binary
+*.mp3 binary
+*.font binary

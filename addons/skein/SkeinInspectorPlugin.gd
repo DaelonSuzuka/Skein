@@ -79,7 +79,7 @@ func select_conversation(prop: CustomProperty):
 	selector = ConfirmationDialog.new()
 	selector.title = 'Select a Conversation'
 
-	tree = load('res://addons/skein/editor/Tree.gd').new()
+	tree = load('res://addons/skein/editor/ConversationTree.gd').new()
 	tree.anchor_right = 1.0
 	tree.anchor_bottom = 1.0
 	selector.add_child(tree)

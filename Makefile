@@ -6,11 +6,26 @@
 MAKEFLAGS += -s
 
 # **************************************************************************** #
-# Targets
+# Cross-platform targets
+# These targets work on any OS with Godot installed and accessible as `godot`
+# (or via the GODOT variable below).
+
+GD ?= godot
+GDARGS := --no-window --quiet
+GODOT = $(GD) $(GDARGS)
 
 pull:
 	git reset --hard
 	git pull
+
+win:
+	$(GODOT) --export "Windows Desktop"
+
+# **************************************************************************** #
+# Linux server deploy targets
+# These targets are designed to run on a Linux server only. They use
+# Unix-specific commands (wget, cp, mkdir -p) and assume a specific
+# filesystem layout (/var/www/html). Do not run these on Windows.
 
 web:
 	$(GODOT) --export "HTML5"
@@ -18,10 +33,9 @@ web:
 webdeploy: web
 	cp build/web/* /var/www/html/magnusdei.io/diagraph
 
-win:
-	$(GODOT) --export "Windows Desktop"
-
 # **************************************************************************** #
+# itch.io deploy (requires butler CLI)
+# https://itch.io/docs/butler/
 
 BUTLER = butler
 
@@ -33,7 +47,9 @@ itch:
 	$(BUTLER) push build/web daelon/diagraph:html5
 
 # **************************************************************************** #
-# download godot binary and export templates for linux
+# Godot download — Linux server only
+# Downloads a Godot headless binary and export templates to ~/godot/
+# for CI/export use. Requires wget and unzip.
 
 GDVERSION := 3.5
 GDBUILD := stable
@@ -60,22 +76,6 @@ download:
 	mv templates/ ~/.local/share/godot/templates/$(GDVERSION).$(GDBUILD)/
 
 	rm $(TEMPLATES)
-
-# **************************************************************************** #
-# Variables
-
-WSLENV ?= notwsl
-
-GD = ""
-ifndef WSLENV
-	GD := godot.exe
-else
-	GD := ~/godot/$(GDBINARY)
-endif
-
-GDARGS := --no-window --quiet
-
-GODOT = $(GD) $(GDARGS)
 
 # **************************************************************************** #
 

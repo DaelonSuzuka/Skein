@@ -29,6 +29,9 @@
 - Use `Files.prefix` (`user://` on HTML5, otherwise `res://`) for all read/write paths.
 - `Files.save_json` / `Files.load_json` handle `null`/`{}` guards and auto-append extensions.
 - `Yarn.save_yarn` / `Yarn.load_yarn` strip runtime-only keys (`size`, `offset`) before serializing.
+- `.gitattributes` enforces LF line endings for all text formats. The Yarn parser strips `\r` defensively (`text.replace('\r', '').split('\n')`) so CRLF files from external sources won't break parsing.
+- `res://` paths always use `/` separators in Godot, so `split('/')` is safe for `res://` paths. OS-native paths from `globalize_path` may use `\` on Windows — use `path_join()` or Godot path utilities instead of string splitting.
+- Extension checks use `to_lower()` comparison to handle case variation across platforms (`.JSON` on Windows, `.json` on Linux).
 
 ## Code Execution
 - Expressions inside `{ }` are executed silently; `{{ }}` prints the result.
@@ -48,3 +51,4 @@
 - Each graph node stores `data` dict with `id`, `name`, `type`, `text`, `choices`, `branches`, `connections`, etc.
 - `GraphEdit.get_nodes()` serializes the graph back into the dictionary format saved to disk.
 - Editor data (zoom, panel sizes, current conversation) is persisted separately in `user://skein/editor_data.json`.
+- Use `path_join()` not deprecated `plus_file()` for path concatenation.

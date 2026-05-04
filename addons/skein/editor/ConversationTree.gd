@@ -442,6 +442,6 @@ func drop_data(position: Vector2, item):
 	var type = item.get_meta('type')
 	if type in ['file', 'folder']:
 		var path = item.get_meta('path')
-		var new_path = to_path.plus_file(path.get_file())
+		var new_path = to_path.path_join(path.get_file())
 
 		rename_conversation.emit(path, new_path)

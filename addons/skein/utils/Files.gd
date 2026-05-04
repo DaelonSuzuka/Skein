@@ -36,11 +36,11 @@ func validate_paths():
 func check_extension(file: String, ext=null) -> bool:
 	if ext:
 		if ext is String:
-			if file.ends_with(ext):
+			if file.to_lower().ends_with(ext.to_lower()):
 				return true
 		elif ext is Array:
 			for e in ext:
-				if file.ends_with(e):
+				if file.to_lower().ends_with(e.to_lower()):
 					return true
 	return false
 

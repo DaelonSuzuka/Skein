@@ -70,7 +70,7 @@ func parse_yarn(text: String) -> Dictionary[String, Dictionary]:
 	var header: Array[String] = []
 	var body: Array[String] = []
 	var i := 0
-	var lines = text.split('\n')
+	var lines = text.replace('\r', '').split('\n')
 	while i < lines.size():
 		var line = lines[i].strip_edges(false) # rstrip whitespace
 		if line == '===': # end of node
