@@ -15,8 +15,25 @@ var Watcher := preload('./utils/Watcher.gd').new()
 var characters := {}
 var conversations := {}
 var _conversations := {}
+var _cache := {}
 
 signal refreshed
+
+# ******************************************************************************
+# Conversation string parser
+# Parses "Name[:Entry[:Line]]" into a dictionary.
+# This is the single source of truth for the format — all callers should
+# use this instead of splitting on ':' independently.
+# ******************************************************************************/
+
+static func parse_conversation_string(conversation_string: String) -> Dictionary:
+	conversation_string = conversation_string.trim_prefix("res://").trim_prefix("user://")
+	var parts = conversation_string.split(":")
+	return {
+		"conversation": parts[0],
+		"entry": parts[1] if parts.size() >= 2 else "",
+		"line": int(parts[2]) if parts.size() >= 3 else 0,
+	}
 
 # ******************************************************************************
 
@@ -25,12 +42,15 @@ func _ready():
 	add_child(Files)
 	add_child(Yarn)
 	add_child(Sandbox)
-	add_child(Watcher)
+
+	if Engine.is_editor_hint():
+		add_child(Watcher)
 
 	Files.validate_paths()
 	refresh.call_deferred()
 
-	init_file_watcher()
+	if Engine.is_editor_hint():
+		init_file_watcher()
 
 func init_file_watcher():
 	Watcher.add_scan_directory(Files.conversation_prefix)
@@ -39,6 +59,7 @@ func init_file_watcher():
 	Watcher.files_changed.connect(refresh)
 
 func refresh():
+	_cache.clear()
 	load_conversations()
 	load_characters()
 	refreshed.emit()
@@ -109,12 +130,18 @@ func get_full_path(path: String) -> String:
 	return path
 
 func load_conversation(path: String, default=null):
-	# sanitize path by removing node name and/or line number
-	path = path.trim_prefix(Files.prefix)
-	path = path.split(':')[0]
-	path = get_full_path(path)
+	var parsed = parse_conversation_string(path)
+	var resolved = get_full_path(parsed.conversation)
 
-	return _load_conversation(path, default)
+	if resolved in _cache:
+		return _cache[resolved].duplicate(true)
+
+	var result = _load_conversation(resolved, default)
+	if result:
+		_cache[resolved] = result
+		return result.duplicate(true)
+
+	return default
 
 func save_conversation(path: String, data: Dictionary):
 	if data == null:

@@ -57,8 +57,9 @@ Same node dictionary structure stored via `JSON.stringify(data, '\t', true)`.
 `Yarn.gd` provides:
 - `save_yarn(path, data)` — writes dictionary to disk in Yarn format
 - `load_yarn(path)` — reads Yarn file back into node dictionary
-- `convert_nodes_to_yarn(data)` — serializes; uses `var_to_str` for nested dicts (`choices`, `branches`, `connections`)
-- `parse_yarn(text)` — strips `\r` defensively before splitting on `\n`, so CRLF files don't corrupt node titles/IDs
+- `convert_nodes_to_yarn(data)` — serializes; uses `var_to_str` for nested dicts (`choices`, `branches`, `connections`). **Mutates input**: renames `name`→`title`, erases `text`, `size`, `offset`
+- `parse_yarn(text)` — strips ALL `\r` globally before splitting on `\n`, so CRLF files don't corrupt node titles/IDs (body text also loses `\r`)
+- Empty node bodies (no text between `---` and `===`) are supported — returns empty string for `text` (bugfixed: previously crashed on `body[0]` when body array was empty)
 
 `Files.gd` provides:
 - `save_json(path, data)` / `load_json(path, default)` — JSON I/O

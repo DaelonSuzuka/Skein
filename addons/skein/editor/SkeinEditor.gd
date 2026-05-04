@@ -123,15 +123,13 @@ func change_conversation(path: String):
 	save_editor_data()
 	load_conversation(path)
 
-	var _path := path.trim_prefix(Skein.Files.conversation_prefix)
-	var parts := _path.split(':')
-	if len(parts) > 1:
-		%GraphEdit.focus_node(parts[1])
+	var parsed = Skein.parse_conversation_string(path)
+	if parsed.entry:
+		%GraphEdit.focus_node(parsed.entry)
 
 func load_conversation(path: String, force:=false):
-	var _path := path.trim_prefix(Skein.Files.conversation_prefix)
-	var parts := _path.split(':')
-	var convo_name := parts[0]
+	var parsed = Skein.parse_conversation_string(path)
+	var convo_name: String = parsed.conversation
 
 	if !force and current_conversation == convo_name:
 		return
@@ -237,14 +235,13 @@ func rename_conversation(old: String, new: String):
 	Skein.refresh()
 
 func focus_node(path: String):
-	var _path = path.trim_prefix(Skein.Files.conversation_prefix)
-	var parts = _path.split(':')
-	if parts[0] != current_conversation:
+	var parsed = Skein.parse_conversation_string(path)
+	if parsed.conversation != current_conversation:
 		save_conversation()
 		save_editor_data()
-		load_conversation(parts[0])
-	if len(parts) > 1:
-		%GraphEdit.focus_node(parts[1])
+		load_conversation(parsed.conversation)
+	if parsed.entry:
+		%GraphEdit.focus_node(parsed.entry)
 
 func node_selected(node):
 	var path = current_conversation + '/' + node.data.name

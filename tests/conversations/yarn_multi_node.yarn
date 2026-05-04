@@ -1,0 +1,56 @@
+id: 3161026589
+type: dialog
+default: True
+position: Rect2( -90, -180, 400, 400 )
+title: Developer
+---
+Hi there, welcome!
+Talk to Alka if you need something
+===
+id: 4134715227
+type: dialog
+position: Rect2( 1000, -200, 500, 200 )
+title: CargoBox
+---
+This box is absorbing energy from the fuel tank
+It seems to be sending the energy somewhere else
+===
+id: 3006975953
+type: dialog
+next: choice
+position: Rect2( -930, 310, 400, 320 )
+connections: { "4248563603": [ 0, 0 ], "3388302846": [ 1, 0 ] }
+show_choices: True
+choices: { "1": { "choice": "Of course!", "next": "4248563603" }, "2": { "choice": "Maybe later", "next": "3388302846" } }
+title: Greeting
+---
+Alka: Hey! What's up?
+===
+id: 4248563603
+type: dialog
+position: Rect2( -1360, -80, 390, 200 )
+title: Quest
+---
+Alka: My friend Lydia needs some help but I'm all tied up right now
+Alka: Would you kindly go over to the Sirius Estates and help her out?
+===
+id: 3388302846
+type: dialog
+position: Rect2( -1360, 150, 390, 147 )
+title: Later
+---
+Ash: I still want to look around
+===
+id: 3485632630
+type: dialog
+position: Rect2( 2161, 548, 426, 244 )
+title: EnterSewer
+---
+Ash: Head into the sewer?
+
+-> Yes
+	Ash: Alright, let's go.
+	{Game.fade_out()}
+-> Ew No
+	Ash: Maybe later..
+===

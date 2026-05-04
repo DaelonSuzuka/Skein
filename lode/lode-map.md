@@ -12,6 +12,7 @@ Hierarchical index of all lode files.
 
 ## Domain: Core Architecture
 - [core-architecture.md](core/core-architecture.md) — Singleton, autoload, file watcher, and refresh lifecycle
+- [conversation-loading.md](core/conversation-loading.md) — conversation string format, path resolution, caching, and watcher behavior
 
 ## Domain: Dialog Runtime
 - [dialog-runtime.md](dialog/dialog-runtime.md) — Old DialogBox monolith assessment (bugs, design flaws)

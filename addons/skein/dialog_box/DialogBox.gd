@@ -182,13 +182,10 @@ func start(conversation:String, options:={}):
 	remove_options()
 
 	# parse conversation string
-	conversation = conversation.trim_prefix(Skein.Files.prefix)
-
-	var parts = conversation.split(':')
-	if parts.size() >= 2:
-		entry = parts[1]
-	if parts.size() >= 3:
-		line_number = int(parts[2])
+	var parsed = Skein.parse_conversation_string(conversation)
+	entry = parsed.entry
+	line_number = parsed.line
+	conversation = parsed.conversation
 
 	nodes = Skein.load_conversation(conversation, {}).duplicate(true)
 

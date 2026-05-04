@@ -36,7 +36,22 @@ flowchart LR
 var characters := {}        # name → Character instance
 var conversations := {}     # name → absolute path
 var _conversations := {}    # lookup by file, basename, basefile, etc.
+var _cache := {}            # resolved path → nodes dict (runtime cache)
 ```
+
+## Conversation String Format
+
+All conversation references use `"Name[:Entry[:Line]]"`. `Skein.parse_conversation_string()` is the single source of truth for parsing this format. It returns `{ "conversation": String, "entry": String, "line": int }`. Used by DialogEngine, DialogBox, SkeinEditor, SkeinInspectorPlugin, and SkeinSingleton.
+
+## Conversation Loading
+
+`load_conversation(path, default)` resolves short names via `_conversations`, checks `_cache` for a cached result, and only hits disk on cache miss. Returns a `.duplicate(true)` copy so callers can't corrupt the cache. `refresh()` clears `_cache`.
+
+`start_with_data(nodes, options)` on DialogEngine bypasses the singleton entirely — accepts a pre-built node dictionary, no disk access.
+
+## Watcher
+
+`Watcher.gd` is only initialized when `Engine.is_editor_hint()`. At runtime, no file polling occurs. At editor time, it detects changes and triggers `refresh()`.
 
 ## Path Handling
 

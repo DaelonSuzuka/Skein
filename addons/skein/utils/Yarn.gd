@@ -140,11 +140,13 @@ func create_node(header: Array[String], body: Array[String]):
 	if 'branches' in node:
 		node.branches = str_to_var(node.branches)
 
-	var _body := body[0]
-	var i := 1
-	while i < body.size():
-		_body += '\n' + body[i]
-		i += 1
+	var _body := ""
+	if body.size() > 0:
+		_body = body[0]
+		var i := 1
+		while i < body.size():
+			_body += '\n' + body[i]
+			i += 1
 	node['text'] = _body
 
 	return node

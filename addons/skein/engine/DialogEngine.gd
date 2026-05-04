@@ -69,19 +69,12 @@ var _seen_actors: Array = []
 # ******************************************************************************/
 
 ## Start a conversation. conversation_string format: "Name[:Entry[:Line]]"
+## Alternatively, use start_with_data() to pass pre-loaded node data.
 func start(conversation_string: String, options := {}) -> void:
 	_reset_state()
 
-	# Parse conversation string
-	conversation_string = conversation_string.trim_prefix(Skein.Files.prefix)
-	var entry := ""
-	var line_number := 0
-
-	var parts = conversation_string.split(":")
-	if parts.size() >= 2:
-		entry = parts[1]
-	if parts.size() >= 3:
-		line_number = int(parts[2])
+	# Parse conversation string using the shared parser
+	var parsed = Skein.parse_conversation_string(conversation_string)
 
 	# Load conversation data
 	nodes = Skein.load_conversation(conversation_string, {}).duplicate(true)
@@ -90,6 +83,28 @@ func start(conversation_string: String, options := {}) -> void:
 		state = State.DONE
 		return
 
+	# Identify starting node
+	_find_and_enter_start_node(parsed.entry, parsed.line, options)
+
+## Start a conversation from pre-loaded node data, skipping disk entirely.
+## options supports: entry, line, caller, popup, popup_timeout, length/len, exec, directives
+func start_with_data(data: Dictionary, options := {}) -> void:
+	_reset_state()
+
+	nodes = data.duplicate(true)
+	if nodes.size() == 0:
+		push_error('DialogEngine: start_with_data called with empty nodes')
+		state = State.DONE
+		return
+
+	var entry: String = options.get("entry", "")
+	var line_number: int = options.get("line", 0)
+
+	_find_and_enter_start_node(entry, line_number, options)
+
+
+## Common entry-point logic shared by start() and start_with_data().
+func _find_and_enter_start_node(entry: String, line_number: int, options: Dictionary) -> void:
 	# Identify starting node
 	var start_node := ""
 	if entry:

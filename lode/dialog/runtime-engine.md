@@ -153,7 +153,8 @@ The braces are emitted as INSTANT (not typed out character by character) so they
 ## Public API
 
 ```gdscript
-engine.start(conversation_string, options)
+engine.start(conversation_string, options)  # "Name[:Entry[:Line]]" from disk
+engine.start_with_data(nodes_dict, options)  # Pre-loaded nodes, no disk hit
 engine.advance()           # Next line after LINE_END
 engine.choose(key)          # Select choice
 engine.jump_to(node_id)     # Jump to node
@@ -161,6 +162,16 @@ engine.stop()               # End conversation
 engine.next_effect()        # Pull next SkeinDialogEffect
 engine.set_speed(value)     # Called from Sandbox
 ```
+
+`start_with_data()` options support `entry` (string), `line` (int), and all renderer options (`caller`, `popup`, `popup_timeout`, `length`/`len`, `exec`, directives). Common start-node-finding logic lives in `_find_and_enter_start_node()`. Both `start()` and `start_with_data()` call it after preparing the `nodes` dict.
+
+## Known Gap: No await/yield mechanism
+
+The old `DialogBox.gd` had `_yield(object, sig)` which paused the dialog and awaited a game signal before resuming. The sandbox exposed this as `await(object, sig)` to dialog authors. This did not carry forward to the new engine.
+
+The current engine has `State.YIELDING` in its enum but never transitions into it. Without yield, dialog cannot pause and wait for arbitrary game events (door opening, NPC arriving, cutscene completing). The `timer()` function is a partial substitute (timeout-based) but cannot respond to signals.
+
+Design challenge: the engine is pull-based and signal-less. A yield would require the renderer to hold state across frames — e.g. the engine emits a YIELDING effect with signal details, the renderer connects to the signal, and resumes calling `next_effect()` when it fires. This could also be modeled as a `WAITING_SIGNAL` state parallel to `WAITING_INPUT`, where `advance()` resumes after the signal fires rather than after user input.
 
 ## Expression Evaluation (Sandbox)
 

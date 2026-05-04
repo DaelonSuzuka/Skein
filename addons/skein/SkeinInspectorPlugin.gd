@@ -105,8 +105,8 @@ func accepted(prop: CustomProperty):
 				return
 			'node':
 				var convo = SkeinConversation.new()
-				var parts = path.split(':')
-				convo.file = parts[0]
+				var parsed = Skein.parse_conversation_string(path)
+				convo.file = parsed.conversation
 
 				var node = item.get_meta('node')
 				if node.name.to_lower() != node.type.to_lower():

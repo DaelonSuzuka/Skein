@@ -87,6 +87,36 @@ flowchart LR
 - `BaseNode.get_data()` converts `position_offset` and `size` into `Rect2` via `var_to_str` for portability.
 - `BaseNode.set_data()` decodes `position` (new) or `position_offset` + `size` (legacy) fields.
 
+## Standalone Capability
+
+The editor is designed to run outside the Godot editor plugin as a standalone application (e.g. for writers who don't use Godot). The `plugin` property on `SkeinEditor` is nullable — the `_ready()` guard skips init only when `Engine.is_editor_hint() and !plugin`. When `plugin` is null, the only loss is the "Set as Preferred Editor" menu item (line 54 is guarded by `if plugin:`).
+
+`SkeinInspectorPlugin` is the one component that *truly* requires the Godot editor — it extends `EditorInspectorPlugin` and calls `plugin.get_editor_interface().get_editor_main_screen()`. But it's a wholly separate registration in `plugin.gd`, not part of the `SkeinEditor.tscn` scene tree.
+
+### Headless Testing (Verified ✅)
+
+Godot 4.6 `--headless` instantiates the full scene tree and allows `Control` nodes to function — it just skips rendering. This was verified with exploratory tests:
+
+- `SkeinEditor.tscn` instantiates and `add_child` works
+- `%GraphEdit` and `%Tree` unique-name nodes are accessible
+- `load_conversation()` sets `current_conversation` and populates the graph
+- `GraphEdit.create_node()` / `get_nodes()` data round-trip works
+
+Confirmed by 13 existing renderer tests that instantiate `.tscn` Control scenes, call `add_child`, and read back `.text` from `RichTextLabel` — all passing in `--headless`.
+
+**Limitation:** visual rendering and input events are absent. Tests can check data flow and state, but not pixel output or mouse interaction.
+
+**Orphan note:** tests leave `DialogTimer` orphans because `queue_free()` on the editor doesn't cleanly free the preview DialogBox's timers. Minor, not a blocker.
+
+### Editor Smoke Tests
+
+`tests/editor_smoke.test.gd` — 9 tests that catch structural regressions:
+- Scene tree integrity (3 tests): `%GraphEdit`, `%Tree`, `%DialogBox` nodes exist
+- Conversation loading (3 tests): `load_conversation` sets current, populates graph, serialization round-trips with `type`/`name` fields
+- Graph create/clear (2 tests): `create_node` + `get_nodes()` round-trip, `clear()` empties graph
+
+These test that the editor *boots and loads content*, not specific UI behavior.
+
 ## Related Lodes
 - [core-architecture.md](../core/core-architecture.md) — how `SkeinSingleton` loads/saves conversations
 - [dialog-runtime.md](../dialog/dialog-runtime.md) — how the graph content is interpreted at runtime

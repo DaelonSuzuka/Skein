@@ -16,8 +16,15 @@ Raw ideas captured as single-line entries. No multi-line descriptions, no detail
 - DialogBox is intended as a customizable template but subclassing path is not documented
 - Quest system design that coevolves with dialog runtime
 - MethodPicker inspector component needs completion
-- Unit test coverage: 41 engine + 37 extended, 14 sandbox, 13 renderer (105 total, all passing)
+- Unit test coverage: 157 total, all passing
 - Character.gd is a prototype that never became a standard — needs graduation to proper plugin-level abstraction
 - Investigate Godot 4 Custom Resources for Character data — Gd3 had terrible ergonomics but Gd4 improved them. A CharacterResource could hold data (name, color, portrait path, blip path) separate from the presentation scene.
 - Write .tscn scenes for the four example renderers — DONE
 - <<push>>/<<return>>/<<emit>> directives are parsed but have no runtime effect — decide whether to implement or remove
+- await/yield mechanism for new DialogEngine — old DialogBox had _yield(object, sig) to pause dialog until a game signal fires; new engine has YIELDING state in enum but never enters it
+- Runtime conversation cache — load from disk once, serve from memory thereafter
+- Kill file watcher at runtime (editor-only); Isotope frees it on HTML5 but not desktop
+- Extract conversation string parser into shared utility (7 places currently parse "Name:Entry:Line" independently)
+- Add engine.start_with_data() entry point for pre-loaded conversations (skip disk entirely)
+- Expose conversation_path and characters_path as project settings (already vars, just need UI)
+- Isotope real-world yarn patterns documented: speech→dialog legacy type, {Ash.mood('analyzing')} syntax, <<wait>> directive, <<exec>> toggle, <<set_name>>, \ line continuation, -> arrow choices, {Game.fade_out()} scene transitions, {caller.fight()} side effects, comment nodes with color
