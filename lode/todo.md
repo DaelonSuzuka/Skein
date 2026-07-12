@@ -20,7 +20,14 @@ Raw ideas captured as single-line entries. No multi-line descriptions, no detail
 - Character.gd is a prototype that never became a standard — needs graduation to proper plugin-level abstraction
 - Investigate Godot 4 Custom Resources for Character data — Gd3 had terrible ergonomics but Gd4 improved them. A CharacterResource could hold data (name, color, portrait path, blip path) separate from the presentation scene.
 - Write .tscn scenes for the four example renderers — DONE
-- <<push>>/<<return>>/<<emit>> directives are parsed but have no runtime effect — decide whether to implement or remove
+- <<push>>/<<return>>/<<emit>> directives are parsed but have no runtime effect — implement (call stack enables hub-and-spoke choices; see plans/choice-system.md)
+- Engine review 2026-07-12 findings written to plans/engine-review-2026-07-12.md (hang on unterminated blocks, {{jump}} corruption, metadata ordering, lost directives, conditional-choice regression)
+- <<wait N>> directive — used by real Isotope yarn, never implemented in any engine version; trivial as PAUSE effect now
+- engine.get_state()/set_state() for save/resume mid-conversation
+- Expose per-line backlog/history from the engine (VN staple; engine already accumulates it)
+- Seedable RNG hook for [[random]] / %random / _get_id (determinism for Isotope replay integration)
+- Shared iterative drain_until_blocking() consume helper for renderers (fixes recursion depth, fast-forward inconsistency, 4x duplication)
+- Golden effect-stream transcript tests + malformed-input fuzz test
 - await/yield mechanism for new DialogEngine — old DialogBox had _yield(object, sig) to pause dialog until a game signal fires; new engine has YIELDING state in enum but never enters it
 - Runtime conversation cache — load from disk once, serve from memory thereafter
 - Kill file watcher at runtime (editor-only); Isotope frees it on HTML5 but not desktop
